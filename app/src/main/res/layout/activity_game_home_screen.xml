@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameHomeScreenPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.GameHomeScreenActivity">
+
+    <!-- שורת הכפתורים העליונה -->
+    <LinearLayout
+        android:id="@+id/topMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+
+        <Button
+            android:id="@+id/btn_GameHomeScreen_to_main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="דף הבית"
+            android:textSize="22sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:fontFamily="@font/text_hebrew"/>
+
+        <Button
+            android:id="@+id/btn_GameHomeScreen_to_DetailsAboutUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="משתמש"
+            android:textSize="23sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:fontFamily="@font/text_hebrew"/>
+
+        <Button
+            android:id="@+id/btn_GameHomeScreen_to_contact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="צור קשר"
+            android:textSize="23sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:fontFamily="@font/text_hebrew"/>
+
+        <Button
+            android:id="@+id/btn_GameHomeScreen_to_exit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="התנתקות"
+            android:textSize="23sp"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:fontFamily="@font/text_hebrew"/>
+    </LinearLayout>
+
+    <!-- קו הפרדה -->
+    <View
+        android:id="@+id/separatorLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?attr/colorOnSurface"
+        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- תוכן מרכזי עם גלילה -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <!-- כותרת -->
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="משחק הזיכרון"
+                android:textColor="@color/headline"
+                android:textSize="40sp"
+                android:fontFamily="@font/headline_hebrew"/>
+
+            <!-- תוצאות שחקן -->
+            <TextView
+                android:id="@+id/tv_GameHomeScreen_victories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ניצחונות: "
+                android:textSize="25sp"
+                android:gravity="right"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/text_hebrew"/>
+
+            <TextView
+                android:id="@+id/tv_GameHomeScreen_status_of_finding_enemy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מחפש יריב..."
+                android:textSize="25sp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:fontFamily="@font/text_hebrew"/>
+
+            <!-- כפתורים -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_GameHomeScreen_find_enemy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="מצא יריב"
+                    android:textAllCaps="false"
+                    android:textSize="25sp"
+                    app:cornerRadius="30dp"
+                    app:icon="@drawable/ic_search"
+                    app:iconSize="28dp"
+                    app:iconGravity="textStart"
+                    app:iconPadding="12dp"
+                    android:fontFamily="@font/text_hebrew"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_GameHomeScreen_cancel_find_enemy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="בטל חיפוש"
+                    android:textAllCaps="false"
+                    android:textSize="25sp"
+                    app:cornerRadius="30dp"
+                    app:icon="@drawable/ic_cancel"
+                    app:iconSize="28dp"
+                    app:iconGravity="textStart"
+                    app:iconPadding="12dp"
+                    android:fontFamily="@font/text_hebrew"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- הוראות -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_GameHomeScreen_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:strokeColor="?attr/colorOutline"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_GameHomeScreen_instructions_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- כותרת -->
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_instructions_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="הוראות המשחק"
+                        android:textSize="30sp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="center"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- פתיח -->
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_instructions_intro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="משחק זיכרון תחרותי אונליין ראש בראש, המיועד לשיפור וחיזוק הזיכרון והמנצח נקבע לפי סך הנקודות הגבוה ביותר."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- מטרת המשחק -->
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_goal_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="מטרת המשחק"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_goal_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="לנצח את היריב באמצעות צבירת מספר הנקודות הגבוה ביותר לאורך שלושת הסבבים."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- כללים -->
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_rules_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="כללי המשחק"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_rules_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• בכל תור נחשפים שני קלפים."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right" />
+
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_rules_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• זוג תואם מזכה בנקודה ובתור נוסף."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right" />
+
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_rules_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• זוג לא תואם מחזיר את הקלפים ומעביר את התור."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="16dp" />
+
+                    <!-- ניקוד -->
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_score_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="שיטת הניקוד"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="right"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:id="@+id/txt_GameHomeScreen_score_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• התאמה נכונה: 1+ נקודה."
+                        android:textSize="22sp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/txt_GameHomeScreen_leaderboard_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="טבלת מובילים"
+                android:textSize="30sp"
+                android:fontFamily="@font/headline_hebrew"
+                android:gravity="center"
+                android:layout_marginTop="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="1dp"
+                android:paddingVertical="10dp"
+                android:layout_marginTop="15dp"
+                android:weightSum="10">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="שם מלא"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/headline_hebrew"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="אימייל"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/headline_hebrew"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🏆"
+                    android:textSize="18sp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_GameHomeScreen_leaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

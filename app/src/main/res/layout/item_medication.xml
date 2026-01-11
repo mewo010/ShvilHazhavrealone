@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layoutDirection="rtl">
+
+        <!-- שם התרופה – ממורכז -->
+        <TextView
+            android:id="@+id/txt_MedicationRow_Name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:fontFamily="@font/headline_hebrew"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="אקמול" />
+
+        <!-- תפריט פעולות ⋮ -->
+        <ImageButton
+            android:id="@+id/btn_MedicationRow_Menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="אפשרויות"
+            android:src="@drawable/ic_more"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- פרטי התרופה – מיושר לימין -->
+        <TextView
+            android:id="@+id/txt_MedicationRow_Details"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:fontFamily="@font/text_hebrew"
+            android:gravity="start"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/txt_MedicationRow_Name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="כאב ראש, 2 כדורים ביום" />
+
+        <!-- תוקף – מיושר לימין -->
+        <TextView
+            android:id="@+id/txt_MedicationRow_Date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:fontFamily="@font/text_hebrew"
+            android:gravity="start"
+            android:layout_marginTop="6dp"
+            app:layout_constraintTop_toBottomOf="@id/txt_MedicationRow_Details"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="בתוקף עד: 02/05/2025" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

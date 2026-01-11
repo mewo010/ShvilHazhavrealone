@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">שביל הזהב</string>
+    <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב...\"</string>
+
+    <string-array name="search_types">
+        <item>שם פרטי</item>
+        <item>שם משפחה</item>
+        <item>אימייל</item>
+        <item>מנהלים</item>
+        <item>משתמשים רגילים</item>
+        <item>ניצחונות</item>
+    </string-array>
+</resources>

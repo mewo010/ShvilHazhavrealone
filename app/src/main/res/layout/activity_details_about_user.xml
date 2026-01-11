@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detailsAboutUserPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.DetailsAboutUserActivity">
+
+    <!-- שורת ניווט למשתמש מחובר -->
+    <!-- שורת הכפתורים העליונה -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_container_DetailsAboutUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- תפריט משתמש רגיל -->
+        <LinearLayout
+            android:id="@+id/topMenuDetailsAboutUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="?attr/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btn_DetailsAboutUser_to_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="דף הבית"
+                android:textSize="22sp"
+                android:singleLine="true"
+                android:ellipsize="none"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:fontFamily="@font/text_hebrew"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_DetailsAboutUser_to_DetailsAboutUserPage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="משתמש"
+                android:textSize="22sp"
+                android:singleLine="true"
+                android:ellipsize="none"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:fontFamily="@font/text_hebrew"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_DetailsAboutUser_to_contact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="צור קשר"
+                android:textSize="22sp"
+                android:singleLine="true"
+                android:ellipsize="none"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:fontFamily="@font/text_hebrew"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_DetailsAboutUser_to_exit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="התנתקות"
+                android:textSize="22sp"
+                android:singleLine="true"
+                android:ellipsize="none"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:fontFamily="@font/text_hebrew"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <!-- קו הפרדה – רק למשתמש רגיל -->
+        <View
+            android:id="@+id/separatorLine_DetailsAboutUser"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/colorOnSurface"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/topMenuDetailsAboutUser"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- כפתור חזרה למנהל -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_DetailsAboutUser_to_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="חזרה"
+            android:textSize="25sp"
+            android:fontFamily="@font/text_hebrew"
+            app:cornerRadius="25dp"
+            app:icon="@drawable/ic_back"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- תוכן מרכזי עם גלילה -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/top_container_DetailsAboutUser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="24dp">
+
+            <!-- כרטיס ראשי עם שם ותמונה -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                android:layout_marginBottom="20dp"
+                android:padding="24dp"
+                app:strokeColor="?attr/colorOutline">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/img_DetailsAboutUser_user_profile"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_user"
+                        android:contentDescription="User photo"
+                        android:scaleType="centerCrop"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_DetailsAboutUser_change_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="החלף תמונה"
+                        android:textSize="20sp"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/ic_camera"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        android:padding="6dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"/>
+
+                    <TextView
+                        android:id="@+id/txt_DetailsAboutUser_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="שם פרטי + משפחה"
+                        android:textColor="@color/headline"
+                        android:textSize="30sp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/headline_hebrew"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- כרטיס מידע אישי -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                android:padding="20dp"
+                app:strokeColor="?attr/colorOutline">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="right"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="פרטים אישיים"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="שם פרטי:"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="26sp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_DetailsAboutUser_first_name"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="שם משפחה:"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="26sp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_DetailsAboutUser_last_name"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="אימייל:"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="26sp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_DetailsAboutUser_email"
+                        android:fontFamily="@font/text_english"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="סיסמה:"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textSize="26sp"
+                        android:layout_marginRight="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_DetailsAboutUser_password"
+                        android:fontFamily="@font/text_english"
+                        android:textSize="20sp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="15dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- כפתור עריכה -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_DetailsAboutUser_edit_user"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="ערוך פרטים"
+                android:textSize="25sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                app:cornerRadius="30dp"
+                app:icon="@drawable/ic_edit"
+                app:iconGravity="textStart"
+                android:fontFamily="@font/text_hebrew"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
