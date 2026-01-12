@@ -24,8 +24,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:paddingBottom="30dp">
-
-            <!-- כותרת -->
+            
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,8 +43,7 @@
                 android:textSize="37sp"
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/text_hebrew"/>
-
-            <!-- בלוק כפתורים -->
+            
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,7 +136,6 @@
                         app:iconPadding="12dp"
                         android:fontFamily="@font/text_hebrew" />
 
-                    <!-- כפתור התנתקות -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_exit"
                         android:fontFamily="@font/text_hebrew"

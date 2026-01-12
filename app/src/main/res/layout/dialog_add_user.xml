@@ -12,7 +12,6 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- כותרת -->
         <TextView
             android:id="@+id/txtAddUserDialogTitle"
             android:layout_width="wrap_content"
@@ -23,7 +22,6 @@
             android:fontFamily="@font/headline_hebrew"
             android:layout_marginBottom="16dp" />
 
-        <!-- שם פרטי -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +41,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- שם משפחה -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +60,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- אימייל -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +80,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- סיסמה -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,7 +103,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- כפתורים -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

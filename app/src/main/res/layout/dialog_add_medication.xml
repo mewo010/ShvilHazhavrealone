@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- שם התרופה -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +29,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- פרטים -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +45,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- תאריך -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +63,6 @@
                 android:fontFamily="@font/text_hebrew"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- כפתורים -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

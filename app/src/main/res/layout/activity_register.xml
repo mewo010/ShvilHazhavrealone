@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".screens.RegisterActivity" >
 
-    <!-- שורת הכפתורים העליונה -->
     <LinearLayout
         android:id="@+id/topMenu"
         android:layout_width="0dp"
@@ -73,7 +72,6 @@
             android:fontFamily="@font/text_hebrew"/>
     </LinearLayout>
 
-    <!-- קו הפרדה -->
     <View
         android:id="@+id/separatorLine"
         android:layout_width="0dp"
@@ -83,7 +81,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- תוכן מרכזי עם גלילה -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollContent"
         android:layout_width="0dp"
@@ -101,7 +98,6 @@
             android:gravity="center_horizontal"
             android:padding="20dp">
 
-            <!-- כותרת -->
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
@@ -128,7 +124,6 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- שם פרטי -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -148,7 +143,6 @@
                             android:fontFamily="@font/text_hebrew"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- שם משפחה -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,7 +162,6 @@
                             android:fontFamily="@font/text_hebrew"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- אימייל -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -189,7 +182,6 @@
                             android:fontFamily="@font/text_hebrew"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- סיסמה -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -213,7 +205,6 @@
                             android:fontFamily="@font/text_hebrew"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- כפתור הרשמה -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegister"
                         android:layout_width="match_parent"

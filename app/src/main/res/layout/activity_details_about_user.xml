@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".screens.DetailsAboutUserActivity">
 
-    <!-- שורת ניווט למשתמש מחובר -->
-    <!-- שורת הכפתורים העליונה -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_container_DetailsAboutUser"
         android:layout_width="0dp"
@@ -18,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- תפריט משתמש רגיל -->
         <LinearLayout
             android:id="@+id/topMenuDetailsAboutUser"
             android:layout_width="0dp"
@@ -88,7 +84,6 @@
                 android:visibility="gone"/>
         </LinearLayout>
 
-        <!-- קו הפרדה – רק למשתמש רגיל -->
         <View
             android:id="@+id/separatorLine_DetailsAboutUser"
             android:layout_width="0dp"
@@ -99,7 +94,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!-- כפתור חזרה למנהל -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_DetailsAboutUser_to_admin"
             android:layout_width="wrap_content"
@@ -119,7 +113,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- תוכן מרכזי עם גלילה -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -135,7 +128,6 @@
             android:gravity="center_horizontal"
             android:padding="24dp">
 
-            <!-- כרטיס ראשי עם שם ותמונה -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,7 +180,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- כרטיס מידע אישי -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,7 +275,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- כפתור עריכה -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_DetailsAboutUser_edit_user"
                 android:layout_width="match_parent"

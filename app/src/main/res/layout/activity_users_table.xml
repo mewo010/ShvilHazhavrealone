@@ -26,7 +26,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- כותרת -->
     <TextView
         android:id="@+id/txtUsersTableTitle"
         android:layout_width="wrap_content"
@@ -56,7 +55,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- כרטיס חיפוש -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/searchCard_UsersTable"
         android:layout_width="0dp"
@@ -117,7 +115,6 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_UsersTable"
         android:layout_width="0dp"

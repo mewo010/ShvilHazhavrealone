@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".screens.GameHomeScreenActivity">
 
-    <!-- שורת הכפתורים העליונה -->
     <LinearLayout
         android:id="@+id/topMenu"
         android:layout_width="0dp"
@@ -73,7 +72,6 @@
             android:fontFamily="@font/text_hebrew"/>
     </LinearLayout>
 
-    <!-- קו הפרדה -->
     <View
         android:id="@+id/separatorLine"
         android:layout_width="0dp"
@@ -83,7 +81,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- תוכן מרכזי עם גלילה -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,7 +95,6 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <!-- כותרת -->
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
@@ -108,7 +104,6 @@
                 android:textSize="40sp"
                 android:fontFamily="@font/headline_hebrew"/>
 
-            <!-- תוצאות שחקן -->
             <TextView
                 android:id="@+id/tv_GameHomeScreen_victories"
                 android:layout_width="match_parent"
@@ -130,7 +125,6 @@
                 android:visibility="gone"
                 android:fontFamily="@font/text_hebrew"/>
 
-            <!-- כפתורים -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,7 +163,6 @@
                     android:visibility="gone"/>
             </LinearLayout>
 
-            <!-- הוראות -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_GameHomeScreen_instructions"
                 android:layout_width="match_parent"
@@ -187,7 +180,6 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <!-- כותרת -->
                     <TextView
                         android:id="@+id/txt_GameHomeScreen_instructions_title"
                         android:layout_width="match_parent"
@@ -198,7 +190,6 @@
                         android:gravity="center"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- פתיח -->
                     <TextView
                         android:id="@+id/txt_GameHomeScreen_instructions_intro"
                         android:layout_width="match_parent"
@@ -209,7 +200,6 @@
                         android:gravity="right"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- מטרת המשחק -->
                     <TextView
                         android:id="@+id/txt_GameHomeScreen_goal_title"
                         android:layout_width="match_parent"
@@ -230,7 +220,6 @@
                         android:gravity="right"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- כללים -->
                     <TextView
                         android:id="@+id/txt_GameHomeScreen_rules_title"
                         android:layout_width="match_parent"
@@ -269,7 +258,6 @@
                         android:gravity="right"
                         android:layout_marginBottom="16dp" />
 
-                    <!-- ניקוד -->
                     <TextView
                         android:id="@+id/txt_GameHomeScreen_score_title"
                         android:layout_width="match_parent"
