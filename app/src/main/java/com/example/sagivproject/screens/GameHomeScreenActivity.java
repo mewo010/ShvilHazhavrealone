@@ -80,6 +80,8 @@ public class GameHomeScreenActivity extends BaseActivity {
             @Override
             public void onCompleted(List<User> users) {
                 if (users != null) {
+                    users.removeIf(User::getIsAdmin);
+
                     // מיון הרשימה לפי כמות ניצחונות מהגבוה לנמוך
                     users.sort((u1, u2) -> Integer.compare(u2.getCountWins(), u1.getCountWins()));
 
