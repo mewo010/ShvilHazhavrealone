@@ -361,14 +361,6 @@ public class DatabaseService {
         writeData(USERS_PATH + "/" + uid + "/medications/" + medication.getId(), medication, callback);
     }
 
-    /// get a medication from the database
-    /// @param uid user's id
-    /// @param medicationId the id of the medication to get
-    /// @param callback the callback to call when the operation is completed
-    public void getMedication(@NotNull final String uid, @NotNull final String medicationId, @NotNull final DatabaseCallback<Medication> callback) {
-        getData(USERS_PATH + "/" + uid + "/medications/" + medicationId, Medication.class, callback);
-    }
-
     /// get all the medications of a specific user
     /// @param uid the id of the user
     /// @param callback the callback
@@ -527,7 +519,6 @@ public class DatabaseService {
                 if (matchedRoomId[0] != null) {
                     GameRoom room = snapshot.child(matchedRoomId[0]).getValue(GameRoom.class);
                     callback.onCompleted(room);
-                    return;
                 }
             }
         });
