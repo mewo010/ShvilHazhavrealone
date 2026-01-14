@@ -52,8 +52,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         user = SharedPreferencesUtil.getUser(this);
 
-        topMenu = findViewById(R.id.topMenuDetailsAboutUser);
         //משתמש מחובר
+        topMenu = findViewById(R.id.topMenuDetailsAboutUser);
         btnToMain = findViewById(R.id.btn_DetailsAboutUser_to_main);
         btnToDetailsAboutUser = findViewById(R.id.btn_DetailsAboutUser_to_DetailsAboutUserPage);
         btnToContact = findViewById(R.id.btn_DetailsAboutUser_to_contact);
@@ -106,11 +106,31 @@ public class DetailsAboutUserActivity extends BaseActivity {
         txtLastName = findViewById(R.id.txt_DetailsAboutUser_last_name);
         txtEmail = findViewById(R.id.txt_DetailsAboutUser_email);
         txtPassword = findViewById(R.id.txt_DetailsAboutUser_password);
-
-        loadUserDetailsFromSharedPref();
     }
 
-    private void loadUserDetailsFromSharedPref() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserFromDatabase();
+    }
+
+    private void loadUserFromDatabase() {
+        DatabaseService.getInstance().getUser(user.getUid(), new DatabaseService.DatabaseCallback<User>() {
+            @Override
+            public void onCompleted(User dbUser) {
+                user = dbUser;
+                SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
+                loadUserDetailsToUI();
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(DetailsAboutUserActivity.this, "שגיאה בטעינת נתונים", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadUserDetailsToUI() {
         txtTitle.setText(user.getFullName());
         txtFirstName.setText(user.getFirstName());
         txtLastName.setText(user.getLastName());
@@ -130,7 +150,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     private void openEditDialog() {
         new EditUserDialog(this, user, () -> {
             SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
-            loadUserDetailsFromSharedPref();
+            loadUserDetailsToUI();
         }).show();
     }
 
