@@ -25,6 +25,7 @@ import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
 import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.utils.ImageUtil;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailsAboutUserActivity extends BaseActivity {
     private Button btnToMain, btnToDetailsAboutUser, btnToContact, btnToExit, btnToAdmin, btnEditUser;
@@ -32,11 +33,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
     private LinearLayout topMenu;
     private TextView txtTitle, txtFirstName, txtLastName, txtEmail, txtPassword;
     private ImageView imgUserProfile;
-    private Button btnChangePhoto;
-
-    private static final int REQ_CAMERA = 100;
-    private static final int REQ_GALLERY = 200;
-
+    private FloatingActionButton btnChangePhoto;
+    private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
     private User user;
 
     @Override
