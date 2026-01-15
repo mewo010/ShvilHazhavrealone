@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -36,7 +37,6 @@ import java.util.List;
 public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapter.MemoryGameListener {
     private RecyclerView recyclerCards;
     private boolean endDialogShown = false, localLock = false;
-    private boolean isWinRecorded = false; //דגל למניעת כפל ניצחונות
     private String roomId;
     private User user;
     private GameRoom currentRoom;
@@ -132,11 +132,15 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             databaseService.getAllImages(new DatabaseService.DatabaseCallback<List<ImageData>>() {
                 @Override
                 public void onCompleted(List<ImageData> allImages) {
-                    if (allImages == null || allImages.isEmpty()) return;
+                    if (allImages == null || allImages.size() < 6) {
+                        Toast.makeText(MemoryGameActivity.this, "אין מספיק תמונות כדי להתחיל את המשחק.", Toast.LENGTH_LONG).show();
+                        finish();
+                        return;
+                    }
 
                     // בחירת 6 תמונות רנדומליות ליצירת 12 קלפים (זוגות)
                     Collections.shuffle(allImages);
-                    List<ImageData> selected = allImages.subList(0, Math.min(6, allImages.size()));
+                    List<ImageData> selected = allImages.subList(0, 6);
 
                     List<Card> cards = new ArrayList<>();
                     for (ImageData img : selected) {
@@ -151,7 +155,10 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 }
 
                 @Override
-                public void onFailed(Exception e) { /* טיפול בשגיאה */ }
+                public void onFailed(Exception e) {
+                    Toast.makeText(MemoryGameActivity.this, "שגיאה בטעינת תמונות המשחק", Toast.LENGTH_SHORT).show();
+                    finish(); // חזרה למסך הקודם
+                }
             });
         }
     }
@@ -168,9 +175,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
         if (localLock) return;
 
-        if (!user.getUid().equals(currentRoom.getCurrentTurnUid())) return;
-
-        if (currentRoom.isProcessingMatch()) return;
+        if (!isMyTurn()) return;
 
         int cardIndex = adapter.getCards().indexOf(card);
         if (card.getIsMatched() || card.getIsRevealed()) return;
@@ -213,19 +218,10 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             databaseService.updateCardStatus(roomId, idx2, true, true);
 
             String scoreField = user.getUid().equals(currentRoom.getPlayer1().getUid()) ? "player1Score" : "player2Score";
-            int newScore = user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
-                    currentRoom.getPlayer1Score() + 1 : currentRoom.getPlayer2Score() + 1;
 
-            databaseService.updateRoomField(roomId, scoreField, newScore);
+            databaseService.updateRoomField(roomId, scoreField, user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
+                    currentRoom.getPlayer1Score() + 1 : currentRoom.getPlayer2Score() + 1);
 
-            // עדכון מקומי זמני כדי ש-checkIfGameFinished יראה את הניקוד החדש מיד
-            if (user.getUid().equals(currentRoom.getPlayer1().getUid())) {
-                currentRoom.setPlayer1Score(newScore);
-            } else {
-                currentRoom.setPlayer2Score(newScore);
-            }
-
-            checkIfGameFinished();
         } else {
             // --- טעות ---
             adapter.animateError(idx1, recyclerCards);
@@ -245,7 +241,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
         databaseService.updateRoomField(roomId, "firstSelectedCardIndex", null);
 
-        // משחררים את ה-Processing רק אחרי שהעדכונים הסתיימו
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             databaseService.setProcessing(roomId, false);
             localLock = false;
@@ -253,10 +248,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     }
 
     private void checkIfGameFinished() {
-        // סך כל הזוגות במשחק הוא 6 (מתוך 12 קלפים)
         int totalPairsFound = currentRoom.getPlayer1Score() + currentRoom.getPlayer2Score();
-
-        // אנחנו בודקים אם הגענו ל-6 זוגות
         if (totalPairsFound >= 6) {
             finishGame(currentRoom);
         }
@@ -266,8 +258,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         if ("finished".equals(room.getStatus())) return;
 
         String winnerUid = calculateWinner(room);
-
-        // עדכון ה-DB שהמשחק נגמר
         databaseService.updateRoomField(roomId, "winnerUid", winnerUid);
         databaseService.updateRoomField(roomId, "status", "finished");
     }
@@ -289,10 +279,9 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
                 if (room.getCards() == null || room.getCards().isEmpty()) {
                     setupGameBoard(room);
-                    return; // מחכים לעדכון הבא מה-DB שיכיל את הקלפים
+                    return; 
                 }
 
-                // עדכון ה-Adapter עם הקלפים החדשים מה-DB
                 if (room.getCards() != null) {
                     adapter.getCards().clear();
                     adapter.getCards().addAll(room.getCards());
@@ -304,14 +293,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                         room.getPlayer2().getUid() : room.getPlayer1().getUid();
                 databaseService.setupForfeitOnDisconnect(roomId, opponentUid);
 
-                // בדיקה האם המשחק הסתיים (כולל עקב ניתוק)
                 if ("finished".equals(room.getStatus())) {
                     if (turnTimer != null) turnTimer.cancel();
                     databaseService.removeForfeitOnDisconnect(roomId);
 
-                    // אם אני המנצח ועדיין לא רשמתי את הניצחון ב-DB
-                    if (myUid.equals(room.getWinnerUid()) && !isWinRecorded) {
-                        isWinRecorded = true; // סימון שביצענו עדכון
+                    if (myUid.equals(room.getWinnerUid())) {
                         databaseService.addUserWin(myUid);
                         user.setCountWins(user.getCountWins() + 1);
                         SharedPreferencesUtil.saveUser(MemoryGameActivity.this, user);
@@ -321,16 +307,17 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                     return;
                 }
 
-                // 1. עדכון טקסט התור
+                checkIfGameFinished();
+
                 boolean isMyTurn = user.getUid().equals(room.getCurrentTurnUid());
                 if (isMyTurn) {
                     tvTurnStatus.setText("תורך!");
                     tvTurnStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-                    startTurnTimer(); // הפעלת טיימר רק אם זה תורי
+                    startTurnTimer();
                 } else {
                     tvTurnStatus.setText("תור היריב...");
                     tvTurnStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                    if (turnTimer != null) turnTimer.cancel(); // ביטול טיימר אם התור עבר
+                    if (turnTimer != null) turnTimer.cancel();
                     tvTimer.setText("");
                 }
             }
@@ -343,7 +330,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // קריאה לפונקציית הניתוק דרך השירות בלבד
         if (roomId != null) {
             databaseService.stopListeningToGame(roomId);
         }
@@ -373,7 +359,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
             @Override
             public void onFinish() {
-                // הזמן נגמר - העברת תור אוטומטית ליריב
+                if (currentRoom.getFirstSelectedCardIndex() != null) {
+                    databaseService.updateCardStatus(roomId, currentRoom.getFirstSelectedCardIndex(), false, false);
+                    databaseService.updateRoomField(roomId, "firstSelectedCardIndex", null);
+                }
+
                 String opponentUid = user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
                         currentRoom.getPlayer2().getUid() : currentRoom.getPlayer1().getUid();
                 databaseService.updateRoomField(roomId, "currentTurnUid", opponentUid);

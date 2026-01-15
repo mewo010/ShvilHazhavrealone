@@ -14,13 +14,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -271,21 +274,25 @@ public class DatabaseService {
     /// @see DatabaseCallback
     /// @see User
     public void getUserByEmailAndPassword(@NotNull final String email, @NotNull final String password, @NotNull final DatabaseCallback<User> callback) {
-        getUserList(new DatabaseCallback<List<User>>() {
+        Query query = readData(USERS_PATH).orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCompleted(List<User> users) {
-                for (User user : users) {
-                    if (Objects.equals(user.getEmail(), email) && Objects.equals(user.getPassword(), password)) {
-                        callback.onCompleted(user);
-                        return;
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        User user = userSnapshot.getValue(User.class);
+                        if (user != null && Objects.equals(user.getPassword(), password)) {
+                            callback.onCompleted(user);
+                            return;
+                        }
                     }
                 }
                 callback.onCompleted(null);
             }
 
             @Override
-            public void onFailed(Exception e) {
-
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onFailed(error.toException());
             }
         });
     }
@@ -294,21 +301,16 @@ public class DatabaseService {
     /// @param email the email to check
     /// @param callback the callback to call when the operation is completed
     public void checkIfEmailExists(@NotNull final String email, @NotNull final DatabaseCallback<Boolean> callback) {
-        getUserList(new DatabaseCallback<List<User>>() {
+        Query query = readData(USERS_PATH).orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onCompleted(List<User> users) {
-                for (User user : users) {
-                    if (Objects.equals(user.getEmail(), email)) {
-                        callback.onCompleted(true);
-                        return;
-                    }
-                }
-                callback.onCompleted(false);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                callback.onCompleted(snapshot.exists());
             }
 
             @Override
-            public void onFailed(Exception e) {
-
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onFailed(error.toException());
             }
         });
     }
