@@ -14,13 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.utils.InputValidator;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 public class LoginActivity extends BaseActivity {
     private Button btnToContact, btnToLanding, btnToRegister, btnLogin;
     private EditText editTextEmail, editTextPassword;
+    private AuthService authService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,8 @@ public class LoginActivity extends BaseActivity {
             return insets;
         });
 
+        authService = new AuthService(this);
+
         btnToLanding = findViewById(R.id.btn_login_to_landing);
         btnToContact = findViewById(R.id.btn_login_to_contact);
         btnToRegister = findViewById(R.id.btn_login_to_register);
@@ -44,7 +46,7 @@ public class LoginActivity extends BaseActivity {
         btnToLanding.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, LandingActivity.class)));
         btnToContact.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, ContactActivity.class)));
         btnToRegister.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
-        btnLogin.setOnClickListener(view -> loginUser());
+        btnLogin.setOnClickListener(view -> tryLogin());
 
         String lastEmail = getIntent().getStringExtra("userEmail");
         if (lastEmail != null && !lastEmail.isEmpty()) {
@@ -52,47 +54,56 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void loginUser() {
+    private void tryLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        if (!validateInput(email, password)) {
+            return;
+        }
+
+        authService.login(email, password, new AuthService.LoginCallback() {
+            @Override
+            public void onSuccess(User user) {
+                Intent intent;
+
+                if (user.getIsAdmin()) {
+                    Toast.makeText(LoginActivity.this, "התחברת למשתמש מנהל בהצלחה!", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(LoginActivity.this, AdminPageActivity.class);
+                } else {
+                    Toast.makeText(LoginActivity.this, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                }
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private boolean validateInput(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "נא למלא אימייל וסיסמה", Toast.LENGTH_SHORT).show();
-        } else if (!InputValidator.isEmailValid(email)) {
+            return false;
+        }
+
+        if (!InputValidator.isEmailValid(email)) {
             editTextEmail.requestFocus();
-            Toast.makeText(this, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
-        } else if (!InputValidator.isPasswordValid(password)) {
+            Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (!InputValidator.isPasswordValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
-        } else {
-            databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<User>() {
-                @Override
-                public void onCompleted(User user) {
-                    if (user == null) {
-                        Toast.makeText(LoginActivity.this, "שגיאה בהתחברות המשתמש", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    SharedPreferencesUtil.saveUser(LoginActivity.this, user);
-
-                    Intent intent;
-                    if (user.getIsAdmin()) {
-                        Toast.makeText(LoginActivity.this, "התחברת למשתמש מנהל בהצלחה!", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(LoginActivity.this, AdminPageActivity.class);
-                    } else {
-                        Toast.makeText(LoginActivity.this, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                    }
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onFailed(Exception e) {
-                    Toast.makeText(LoginActivity.this, "שגיאה בהתחברות המשתמש", Toast.LENGTH_LONG).show();
-                    SharedPreferencesUtil.signOutUser(LoginActivity.this);
-                }
-            });
+            return false;
         }
+
+        return true;
     }
 }

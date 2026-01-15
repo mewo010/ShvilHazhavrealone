@@ -19,11 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity {
-    public interface RequiresPermissions {
-
-    }
-
     protected DatabaseService databaseService;
+
+    public interface RequiresPermissions {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
