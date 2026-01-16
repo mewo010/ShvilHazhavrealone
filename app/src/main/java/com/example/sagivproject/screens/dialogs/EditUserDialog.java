@@ -9,7 +9,7 @@ import android.widget.Toast;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.AuthService;
-import com.example.sagivproject.utils.InputValidator;
+import com.example.sagivproject.utils.Validator;
 
 public class EditUserDialog {
     private final Context context;
@@ -83,25 +83,25 @@ public class EditUserDialog {
             return false;
         }
 
-        if (!InputValidator.isNameValid(fName)) {
+        if (!Validator.isNameValid(fName)) {
             firstName.requestFocus();
             Toast.makeText(context, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isNameValid(lName)) {
+        if (!Validator.isNameValid(lName)) {
             lastName.requestFocus();
             Toast.makeText(context, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isEmailValid(email)) {
+        if (!Validator.isEmailValid(email)) {
             emailEdt.requestFocus();
             Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isPasswordValid(pass)) {
+        if (!Validator.isPasswordValid(pass)) {
             passEdt.requestFocus();
             Toast.makeText(context, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

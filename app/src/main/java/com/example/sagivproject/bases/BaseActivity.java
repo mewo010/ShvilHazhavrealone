@@ -22,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected DatabaseService databaseService;
 
     public interface RequiresPermissions {
+
     }
 
     @Override

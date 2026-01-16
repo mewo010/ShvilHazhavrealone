@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.services.AuthService;
-import com.example.sagivproject.utils.InputValidator;
+import com.example.sagivproject.utils.Validator;
 
 public class RegisterActivity extends BaseActivity {
     private Button btnToContact, btnToLanding, btnToLogin, btnRegister;
@@ -83,25 +83,25 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (!InputValidator.isNameValid(firstName)) {
+        if (!Validator.isNameValid(firstName)) {
             editTextFirstName.requestFocus();
             Toast.makeText(this, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isNameValid(lastName)) {
+        if (!Validator.isNameValid(lastName)) {
             editTextLastName.requestFocus();
             Toast.makeText(this, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isEmailValid(email)) {
+        if (!Validator.isEmailValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!InputValidator.isPasswordValid(password)) {
+        if (!Validator.isPasswordValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

@@ -183,7 +183,6 @@ public class AuthService {
         });
     }
 
-    //התנתקות
     public String logout() {
         User user = SharedPreferencesUtil.getUser(context);
 
