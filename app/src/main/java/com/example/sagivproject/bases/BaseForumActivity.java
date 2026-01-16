@@ -20,10 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseForumActivity extends BaseActivity {
-    public interface ForumPermissions {
-        boolean canDelete(ForumMessage message);
-    }
-
     protected RecyclerView recycler;
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
@@ -31,6 +27,10 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected List<ForumMessage> messages = new ArrayList<>();
     protected ForumService forumService;
     protected ForumPermissions permissions;
+
+    public interface ForumPermissions {
+        boolean canDelete(ForumMessage message);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

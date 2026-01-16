@@ -8,18 +8,20 @@ import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.utils.InputValidator;
 
 public class EditUserDialog {
     private final Context context;
     private final User user;
     private final Runnable onSuccess;
+    private final AuthService authService;
 
     public EditUserDialog(Context context, User user, Runnable onSuccess) {
         this.context = context;
         this.user = user;
         this.onSuccess = onSuccess;
+        this.authService = new AuthService(context);
     }
 
     public void show() {
@@ -34,6 +36,7 @@ public class EditUserDialog {
         EditText inputLastName = dialog.findViewById(R.id.inputEditUserLastName);
         EditText inputEmail = dialog.findViewById(R.id.inputEditUserEmail);
         EditText inputPassword = dialog.findViewById(R.id.inputEditUserPassword);
+
         Button btnSave = dialog.findViewById(R.id.btnEditUserSave);
         Button btnCancel = dialog.findViewById(R.id.btnEditUserCancel);
 
@@ -48,76 +51,62 @@ public class EditUserDialog {
             String email = inputEmail.getText().toString().trim();
             String pass = inputPassword.getText().toString().trim();
 
-            if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(context, "כל השדות חובה", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (!InputValidator.isNameValid(fName)) {
-                inputFirstName.requestFocus();
-                Toast.makeText(context, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (!InputValidator.isNameValid(lName)) {
-                inputLastName.requestFocus();
-                Toast.makeText(context, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (!InputValidator.isEmailValid(email)) {
-                inputEmail.requestFocus();
-                Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if (!InputValidator.isPasswordValid(pass)) {
-                inputPassword.requestFocus();
-                Toast.makeText(context, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
+            if (!validateInput(fName, lName, email, pass,
+                    inputFirstName, inputLastName, inputEmail, inputPassword)) {
                 return;
             }
 
-            boolean emailChanged = !email.equals(user.getEmail());
-
-            if (emailChanged) {
-                DatabaseService.getInstance().checkIfEmailExists(email, new DatabaseService.DatabaseCallback<Boolean>() {
-                    @Override
-                    public void onCompleted(Boolean exists) {
-                        if (exists) {
-                            Toast.makeText(context, "אימייל זה תפוס", Toast.LENGTH_SHORT).show();
-                        } else {
-                            updateUser(dialog, fName, lName, email, pass);
-                        }
+            authService.updateUser(user, fName, lName, email, pass, new AuthService.UpdateUserCallback() {
+                @Override
+                public void onSuccess(User updatedUser) {
+                    Toast.makeText(context, "הפרטים עודכנו!", Toast.LENGTH_SHORT).show();
+                    if (onSuccess != null) {
+                        onSuccess.run();
                     }
+                    dialog.dismiss();
+                }
 
-                    @Override
-                    public void onFailed(Exception e) {
-                        Toast.makeText(context, "שגיאה בבדיקת אימייל", Toast.LENGTH_LONG).show();
-                    }
-                });
-            } else {
-                updateUser(dialog, fName, lName, email, pass);
-            }
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                }
+            });
         });
 
         btnCancel.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
     }
 
-    private void updateUser(Dialog dialog, String fName, String lName, String email, String pass) {
-        user.setFirstName(fName);
-        user.setLastName(lName);
-        user.setEmail(email);
-        user.setPassword(pass);
+    private boolean validateInput(String fName, String lName, String email, String pass, EditText firstName, EditText lastName, EditText emailEdt, EditText passEdt) {
+        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || pass.isEmpty()) {
+            Toast.makeText(context, "כל השדות חובה", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-        DatabaseService.getInstance().updateUser(user, new DatabaseService.DatabaseCallback<Void>() {
-            @Override
-            public void onCompleted(Void object) {
-                Toast.makeText(context, "הפרטים עודכנו!", Toast.LENGTH_SHORT).show();
-                if (onSuccess != null) onSuccess.run();
-                dialog.dismiss();
-            }
+        if (!InputValidator.isNameValid(fName)) {
+            firstName.requestFocus();
+            Toast.makeText(context, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
-            @Override
-            public void onFailed(Exception e) {
-                Toast.makeText(context, "שגיאה: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (!InputValidator.isNameValid(lName)) {
+            lastName.requestFocus();
+            Toast.makeText(context, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (!InputValidator.isEmailValid(email)) {
+            emailEdt.requestFocus();
+            Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (!InputValidator.isPasswordValid(pass)) {
+            passEdt.requestFocus();
+            Toast.makeText(context, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }

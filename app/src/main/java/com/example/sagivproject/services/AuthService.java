@@ -33,6 +33,11 @@ public class AuthService {
         void onError(String message);
     }
 
+    public interface UpdateUserCallback {
+        void onSuccess(User updatedUser);
+        void onError(String message);
+    }
+
     private interface CreateUserCallback {
         void onSuccess(User user);
         void onError(String message);
@@ -117,6 +122,30 @@ public class AuthService {
         });
     }
 
+    public void updateUser(User user, String newFirstName, String newLastName, String newEmail, String newPassword, UpdateUserCallback callback) {
+        boolean emailChanged = !newEmail.equals(user.getEmail());
+
+        if (emailChanged) {
+            databaseService.checkIfEmailExists(newEmail, new DatabaseService.DatabaseCallback<Boolean>() {
+                @Override
+                public void onCompleted(Boolean exists) {
+                    if (exists) {
+                        callback.onError("אימייל זה תפוס");
+                    } else {
+                        applyUserUpdate(user, newFirstName, newLastName, newEmail, newPassword, callback);
+                    }
+                }
+
+                @Override
+                public void onFailed(Exception e) {
+                    callback.onError("שגיאה בבדיקת אימייל");
+                }
+            });
+        } else {
+            applyUserUpdate(user, newFirstName, newLastName, newEmail, newPassword, callback);
+        }
+    }
+
     private void createUser(String firstName, String lastName, String email, String password, CreateUserCallback callback) {
         String uid = databaseService.generateUserId();
 
@@ -131,6 +160,25 @@ public class AuthService {
             @Override
             public void onFailed(Exception e) {
                 callback.onError("שגיאה בשמירת הנתונים");
+            }
+        });
+    }
+
+    private void applyUserUpdate(User user, String firstName, String lastName, String email, String password, UpdateUserCallback callback) {
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<Void>() {
+            @Override
+            public void onCompleted(Void object) {
+                callback.onSuccess(user);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                callback.onError("שגיאה בעדכון הפרטים");
             }
         });
     }
