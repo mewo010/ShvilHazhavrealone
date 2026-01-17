@@ -59,52 +59,37 @@
                 android:textSize="20sp"
                 android:fontFamily="@font/text_hebrew"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txt_UserRow_birthDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="2dp">
+                android:text="תאריך לידה: 01/01/2000"
+                android:textSize="20sp"
+                android:fontFamily="@font/text_hebrew"/>
 
-                <TextView
-                    android:id="@+id/txt_UserRow_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="גיל: 0"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="12dp"
-                    android:fontFamily="@font/text_hebrew"/>
-
-                <TextView
-                    android:id="@+id/txt_UserRow_birthDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="תאריך: 01/01/2000"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/text_hebrew"/>
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/txt_UserRow_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="גיל: 0"
+                android:textSize="20sp"
+                android:fontFamily="@font/text_hebrew"/>
 
-                <TextView
-                    android:id="@+id/txt_UserRow_wins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ניצחונות: 0"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="12dp"
-                    android:fontFamily="@font/text_hebrew"/>
+            <TextView
+                android:id="@+id/txt_UserRow_wins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ניצחונות: 0"
+                android:textSize="20sp"
+                android:fontFamily="@font/text_hebrew"/>
 
-                <TextView
-                    android:id="@+id/txt_UserRow_IsAdmin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="מנהל: לא"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/text_hebrew"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_UserRow_IsAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="מנהל: לא"
+                android:textSize="20sp"
+                android:fontFamily="@font/text_hebrew"/>
         </LinearLayout>
 
         <LinearLayout
@@ -115,16 +100,16 @@
 
             <ImageButton
                 android:id="@+id/btn_UserRow_DeleteUser"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_delete"
                 android:contentDescription="מחק משתמש" />
 
             <ImageButton
                 android:id="@+id/btn_UserRow_MakeAdmin"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_add_admin"
                 android:contentDescription="הפוך למנהל" />
