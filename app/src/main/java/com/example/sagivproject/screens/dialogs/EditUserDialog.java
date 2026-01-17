@@ -1,5 +1,6 @@
 package com.example.sagivproject.screens.dialogs;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.Button;
@@ -11,11 +12,14 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.utils.Validator;
 
+import java.util.Calendar;
+
 public class EditUserDialog {
     private final Context context;
     private final User user;
     private final Runnable onSuccess;
     private final AuthService authService;
+    private long birthDateMillis = -1;
 
     public EditUserDialog(Context context, User user, Runnable onSuccess) {
         this.context = context;
@@ -37,6 +41,22 @@ public class EditUserDialog {
         EditText inputEmail = dialog.findViewById(R.id.inputEditUserEmail);
         EditText inputPassword = dialog.findViewById(R.id.inputEditUserPassword);
 
+        EditText inputBirthDate = dialog.findViewById(R.id.inputEditUserBirthDate);
+
+        birthDateMillis = user.getBirthDateMillis();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(birthDateMillis);
+
+        String date = String.format("%02d/%02d/%04d",
+                cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.YEAR));
+
+        inputBirthDate.setText(date);
+
+        inputBirthDate.setOnClickListener(v -> openDatePicker(inputBirthDate));
+
         Button btnSave = dialog.findViewById(R.id.btnEditUserSave);
         Button btnCancel = dialog.findViewById(R.id.btnEditUserCancel);
 
@@ -51,12 +71,11 @@ public class EditUserDialog {
             String email = inputEmail.getText().toString().trim();
             String pass = inputPassword.getText().toString().trim();
 
-            if (!validateInput(fName, lName, email, pass,
-                    inputFirstName, inputLastName, inputEmail, inputPassword)) {
+            if (!validateInput(fName, lName, email, pass, inputFirstName, inputLastName, inputEmail, inputPassword, inputBirthDate)) {
                 return;
             }
 
-            authService.updateUser(user, fName, lName, email, pass, new AuthService.UpdateUserCallback() {
+            authService.updateUser(user, fName, lName, birthDateMillis, email, pass, new AuthService.UpdateUserCallback() {
                 @Override
                 public void onSuccess(User updatedUser) {
                     Toast.makeText(context, "הפרטים עודכנו!", Toast.LENGTH_SHORT).show();
@@ -77,7 +96,7 @@ public class EditUserDialog {
         dialog.show();
     }
 
-    private boolean validateInput(String fName, String lName, String email, String pass, EditText firstName, EditText lastName, EditText emailEdt, EditText passEdt) {
+    private boolean validateInput(String fName, String lName, String email, String pass, EditText firstName, EditText lastName, EditText emailEdt, EditText passEdt, EditText birthDateEdt) {
         if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || pass.isEmpty()) {
             Toast.makeText(context, "כל השדות חובה", Toast.LENGTH_SHORT).show();
             return false;
@@ -95,6 +114,12 @@ public class EditUserDialog {
             return false;
         }
 
+        if (!Validator.isAgeValid(birthDateMillis)) {
+            birthDateEdt.requestFocus();
+            Toast.makeText(context, "הגיל המינימלי הוא 12", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         if (!Validator.isEmailValid(email)) {
             emailEdt.requestFocus();
             Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
@@ -108,5 +133,35 @@ public class EditUserDialog {
         }
 
         return true;
+    }
+
+    private void openDatePicker(EditText birthDateEdt) {
+        Calendar calendar = Calendar.getInstance();
+
+        if (birthDateMillis > 0) {
+            calendar.setTimeInMillis(birthDateMillis);
+        }
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                context,
+                (view, year, month, day) -> {
+
+                    Calendar birthCal = Calendar.getInstance();
+                    birthCal.set(year, month, day, 0, 0, 0);
+                    birthCal.set(Calendar.MILLISECOND, 0);
+
+                    birthDateMillis = birthCal.getTimeInMillis();
+
+                    String date = String.format("%02d/%02d/%04d",
+                            day, month + 1, year);
+
+                    birthDateEdt.setText(date);
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+
+        dialog.show();
     }
 }

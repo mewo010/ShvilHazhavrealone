@@ -51,7 +51,7 @@
             android:layout_weight="2"
             android:text="5"
             android:textSize="28sp"
-            android:textColor="@color/error"
+            android:textColor="@color/headline"
             android:fontFamily="@font/text_hebrew"
             android:gravity="center" />
     </LinearLayout>

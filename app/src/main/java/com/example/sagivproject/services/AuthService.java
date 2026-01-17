@@ -64,14 +64,14 @@ public class AuthService {
         });
     }
 
-    public void register(String firstName, String lastName, String email, String password, RegisterCallback callback) {
+    public void register(String firstName, String lastName, long birthDateMillis, String email, String password, RegisterCallback callback) {
         databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<Boolean>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
                     callback.onError("אימייל זה תפוס");
                 } else {
-                    createUser(firstName, lastName, email, password, new CreateUserCallback() {
+                    createUser(firstName, lastName, birthDateMillis, email, password, new CreateUserCallback() {
                         @Override
                         public void onSuccess(User user) {
                             SharedPreferencesUtil.saveUser(context, user);
@@ -94,14 +94,14 @@ public class AuthService {
         });
     }
 
-    public void addUser(String firstName, String lastName, String email, String password, AddUserCallback callback) {
+    public void addUser(String firstName, String lastName, long birthDateMillis, String email, String password, AddUserCallback callback) {
         databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<Boolean>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
                     callback.onError("אימייל זה תפוס");
                 } else {
-                    createUser(firstName, lastName, email, password, new CreateUserCallback() {
+                    createUser(firstName, lastName, birthDateMillis, email, password, new CreateUserCallback() {
                         @Override
                         public void onSuccess(User user) {
                             callback.onSuccess(user);
@@ -122,7 +122,7 @@ public class AuthService {
         });
     }
 
-    public void updateUser(User user, String newFirstName, String newLastName, String newEmail, String newPassword, UpdateUserCallback callback) {
+    public void updateUser(User user, String newFirstName, String newLastName, long newBirthDateMillis, String newEmail, String newPassword, UpdateUserCallback callback) {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
         if (emailChanged) {
@@ -132,7 +132,7 @@ public class AuthService {
                     if (exists) {
                         callback.onError("אימייל זה תפוס");
                     } else {
-                        applyUserUpdate(user, newFirstName, newLastName, newEmail, newPassword, callback);
+                        applyUserUpdate(user, newFirstName, newLastName, newBirthDateMillis, newEmail, newPassword, callback);
                     }
                 }
 
@@ -142,14 +142,14 @@ public class AuthService {
                 }
             });
         } else {
-            applyUserUpdate(user, newFirstName, newLastName, newEmail, newPassword, callback);
+            applyUserUpdate(user, newFirstName, newLastName, newBirthDateMillis, newEmail, newPassword, callback);
         }
     }
 
-    private void createUser(String firstName, String lastName, String email, String password, CreateUserCallback callback) {
+    private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, CreateUserCallback callback) {
         String uid = databaseService.generateUserId();
 
-        User user = new User(uid, firstName, lastName, email, password, false, null, new HashMap<>(), 0);
+        User user = new User(uid, firstName, lastName, birthDateMillis, email, password, false, null, new HashMap<>(), 0);
 
         databaseService.createNewUser(user, new DatabaseService.DatabaseCallback<Void>() {
             @Override
@@ -164,9 +164,10 @@ public class AuthService {
         });
     }
 
-    private void applyUserUpdate(User user, String firstName, String lastName, String email, String password, UpdateUserCallback callback) {
+    private void applyUserUpdate(User user, String firstName, String lastName, long birthDateMillis, String email, String password, UpdateUserCallback callback) {
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setBirthDateMillis(birthDateMillis);
         user.setEmail(email);
         user.setPassword(password);
 

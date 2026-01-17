@@ -27,11 +27,13 @@ import com.example.sagivproject.utils.ImageUtil;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+
 public class DetailsAboutUserActivity extends BaseActivity {
     private Button btnToMain, btnToDetailsAboutUser, btnToContact, btnToExit, btnToAdmin, btnEditUser;
     private View separatorLine;
     private LinearLayout topMenu;
-    private TextView txtTitle, txtFirstName, txtLastName, txtEmail, txtPassword;
+    private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private FloatingActionButton btnChangePhoto;
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
@@ -100,8 +102,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
         });
 
         txtTitle = findViewById(R.id.txt_DetailsAboutUser_title);
-        txtFirstName = findViewById(R.id.txt_DetailsAboutUser_first_name);
-        txtLastName = findViewById(R.id.txt_DetailsAboutUser_last_name);
+        txtAge = findViewById(R.id.txt_DetailsAboutUser_age);
+        txtBirthDate = findViewById(R.id.txt_DetailsAboutUser_birth_date);
+        txtWins = findViewById(R.id.txt_DetailsAboutUser_wins);
         txtEmail = findViewById(R.id.txt_DetailsAboutUser_email);
         txtPassword = findViewById(R.id.txt_DetailsAboutUser_password);
     }
@@ -130,8 +133,6 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
     private void loadUserDetailsToUI() {
         txtTitle.setText(user.getFullName());
-        txtFirstName.setText(user.getFirstName());
-        txtLastName.setText(user.getLastName());
         txtEmail.setText(user.getEmail());
         txtPassword.setText(user.getPassword());
 
@@ -143,6 +144,23 @@ public class DetailsAboutUserActivity extends BaseActivity {
         } else {
             imgUserProfile.setImageResource(R.drawable.ic_user);
         }
+
+        int age = user.getAge();
+        txtAge.setText(String.valueOf(age));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(user.getBirthDateMillis());
+
+        String birthDate = String.format(
+                "%02d/%02d/%04d",
+                cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.YEAR)
+        );
+
+        txtBirthDate.setText(birthDate);
+
+        txtWins.setText(String.valueOf(user.getCountWins()));
     }
 
     private void openEditDialog() {

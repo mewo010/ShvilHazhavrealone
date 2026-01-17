@@ -49,10 +49,21 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
         User user = users.get(position);
 
         holder.txtUserFullName.setText(user.getFullName());
-        holder.txtUserEmail.setText("אימייל: " + user.getEmail());
+        holder.txtUserEmail.setText(user.getEmail());
         holder.txtUserPassword.setText("סיסמה: " + user.getPassword());
+        holder.txtUserAge.setText("גיל: " + user.getAge());
         holder.txtUserIsAdmin.setText("מנהל: " + (user.getIsAdmin() ? "כן" : "לא"));
         holder.txtUserWins.setText("ניצחונות: " + user.getCountWins());
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTimeInMillis(user.getBirthDateMillis());
+
+        String birthDateStr = String.format("%02d/%02d/%04d",
+                cal.get(java.util.Calendar.DAY_OF_MONTH),
+                cal.get(java.util.Calendar.MONTH) + 1,
+                cal.get(java.util.Calendar.YEAR));
+
+        holder.txtUserBirthDate.setText("תאריך לידה: " + birthDateStr);
 
         String base64Image = user.getProfileImage();
 
@@ -112,7 +123,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView txtUserFullName, txtUserEmail, txtUserPassword, txtUserIsAdmin, txtUserWins;
+        TextView txtUserFullName, txtUserEmail, txtUserPassword, txtUserIsAdmin, txtUserWins, txtUserAge, txtUserBirthDate;
         ImageButton btnDeleteUser, btnToggleAdmin;
         ImageView imgUserProfile;
 
@@ -120,6 +131,8 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
             super(itemView);
             txtUserFullName = itemView.findViewById(R.id.txt_UserRow_fullName);
             txtUserEmail = itemView.findViewById(R.id.txt_UserRow_email);
+            txtUserAge = itemView.findViewById(R.id.txt_UserRow_age);
+            txtUserBirthDate = itemView.findViewById(R.id.txt_UserRow_birthDate);
             txtUserPassword = itemView.findViewById(R.id.txt_UserRow_password);
             txtUserIsAdmin = itemView.findViewById(R.id.txt_UserRow_IsAdmin);
             imgUserProfile = itemView.findViewById(R.id.img_UserRow_userProfile);

@@ -165,6 +165,26 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:startIconDrawable="@drawable/ic_calendar"
+                        android:layout_marginBottom="12dp"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeWidth="1dp"
+                        android:fontFamily="@font/text_hebrew">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_register_birth_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="תאריך לידה"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:textSize="23sp"
+                            android:fontFamily="@font/text_hebrew"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         app:startIconDrawable="@drawable/ic_email"
                         android:layout_marginBottom="12dp"
                         app:boxBackgroundMode="outline"

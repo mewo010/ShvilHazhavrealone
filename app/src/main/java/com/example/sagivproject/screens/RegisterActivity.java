@@ -1,5 +1,6 @@
 package com.example.sagivproject.screens;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,9 +17,13 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.utils.Validator;
 
+import java.util.Calendar;
+
 public class RegisterActivity extends BaseActivity {
     private Button btnToContact, btnToLanding, btnToLogin, btnRegister;
-    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
+    private int birthYear, birthMonth, birthDay;
+    private long birthDateMillis = -1;
     private AuthService authService;
 
     @Override
@@ -41,8 +46,13 @@ public class RegisterActivity extends BaseActivity {
 
         editTextFirstName = findViewById(R.id.edt_register_first_name);
         editTextLastName = findViewById(R.id.edt_register_last_name);
+        editTextBirthDate = findViewById(R.id.edt_register_birth_date);
+        editTextBirthDate.setOnClickListener(v -> openDatePicker());
         editTextEmail = findViewById(R.id.edt_register_email);
         editTextPassword = findViewById(R.id.edt_register_password);
+
+        editTextBirthDate.setFocusable(false);
+        editTextBirthDate.setClickable(true);
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, ContactActivity.class)));
         btnToLanding.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, LandingActivity.class)));
@@ -53,14 +63,15 @@ public class RegisterActivity extends BaseActivity {
     private void tryRegister() {
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
+        String birthDate = editTextBirthDate.getText().toString();
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if (!validateInput(firstName, lastName, email, password)) {
+        if (!validateInput(firstName, lastName, birthDate, email, password)) {
             return;
         }
 
-        authService.register(firstName, lastName, email, password, new AuthService.RegisterCallback() {
+        authService.register(firstName, lastName, birthDateMillis, email, password, new AuthService.RegisterCallback() {
             @Override
             public void onSuccess() {
                 Toast.makeText(RegisterActivity.this, "ההרשמה בוצעה בהצלחה!", Toast.LENGTH_SHORT).show();
@@ -77,8 +88,8 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    private boolean validateInput(String firstName, String lastName, String email, String password) {
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    private boolean validateInput(String firstName, String lastName, String birthDate, String email, String password) {
+        if (firstName.isEmpty() || lastName.isEmpty() || birthDate.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "נא למלא את כל השדות", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -95,6 +106,18 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
+        if (birthDateMillis <= 0) {
+            editTextBirthDate.requestFocus();
+            Toast.makeText(this, "נא לבחור תאריך לידה", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (!Validator.isAgeValid(birthDateMillis)) {
+            editTextBirthDate.requestFocus();
+            Toast.makeText(this, "הגיל המינימלי להרשמה הוא 12", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         if (!Validator.isEmailValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
@@ -108,5 +131,37 @@ public class RegisterActivity extends BaseActivity {
         }
 
         return true;
+    }
+
+    private void openDatePicker() {
+        final Calendar calendar = Calendar.getInstance();
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                R.style.CustomDatePickerDialog,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    birthYear = selectedYear;
+                    birthMonth = selectedMonth;
+                    birthDay = selectedDay;
+
+                    Calendar birthCal = Calendar.getInstance();
+                    birthCal.set(birthYear, birthMonth, birthDay, 0, 0, 0);
+                    birthCal.set(Calendar.MILLISECOND, 0);
+
+                    birthDateMillis = birthCal.getTimeInMillis();
+
+                    String date = String.format("%02d/%02d/%04d",
+                            birthDay, birthMonth + 1, birthYear);
+
+                    editTextBirthDate.setText(date);
+                },
+                year, month, day
+        );
+
+        dialog.show();
     }
 }

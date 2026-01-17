@@ -58,7 +58,6 @@
                 android:text="מחיקת תמונה"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
-                android:textColor="@color/error"
                 android:layout_margin="4dp"
                 android:visibility="gone" />
 
