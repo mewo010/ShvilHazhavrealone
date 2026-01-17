@@ -9,11 +9,17 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.example.sagivproject.workers.BirthdayWorker;
+
+import java.util.concurrent.TimeUnit;
 
 public class AdminPageActivity extends BaseActivity {
     private Button btnToUserTable, btnToMemoryGameLogsTable, btnToMedicationsTable, btnToForum, btnToDetailsAboutUser, btnLogout;
@@ -29,6 +35,8 @@ public class AdminPageActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        setupBirthdayNotification();
 
         btnToUserTable = findViewById(R.id.btn_admin_to_UsersTablePage);
         btnToMedicationsTable = findViewById(R.id.btn_admin_to_MedicineImagesTablePage);
@@ -51,5 +59,19 @@ public class AdminPageActivity extends BaseActivity {
         } else {
             txtAdminTitle.setText("שלום " + user.getFullName());
         }
+    }
+
+    //התראה על יום הולדת
+    private void setupBirthdayNotification() {
+        PeriodicWorkRequest birthdayRequest =
+                new PeriodicWorkRequest.Builder(BirthdayWorker.class, 24, TimeUnit.HOURS)
+                        .addTag("BirthdayWorkTag")
+                        .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "BirthdayDailyWork",
+                ExistingPeriodicWorkPolicy.KEEP,
+                birthdayRequest
+        );
     }
 }

@@ -19,6 +19,7 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.example.sagivproject.workers.BirthdayWorker;
 import com.example.sagivproject.workers.MedicationWorker;
 
 import java.util.Calendar;
@@ -52,6 +53,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
 
         User user = SharedPreferencesUtil.getUser(this);
         setupDailyNotifications();
+        setupBirthdayNotification();
 
         btnToContact = findViewById(R.id.btn_main_to_contact);
         btnToDetailsAboutUser = findViewById(R.id.btn_main_to_DetailsAboutUser);
@@ -115,6 +117,19 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         );
     }
 
+    //התראה על יום הולדת
+    private void setupBirthdayNotification() {
+        PeriodicWorkRequest birthdayRequest =
+                new PeriodicWorkRequest.Builder(BirthdayWorker.class, 24, TimeUnit.HOURS)
+                        .addTag("BirthdayWorkTag")
+                        .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "BirthdayDailyWork",
+                ExistingPeriodicWorkPolicy.KEEP,
+                birthdayRequest
+        );
+    }
 
 
     //העלאת כל התמונות - למחוק בסוף הפרויקט!
