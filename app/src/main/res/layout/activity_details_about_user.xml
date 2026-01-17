@@ -197,7 +197,7 @@
                                 android:id="@+id/txt_DetailsAboutUser_age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="18"
+                                android:text="0"
                                 android:textSize="45sp"
                                 android:textColor="@color/headline"
                                 android:fontFamily="@font/text_hebrew" />
@@ -206,7 +206,7 @@
                                 android:id="@+id/txt_DetailsAboutUser_birth_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="23/11/2008"
+                                android:text="00/00/0000"
                                 android:textSize="22sp"
                                 android:fontFamily="@font/text_hebrew" />
                         </LinearLayout>
@@ -222,7 +222,7 @@
                                 android:id="@+id/txt_DetailsAboutUser_wins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="23"
+                                android:text="0"
                                 android:textSize="45sp"
                                 android:textColor="@color/headline"
                                 android:fontFamily="@font/text_hebrew" />
@@ -264,7 +264,8 @@
                                 android:id="@+id/txt_DetailsAboutUser_email"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="25sp"
+                                android:textSize="22sp"
+                                android:text="example@example.com"
                                 android:fontFamily="@font/text_english" />
                         </LinearLayout>
                     </LinearLayout>
@@ -296,7 +297,8 @@
                                 android:id="@+id/txt_DetailsAboutUser_password"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="25sp"
+                                android:textSize="22sp"
+                                android:text="xxxxxxx"
                                 android:fontFamily="@font/text_english" />
                         </LinearLayout>
                     </LinearLayout>
