@@ -134,10 +134,7 @@ public class AddUserDialog {
 
                     birthDateMillis = birthCal.getTimeInMillis();
 
-                    String date = String.format("%02d/%02d/%04d",
-                            day, month + 1, year);
-
-                    birthDateEdt.setText(date);
+                    updateBirthDateText(birthDateEdt, birthDateMillis);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -145,5 +142,15 @@ public class AddUserDialog {
         );
 
         dialog.show();
+    }
+
+    private void updateBirthDateText(EditText editText, long millis) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(millis);
+        String date = String.format("%02d/%02d/%04d",
+                cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.YEAR));
+        editText.setText(date);
     }
 }

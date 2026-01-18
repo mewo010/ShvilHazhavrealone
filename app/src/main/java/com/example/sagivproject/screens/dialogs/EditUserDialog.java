@@ -45,15 +45,7 @@ public class EditUserDialog {
 
         birthDateMillis = user.getBirthDateMillis();
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(birthDateMillis);
-
-        String date = String.format("%02d/%02d/%04d",
-                cal.get(Calendar.DAY_OF_MONTH),
-                cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.YEAR));
-
-        inputBirthDate.setText(date);
+        updateBirthDateText(inputBirthDate, birthDateMillis);
 
         inputBirthDate.setOnClickListener(v -> openDatePicker(inputBirthDate));
 
@@ -152,10 +144,7 @@ public class EditUserDialog {
 
                     birthDateMillis = birthCal.getTimeInMillis();
 
-                    String date = String.format("%02d/%02d/%04d",
-                            day, month + 1, year);
-
-                    birthDateEdt.setText(date);
+                    updateBirthDateText(birthDateEdt, birthDateMillis);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -163,5 +152,15 @@ public class EditUserDialog {
         );
 
         dialog.show();
+    }
+
+    private void updateBirthDateText(EditText editText, long millis) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(millis);
+        String date = String.format("%02d/%02d/%04d",
+                cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.YEAR));
+        editText.setText(date);
     }
 }
