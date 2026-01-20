@@ -21,14 +21,12 @@ import com.example.sagivproject.screens.dialogs.MedicationDialog;
 import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class MedicationListActivity extends BaseActivity {
     private Button btnToMain, btnToContact, btnToDetailsAboutUser, btnAddMedication, btnToExit;
@@ -37,7 +35,6 @@ public class MedicationListActivity extends BaseActivity {
     private MedicationAdapter adapter;
     private ArrayList<Medication> medications = new ArrayList<>();
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private User user;
     private String uid;
 
@@ -220,7 +217,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void openMedicationDialog(Medication medToEdit) {
-        new MedicationDialog(this, medToEdit, uid, dateFormat, new MedicationDialog.OnMedicationSubmitListener() {
+        new MedicationDialog(this, medToEdit, uid, new MedicationDialog.OnMedicationSubmitListener() {
             @Override
             public void onAdd(Medication medication) {
                 saveMedication(medication);

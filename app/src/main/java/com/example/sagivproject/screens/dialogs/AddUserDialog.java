@@ -1,6 +1,5 @@
 package com.example.sagivproject.screens.dialogs;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.widget.Button;
@@ -10,9 +9,10 @@ import android.widget.Toast;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
-import java.util.Calendar;
+import java.util.Objects;
 
 public class AddUserDialog {
     private final Context context;
@@ -33,17 +33,24 @@ public class AddUserDialog {
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_user);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
         EditText inputFirstName = dialog.findViewById(R.id.inputAddUserFirstName);
         EditText inputLastName = dialog.findViewById(R.id.inputAddUserLastName);
         EditText inputBirthDate = dialog.findViewById(R.id.inputAddUserBirthDate);
-        inputBirthDate.setOnClickListener(v -> openDatePicker(inputBirthDate));
         EditText inputEmail = dialog.findViewById(R.id.inputAddUserEmail);
         EditText inputPassword = dialog.findViewById(R.id.inputAddUserPassword);
-
         Button btnAdd = dialog.findViewById(R.id.btnAddUserSave);
         Button btnCancel = dialog.findViewById(R.id.btnAddUserCancel);
+
+        updateBirthDateText(inputBirthDate, birthDateMillis);
+
+        inputBirthDate.setOnClickListener(v -> {
+            CalendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
+                birthDateMillis = millis;
+                inputBirthDate.setText(dateStr);
+            });
+        });
 
         btnAdd.setOnClickListener(v -> {
             String fName = inputFirstName.getText().toString().trim();
@@ -121,36 +128,9 @@ public class AddUserDialog {
         return true;
     }
 
-    private void openDatePicker(EditText birthDateEdt) {
-        Calendar calendar = Calendar.getInstance();
-
-        DatePickerDialog dialog = new DatePickerDialog(
-                context,
-                (view, year, month, day) -> {
-
-                    Calendar birthCal = Calendar.getInstance();
-                    birthCal.set(year, month, day, 0, 0, 0);
-                    birthCal.set(Calendar.MILLISECOND, 0);
-
-                    birthDateMillis = birthCal.getTimeInMillis();
-
-                    updateBirthDateText(birthDateEdt, birthDateMillis);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-
-        dialog.show();
-    }
-
     private void updateBirthDateText(EditText editText, long millis) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(millis);
-        String date = String.format("%02d/%02d/%04d",
-                cal.get(Calendar.DAY_OF_MONTH),
-                cal.get(Calendar.MONTH) + 1,
-                cal.get(Calendar.YEAR));
-        editText.setText(date);
+        if (millis > 0) {
+            editText.setText(CalendarUtil.formatDate(millis));
+        }
     }
 }

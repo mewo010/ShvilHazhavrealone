@@ -1,6 +1,5 @@
 package com.example.sagivproject.screens;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -15,14 +14,12 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
-
-import java.util.Calendar;
 
 public class RegisterActivity extends BaseActivity {
     private Button btnToContact, btnToLanding, btnToLogin, btnRegister;
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
-    private int birthYear, birthMonth, birthDay;
     private long birthDateMillis = -1;
     private AuthService authService;
 
@@ -47,12 +44,13 @@ public class RegisterActivity extends BaseActivity {
         editTextFirstName = findViewById(R.id.edt_register_first_name);
         editTextLastName = findViewById(R.id.edt_register_last_name);
         editTextBirthDate = findViewById(R.id.edt_register_birth_date);
-        editTextBirthDate.setOnClickListener(v -> openDatePicker());
         editTextEmail = findViewById(R.id.edt_register_email);
         editTextPassword = findViewById(R.id.edt_register_password);
 
         editTextBirthDate.setFocusable(false);
         editTextBirthDate.setClickable(true);
+
+        editTextBirthDate.setOnClickListener(v -> openDatePicker());
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, ContactActivity.class)));
         btnToLanding.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, LandingActivity.class)));
@@ -134,34 +132,9 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void openDatePicker() {
-        final Calendar calendar = Calendar.getInstance();
-
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog dialog = new DatePickerDialog(
-                this,
-                R.style.CustomDatePickerDialog,
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    birthYear = selectedYear;
-                    birthMonth = selectedMonth;
-                    birthDay = selectedDay;
-
-                    Calendar birthCal = Calendar.getInstance();
-                    birthCal.set(birthYear, birthMonth, birthDay, 0, 0, 0);
-                    birthCal.set(Calendar.MILLISECOND, 0);
-
-                    birthDateMillis = birthCal.getTimeInMillis();
-
-                    String date = String.format("%02d/%02d/%04d",
-                            birthDay, birthMonth + 1, birthYear);
-
-                    editTextBirthDate.setText(date);
-                },
-                year, month, day
-        );
-
-        dialog.show();
+        CalendarUtil.openDatePicker(this, birthDateMillis, (dateMillis, formattedDate) -> {
+            this.birthDateMillis = dateMillis;
+            editTextBirthDate.setText(formattedDate);
+        });
     }
 }
