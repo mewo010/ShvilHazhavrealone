@@ -66,6 +66,6 @@ android {
         implementation libs.google.firebase.database
 
         //Networking
-        implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+        implementation libs.okhttp
     }
 }

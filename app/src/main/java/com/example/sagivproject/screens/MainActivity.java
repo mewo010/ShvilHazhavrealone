@@ -37,8 +37,6 @@ import java.io.ByteArrayOutputStream;
  */
 
 public class MainActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
-    private Button btnToContact, btnToDetailsAboutUser, btnToMedicationList, btnToForum, btnToAi, btnToGameHomeScreen, btnToExit;
-    private TextView txtHomePageTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +53,13 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         setupDailyNotifications();
         setupBirthdayNotification();
 
-        btnToContact = findViewById(R.id.btn_main_to_contact);
-        btnToDetailsAboutUser = findViewById(R.id.btn_main_to_DetailsAboutUser);
-        btnToMedicationList = findViewById(R.id.btn_main_to_MedicationList);
-        btnToForum = findViewById(R.id.btn_main_to_forum);
-        btnToAi = findViewById(R.id.btn_main_to_Ai);
-        btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
-        btnToExit = findViewById(R.id.btn_main_to_exit);
+        Button btnToContact = findViewById(R.id.btn_main_to_contact);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_main_to_DetailsAboutUser);
+        Button btnToMedicationList = findViewById(R.id.btn_main_to_MedicationList);
+        Button btnToForum = findViewById(R.id.btn_main_to_forum);
+        Button btnToAi = findViewById(R.id.btn_main_to_Ai);
+        Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
+        Button btnToExit = findViewById(R.id.btn_main_to_exit);
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DetailsAboutUserActivity.class)));
@@ -71,7 +69,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToExit.setOnClickListener(view -> logout());
 
-        txtHomePageTitle = findViewById(R.id.txt_main_Title);
+        TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
         if (user.getFullName() == null || user.getFullName().trim().isEmpty()) {
             txtHomePageTitle.setText("שלום מטופל יקר");
         } else {

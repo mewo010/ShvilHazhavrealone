@@ -18,7 +18,6 @@ import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.utils.Validator;
 
 public class LoginActivity extends BaseActivity {
-    private Button btnToContact, btnToLanding, btnToRegister, btnLogin;
     private EditText editTextEmail, editTextPassword;
     private AuthService authService;
 
@@ -35,10 +34,10 @@ public class LoginActivity extends BaseActivity {
 
         authService = new AuthService(this);
 
-        btnToLanding = findViewById(R.id.btn_login_to_landing);
-        btnToContact = findViewById(R.id.btn_login_to_contact);
-        btnToRegister = findViewById(R.id.btn_login_to_register);
-        btnLogin = findViewById(R.id.btnLogin);
+        Button btnToLanding = findViewById(R.id.btn_login_to_landing);
+        Button btnToContact = findViewById(R.id.btn_login_to_contact);
+        Button btnToRegister = findViewById(R.id.btn_login_to_register);
+        Button btnLogin = findViewById(R.id.btnLogin);
 
         editTextEmail = findViewById(R.id.edt_login_email);
         editTextPassword = findViewById(R.id.edt_login_password);

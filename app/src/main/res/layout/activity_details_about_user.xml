@@ -145,6 +145,7 @@
                     android:id="@+id/btn_DetailsAboutUser_change_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="camera icon"
                     android:layout_gravity="bottom|right"
                     app:fabCustomSize="45dp"
                     app:backgroundTint="@color/background_color_buttons"
@@ -247,6 +248,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginLeft="16dp"
+                            android:contentDescription="email icon"
                             android:src="@drawable/ic_email" />
 
                         <LinearLayout
@@ -280,6 +282,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginLeft="16dp"
+                            android:contentDescription="password icon"
                             android:src="@drawable/ic_password" />
 
                         <LinearLayout

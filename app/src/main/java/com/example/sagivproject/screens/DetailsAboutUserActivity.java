@@ -30,12 +30,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 
 public class DetailsAboutUserActivity extends BaseActivity {
-    private Button btnToMain, btnToDetailsAboutUser, btnToContact, btnToExit, btnToAdmin, btnEditUser;
-    private View separatorLine;
-    private LinearLayout topMenu;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
-    private FloatingActionButton btnChangePhoto;
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
     private User user;
 
@@ -53,15 +49,15 @@ public class DetailsAboutUserActivity extends BaseActivity {
         user = SharedPreferencesUtil.getUser(this);
 
         //משתמש מחובר
-        topMenu = findViewById(R.id.topMenuDetailsAboutUser);
-        btnToMain = findViewById(R.id.btn_DetailsAboutUser_to_main);
-        btnToDetailsAboutUser = findViewById(R.id.btn_DetailsAboutUser_to_DetailsAboutUserPage);
-        btnToContact = findViewById(R.id.btn_DetailsAboutUser_to_contact);
-        btnToExit = findViewById(R.id.btn_DetailsAboutUser_to_exit);
-        separatorLine = findViewById(R.id.separatorLine_DetailsAboutUser);
+        LinearLayout topMenu = findViewById(R.id.topMenuDetailsAboutUser);
+        Button btnToMain = findViewById(R.id.btn_DetailsAboutUser_to_main);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_DetailsAboutUser_to_DetailsAboutUserPage);
+        Button btnToContact = findViewById(R.id.btn_DetailsAboutUser_to_contact);
+        Button btnToExit = findViewById(R.id.btn_DetailsAboutUser_to_exit);
+        View separatorLine = findViewById(R.id.separatorLine_DetailsAboutUser);
 
         //מנהל
-        btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
+        Button btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
 
         boolean isAdmin = user.getIsAdmin();
 
@@ -86,11 +82,11 @@ public class DetailsAboutUserActivity extends BaseActivity {
         btnToExit.setOnClickListener(v -> logout());
         btnToAdmin.setOnClickListener(v -> startActivity(new Intent(this, AdminPageActivity.class)));
 
-        btnEditUser = findViewById(R.id.btn_DetailsAboutUser_edit_user);
+        Button btnEditUser = findViewById(R.id.btn_DetailsAboutUser_edit_user);
         btnEditUser.setOnClickListener(v -> openEditDialog());
 
         imgUserProfile = findViewById(R.id.img_DetailsAboutUser_user_profile);
-        btnChangePhoto = findViewById(R.id.btn_DetailsAboutUser_change_photo);
+        FloatingActionButton btnChangePhoto = findViewById(R.id.btn_DetailsAboutUser_change_photo);
         btnChangePhoto.setOnClickListener(v -> openImagePicker());
         imgUserProfile.setOnClickListener(v -> {
             if (user.getProfileImage() != null) {

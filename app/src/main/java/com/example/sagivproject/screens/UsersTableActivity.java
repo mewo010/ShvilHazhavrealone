@@ -41,8 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersTableActivity extends BaseActivity {
-    private Button btnToAdminPage, btnAddUser;
-    private RecyclerView recyclerView;
     private UsersTableAdapter adapter;
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
     private EditText editSearch;
@@ -62,10 +60,10 @@ public class UsersTableActivity extends BaseActivity {
 
         currentUser = SharedPreferencesUtil.getUser(UsersTableActivity.this);
 
-        btnToAdminPage = findViewById(R.id.btn_UsersTable_to_admin);
+        Button btnToAdminPage = findViewById(R.id.btn_UsersTable_to_admin);
         btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(UsersTableActivity.this, AdminPageActivity.class)));
 
-        btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
+        Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
         btnAddUser.setOnClickListener(v -> {
             new AddUserDialog(this, newUser -> {
                 loadUsers();
@@ -108,7 +106,7 @@ public class UsersTableActivity extends BaseActivity {
                     }
                 });
 
-        recyclerView = findViewById(R.id.recycler_UsersTable);
+        RecyclerView recyclerView = findViewById(R.id.recycler_UsersTable);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 

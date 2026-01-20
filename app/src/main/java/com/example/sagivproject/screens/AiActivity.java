@@ -33,7 +33,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AiActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
-    private Button btnToMain, btnToContact, btnToDetailsAboutUser, send, btnToExit;
+    private Button send;
     private ProgressBar progressBar;
     private EditText questionInput;
     private TextView answerView;
@@ -59,14 +59,14 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
             return insets;
         });
 
-        btnToMain = findViewById(R.id.btn_Ai_to_main);
-        btnToContact = findViewById(R.id.btn_Ai_to_contact);
-        btnToDetailsAboutUser = findViewById(R.id.btn_Ai_to_DetailsAboutUser);
+        Button btnToMain = findViewById(R.id.btn_Ai_to_main);
+        Button btnToContact = findViewById(R.id.btn_Ai_to_contact);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_Ai_to_DetailsAboutUser);
         send = findViewById(R.id.btn_Ai_send_to_Ai);
         questionInput = findViewById(R.id.edit_Ai_question);
         answerView = findViewById(R.id.TV_Ai_txt_response);
         progressBar = findViewById(R.id.progressBar_Ai);
-        btnToExit = findViewById(R.id.btn_Ai_to_exit);
+        Button btnToExit = findViewById(R.id.btn_Ai_to_exit);
 
         btnToMain.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, MainActivity.class)));
         btnToContact.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, ContactActivity.class)));

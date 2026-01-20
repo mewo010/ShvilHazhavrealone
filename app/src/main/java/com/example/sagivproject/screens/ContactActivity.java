@@ -15,10 +15,6 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 public class ContactActivity extends BaseActivity {
-    //כפתורים למשתמש מחובר
-    private Button btnToMain, btnToDetailsAboutUser, btnToExit, btnToContactPage1;
-    //כפתורים למשתמש לא מחובר
-    private Button btnToLanding, btnToLoginPage, btnToRegisterPage, btnToContactPage2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +27,17 @@ public class ContactActivity extends BaseActivity {
             return insets;
         });
 
-        //משתמש מחובר
-        btnToMain = findViewById(R.id.btn_contact_to_main);
-        btnToContactPage1 = findViewById(R.id.btn_contact_to_contact1);
-        btnToDetailsAboutUser = findViewById(R.id.btn_contact_to_DetailsAboutUser);
-        btnToExit = findViewById(R.id.btn_contact_to_exit);
+        //כפתורים למשתמש מחובר
+        Button btnToMain = findViewById(R.id.btn_contact_to_main);
+        Button btnToContactPage1 = findViewById(R.id.btn_contact_to_contact1);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_contact_to_DetailsAboutUser);
+        Button btnToExit = findViewById(R.id.btn_contact_to_exit);
 
-        //משתמש לא מחובר
-        btnToLanding = findViewById(R.id.btn_contact_to_landing);
-        btnToContactPage2 = findViewById(R.id.btn_contact_to_contact2);
-        btnToLoginPage = findViewById(R.id.btn_contact_to_login);
-        btnToRegisterPage = findViewById(R.id.btn_contact_to_register);
+        //כפתורים למשתמש לא מחובר
+        Button btnToLanding = findViewById(R.id.btn_contact_to_landing);
+        Button btnToContactPage2 = findViewById(R.id.btn_contact_to_contact2);
+        Button btnToLoginPage = findViewById(R.id.btn_contact_to_login);
+        Button btnToRegisterPage = findViewById(R.id.btn_contact_to_register);
 
         //בדיקה אם המשתמש מחובר
         boolean isLoggedIn = SharedPreferencesUtil.isUserLoggedIn(ContactActivity.this);

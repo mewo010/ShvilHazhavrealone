@@ -22,8 +22,6 @@ import com.example.sagivproject.workers.BirthdayWorker;
 import java.util.concurrent.TimeUnit;
 
 public class AdminPageActivity extends BaseActivity {
-    private Button btnToUserTable, btnToMemoryGameLogsTable, btnToMedicationsTable, btnToForum, btnToDetailsAboutUser, btnLogout;
-    private TextView txtAdminTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +36,13 @@ public class AdminPageActivity extends BaseActivity {
 
         setupBirthdayNotification();
 
-        btnToUserTable = findViewById(R.id.btn_admin_to_UsersTablePage);
-        btnToMedicationsTable = findViewById(R.id.btn_admin_to_MedicineImagesTablePage);
-        btnToMemoryGameLogsTable = findViewById(R.id.btn_admin_to_MemoryGameLogsTablePage);
-        btnToForum = findViewById(R.id.btn_admin_to_AdminForum);
-        btnToDetailsAboutUser = findViewById(R.id.btn_admin_to_DetailsAboutUser);
-        btnLogout = findViewById(R.id.btn_admin_to_exit);
-        txtAdminTitle = findViewById(R.id.txt_admin_title);
+        Button btnToUserTable = findViewById(R.id.btn_admin_to_UsersTablePage);
+        Button btnToMedicationsTable = findViewById(R.id.btn_admin_to_MedicineImagesTablePage);
+        Button btnToMemoryGameLogsTable = findViewById(R.id.btn_admin_to_MemoryGameLogsTablePage);
+        Button btnToForum = findViewById(R.id.btn_admin_to_AdminForum);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_admin_to_DetailsAboutUser);
+        Button btnLogout = findViewById(R.id.btn_admin_to_exit);
+        TextView txtAdminTitle = findViewById(R.id.txt_admin_title);
 
         btnToUserTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, UsersTableActivity.class)));
         btnToMedicationsTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, MedicationImagesTableActivity.class)));

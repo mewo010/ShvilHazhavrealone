@@ -18,9 +18,6 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 public class ForumActivity extends BaseForumActivity implements BaseForumActivity.ForumPermissions {
-    private Button btnToMain, btnToContact, btnToDetailsAboutUser, btnToExit, btnSendMessage, btnNewMessages;
-    private EditText edtNewMessage;
-    private RecyclerView recyclerForum;
     private User user;
 
     @Override
@@ -36,14 +33,14 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
 
         user = SharedPreferencesUtil.getUser(this);
 
-        btnToMain = findViewById(R.id.btn_forum_main);
-        btnToContact = findViewById(R.id.btn_forum_contact);
-        btnToDetailsAboutUser = findViewById(R.id.btn_forum_DetailsAboutUser);
-        btnToExit = findViewById(R.id.btn_forum_exit);
-        btnSendMessage = findViewById(R.id.btn_forum_send_message);
-        edtNewMessage = findViewById(R.id.edt_forum_new_message);
-        btnNewMessages = findViewById(R.id.btn_forum_new_messages_indicator);
-        recyclerForum = findViewById(R.id.recycler_forum);
+        Button btnToMain = findViewById(R.id.btn_forum_main);
+        Button btnToContact = findViewById(R.id.btn_forum_contact);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_forum_DetailsAboutUser);
+        Button btnToExit = findViewById(R.id.btn_forum_exit);
+        Button btnSendMessage = findViewById(R.id.btn_forum_send_message);
+        EditText edtNewMessage = findViewById(R.id.edt_forum_new_message);
+        Button btnNewMessages = findViewById(R.id.btn_forum_new_messages_indicator);
+        RecyclerView recyclerForum = findViewById(R.id.recycler_forum);
 
         btnToMain.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
         btnToContact.setOnClickListener(view -> startActivity(new Intent(this, ContactActivity.class)));

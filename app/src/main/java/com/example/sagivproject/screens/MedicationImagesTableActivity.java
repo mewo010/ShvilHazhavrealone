@@ -36,8 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationImagesTableActivity extends BaseActivity {
-    private Button btnToAdminPage, btnAdd;
-    private RecyclerView recyclerView;
     private MedicationImagesTableAdapter adapter;
     private List<ImageData> allImages = new ArrayList<>(), filteredList = new ArrayList<>();
     private TextInputEditText etSearch;
@@ -64,10 +62,10 @@ public class MedicationImagesTableActivity extends BaseActivity {
             return insets;
         });
 
-        btnToAdminPage = findViewById(R.id.btn_MedicineImagesTablePage_to_admin);
+        Button btnToAdminPage = findViewById(R.id.btn_MedicineImagesTablePage_to_admin);
         btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(MedicationImagesTableActivity.this, AdminPageActivity.class)));
 
-        recyclerView = findViewById(R.id.recycler_MedicineImagesTablePage);
+        RecyclerView recyclerView = findViewById(R.id.recycler_MedicineImagesTablePage);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new MedicationImagesTableAdapter(
@@ -94,7 +92,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
 
         etSearch = findViewById(R.id.edit_MedicineImagesTablePage_search);
-        btnAdd = findViewById(R.id.btn_MedicineImagesTablePage_add);
+        Button btnAdd = findViewById(R.id.btn_MedicineImagesTablePage_add);
 
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

@@ -13,7 +13,6 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 
 public class LandingActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
-    private Button btnToContact, btnToLogin, btnToRegister, btnNavToContact, btnNavToLogin, btnNavToRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +25,12 @@ public class LandingActivity extends BaseActivity implements BaseActivity.Requir
             return insets;
         });
 
-        btnToContact = findViewById(R.id.btn_landingBody_to_contact);
-        btnToLogin = findViewById(R.id.btn_landingBody_to_login);
-        btnToRegister = findViewById(R.id.btn_landingBody_to_register);
-        btnNavToContact = findViewById(R.id.btn_landing_to_contact);
-        btnNavToLogin = findViewById(R.id.btn_landing_to_login);
-        btnNavToRegister = findViewById(R.id.btn_landing_to_register);
+        Button btnToContact = findViewById(R.id.btn_landingBody_to_contact);
+        Button btnToLogin = findViewById(R.id.btn_landingBody_to_login);
+        Button btnToRegister = findViewById(R.id.btn_landingBody_to_register);
+        Button btnNavToContact = findViewById(R.id.btn_landing_to_contact);
+        Button btnNavToLogin = findViewById(R.id.btn_landing_to_login);
+        Button btnNavToRegister = findViewById(R.id.btn_landing_to_register);
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(LandingActivity.this, ContactActivity.class)));
         btnNavToContact.setOnClickListener(view -> startActivity(new Intent(LandingActivity.this, ContactActivity.class)));

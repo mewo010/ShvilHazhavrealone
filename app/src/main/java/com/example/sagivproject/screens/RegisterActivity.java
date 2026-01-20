@@ -18,7 +18,6 @@ import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
 public class RegisterActivity extends BaseActivity {
-    private Button btnToContact, btnToLanding, btnToLogin, btnRegister;
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
     private long birthDateMillis = -1;
     private AuthService authService;
@@ -36,10 +35,10 @@ public class RegisterActivity extends BaseActivity {
 
         authService = new AuthService(this);
 
-        btnToContact = findViewById(R.id.btn_register_to_contact);
-        btnToLanding = findViewById(R.id.btn_register_to_landing);
-        btnToLogin = findViewById(R.id.btn_register_to_login);
-        btnRegister = findViewById(R.id.btnRegister);
+        Button btnToContact = findViewById(R.id.btn_register_to_contact);
+        Button btnToLanding = findViewById(R.id.btn_register_to_landing);
+        Button btnToLogin = findViewById(R.id.btn_register_to_login);
+        Button btnRegister = findViewById(R.id.btnRegister);
 
         editTextFirstName = findViewById(R.id.edt_register_first_name);
         editTextLastName = findViewById(R.id.edt_register_last_name);

@@ -26,7 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 public class GameHomeScreenActivity extends BaseActivity {
-    private Button btnToMain, btnToContact, btnToDetailsAboutUser,btnFindEnemy, btnCancelFindEnemy, btnToExit;
+    private Button btnFindEnemy;
+    private Button btnCancelFindEnemy;
     private TextView TVictories, TVStatusOfFindingEnemy;
     private GameRoom currentRoom;
     private boolean gameStarted = false;
@@ -49,12 +50,12 @@ public class GameHomeScreenActivity extends BaseActivity {
 
         user = SharedPreferencesUtil.getUser(this);
 
-        btnToMain = findViewById(R.id.btn_GameHomeScreen_to_main);
-        btnToContact = findViewById(R.id.btn_GameHomeScreen_to_contact);
-        btnToDetailsAboutUser = findViewById(R.id.btn_GameHomeScreen_to_DetailsAboutUser);
+        Button btnToMain = findViewById(R.id.btn_GameHomeScreen_to_main);
+        Button btnToContact = findViewById(R.id.btn_GameHomeScreen_to_contact);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_GameHomeScreen_to_DetailsAboutUser);
         btnFindEnemy = findViewById(R.id.btn_GameHomeScreen_find_enemy);
         btnCancelFindEnemy = findViewById(R.id.btn_GameHomeScreen_cancel_find_enemy);
-        btnToExit = findViewById(R.id.btn_GameHomeScreen_to_exit);
+        Button btnToExit = findViewById(R.id.btn_GameHomeScreen_to_exit);
         TVictories = findViewById(R.id.tv_GameHomeScreen_victories);
         TVStatusOfFindingEnemy = findViewById(R.id.tv_GameHomeScreen_status_of_finding_enemy);
         rvLeaderboard = findViewById(R.id.recyclerView_GameHomeScreen_leaderboard);

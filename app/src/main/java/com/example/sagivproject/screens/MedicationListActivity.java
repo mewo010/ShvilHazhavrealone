@@ -29,9 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MedicationListActivity extends BaseActivity {
-    private Button btnToMain, btnToContact, btnToDetailsAboutUser, btnAddMedication, btnToExit;
-    private RecyclerView recyclerViewMedications;
-
     private MedicationAdapter adapter;
     private ArrayList<Medication> medications = new ArrayList<>();
 
@@ -54,11 +51,11 @@ public class MedicationListActivity extends BaseActivity {
         user = SharedPreferencesUtil.getUser(this);
         uid = user.getUid();
 
-        btnToMain = findViewById(R.id.btn_MedicationList_to_main);
-        btnToContact = findViewById(R.id.btn_MedicationList_to_contact);
-        btnToDetailsAboutUser = findViewById(R.id.btn_MedicationList_to_DetailsAboutUser);
-        btnAddMedication = findViewById(R.id.btn_MedicationList_add_medication);
-        btnToExit = findViewById(R.id.btn_MedicationList_to_exit);
+        Button btnToMain = findViewById(R.id.btn_MedicationList_to_main);
+        Button btnToContact = findViewById(R.id.btn_MedicationList_to_contact);
+        Button btnToDetailsAboutUser = findViewById(R.id.btn_MedicationList_to_DetailsAboutUser);
+        Button btnAddMedication = findViewById(R.id.btn_MedicationList_add_medication);
+        Button btnToExit = findViewById(R.id.btn_MedicationList_to_exit);
 
         btnToMain.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, MainActivity.class)));
         btnToContact.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, ContactActivity.class)));
@@ -66,7 +63,7 @@ public class MedicationListActivity extends BaseActivity {
         btnAddMedication.setOnClickListener(view -> openMedicationDialog(null));
         btnToExit.setOnClickListener(view -> logout());
 
-        recyclerViewMedications = findViewById(R.id.recyclerView_medications);
+        RecyclerView recyclerViewMedications = findViewById(R.id.recyclerView_medications);
         recyclerViewMedications.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new MedicationAdapter(this, medications, new MedicationAdapter.OnMedicationActionListener() {

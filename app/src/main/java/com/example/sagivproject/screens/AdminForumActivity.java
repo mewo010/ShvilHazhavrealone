@@ -16,9 +16,6 @@ import com.example.sagivproject.bases.BaseForumActivity;
 import com.example.sagivproject.models.ForumMessage;
 
 public class AdminForumActivity extends BaseForumActivity implements BaseForumActivity.ForumPermissions {
-    private Button btnToAdminPage, btnSendMessage, btnNewMessages;
-    private EditText edtNewMessage;
-    private RecyclerView recyclerForum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +28,13 @@ public class AdminForumActivity extends BaseForumActivity implements BaseForumAc
             return insets;
         });
 
-        btnToAdminPage = findViewById(R.id.btn_AdminForum_to_admin);
+        Button btnToAdminPage = findViewById(R.id.btn_AdminForum_to_admin);
         btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(AdminForumActivity.this, AdminPageActivity.class)));
 
-        btnSendMessage = findViewById(R.id.btn_AdminForum_send_message);
-        edtNewMessage = findViewById(R.id.edt_AdminForum_new_message);
-        btnNewMessages = findViewById(R.id.btn_AdminForum_new_messages_indicator);
-        recyclerForum = findViewById(R.id.recycler_AdminForum);
+        Button btnSendMessage = findViewById(R.id.btn_AdminForum_send_message);
+        EditText edtNewMessage = findViewById(R.id.edt_AdminForum_new_message);
+        Button btnNewMessages = findViewById(R.id.btn_AdminForum_new_messages_indicator);
+        RecyclerView recyclerForum = findViewById(R.id.recycler_AdminForum);
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
         initForumViews(recyclerForum, edtNewMessage, btnNewMessages);

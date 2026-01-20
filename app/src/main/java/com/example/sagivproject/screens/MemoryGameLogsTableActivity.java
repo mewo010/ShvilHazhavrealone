@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemoryGameLogsTableActivity extends BaseActivity {
-    private Button btnToAdminPage;
-    private RecyclerView recyclerView;
     private MemoryGameLogAdapter adapter;
 
     @Override
@@ -36,10 +34,10 @@ public class MemoryGameLogsTableActivity extends BaseActivity {
             return insets;
         });
 
-        btnToAdminPage = findViewById(R.id.btn_MemoryGameLogsTable_to_admin);
+        Button btnToAdminPage = findViewById(R.id.btn_MemoryGameLogsTable_to_admin);
         btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(MemoryGameLogsTableActivity.this, AdminPageActivity.class)));
 
-        recyclerView = findViewById(R.id.recycler_MemoryGameLogsTable);
+        RecyclerView recyclerView = findViewById(R.id.recycler_MemoryGameLogsTable);
         recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
         adapter = new MemoryGameLogAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
