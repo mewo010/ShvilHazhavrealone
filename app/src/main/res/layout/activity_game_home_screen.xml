@@ -99,7 +99,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/משחקהזיכרון"
+                android:text="@string/משחקזיכרון"
                 android:textColor="@color/headline"
                 android:textSize="40sp"
                 android:fontFamily="@font/headline_hebrew"/>
@@ -136,7 +136,7 @@
                     android:id="@+id/btn_GameHomeScreen_find_enemy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מצא יריב"
+                    android:text="@string/מצאיריב"
                     android:textAllCaps="false"
                     android:textSize="25sp"
                     app:cornerRadius="30dp"

@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="שביל הזהב"
+        android:text="@string/app_name"
         android:textSize="45sp"
         android:textColor="@color/headline"
         android:fontFamily="@font/headline_hebrew"

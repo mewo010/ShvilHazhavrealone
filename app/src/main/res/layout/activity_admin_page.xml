@@ -88,14 +88,14 @@
                         android:id="@+id/btn_admin_to_MemoryGameLogsTablePage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/טבלתתיעודמשחקים"
-                        android:textSize="25sp"
                         android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:text="@string/טבלתתיעודהמשחקים"
+                        android:textSize="25sp"
                         app:icon="@drawable/ic_memory_game"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_MedicineImagesTablePage"

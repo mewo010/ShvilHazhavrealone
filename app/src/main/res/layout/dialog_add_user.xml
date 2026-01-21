@@ -14,11 +14,12 @@
 
         <TextView
             android:id="@+id/txtAddUserDialogTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="הוספת משתמש חדש"
             android:textColor="@color/headline"
-            android:textSize="30sp"
+            android:textSize="35sp"
             android:fontFamily="@font/headline_hebrew"
             android:layout_marginBottom="16dp" />
 
@@ -35,7 +36,7 @@
                 android:id="@+id/inputAddUserFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="שם פרטי"
+                android:hint="@string/שםפרטי"
                 android:inputType="textPersonName"
                 android:textSize="23sp"
                 android:fontFamily="@font/text_hebrew"/>
@@ -54,7 +55,7 @@
                 android:id="@+id/inputAddUserLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="שם משפחה"
+                android:hint="@string/שםמשפחה"
                 android:inputType="textPersonName"
                 android:textSize="23sp"
                 android:fontFamily="@font/text_hebrew"/>
@@ -72,7 +73,7 @@
                 android:id="@+id/inputAddUserBirthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="תאריך לידה"
+                android:hint="@string/תאריךלידה"
                 android:focusable="false"
                 android:clickable="true"
                 android:textSize="23sp"
@@ -92,7 +93,7 @@
                 android:id="@+id/inputAddUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="כתובת אימייל"
+                android:hint="@string/כתובתאימייל"
                 android:inputType="textEmailAddress"
                 android:textDirection="ltr"
                 android:textSize="23sp"
@@ -113,7 +114,7 @@
                 android:id="@+id/inputAddUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="סיסמה"
+                android:hint="@string/סיסמה"
                 android:inputType="textPassword"
                 android:textDirection="ltr"
                 android:textSize="23sp"
@@ -134,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="80dp"
-                android:text="הוסף"
+                android:text="@string/הוסף"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="4dp" />
@@ -144,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="80dp"
-                android:text="ביטול"
+                android:text="@string/ביטול"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="4dp" />

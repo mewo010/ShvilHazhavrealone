@@ -9,7 +9,7 @@
     <string name="שלוםמנהליקר">שלום מנהל יקר</string>
     <string name="אפשרויותניהול">אפשרויות ניהול</string>
     <string name="טבלתמשתמשים">טבלת משתמשים</string>
-    <string name="טבלתתיעודמשחקים">טבלת תיעוד המשחקים</string>
+    <string name="טבלתתיעודהמשחקים">טבלת תיעוד המשחקים</string>
     <string name="טבלתתמונותהתרופות">טבלת תמונות התרופות</string>
     <string name="קשרקרוב">קשר קרוב</string>
     <string name="משתמש">משתמש</string>
@@ -32,8 +32,29 @@
     <string name="cameraicon">camera icon</string>
     <string name="אישור">אישור</string>
     <string name="ביטול">ביטול</string>
-    <string name="משחקהזיכרון">משחק הזיכרון</string>
     <string name="ברוכיםהבאים">ברוכים הבאים</string>
+    <string name="שםפרטי">שם פרטי</string>
+    <string name="שםמשפחה">שם משפחה</string>
+    <string name="תאריךלידה">תאריך לידה</string>
+    <string name="כתובתאימייל">כתובת אימייל</string>
+    <string name="סיסמה">סיסמה</string>
+    <string name="שלוםמטופליקר">שלום מטופל יקר</string>
+    <string name="רשימתהתרופותשלי">רשימת התרופות שלי</string>
+    <string name="משחקזיכרון">משחק זיכרון</string>
+    <string name="הוספתתרופה">הוספת תרופה</string>
+    <string name="שמור">שמור</string>
+    <string name="עריכתפרטימשתמש">עריכת פרטי משתמש</string>
+    <string name="הוסף">הוסף</string>
+    <string name="פרטים">פרטים</string>
+    <string name="שםהתרופה">שם התרופה</string>
+    <string name="תאריךאחרוןלשימוש">תאריך אחרון לשימוש</string>
+    <string name="הוספתמשתמש">הוספת משתמש</string>
+    <string name="הקלדכאן">הקלד כאן...</string>
+    <string name="חפשלפי">חפש לפי:</string>
+    <string name="עריכתפרטים">עריכת פרטים</string>
+    <string name="מצאיריב">מצא יריב</string>
+    <string name="הוספתתמונהשלתרופה">הוספת תמונה של תרופה</string>
+    <string name="חפשלפיid">חפש לפי ID (למשל card1)...</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

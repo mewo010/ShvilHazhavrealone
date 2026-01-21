@@ -23,7 +23,7 @@
                 android:id="@+id/edt_medication_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="שם התרופה"
+                android:hint="@string/שםהתרופה"
                 android:textSize="22sp"
                 android:inputType="text"
                 android:fontFamily="@font/text_hebrew"/>
@@ -39,7 +39,7 @@
                 android:id="@+id/edt_medication_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="פרטים"
+                android:hint="@string/פרטים"
                 android:textSize="22sp"
                 android:inputType="text"
                 android:fontFamily="@font/text_hebrew"/>
@@ -55,7 +55,7 @@
                 android:id="@+id/edt_medication_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="תאריך אחרון לשימוש"
+                android:hint="@string/תאריךאחרוןלשימוש"
                 android:textSize="22sp"
                 android:focusable="false"
                 android:clickable="true"
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="80dp"
-                android:text="הוסף"
+                android:text="@string/הוסף"
                 android:textSize="22sp"
                 android:layout_margin="4dp"
                 android:fontFamily="@font/text_hebrew"/>
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="80dp"
-                android:text="ביטול"
+                android:text="@string/ביטול"
                 android:textSize="22sp"
                 android:layout_margin="4dp"
                 android:fontFamily="@font/text_hebrew"/>
