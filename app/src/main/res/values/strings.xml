@@ -1,6 +1,39 @@
 <resources>
     <string name="app_name">שביל הזהב</string>
     <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב...\"</string>
+    <string name="חזרה">חזרה</string>
+    <string name="קשרקרובמנהל">קשר קרוב - מנהל</string>
+    <string name="התקבלוהודעותחדשות">התקבלו הודעות חדשות ↓</string>
+    <string name="כתובהודעה">כתוב הודעה...</string>
+    <string name="דףמנהלים">דף מנהלים 🤐🤫</string>
+    <string name="שלוםמנהליקר">שלום מנהל יקר</string>
+    <string name="אפשרויותניהול">אפשרויות ניהול</string>
+    <string name="טבלתמשתמשים">טבלת משתמשים</string>
+    <string name="טבלתתיעודמשחקים">טבלת תיעוד המשחקים</string>
+    <string name="טבלתתמונותהתרופות">טבלת תמונות התרופות</string>
+    <string name="קשרקרוב">קשר קרוב</string>
+    <string name="משתמש">משתמש</string>
+    <string name="התנתקות">התנתקות</string>
+    <string name="דףהבית">דף הבית</string>
+    <string name="צורקשר">צור קשר</string>
+    <string name="יועץבינהמלאכותית">AI יועץ</string>
+    <string name="הקלדכאןאתשאלתך">הקלד כאן את שאלתך...</string>
+    <string name="שלחשאלה">שלח שאלה</string>
+    <string name="תשובתהיועץ">תשובת היועץ</string>
+    <string name="התשובהתוצגכאן">התשובה תוצג כאן...</string>
+    <string name="דףראשי">דף ראשי</string>
+    <string name="התחברות">התחברות</string>
+    <string name="הרשמה">הרשמה</string>
+    <string name="כתובתמייללפניות">כתובת מייל לפניות:</string>
+    <string name="אימייל">shvilhazhav23contact@gmail.com</string>
+    <string name="טקסטצורקשר">הרעיון לפרויקט עלה לאור התקופה הקשה שהמדינה עוברת בשנים האחרונות ולא מעט אירועים בהם אוכלוסיות מיוחדות ונזקקות נדרשו לעזרה גם בדברים הקטנים היומיומיים.</string>
+    <string name="icon">icon</string>
+    <string name="שםמלא">שם פרטי + משפחה</string>
+    <string name="cameraicon">camera icon</string>
+    <string name="אישור">אישור</string>
+    <string name="ביטול">ביטול</string>
+    <string name="משחקהזיכרון">משחק הזיכרון</string>
+    <string name="ברוכיםהבאים">ברוכים הבאים</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

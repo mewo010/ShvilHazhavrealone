@@ -43,7 +43,7 @@
                 android:id="@+id/btn_DialogExit_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="אישור"
+                android:text="@string/אישור"
                 android:textSize="18sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="2dp" />
@@ -52,7 +52,7 @@
                 android:id="@+id/btn_DialogExit_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ביטול"
+                android:text="@string/ביטול"
                 android:textSize="18sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="2dp" />
