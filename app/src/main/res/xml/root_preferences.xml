@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="תצוגה">
+
+        <SwitchPreferenceCompat
+            android:key="dark_mode"
+            android:title="מצב כהה"
+            android:summary="הפעל מצב כהה / בהיר"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="שפה">
+
+        <ListPreference
+            android:key="language"
+            android:title="שפת האפליקציה"
+            android:defaultValue="he"
+            android:entries="@array/language_names"
+            android:entryValues="@array/language_values"
+            android:summary="%s" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

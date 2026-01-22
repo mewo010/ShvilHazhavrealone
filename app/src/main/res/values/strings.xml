@@ -24,6 +24,7 @@
     <string name="דףראשי">דף ראשי</string>
     <string name="התחברות">התחברות</string>
     <string name="הרשמה">הרשמה</string>
+    <string name="הגדרות">הגדרות</string>
     <string name="כתובתמייללפניות">כתובת מייל לפניות:</string>
     <string name="אימייל">shvilhazhav23contact@gmail.com</string>
     <string name="טקסטצורקשר">הרעיון לפרויקט עלה לאור התקופה הקשה שהמדינה עוברת בשנים האחרונות ולא מעט אירועים בהם אוכלוסיות מיוחדות ונזקקות נדרשו לעזרה גם בדברים הקטנים היומיומיים.</string>
@@ -96,5 +97,16 @@
         <item>מנהלים</item>
         <item>משתמשים רגילים</item>
         <item>ניצחונות</item>
+    </string-array>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <string-array name="language_names">
+        <item>עברית</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>he</item>
+        <item>en</item>
     </string-array>
 </resources>

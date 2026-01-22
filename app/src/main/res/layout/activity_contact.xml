@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +75,16 @@
             android:fontFamily="@font/text_hebrew"
             android:visibility="gone" />
 
+        <ImageButton
+            android:id="@+id/btn_contact_to_settings1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/הגדרות"
+            android:src="@drawable/ic_settings"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/btn_contact_to_landing"
             android:layout_width="0dp"
@@ -131,6 +141,16 @@
             android:paddingEnd="4dp"
             android:fontFamily="@font/text_hebrew"
             android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btn_contact_to_settings2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/הגדרות"
+            android:src="@drawable/ic_settings"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"/>
     </LinearLayout>
 
     <View
