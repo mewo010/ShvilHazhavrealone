@@ -116,6 +116,7 @@
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
         app:icon="@drawable/ic_send"
+        android:contentDescription="@string/שלחהודעה"
         app:iconSize="28dp"
         app:layout_constraintBottom_toBottomOf="@id/layoutNewAdminMessage"
         app:layout_constraintEnd_toEndOf="parent"

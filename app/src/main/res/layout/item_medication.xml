@@ -32,10 +32,10 @@
 
         <ImageButton
             android:id="@+id/btn_MedicationRow_Menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="אפשרויות"
+            android:contentDescription="@string/אפשרויות"
             android:src="@drawable/ic_more"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

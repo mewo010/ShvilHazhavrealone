@@ -21,7 +21,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:fontFamily="@font/headline_hebrew"
-            android:text="אפשרויות" />
+            android:text="@string/אפשרויות" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150sp"
-                android:text="צלם תמונה"
+                android:text="@string/צלםתמונה"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="4dp" />
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150sp"
-                android:text="בחר מהגלריה"
+                android:text="@string/בחרמהגלריה"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="4dp" />
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150sp"
-                android:text="מחיקת תמונה"
+                android:text="@string/מחיקתתמונה"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="4dp"
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="150sp"
-                android:text="ביטול"
+                android:text="@string/ביטול"
                 android:textSize="22sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_marginTop="12dp" />

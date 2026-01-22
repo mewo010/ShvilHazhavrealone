@@ -187,7 +187,7 @@
                         android:layout_height="72dp"
                         android:layout_gravity="center"
                         android:layout_marginBottom="16dp"
-                        android:contentDescription="@string/icon"
+                        android:contentDescription="@string/אייקוןצורקשר"
                         android:src="@drawable/ic_contact_support" />
 
                     <TextView
@@ -198,7 +198,8 @@
                         android:textSize="30sp"
                         android:gravity="right"
                         android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/txtEmail"
@@ -219,7 +220,8 @@
                         android:text="@string/טקסטצורקשר"
                         android:textSize="25sp"
                         android:gravity="right"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

@@ -14,8 +14,9 @@
 
         <TextView
             android:id="@+id/txt_DialogExit_title"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textColor="@color/headline"
             android:text=""
             android:textSize="30sp"
@@ -44,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/אישור"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="2dp" />
 
@@ -53,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ביטול"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/text_hebrew"
                 android:layout_margin="2dp" />
         </LinearLayout>

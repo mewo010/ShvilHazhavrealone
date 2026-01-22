@@ -126,7 +126,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/ic_medication"
-                        android:contentDescription="medication icon"
+                        android:contentDescription="@string/אייקוןתרופה"
                         android:layout_marginBottom="6dp" />
 
                     <Button
@@ -159,7 +159,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/ic_forum"
-                        android:contentDescription="forum icon"
+                        android:contentDescription="@string/אייקוןפורום"
                         android:layout_marginBottom="6dp" />
 
                     <Button
@@ -192,7 +192,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/ic_ai_assistant"
-                        android:contentDescription="ai_assistant icon"
+                        android:contentDescription="@string/אייקוןיועץבינהמלאכותית"
                         android:layout_marginBottom="6dp" />
 
                     <Button
@@ -225,7 +225,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:src="@drawable/ic_memory_game"
-                        android:contentDescription="memory_game icon"
+                        android:contentDescription="@string/אייקוןמשחק"
                         android:layout_marginBottom="6dp" />
 
                     <Button
