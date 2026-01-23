@@ -18,7 +18,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings); //
+        setContentView(R.layout.activity_settings);
+
+        findViewById(R.id.btn_settings_back).setOnClickListener(v -> {
+            getOnBackPressedDispatcher().onBackPressed();
+        });
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -27,16 +31,14 @@ public class SettingsActivity extends AppCompatActivity {
                     .commit();
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.הגדרות);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
         }
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        finish();
+        getOnBackPressedDispatcher().onBackPressed();
         return true;
     }
 
