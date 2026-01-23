@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (SharedPreferencesUtil.isUserLoggedIn(this)) {
                     User current = SharedPreferencesUtil.getUser(this);
                     if (current != null) {
-                        DatabaseService.getInstance().getUser(current.getUid(), new DatabaseService.DatabaseCallback<User>() {
+                        DatabaseService.getInstance().getUser(current.getUid(), new DatabaseService.DatabaseCallback<>() {
                             @Override
                             public void onCompleted(User user) {
                                 if (user != null) {
@@ -46,8 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                                     } else {
                                         intent = new Intent(SplashActivity.this, MainActivity.class);
                                     }
-                                }
-                                else {
+                                } else {
                                     SharedPreferencesUtil.signOutUser(SplashActivity.this);
                                     intent = new Intent(SplashActivity.this, LandingActivity.class);
                                 }

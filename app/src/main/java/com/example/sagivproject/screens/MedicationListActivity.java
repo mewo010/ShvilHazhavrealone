@@ -96,7 +96,7 @@ public class MedicationListActivity extends BaseActivity {
             adapter.notifyDataSetChanged();
         }
 
-        databaseService.getUserMedicationList(uid, new DatabaseService.DatabaseCallback<List<Medication>>() {
+        databaseService.getUserMedicationList(uid, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> list) {
                 medications.clear();
@@ -152,7 +152,7 @@ public class MedicationListActivity extends BaseActivity {
 
     private void saveMedication(Medication medication) {
         medication.setId(databaseService.generateMedicationId(uid));
-        databaseService.createNewMedication(uid, medication, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.createNewMedication(uid, medication, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 HashMap<String, Medication> medsMap = user.getMedications();
@@ -174,7 +174,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void updateMedication(Medication med) {
-        databaseService.updateMedication(uid, med, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateMedication(uid, med, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 HashMap<String, Medication> medsMap = user.getMedications();
@@ -195,7 +195,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void deleteMedicationById(String id) {
-        databaseService.deleteMedication(uid, id, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.deleteMedication(uid, id, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 HashMap<String, Medication> medsMap = user.getMedications();

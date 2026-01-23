@@ -17,7 +17,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="הוספת משתמש חדש"
+            android:text="@string/הוספתמשתמשחדש"
             android:textColor="@color/headline"
             android:textSize="35sp"
             android:fontFamily="@font/headline_hebrew"

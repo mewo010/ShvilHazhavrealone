@@ -1,6 +1,7 @@
 <resources>
 
     <style name="Theme.SagivProject.Light" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/font_body</item>
 
         <item name="android:popupMenuStyle">@style/AppPopupMenuStyle</item>
         <item name="popupMenuStyle">@style/AppPopupMenuStyle</item>

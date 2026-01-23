@@ -64,11 +64,7 @@ public class UsersTableActivity extends BaseActivity {
         btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(UsersTableActivity.this, AdminPageActivity.class)));
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> {
-            new AddUserDialog(this, newUser -> {
-                loadUsers();
-            }).show();
-        });
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers()).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -122,7 +118,7 @@ public class UsersTableActivity extends BaseActivity {
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.search_types)
@@ -176,7 +172,7 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void loadUsers() {
-        databaseService.getUserList(new DatabaseService.DatabaseCallback<List<User>>() {
+        databaseService.getUserList(new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> list) {
                 usersList.clear();
@@ -202,7 +198,7 @@ public class UsersTableActivity extends BaseActivity {
     private void handleToggleAdmin(User user) {
         boolean newRole = !user.getIsAdmin();
 
-        databaseService.updateUserAdminStatus(user.getUid(), newRole, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateUserAdminStatus(user.getUid(), newRole, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(UsersTableActivity.this, "הסטטוס עודכן בהצלחה", Toast.LENGTH_SHORT).show();
@@ -218,7 +214,7 @@ public class UsersTableActivity extends BaseActivity {
 
     private void handleDeleteUser(User user) {
         boolean isSelf = user.equals(currentUser);
-        databaseService.deleteUser(user.getUid(), new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.deleteUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 if (isSelf) {

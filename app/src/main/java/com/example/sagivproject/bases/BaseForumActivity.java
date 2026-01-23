@@ -91,7 +91,7 @@ public abstract class BaseForumActivity extends BaseActivity {
     }
 
     protected void loadMessages() {
-        forumService.listenToMessages(new ForumService.ForumCallback<List<ForumMessage>>() {
+        forumService.listenToMessages(new ForumService.ForumCallback<>() {
             @Override
             public void onSuccess(List<ForumMessage> list) {
                 //בודקים אם המשתמש היה בסוף לפני העדכון

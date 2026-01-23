@@ -317,7 +317,7 @@ public class DatabaseService {
     /// @param user the user object to update
     /// @param callback the callback to call when the operation is completed
     public void updateUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
-        runTransaction(USERS_PATH + "/" + user.getUid(), User.class, currentUser -> user, new DatabaseCallback<User>() {
+        runTransaction(USERS_PATH + "/" + user.getUid(), User.class, currentUser -> user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(User object) {
                 if (callback != null) {
@@ -708,9 +708,14 @@ public class DatabaseService {
 
         runTransaction(USERS_PATH + "/" + uid + "/countWins", Integer.class,
                 currentWins -> (currentWins == null) ? 1 : currentWins + 1,
-                new DatabaseCallback<Integer>() {
-                    @Override public void onCompleted(Integer object) {}
-                    @Override public void onFailed(Exception e) {}
+                new DatabaseCallback<>() {
+                    @Override
+                    public void onCompleted(Integer object) {
+                    }
+
+                    @Override
+                    public void onFailed(Exception e) {
+                    }
                 });
     }
 

@@ -129,7 +129,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     private void setupGameBoard(GameRoom room) {
         // רק השחקן הראשון יוצר את הלוח
         if (room.getCards() == null && user.getUid().equals(room.getPlayer1().getUid())) {
-            databaseService.getAllImages(new DatabaseService.DatabaseCallback<List<ImageData>>() {
+            databaseService.getAllImages(new DatabaseService.DatabaseCallback<>() {
                 @Override
                 public void onCompleted(List<ImageData> allImages) {
                     if (allImages == null || allImages.size() < 6) {
@@ -199,9 +199,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             databaseService.updateCardStatus(roomId, clickedIndex, true, false);
 
             //בדיקה אם יש התאמה
-            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                checkMatch(firstIndex, clickedIndex);
-            }, 1000); //השהייה כדי שהשחקן יראה את הקלף השני
+            new Handler(Looper.getMainLooper()).postDelayed(() -> checkMatch(firstIndex, clickedIndex), 1000); //השהייה כדי שהשחקן יראה את הקלף השני
         }
     }
 
@@ -263,7 +261,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     }
 
     private void listenToGame() {
-        databaseService.listenToGame(roomId, new DatabaseService.DatabaseCallback<GameRoom>() {
+        databaseService.listenToGame(roomId, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
                 if (room == null) return;
@@ -279,7 +277,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
                 if (room.getCards() == null || room.getCards().isEmpty()) {
                     setupGameBoard(room);
-                    return; 
+                    return;
                 }
 
                 if (room.getCards() != null) {
@@ -323,7 +321,8 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             }
 
             @Override
-            public void onFailed(Exception e) {}
+            public void onFailed(Exception e) {
+            }
         });
     }
 

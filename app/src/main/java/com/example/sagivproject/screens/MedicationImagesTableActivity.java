@@ -115,13 +115,14 @@ public class MedicationImagesTableActivity extends BaseActivity {
     }
 
     private void loadImages() {
-        databaseService.getAllImages(new DatabaseService.DatabaseCallback<List<ImageData>>() {
+        databaseService.getAllImages(new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ImageData> list) {
                 allImages.clear();
                 if (list != null) allImages.addAll(list);
                 filterImages(etSearch.getText().toString());
             }
+
             @Override
             public void onFailed(Exception e) {
                 Toast.makeText(MedicationImagesTableActivity.this, "שגיאה בטעינה", Toast.LENGTH_SHORT).show();
@@ -152,12 +153,13 @@ public class MedicationImagesTableActivity extends BaseActivity {
                 String newId = "card" + nextNumber;
 
                 ImageData newImg = new ImageData(newId, base64);
-                databaseService.createImage(newImg, new DatabaseService.DatabaseCallback<Void>() {
+                databaseService.createImage(newImg, new DatabaseService.DatabaseCallback<>() {
                     @Override
                     public void onCompleted(Void object) {
                         Toast.makeText(MedicationImagesTableActivity.this, "התמונה נוספה כ-" + newId, Toast.LENGTH_SHORT).show();
                         loadImages();
                     }
+
                     @Override
                     public void onFailed(Exception e) {
                         Toast.makeText(MedicationImagesTableActivity.this, "שגיאה בשמירה", Toast.LENGTH_SHORT).show();
@@ -174,7 +176,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
             allImages.get(i).setId("card" + (i + 1));
         }
 
-        databaseService.updateAllImages(allImages, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateAllImages(allImages, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(MedicationImagesTableActivity.this, "התמונה נמחקה והרשימה סודרה מחדש", Toast.LENGTH_SHORT).show();

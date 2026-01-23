@@ -89,6 +89,7 @@
     <string name="שיטתהניקוד">שיטת הניקוד</string>
     <string name="טבלתמובילים">טבלת מובילים</string>
     <string name="אייקוןגביע">🏆</string>
+    <string name="הוספתמשתמשחדש">הוספת משתמש חדש</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>
@@ -105,7 +106,7 @@
     </string-array>
 
     <string-array name="language_values">
-        <item>Hebrew</item>
-        <item>English</item>
+        <item>he</item>
+        <item>en</item>
     </string-array>
 </resources>

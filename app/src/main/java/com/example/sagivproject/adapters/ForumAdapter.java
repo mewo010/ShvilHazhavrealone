@@ -117,11 +117,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
     }
 
     public static class ForumViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtUser;
-        final TextView txtEmail;
-        final TextView txtIsAdmin;
-        final TextView txtMessage;
-        final TextView txtTime;
+        final TextView txtUser, txtEmail, txtIsAdmin, txtMessage, txtTime;
         final ImageButton btnMenu;
 
         public ForumViewHolder(@NonNull View itemView) {

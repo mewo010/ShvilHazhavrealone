@@ -116,7 +116,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserFromDatabase() {
-        DatabaseService.getInstance().getUser(user.getUid(), new DatabaseService.DatabaseCallback<User>() {
+        DatabaseService.getInstance().getUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
@@ -199,7 +199,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         imgUserProfile.setImageResource(R.drawable.ic_user);
 
-        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
@@ -245,7 +245,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void saveProfileImage() {
-        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);

@@ -29,7 +29,7 @@ public class BirthdayWorker extends BaseWorkerActivity {
         String userId = SharedPreferencesUtil.getUserId(context);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUser(userId, new DatabaseService.DatabaseCallback<User>() {
+        databaseService.getUser(userId, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user != null) {

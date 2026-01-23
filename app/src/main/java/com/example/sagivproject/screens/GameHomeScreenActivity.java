@@ -80,7 +80,7 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void setupLeaderboard() {
-        databaseService.getUserList(new DatabaseService.DatabaseCallback<List<User>>() {
+        databaseService.getUserList(new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> users) {
                 if (users != null) {
@@ -106,7 +106,7 @@ public class GameHomeScreenActivity extends BaseActivity {
         btnCancelFindEnemy.setVisibility(View.VISIBLE);
         btnFindEnemy.setVisibility(View.GONE);
 
-        databaseService.findOrCreateRoom(user, new DatabaseService.DatabaseCallback<GameRoom>() {
+        databaseService.findOrCreateRoom(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
                 currentRoom = room;

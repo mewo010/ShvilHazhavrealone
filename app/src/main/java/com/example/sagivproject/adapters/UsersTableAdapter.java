@@ -122,15 +122,8 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtUserFullName;
-        final TextView txtUserEmail;
-        final TextView txtUserPassword;
-        final TextView txtUserIsAdmin;
-        final TextView txtUserWins;
-        final TextView txtUserAge;
-        final TextView txtUserBirthDate;
-        final ImageButton btnDeleteUser;
-        final ImageButton btnToggleAdmin;
+        final TextView txtUserFullName, txtUserEmail, txtUserPassword, txtUserIsAdmin, txtUserWins, txtUserAge, txtUserBirthDate;
+        final ImageButton btnDeleteUser, btnToggleAdmin;
         final ImageView imgUserProfile;
 
         public UserViewHolder(@NonNull View itemView) {

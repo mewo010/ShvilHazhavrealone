@@ -16,12 +16,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        String lang = prefs.getString("language", "he");
+        applyLocale(lang);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        findViewById(R.id.btn_settings_back).setOnClickListener(v -> {
-            getOnBackPressedDispatcher().onBackPressed();
-        });
+        findViewById(R.id.btn_settings_back).setOnClickListener(v -> finish());
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -35,10 +37,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        getOnBackPressedDispatcher().onBackPressed();
-        return true;
+    private void applyLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        config.setLayoutDirection(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat
@@ -81,12 +86,17 @@ public class SettingsActivity extends AppCompatActivity {
         private void setLocale(String lang) {
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
+
             Configuration config = new Configuration();
             config.setLocale(locale);
 
-            requireActivity().getResources().updateConfiguration(config,
-                    requireActivity().getResources().getDisplayMetrics());
+            // הגדרת כיוון הכתיבה (מימין לשמאל או משמאל לימין)
+            config.setLayoutDirection(locale);
 
+            // עדכון המשאבים של האפליקציה
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+            // חשוב: רענון האקטיביטי כדי להחיל את השפה והפונטים החדשים
             requireActivity().recreate();
         }
     }

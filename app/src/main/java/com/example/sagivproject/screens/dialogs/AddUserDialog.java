@@ -45,12 +45,10 @@ public class AddUserDialog {
 
         updateBirthDateText(inputBirthDate, birthDateMillis);
 
-        inputBirthDate.setOnClickListener(v -> {
-            CalendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
-                birthDateMillis = millis;
-                inputBirthDate.setText(dateStr);
-            });
-        });
+        inputBirthDate.setOnClickListener(v -> CalendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
+            birthDateMillis = millis;
+            inputBirthDate.setText(dateStr);
+        }));
 
         btnAdd.setOnClickListener(v -> {
             String fName = inputFirstName.getText().toString().trim();
@@ -89,13 +87,13 @@ public class AddUserDialog {
             return false;
         }
 
-        if (!Validator.isNameValid(fName)) {
+        if (Validator.isNameValid(fName)) {
             firstName.requestFocus();
             Toast.makeText(context, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!Validator.isNameValid(lName)) {
+        if (Validator.isNameValid(lName)) {
             lastName.requestFocus();
             Toast.makeText(context, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -107,19 +105,19 @@ public class AddUserDialog {
             return false;
         }
 
-        if (!Validator.isAgeValid(birthDateMillis)) {
+        if (Validator.isAgeValid(birthDateMillis)) {
             birthDateEdt.requestFocus();
             Toast.makeText(context, "הגיל המינימלי הוא 12", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!Validator.isEmailValid(email)) {
+        if (Validator.isEmailValid(email)) {
             emailEdt.requestFocus();
             Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!Validator.isPasswordValid(password)) {
+        if (Validator.isPasswordValid(password)) {
             passwordEdt.requestFocus();
             Toast.makeText(context, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

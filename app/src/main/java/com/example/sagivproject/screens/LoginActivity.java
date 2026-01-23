@@ -94,13 +94,13 @@ public class LoginActivity extends BaseActivity {
             return false;
         }
 
-        if (!Validator.isEmailValid(email)) {
+        if (Validator.isEmailValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (!Validator.isPasswordValid(password)) {
+        if (Validator.isPasswordValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

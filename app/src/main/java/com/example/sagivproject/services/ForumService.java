@@ -18,7 +18,7 @@ public class ForumService {
     }
 
     public void listenToMessages(ForumCallback<List<ForumMessage>> callback) {
-        databaseService.getForumMessagesRealtime(new DatabaseService.DatabaseCallback<List<ForumMessage>>() {
+        databaseService.getForumMessagesRealtime(new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ForumMessage> list) {
                 callback.onSuccess(list);

@@ -12,15 +12,15 @@ public final class Validator {
     private Validator() {} // מונע יצירה
 
     public static boolean isNameValid(@Nullable String name) {
-        return name != null && name.trim().length() >= 3;
+        return name == null || name.trim().length() < 3;
     }
 
     public static boolean isEmailValid(@Nullable String email) {
-        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return email == null || !Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static boolean isPasswordValid(@Nullable String password) {
-        return password != null && password.length() >= 6;
+        return password == null || password.length() < 6;
     }
 
     public static boolean isAgeValid(long birthDateMillis) {
@@ -35,6 +35,6 @@ public final class Validator {
             age--;
         }
 
-        return age >= MIN_AGE;
+        return age < MIN_AGE;
     }
 }

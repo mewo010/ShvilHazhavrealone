@@ -46,7 +46,7 @@ public class MemoryGameLogsTableActivity extends BaseActivity {
     }
 
     private void listenToGamesRealtime() {
-        databaseService.getAllRoomsRealtime(new DatabaseService.DatabaseCallback<List<GameRoom>>() {
+        databaseService.getAllRoomsRealtime(new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<GameRoom> allRooms) {
                 if (allRooms == null) return;

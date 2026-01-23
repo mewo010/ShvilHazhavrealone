@@ -34,7 +34,7 @@ public class MedicationWorker extends BaseWorkerActivity {
         String userId = SharedPreferencesUtil.getUserId(context);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUserMedicationList(userId, new DatabaseService.DatabaseCallback<List<Medication>>() {
+        databaseService.getUserMedicationList(userId, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> medications) {
                 processMedications(context, userId, medications);

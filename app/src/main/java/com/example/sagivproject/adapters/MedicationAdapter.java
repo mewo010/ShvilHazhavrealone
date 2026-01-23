@@ -114,9 +114,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     }
 
     static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtMedicationName;
-        final TextView txtMedicationDetails;
-        final TextView txtMedicationDate;
+        final TextView txtMedicationName, txtMedicationDetails, txtMedicationDate;
         final ImageButton btnMenu;
 
         public MedicationViewHolder(@NonNull View itemView) {

@@ -14,14 +14,14 @@
     <string name="קשרקרוב">Close Contact</string>
     <string name="משתמש">User</string>
     <string name="התנתקות">Log out</string>
-    <string name="דףהבית">Home Page</string>
+    <string name="דףהבית">Home</string>
     <string name="צורקשר">Contact Us</string>
     <string name="יועץבינהמלאכותית">AI Advisor</string>
     <string name="הקלדכאןאתשאלתך">Type your question here...</string>
     <string name="שלחשאלה">Send Question</string>
     <string name="תשובתהיועץ">Advisor’s Answer</string>
     <string name="התשובהתוצגכאן">The answer will appear here...</string>
-    <string name="דףראשי">Main Page</string>
+    <string name="דףראשי">Home</string>
     <string name="התחברות">Login</string>
     <string name="הרשמה">Register</string>
     <string name="הגדרות">Settings</string>
@@ -97,6 +97,7 @@
     <string name="שיטתהניקוד">Scoring System</string>
     <string name="טבלתמובילים">Leaderboard</string>
     <string name="אייקוןגביע">🏆</string>
+    <string name="הוספתמשתמשחדש">Add New User</string>
 
     <string-array name="search_types">
         <item>First Name</item>
@@ -108,12 +109,12 @@
     </string-array>
 
     <string-array name="language_names">
-        <item>Hebrew</item>
+        <item>עברית</item>
         <item>English</item>
     </string-array>
 
     <string-array name="language_values">
-        <item>Hebrew</item>
-        <item>English</item>
+        <item>he</item>
+        <item>en</item>
     </string-array>
 </resources>

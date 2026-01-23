@@ -44,7 +44,7 @@ public class AuthService {
     }
 
     public void login(String email, String password, LoginCallback callback) {
-        databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<User>() {
+        databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user == null) {
@@ -65,7 +65,7 @@ public class AuthService {
     }
 
     public void register(String firstName, String lastName, long birthDateMillis, String email, String password, RegisterCallback callback) {
-        databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<Boolean>() {
+        databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
@@ -95,7 +95,7 @@ public class AuthService {
     }
 
     public void addUser(String firstName, String lastName, long birthDateMillis, String email, String password, AddUserCallback callback) {
-        databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<Boolean>() {
+        databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
@@ -126,7 +126,7 @@ public class AuthService {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
         if (emailChanged) {
-            databaseService.checkIfEmailExists(newEmail, new DatabaseService.DatabaseCallback<Boolean>() {
+            databaseService.checkIfEmailExists(newEmail, new DatabaseService.DatabaseCallback<>() {
                 @Override
                 public void onCompleted(Boolean exists) {
                     if (exists) {
@@ -151,7 +151,7 @@ public class AuthService {
 
         User user = new User(uid, firstName, lastName, birthDateMillis, email, password, false, null, new HashMap<>(), 0);
 
-        databaseService.createNewUser(user, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.createNewUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);
@@ -171,7 +171,7 @@ public class AuthService {
         user.setEmail(email);
         user.setPassword(password);
 
-        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<Void>() {
+        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);

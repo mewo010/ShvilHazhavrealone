@@ -45,9 +45,8 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public int getItemCount() { return userList.size(); }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvName;
-        final TextView tvEmail;
-        final TextView tvWins;
+        final TextView tvName, tvEmail, tvWins;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_ItemUserRank_user_name);
