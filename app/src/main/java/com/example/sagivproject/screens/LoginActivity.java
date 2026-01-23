@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -38,6 +39,7 @@ public class LoginActivity extends BaseActivity {
         Button btnToContact = findViewById(R.id.btn_login_to_contact);
         Button btnToRegister = findViewById(R.id.btn_login_to_register);
         Button btnLogin = findViewById(R.id.btnLogin);
+        ImageButton btnToSettings = findViewById(R.id.btn_login_to_settings);
 
         editTextEmail = findViewById(R.id.edt_login_email);
         editTextPassword = findViewById(R.id.edt_login_password);
@@ -46,6 +48,7 @@ public class LoginActivity extends BaseActivity {
         btnToContact.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, ContactActivity.class)));
         btnToRegister.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
         btnLogin.setOnClickListener(view -> tryLogin());
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         String lastEmail = getIntent().getStringExtra("userEmail");
         if (lastEmail != null && !lastEmail.isEmpty()) {

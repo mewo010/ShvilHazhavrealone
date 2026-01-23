@@ -3,6 +3,7 @@ package com.example.sagivproject.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -60,6 +61,8 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         Button btnToAi = findViewById(R.id.btn_main_to_Ai);
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
         Button btnToExit = findViewById(R.id.btn_main_to_exit);
+        ImageButton btnToSettings = findViewById(R.id.btn_main_to_settings);
+
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DetailsAboutUserActivity.class)));
@@ -68,6 +71,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToExit.setOnClickListener(view -> logout());
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
         if (user.getFullName() == null || user.getFullName().trim().isEmpty()) {

@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/txtAddUserDialogTitle"
-            android:layout_width="400dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="הוספת משתמש חדש"

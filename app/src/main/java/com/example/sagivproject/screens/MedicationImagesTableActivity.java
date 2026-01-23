@@ -37,7 +37,8 @@ import java.util.List;
 
 public class MedicationImagesTableActivity extends BaseActivity {
     private MedicationImagesTableAdapter adapter;
-    private List<ImageData> allImages = new ArrayList<>(), filteredList = new ArrayList<>();
+    private final List<ImageData> allImages = new ArrayList<>();
+    private final List<ImageData> filteredList = new ArrayList<>();
     private TextInputEditText etSearch;
 
     //פתיחת גלריה לבחירת תמונה

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         Button btnToDetailsAboutUser = findViewById(R.id.btn_DetailsAboutUser_to_DetailsAboutUserPage);
         Button btnToContact = findViewById(R.id.btn_DetailsAboutUser_to_contact);
         Button btnToExit = findViewById(R.id.btn_DetailsAboutUser_to_exit);
+        ImageButton btnToSettings = findViewById(R.id.btn_DetailsAboutUser_to_settings);
         View separatorLine = findViewById(R.id.separatorLine_DetailsAboutUser);
 
         //מנהל
@@ -73,6 +75,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
             btnToDetailsAboutUser.setVisibility(View.VISIBLE);
             btnToContact.setVisibility(View.VISIBLE);
             btnToExit.setVisibility(View.VISIBLE);
+            btnToSettings.setVisibility(View.VISIBLE);
             separatorLine.setVisibility(View.VISIBLE);
             topMenu.setVisibility(View.VISIBLE);
         }
@@ -80,6 +83,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         btnToMain.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
         btnToContact.setOnClickListener(v -> startActivity(new Intent(this, ContactActivity.class)));
         btnToExit.setOnClickListener(v -> logout());
+        btnToSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
         btnToAdmin.setOnClickListener(v -> startActivity(new Intent(this, AdminPageActivity.class)));
 
         Button btnEditUser = findViewById(R.id.btn_DetailsAboutUser_edit_user);

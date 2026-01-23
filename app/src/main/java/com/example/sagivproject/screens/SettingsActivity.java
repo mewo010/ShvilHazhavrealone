@@ -8,7 +8,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import com.example.sagivproject.R;
 
@@ -19,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_settings); //
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -31,51 +30,62 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.הגדרות);
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragmentCompat {
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    public static class SettingsFragment extends PreferenceFragmentCompat
+            implements SharedPreferences.OnSharedPreferenceChangeListener {
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
 
-            SharedPreferences prefs =
-                    PreferenceManager.getDefaultSharedPreferences(requireContext());
+        @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceManager().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
+        }
 
-            // מאזין לשינויים בהגדרות
-            prefs.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> {
+        @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceManager().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
 
-                // מצב כהה / בהיר
-                if (key.equals("dark_mode")) {
-                    boolean isDark = sharedPreferences.getBoolean("dark_mode", false);
-                    AppCompatDelegate.setDefaultNightMode(
-                            isDark
-                                    ? AppCompatDelegate.MODE_NIGHT_YES
-                                    : AppCompatDelegate.MODE_NIGHT_NO
-                    );
-                }
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals("dark_mode")) {
+                boolean isDark = sharedPreferences.getBoolean("dark_mode", false);
+                AppCompatDelegate.setDefaultNightMode(
+                        isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
+                );
+            }
 
-                // שינוי שפה
-                if (key.equals("language")) {
-                    String lang = sharedPreferences.getString("language", "he");
-                    setLocale(lang);
-                }
-            });
+            if (key.equals("language")) {
+                String lang = sharedPreferences.getString("language", "he");
+                setLocale(lang);
+            }
         }
 
         private void setLocale(String lang) {
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
-
             Configuration config = new Configuration();
             config.setLocale(locale);
 
-            requireActivity().getResources().updateConfiguration(
-                    config,
-                    requireActivity().getResources().getDisplayMetrics()
-            );
+            requireActivity().getResources().updateConfiguration(config,
+                    requireActivity().getResources().getDisplayMetrics());
 
-            // רענון האקטיביטי
             requireActivity().recreate();
         }
     }

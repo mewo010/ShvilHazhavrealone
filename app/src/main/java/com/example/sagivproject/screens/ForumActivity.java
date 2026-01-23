@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
@@ -37,6 +38,8 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
         Button btnToContact = findViewById(R.id.btn_forum_contact);
         Button btnToDetailsAboutUser = findViewById(R.id.btn_forum_DetailsAboutUser);
         Button btnToExit = findViewById(R.id.btn_forum_exit);
+        ImageButton btnToSettings = findViewById(R.id.btn_forum_to_settings);
+
         Button btnSendMessage = findViewById(R.id.btn_forum_send_message);
         EditText edtNewMessage = findViewById(R.id.edt_forum_new_message);
         Button btnNewMessages = findViewById(R.id.btn_forum_new_messages_indicator);
@@ -46,6 +49,7 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
         btnToContact.setOnClickListener(view -> startActivity(new Intent(this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(this, DetailsAboutUserActivity.class)));
         btnToExit.setOnClickListener(view -> logout());
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
         initForumViews(recyclerForum, edtNewMessage, btnNewMessages);

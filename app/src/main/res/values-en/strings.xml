@@ -1,0 +1,119 @@
+<resources>
+    <string name="app_name">שביל הזהב</string>
+    <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב...\"</string>
+    <string name="חזרה">Back</string>
+    <string name="קשרקרובמנהל">Close Contact – Admin</string>
+    <string name="התקבלוהודעותחדשות">New messages received ↓</string>
+    <string name="כתובהודעה">Write a message...</string>
+    <string name="דףמנהלים">Admin Page 🤐🤫</string>
+    <string name="שלוםמנהליקר">Hello dear admin</string>
+    <string name="אפשרויותניהול">Management Options</string>
+    <string name="טבלתמשתמשים">Users Table</string>
+    <string name="טבלתתיעודהמשחקים">Game Logs Table</string>
+    <string name="טבלתתמונותהתרופות">Medication Images Table</string>
+    <string name="קשרקרוב">Close Contact</string>
+    <string name="משתמש">User</string>
+    <string name="התנתקות">Log out</string>
+    <string name="דףהבית">Home Page</string>
+    <string name="צורקשר">Contact Us</string>
+    <string name="יועץבינהמלאכותית">AI Advisor</string>
+    <string name="הקלדכאןאתשאלתך">Type your question here...</string>
+    <string name="שלחשאלה">Send Question</string>
+    <string name="תשובתהיועץ">Advisor’s Answer</string>
+    <string name="התשובהתוצגכאן">The answer will appear here...</string>
+    <string name="דףראשי">Main Page</string>
+    <string name="התחברות">Login</string>
+    <string name="הרשמה">Register</string>
+    <string name="הגדרות">Settings</string>
+    <string name="כתובתמייללפניות">Contact email address:</string>
+    <string name="אימייל">shvilhazhav23contact@gmail.com</string>
+    <string name="טקסטצורקשר">
+        The idea for the project arose in light of the difficult period the country has been experiencing in recent years,
+        and numerous events in which special and vulnerable populations required help even with small everyday matters.
+    </string>
+    <string name="אייקוןצורקשר">Contact Icon</string>
+    <string name="שםמלא">First and Last Name</string>
+    <string name="אישור">Confirm</string>
+    <string name="ביטול">Cancel</string>
+    <string name="ברוכיםהבאים">Welcome</string>
+    <string name="שםפרטי">First Name</string>
+    <string name="שםמשפחה">Last Name</string>
+    <string name="תאריךלידה">Date of Birth</string>
+    <string name="כתובתאימייל">Email Address</string>
+    <string name="סיסמה">Password</string>
+    <string name="שלוםמטופליקר">Hello dear patient</string>
+    <string name="רשימתהתרופותשלי">My Medications List</string>
+    <string name="משחקזיכרון">Memory Game</string>
+    <string name="הוספתתרופה">Add Medication</string>
+    <string name="שמור">Save</string>
+    <string name="עריכתפרטימשתמש">Edit User Details</string>
+    <string name="הוסף">Add</string>
+    <string name="פרטים">Details</string>
+    <string name="שםהתרופה">Medication Name</string>
+    <string name="תאריךאחרוןלשימוש">Expiration Date</string>
+    <string name="הוספתמשתמש">Add User</string>
+    <string name="הקלדכאן">Type here...</string>
+    <string name="חפשלפי">Search by:</string>
+    <string name="עריכתפרטים">Edit Details</string>
+    <string name="מצאיריב">Find Opponent</string>
+    <string name="הוספתתמונהשלתרופה">Add Medication Image</string>
+    <string name="חפשלפיid">Search by ID (e.g. card1)...</string>
+    <string name="אפשרויות">Options</string>
+    <string name="תמונתפרופיל">Profile Picture</string>
+    <string name="אייקוןמצלמה">Camera Icon</string>
+    <string name="הפוךלמנהל">Make Admin</string>
+    <string name="מחק">Delete</string>
+    <string name="קלף">Card</string>
+    <string name="ערוך">Edit</string>
+    <string name="צלםתמונה">Take Photo</string>
+    <string name="בחרמהגלריה">Choose from Gallery</string>
+    <string name="מחיקתתמונה">Delete Image</string>
+    <string name="אייקון">Icon</string>
+    <string name="יציאה">Exit</string>
+    <string name="אייקוןתרופה">Medication Icon</string>
+    <string name="אייקוןפורום">Forum Icon</string>
+    <string name="אייקוןיועץבינהמלאכותית">AI Advisor Icon</string>
+    <string name="אייקוןמשחק">Game Icon</string>
+    <string name="תמונתהאפליקציה">Application Image</string>
+    <string name="שלחהודעה">Send Message</string>
+    <string name="ניצחונות">Wins</string>
+    <string name="אייקוןאימייל">Email Icon</string>
+    <string name="אייקוןסיסמה">Password Icon</string>
+    <string name="בטלחיפוש">Clear Search</string>
+    <string name="הוראותהמשחק">Game Instructions</string>
+    <string name="טקסט1משחק">
+        A competitive online head-to-head memory game designed to improve and strengthen memory.
+        The winner is determined by the highest total score.
+    </string>
+    <string name="מטרתהמשחק">Game Objective</string>
+    <string name="טקסט2משחק">
+        Defeat your opponent by accumulating the highest number of points across three rounds.
+    </string>
+    <string name="כלליהמשחק">Game Rules</string>
+    <string name="טקסט3משחק">• Two cards are revealed each turn.</string>
+    <string name="טקסט4משחק">• A matching pair earns a point and an extra turn.</string>
+    <string name="טקסט5משחק">• A non-matching pair flips the cards back and passes the turn.</string>
+    <string name="טקסט6משחק">• Correct match: +1 point.</string>
+    <string name="שיטתהניקוד">Scoring System</string>
+    <string name="טבלתמובילים">Leaderboard</string>
+    <string name="אייקוןגביע">🏆</string>
+
+    <string-array name="search_types">
+        <item>First Name</item>
+        <item>Last Name</item>
+        <item>Email</item>
+        <item>Admins</item>
+        <item>Regular Users</item>
+        <item>Wins</item>
+    </string-array>
+
+    <string-array name="language_names">
+        <item>Hebrew</item>
+        <item>English</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>Hebrew</item>
+        <item>English</item>
+    </string-array>
+</resources>

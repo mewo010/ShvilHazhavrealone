@@ -139,7 +139,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
-        ImageView cardImage;
+        final ImageView cardImage;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -50,7 +50,9 @@ public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtPlayers, txtScore, txtStatus;
+        final TextView txtPlayers;
+        final TextView txtScore;
+        final TextView txtStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -98,7 +98,6 @@
         <item>משתמשים רגילים</item>
         <item>ניצחונות</item>
     </string-array>
-    <string name="title_activity_settings">SettingsActivity</string>
 
     <string-array name="language_names">
         <item>עברית</item>
@@ -106,7 +105,7 @@
     </string-array>
 
     <string-array name="language_values">
-        <item>he</item>
-        <item>en</item>
+        <item>Hebrew</item>
+        <item>English</item>
     </string-array>
 </resources>

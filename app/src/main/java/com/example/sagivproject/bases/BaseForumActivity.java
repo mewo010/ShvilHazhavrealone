@@ -24,7 +24,7 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
     protected ForumAdapter adapter;
-    protected List<ForumMessage> messages = new ArrayList<>();
+    protected final List<ForumMessage> messages = new ArrayList<>();
     protected ForumService forumService;
     protected ForumPermissions permissions;
 

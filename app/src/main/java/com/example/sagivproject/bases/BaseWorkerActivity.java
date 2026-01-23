@@ -9,7 +9,7 @@ import androidx.work.WorkerParameters;
 import com.example.sagivproject.services.DatabaseService;
 
 public abstract class BaseWorkerActivity extends Worker {
-    protected DatabaseService databaseService;
+    protected final DatabaseService databaseService;
 
     public BaseWorkerActivity(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);

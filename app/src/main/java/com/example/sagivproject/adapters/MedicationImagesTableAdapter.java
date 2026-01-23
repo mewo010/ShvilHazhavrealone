@@ -76,9 +76,9 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgView;
-        TextView txtId;
-        ImageButton btnDelete;
+        final ImageView imgView;
+        final TextView txtId;
+        final ImageButton btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

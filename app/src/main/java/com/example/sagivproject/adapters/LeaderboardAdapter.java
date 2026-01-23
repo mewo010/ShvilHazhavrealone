@@ -14,7 +14,7 @@ import com.example.sagivproject.models.User;
 import java.util.List;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.ViewHolder> {
-    private List<User> userList;
+    private final List<User> userList;
 
     public LeaderboardAdapter(List<User> userList) {
         this.userList = userList;
@@ -45,7 +45,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public int getItemCount() { return userList.size(); }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvEmail, tvWins;
+        final TextView tvName;
+        final TextView tvEmail;
+        final TextView tvWins;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_ItemUserRank_user_name);

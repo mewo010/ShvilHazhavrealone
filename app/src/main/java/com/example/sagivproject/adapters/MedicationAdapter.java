@@ -27,11 +27,11 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
-    private Context context;
-    private ArrayList<Medication> medications;
-    private OnMedicationActionListener listener;
+    private final Context context;
+    private final ArrayList<Medication> medications;
+    private final OnMedicationActionListener listener;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public interface OnMedicationActionListener {
         void onEdit(int position);
@@ -114,8 +114,10 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     }
 
     static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        TextView txtMedicationName, txtMedicationDetails, txtMedicationDate;
-        ImageButton btnMenu;
+        final TextView txtMedicationName;
+        final TextView txtMedicationDetails;
+        final TextView txtMedicationDate;
+        final ImageButton btnMenu;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -3,6 +3,7 @@ package com.example.sagivproject.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,8 +31,7 @@ import java.util.List;
 
 public class MedicationListActivity extends BaseActivity {
     private MedicationAdapter adapter;
-    private ArrayList<Medication> medications = new ArrayList<>();
-
+    private final ArrayList<Medication> medications = new ArrayList<>();
     private User user;
     private String uid;
 
@@ -56,12 +56,14 @@ public class MedicationListActivity extends BaseActivity {
         Button btnToDetailsAboutUser = findViewById(R.id.btn_MedicationList_to_DetailsAboutUser);
         Button btnAddMedication = findViewById(R.id.btn_MedicationList_add_medication);
         Button btnToExit = findViewById(R.id.btn_MedicationList_to_exit);
+        ImageButton btnToSettings = findViewById(R.id.btn_MedicationList_to_settings);
 
         btnToMain.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, MainActivity.class)));
         btnToContact.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, DetailsAboutUserActivity.class)));
         btnAddMedication.setOnClickListener(view -> openMedicationDialog(null));
         btnToExit.setOnClickListener(view -> logout());
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         RecyclerView recyclerViewMedications = findViewById(R.id.recyclerView_medications);
         recyclerViewMedications.setLayoutManager(new LinearLayoutManager(this));
