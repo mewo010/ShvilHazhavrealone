@@ -76,28 +76,6 @@ public class SettingsActivity extends AppCompatActivity {
                         isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
                 );
             }
-
-            if (key.equals("language")) {
-                String lang = sharedPreferences.getString("language", "he");
-                setLocale(lang);
-            }
-        }
-
-        private void setLocale(String lang) {
-            Locale locale = new Locale(lang);
-            Locale.setDefault(locale);
-
-            Configuration config = new Configuration();
-            config.setLocale(locale);
-
-            // הגדרת כיוון הכתיבה (מימין לשמאל או משמאל לימין)
-            config.setLayoutDirection(locale);
-
-            // עדכון המשאבים של האפליקציה
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-
-            // חשוב: רענון האקטיביטי כדי להחיל את השפה והפונטים החדשים
-            requireActivity().recreate();
         }
     }
 }

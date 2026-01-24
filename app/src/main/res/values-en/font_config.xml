@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="font_headline" type="font">@font/headline_english</item>
-    <item name="font_body" type="font">@font/text_english</item>
-</resources>

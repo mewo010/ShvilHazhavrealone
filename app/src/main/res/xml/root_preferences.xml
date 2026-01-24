@@ -8,14 +8,4 @@
             app:defaultValue="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="שפה">
-        <ListPreference
-            app:key="language"
-            app:title="שפת האפליקציה"
-            app:defaultValue="he"
-            app:entries="@array/language_names"
-            app:entryValues="@array/language_values"
-            app:summary="%s" />
-    </PreferenceCategory>
-
 </PreferenceScreen>
