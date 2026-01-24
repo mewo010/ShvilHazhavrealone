@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">שביל הזהב</string>
     <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב...\"</string>
     <string name="חזרה">Back</string>
@@ -57,7 +57,7 @@
     <string name="עריכתפרטים">Edit Details</string>
     <string name="מצאיריב">Find Opponent</string>
     <string name="הוספתתמונהשלתרופה">Add Medication Image</string>
-    <string name="חפשלפיid">Search by ID (e.g. card1)...</string>
+    <string name="חפשלפיid" tools:ignore="Typos">Search by ID (e.g. card1)…</string>
     <string name="אפשרויות">Options</string>
     <string name="תמונתפרופיל">Profile Picture</string>
     <string name="אייקוןמצלמה">Camera Icon</string>
@@ -98,6 +98,7 @@
     <string name="טבלתמובילים">Leaderboard</string>
     <string name="אייקוןגביע">🏆</string>
     <string name="הוספתמשתמשחדש">Add New User</string>
+    <string name="סוגההתרופה">Medication Type</string>
 
     <string-array name="search_types">
         <item>First Name</item>

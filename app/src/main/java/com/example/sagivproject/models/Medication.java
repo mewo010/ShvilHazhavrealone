@@ -8,14 +8,16 @@ public class Medication {
     private String id;
     private String name;
     private String details;
+    private MedicationType type;
     @Exclude
     private Date date;
 
     public Medication() {}
 
-    public Medication(String name, String details, Date date, String userId) {
+    public Medication(String name, String details, MedicationType type, Date date, String userId) {
         this.name = name;
         this.details = details;
+        this.type = type;
         this.date = date;
         this.id = userId;
     }
@@ -26,6 +28,8 @@ public class Medication {
     public void setName(String name) { this.name = name; }
     public String getDetails() { return this.details; }
     public void setDetails(String details) { this.details = details; }
+    public MedicationType getType() { return type; }
+    public void setType(MedicationType type) { this.type = type; }
 
     @Exclude
     public Date getDate() { return this.date; }

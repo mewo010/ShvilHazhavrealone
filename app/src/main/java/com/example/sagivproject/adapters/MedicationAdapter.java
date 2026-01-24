@@ -65,6 +65,13 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
             holder.txtMedicationName.setText(med.getName());
         }
 
+        if (med.getType() != null) {
+            holder.txtMedicationType.setText(med.getType().getDisplayName());
+            holder.txtMedicationType.setVisibility(View.VISIBLE);
+        } else {
+            holder.txtMedicationType.setVisibility(View.GONE);
+        }
+
         holder.txtMedicationDetails.setText(med.getDetails());
         holder.txtMedicationDate.setText("תוקף: " + dateFormat.format(med.getDate()));
 
@@ -114,12 +121,13 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     }
 
     static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtMedicationName, txtMedicationDetails, txtMedicationDate;
+        final TextView txtMedicationName, txtMedicationType, txtMedicationDetails, txtMedicationDate;
         final ImageButton btnMenu;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
             txtMedicationName = itemView.findViewById(R.id.txt_MedicationRow_Name);
+            txtMedicationType = itemView.findViewById(R.id.txt_MedicationRow_Type);
             txtMedicationDetails = itemView.findViewById(R.id.txt_MedicationRow_Details);
             txtMedicationDate = itemView.findViewById(R.id.txt_MedicationRow_Date);
             btnMenu = itemView.findViewById(R.id.btn_MedicationRow_Menu);

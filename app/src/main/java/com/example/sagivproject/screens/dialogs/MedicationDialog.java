@@ -2,17 +2,22 @@ package com.example.sagivproject.screens.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.Medication;
+import com.example.sagivproject.models.MedicationType;
 import com.example.sagivproject.utils.CalendarUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MedicationDialog {
     public interface OnMedicationSubmitListener {
@@ -38,15 +43,26 @@ public class MedicationDialog {
         dialog.setContentView(R.layout.dialog_add_medication);
 
         EditText edtName = dialog.findViewById(R.id.edt_medication_name);
+        AutoCompleteTextView spinnerType = dialog.findViewById(R.id.spinner_medication_type);
         EditText edtDetails = dialog.findViewById(R.id.edt_medication_details);
         EditText edtDate = dialog.findViewById(R.id.edt_medication_date);
         Button btnConfirm = dialog.findViewById(R.id.btn_add_medication_confirm);
         Button btnCancel = dialog.findViewById(R.id.btn_add_medication_cancel);
 
+        List<String> typeNames = new ArrayList<>();
+        for (MedicationType type : MedicationType.values()) {
+            typeNames.add(type.getDisplayName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, typeNames);
+        spinnerType.setAdapter(adapter);
+
         long initialDateMillis = -1;
         if (medToEdit != null) {
             edtName.setText(medToEdit.getName());
             edtDetails.setText(medToEdit.getDetails());
+            if (medToEdit.getType() != null) {
+                spinnerType.setText(medToEdit.getType().getDisplayName(), false);
+            }
             if (medToEdit.getDate() != null) {
                 initialDateMillis = medToEdit.getDate().getTime();
                 edtDate.setText(CalendarUtil.formatDate(initialDateMillis, DATE_FORMAT));
@@ -58,11 +74,25 @@ public class MedicationDialog {
 
         btnConfirm.setOnClickListener(v -> {
             String name = edtName.getText().toString().trim();
+            String typeString = spinnerType.getText().toString();
             String details = edtDetails.getText().toString().trim();
             String dateString = edtDate.getText().toString().trim();
 
-            if (name.isEmpty() || details.isEmpty() || dateString.isEmpty()) {
+            if (name.isEmpty() || typeString.isEmpty() || details.isEmpty() || dateString.isEmpty()) {
                 Toast.makeText(context, "אנא מלא את כל השדות", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            MedicationType selectedType = null;
+            for (MedicationType type : MedicationType.values()) {
+                if (type.getDisplayName().equals(typeString)) {
+                    selectedType = type;
+                    break;
+                }
+            }
+
+            if (selectedType == null) {
+                Toast.makeText(context, "אנא בחר סוג תרופה", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -70,10 +100,11 @@ public class MedicationDialog {
                 Date date = new SimpleDateFormat(DATE_FORMAT).parse(dateString);
 
                 if (medToEdit == null) {
-                    listener.onAdd(new Medication(name, details, date, uid));
+                    listener.onAdd(new Medication(name, details, selectedType, date, uid));
                 } else {
                     medToEdit.setName(name);
                     medToEdit.setDetails(details);
+                    medToEdit.setType(selectedType);
                     medToEdit.setDate(date);
                     listener.onEdit(medToEdit);
                 }
