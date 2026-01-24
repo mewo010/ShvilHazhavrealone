@@ -40,7 +40,6 @@
         app:layout_constraintTop_toBottomOf="@id/btn_AdminForum_to_admin" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"

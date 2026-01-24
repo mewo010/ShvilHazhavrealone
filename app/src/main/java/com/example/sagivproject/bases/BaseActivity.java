@@ -2,7 +2,6 @@ package com.example.sagivproject.bases;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -56,13 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         permissions.add(Manifest.permission.CAMERA);
         permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permissions.add(Manifest.permission.POST_NOTIFICATIONS);
-        }
+        permissions.add(Manifest.permission.POST_NOTIFICATIONS);
 
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), 1001);
     }

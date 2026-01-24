@@ -30,25 +30,6 @@
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog.MinWidth">
-        <item name="colorAccent">@color/background_color_nav</item>
-        <item name="colorPrimary">@color/background_color_nav</item>
-        <item name="android:textColorAlertDialogListItem">@color/background_color_nav</item>
-        <item name="android:datePickerDialogTheme">@style/DatePickerStyle</item>
-        <item name="android:fontFamily">@font/text_hebrew</item>
-        <item name="android:textColorPrimary">@color/text_color</item>
-        <item name="android:textColorPrimaryInverse">@color/nav_text_color</item>
-        <item name="android:windowBackground">@color/background_color</item>
-    </style>
-
-    <style name="DatePickerStyle" parent="android:Theme.Material.Light.Dialog">
-        <item name="android:background">@color/background_color</item>
-        <item name="android:headerBackground">@color/background_color_nav</item>
-        <item name="android:textColorPrimary">@color/text_color</item>
-        <item name="android:textColorPrimaryInverse">@color/nav_text_color</item>
-        <item name="android:datePickerMode">calendar</item>
-    </style>
-
     <style name="AppTextInputLayoutStyle"
         parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/text_color</item>

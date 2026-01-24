@@ -50,7 +50,6 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ProgressBar
-        android:id="@+id/progressBar_Splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

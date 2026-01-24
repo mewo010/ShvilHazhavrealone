@@ -100,14 +100,4 @@
         <item>משתמשים רגילים</item>
         <item>ניצחונות</item>
     </string-array>
-
-    <string-array name="language_names">
-        <item>עברית</item>
-        <item>English</item>
-    </string-array>
-
-    <string-array name="language_values">
-        <item>he</item>
-        <item>en</item>
-    </string-array>
 </resources>

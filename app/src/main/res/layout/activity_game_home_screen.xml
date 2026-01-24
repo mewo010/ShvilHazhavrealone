@@ -174,7 +174,6 @@
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_GameHomeScreen_instructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -184,14 +183,12 @@
                 app:strokeWidth="1dp">
 
                 <LinearLayout
-                    android:id="@+id/layout_GameHomeScreen_instructions_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp">
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_instructions_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/הוראותהמשחק"
@@ -201,7 +198,6 @@
                         android:layout_marginBottom="16dp" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_instructions_intro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט1משחק"
@@ -212,7 +208,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_goal_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/מטרתהמשחק"
@@ -223,7 +218,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_goal_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט2משחק"
@@ -234,7 +228,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_rules_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/כלליהמשחק"
@@ -245,7 +238,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_rules_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט3משחק"
@@ -255,7 +247,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_rules_2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט4משחק"
@@ -265,7 +256,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_rules_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט5משחק"
@@ -276,7 +266,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_score_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/שיטתהניקוד"
@@ -287,7 +276,6 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txt_GameHomeScreen_score_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/טקסט6משחק"
@@ -300,7 +288,6 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/txt_GameHomeScreen_leaderboard_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/טבלתמובילים"

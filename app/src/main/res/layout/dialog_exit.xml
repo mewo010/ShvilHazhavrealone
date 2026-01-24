@@ -33,7 +33,6 @@
             android:fontFamily="@font/text_hebrew"/>
 
         <LinearLayout
-            android:id="@+id/linearLayout_DialogExit_ButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
