@@ -33,10 +33,7 @@ public class ForumService {
 
     public void sendMessage(User user, String text, ForumCallback<Void> callback) {
         String id = databaseService.generateForumMessageId();
-        ForumMessage msg = new ForumMessage(
-                id, user.getFullName(), user.getEmail(), text,
-                System.currentTimeMillis(), user.getUid(), user.getIsAdmin()
-        );
+        ForumMessage msg = new ForumMessage(id, user.getFullName(), user.getEmail(), text,  System.currentTimeMillis(), user.getUid(), user.isAdmin());
 
         databaseService.sendForumMessage(msg, new DatabaseService.DatabaseCallback<>() {
             @Override

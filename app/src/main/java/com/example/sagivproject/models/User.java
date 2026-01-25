@@ -1,5 +1,7 @@
 package com.example.sagivproject.models;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.Objects;
 public class User implements Serializable {
     private String uid;
     private String email;
-    private boolean isAdmin;
+    private UserRole role;
     private String firstName;
     private String lastName;
     private long birthDateMillis;
@@ -19,14 +21,14 @@ public class User implements Serializable {
 
     public User() { }
 
-    public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, boolean isAdmin, String profileImage, HashMap<String, Medication> medications, int count_wins) {
+    public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications, int count_wins) {
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDateMillis = birthDateMillis;
         this.email = email;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.role = role;
         this.profileImage = profileImage;
         this.medications = medications;
         this.count_wins = count_wins;
@@ -61,8 +63,9 @@ public class User implements Serializable {
     public String getPassword() { return this.password; }
     public void setPassword(String password) { this.password = password; }
 
-    public boolean getIsAdmin() { return this.isAdmin; }
-    public void setIsAdmin(boolean isAdmin) { this.isAdmin = isAdmin; }
+    public UserRole getRole() { return role == null ? UserRole.REGULAR : role; }
+    public void setRole(UserRole role) { this.role = role; }
+    public boolean isAdmin() { return this.role == UserRole.ADMIN; }
 
     public String getUid() { return this.uid; }
     public void setUid(String uid) { this.uid = uid; }
@@ -92,12 +95,13 @@ public class User implements Serializable {
         return Objects.hashCode(uid);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "User{" +
                 "uid='" + uid + '\'' +
                 ", email='" + email + '\'' +
-                ", isAdmin=" + isAdmin +
+                ", role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +

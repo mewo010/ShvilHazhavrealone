@@ -51,7 +51,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
         holder.txtUserEmail.setText(user.getEmail());
         holder.txtUserPassword.setText("סיסמה: " + user.getPassword());
         holder.txtUserAge.setText("גיל: " + user.getAge());
-        holder.txtUserIsAdmin.setText("מנהל: " + (user.getIsAdmin() ? "כן" : "לא"));
+        holder.txtUserIsAdmin.setText("מנהל: " + (user.isAdmin() ? "כן" : "לא"));
         holder.txtUserWins.setText("ניצחונות: " + user.getCountWins());
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
@@ -84,7 +84,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
             holder.btnDeleteUser.setVisibility(View.VISIBLE);
 
             //שינוי אייקון לפי הסטטוס
-            if (user.getIsAdmin()) {
+            if (user.isAdmin()) {
                 holder.btnToggleAdmin.setImageResource(R.drawable.ic_remove_admin);
                 holder.btnToggleAdmin.setContentDescription("הסר מנהל");
             } else {
@@ -102,7 +102,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
         );
 
         holder.itemView.setOnLongClickListener(v -> {
-            if (!user.getIsAdmin()) {
+            if (!user.isAdmin()) {
                 listener.onUserClicked(user);
                 return true;
             }

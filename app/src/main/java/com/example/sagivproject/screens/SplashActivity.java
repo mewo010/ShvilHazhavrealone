@@ -41,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
                             public void onCompleted(User user) {
                                 if (user != null) {
                                     SharedPreferencesUtil.saveUser(SplashActivity.this, user);
-                                    if (user.getIsAdmin()) {
+                                    if (user.isAdmin()) {
                                         intent = new Intent(SplashActivity.this, AdminPageActivity.class);
                                     } else {
                                         intent = new Intent(SplashActivity.this, MainActivity.class);

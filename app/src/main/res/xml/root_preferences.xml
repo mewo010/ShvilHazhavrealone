@@ -1,11 +1,28 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconSpaceReserved="false">
 
-    <PreferenceCategory app:title="תצוגה">
+    <PreferenceCategory
+        app:title="תצוגה"
+        app:iconSpaceReserved="false"
+        app:titleTextColor="@color/headline"
+        android:layout_marginBottom="8dp">
+
         <SwitchPreferenceCompat
             app:key="dark_mode"
             app:title="מצב כהה"
             app:summary="הפעל מצב כהה / בהיר"
-            app:defaultValue="false" />
+            app:defaultValue="false"
+            android:fontFamily="@font/text_hebrew"
+            android:padding="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="12dp"
+
+            app:iconSpaceReserved="false"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

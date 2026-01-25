@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.models.UserRole;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
@@ -149,7 +150,7 @@ public class AuthService {
     private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, CreateUserCallback callback) {
         String uid = databaseService.generateUserId();
 
-        User user = new User(uid, firstName, lastName, birthDateMillis, email, password, false, null, new HashMap<>(), 0);
+        User user = new User(uid, firstName, lastName, birthDateMillis, email, password, UserRole.REGULAR, null, new HashMap<>(), 0);
 
         databaseService.createNewUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override

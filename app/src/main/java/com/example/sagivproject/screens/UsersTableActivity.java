@@ -196,7 +196,7 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void handleToggleAdmin(User user) {
-        boolean newRole = !user.getIsAdmin();
+        boolean newRole = !user.isAdmin();
 
         databaseService.updateUserAdminStatus(user.getUid(), newRole, new DatabaseService.DatabaseCallback<>() {
             @Override
@@ -245,7 +245,7 @@ public class UsersTableActivity extends BaseActivity {
 
             case "מנהלים":
                 for (User user : usersList) {
-                    if (user.getIsAdmin() &&
+                    if (user.isAdmin() &&
                             user.getFullName().toLowerCase().contains(lowerQuery)) {
                         filteredList.add(user);
                     }
@@ -254,7 +254,7 @@ public class UsersTableActivity extends BaseActivity {
 
             case "משתמשים רגילים":
                 for (User user : usersList) {
-                    if (!user.getIsAdmin() &&
+                    if (!user.isAdmin() &&
                             user.getFullName().toLowerCase().contains(lowerQuery)) {
                         filteredList.add(user);
                     }

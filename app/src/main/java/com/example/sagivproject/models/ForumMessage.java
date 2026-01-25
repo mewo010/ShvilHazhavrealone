@@ -7,18 +7,18 @@ public class ForumMessage {
     private String message;
     private long timestamp;
     private String userId;
-    private boolean isUserAdmin;
+    private boolean sentByAdmin;
 
     public ForumMessage() {}
 
-    public ForumMessage(String messageId, String fullName, String email, String message, long timestamp, String userId, boolean isUserAdmin) {
+    public ForumMessage(String messageId, String fullName, String email, String message, long timestamp, String userId, boolean sentByAdmin) {
         this.messageId = messageId;
         this.fullName = fullName;
         this.email = email;
         this.message = message;
         this.timestamp = timestamp;
         this.userId = userId;
-        this.isUserAdmin = isUserAdmin;
+        this.sentByAdmin = sentByAdmin;
     }
 
     public String getMessageId() { return messageId; }
@@ -39,9 +39,9 @@ public class ForumMessage {
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
 
-    public boolean getIsUserAdmin() { return isUserAdmin; }
+    public boolean isSentByAdmin() { return sentByAdmin; }
 
-    public void setUserAdmin(Boolean admin) { isUserAdmin = admin; }
+    public void setSentByAdmin(boolean sentByAdmin) { this.sentByAdmin = sentByAdmin; }
 
     @Override
     public String toString() {
@@ -52,7 +52,7 @@ public class ForumMessage {
                 ", message='" + message + '\'' +
                 ", timestamp=" + timestamp +
                 ", userId='" + userId + '\'' +
-                ", isUserAdmin=" + isUserAdmin +
+                ", isUserAdmin=" + sentByAdmin +
                 '}';
     }
 }

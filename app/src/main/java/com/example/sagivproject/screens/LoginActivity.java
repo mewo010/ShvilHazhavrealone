@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(User user) {
                 Intent intent;
 
-                if (user.getIsAdmin()) {
+                if (user.isAdmin()) {
                     Toast.makeText(LoginActivity.this, "התחברת למשתמש מנהל בהצלחה!", Toast.LENGTH_SHORT).show();
                     intent = new Intent(LoginActivity.this, AdminPageActivity.class);
                 } else {

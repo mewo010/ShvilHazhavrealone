@@ -61,7 +61,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         //מנהל
         Button btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
 
-        boolean isAdmin = user.getIsAdmin();
+        boolean isAdmin = user.isAdmin();
 
         if (isAdmin) {
             //הופך את כפתורי המנהל ל-VISIBLE

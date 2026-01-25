@@ -2,6 +2,9 @@ package com.example.sagivproject.screens;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -54,6 +57,17 @@ public class SettingsActivity extends AppCompatActivity {
                 boolean isDark = sharedPreferences.getBoolean("dark_mode", false);
                 AppCompatDelegate.setDefaultNightMode(isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
             }
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+
+            if (view != null) {
+                view.setPadding(16, 16, 16, 16);
+            }
+
+            return view;
         }
     }
 }
