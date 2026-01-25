@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
         Button btnToExit = findViewById(R.id.btn_main_to_exit);
         ImageButton btnToSettings = findViewById(R.id.btn_main_to_settings);
-
+        TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
 
         btnToContact.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DetailsAboutUserActivity.class)));
@@ -70,15 +70,11 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumActivity.class)));
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         btnToExit.setOnClickListener(view -> logout());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
-        TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
-        if (user.getFullName() == null || user.getFullName().trim().isEmpty()) {
-            txtHomePageTitle.setText("שלום מטופל יקר");
-        } else {
-            txtHomePageTitle.setText("שלום " + user.getFullName());
-        }
+        assert user != null;
+        txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));
 
         //להעלאת תמונות - למחוק בסוף הפרויקט!
         //uploadAllImages();

@@ -136,6 +136,19 @@
                         android:fontFamily="@font/text_hebrew" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_admin_to_Settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/הגדרות"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="16dp"
+                        app:icon="@drawable/ic_settings"
+                        app:iconSize="28dp"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="12dp"
+                        android:fontFamily="@font/text_hebrew" />
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_exit"
                         android:fontFamily="@font/text_hebrew"
                         android:layout_width="match_parent"
