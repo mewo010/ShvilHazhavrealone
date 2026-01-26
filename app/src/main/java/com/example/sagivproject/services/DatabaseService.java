@@ -226,8 +226,8 @@ public class DatabaseService {
     ///
     /// @param user     the user object to create
     /// @param callback the callback to call when the operation is completed
-    ///                                              the callback will receive void
-    ///                                            if the operation fails, the callback will receive an exception
+    ///                                                              the callback will receive void
+    ///                                                            if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void createNewUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
@@ -238,8 +238,8 @@ public class DatabaseService {
     ///
     /// @param uid      the id of the user to get
     /// @param callback the callback to call when the operation is completed
-    ///                                               the callback will receive the user object
-    ///                                             if the operation fails, the callback will receive an exception
+    ///                                                               the callback will receive the user object
+    ///                                                             if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void getUser(@NotNull final String uid, @NotNull final DatabaseCallback<User> callback) {
@@ -249,8 +249,8 @@ public class DatabaseService {
     /// get all the users from the database
     ///
     /// @param callback the callback to call when the operation is completed
-    ///                                              the callback will receive a list of user objects
-    ///                                            if the operation fails, the callback will receive an exception
+    ///                                                              the callback will receive a list of user objects
+    ///                                                            if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see List
     /// @see User
@@ -271,8 +271,8 @@ public class DatabaseService {
     /// @param email    the email of the user
     /// @param password the password of the user
     /// @param callback the callback to call when the operation is completed
-    ///                                            the callback will receive the user object
-    ///                                          if the operation fails, the callback will receive an exception
+    ///                                                            the callback will receive the user object
+    ///                                                          if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void getUserByEmailAndPassword(@NotNull final String email, @NotNull final String password, @NotNull final DatabaseCallback<User> callback) {
@@ -419,7 +419,7 @@ public class DatabaseService {
     ///
     /// @param message  the ForumMessage object to send
     /// @param callback the callback to call when the operation is completed
-    ///                                                 the callback will receive void on success or an exception on fail
+    ///                                                                 the callback will receive void on success or an exception on fail
     /// @see DatabaseCallback
     /// @see ForumMessage
     public void sendForumMessage(ForumMessage message, DatabaseCallback<Void> callback) {
@@ -429,7 +429,7 @@ public class DatabaseService {
     /// get all forum messages in realtime (live updates)
     ///
     /// @param callback the callback that will receive a List<ForumMessage> when data changes
-    ///                                                 if the operation fails, the callback will receive an exception
+    ///                                                                 if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see ForumMessage
     /// @see ValueEventListener
@@ -458,7 +458,7 @@ public class DatabaseService {
     ///
     /// @param messageId the id of the forum message to delete
     /// @param callback  the callback to call when the operation is completed
-    ///                                                   the callback will receive void on success or an exception on fail
+    ///                                                                    the callback will receive void on success or an exception on fail
     /// @see DatabaseCallback
     public void deleteForumMessage(@NotNull final String messageId, @Nullable final DatabaseCallback<Void> callback) {
         deleteData(FORUM_PATH + "/" + messageId, callback);
@@ -474,7 +474,7 @@ public class DatabaseService {
     ///
     /// @param user     the user who wants to join or create a game room
     /// @param callback callback that returns the matched or newly created GameRoom
-    ///                                                 or an exception if the transaction fails
+    ///                                                                 or an exception if the transaction fails
     /// @see GameRoom
     /// @see Transaction
     public void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback) {

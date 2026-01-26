@@ -25,6 +25,7 @@ public class MedicationDialog {
     private final Medication medToEdit;
     private final String uid;
     private final OnMedicationSubmitListener listener;
+
     public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener) {
         this.context = context;
         this.medToEdit = medToEdit;

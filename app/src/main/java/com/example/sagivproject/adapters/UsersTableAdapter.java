@@ -21,6 +21,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
     private final User currentUser;
     private final List<User> users;
     private final OnUserActionListener listener;
+
     public UsersTableAdapter(List<User> users, User currentUser, OnUserActionListener listener) {
         this.users = users;
         this.currentUser = currentUser;

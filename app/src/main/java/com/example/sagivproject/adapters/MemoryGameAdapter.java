@@ -21,6 +21,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
     private static final int CAMERA_DISTANCE = 8000;
     private final List<Card> cards;
     private final MemoryGameListener listener;
+
     public MemoryGameAdapter(List<Card> cards, MemoryGameListener listener) {
         this.cards = cards;
         this.listener = listener;
