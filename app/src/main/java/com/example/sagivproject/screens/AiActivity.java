@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -129,7 +130,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);
                         answerView.setText("שגיאה: " + e.getMessage());
@@ -137,7 +138,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     final String r = response.body().string();
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);

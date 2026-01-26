@@ -423,7 +423,7 @@ public class DatabaseService {
                 .orderByChild("timestamp")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot snapshot) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<ForumMessage> list = new ArrayList<>();
                         for (DataSnapshot child : snapshot.getChildren()) {
                             ForumMessage msg = child.getValue(ForumMessage.class);
@@ -433,7 +433,7 @@ public class DatabaseService {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError error) {
+                    public void onCancelled(@NonNull DatabaseError error) {
                         callback.onFailed(error.toException());
                     }
                 });

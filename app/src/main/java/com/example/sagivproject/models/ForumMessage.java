@@ -1,5 +1,7 @@
 package com.example.sagivproject.models;
 
+import androidx.annotation.NonNull;
+
 public class ForumMessage {
     private String messageId;
     private String fullName;
@@ -43,6 +45,7 @@ public class ForumMessage {
 
     public void setSentByAdmin(boolean sentByAdmin) { this.sentByAdmin = sentByAdmin; }
 
+    @NonNull
     @Override
     public String toString() {
         return "ForumMessage{" +

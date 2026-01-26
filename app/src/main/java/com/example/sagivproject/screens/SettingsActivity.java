@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
@@ -59,13 +60,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        @NonNull
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);
 
-            if (view != null) {
-                view.setPadding(16, 16, 16, 16);
-            }
+            view.setPadding(16, 16, 16, 16);
 
             return view;
         }

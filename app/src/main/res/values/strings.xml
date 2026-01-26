@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">שביל הזהב</string>
-    <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב...\"</string>
+    <string name="splash_quote">\"מנגינות מדומות, משטות, מזייפות, מטשטשות לי את שביל הזהב…\"</string>
     <string name="חזרה">חזרה</string>
     <string name="קשרקרובמנהל">קשר קרוב - מנהל</string>
     <string name="התקבלוהודעותחדשות">התקבלו הודעות חדשות ↓</string>
-    <string name="כתובהודעה">כתוב הודעה...</string>
+    <string name="כתובהודעה">כתוב הודעה…</string>
     <string name="דףמנהלים">דף מנהלים 🤐🤫</string>
     <string name="שלוםמנהליקר">שלום מנהל יקר</string>
     <string name="אפשרויותניהול">אפשרויות ניהול</string>
@@ -17,10 +17,10 @@
     <string name="דףהבית">דף הבית</string>
     <string name="צורקשר">צור קשר</string>
     <string name="יועץבינהמלאכותית">AI יועץ</string>
-    <string name="הקלדכאןאתשאלתך">הקלד כאן את שאלתך...</string>
+    <string name="הקלדכאןאתשאלתך">הקלד כאן את שאלתך…</string>
     <string name="שלחשאלה">שלח שאלה</string>
     <string name="תשובתהיועץ">תשובת היועץ</string>
-    <string name="התשובהתוצגכאן">התשובה תוצג כאן...</string>
+    <string name="התשובהתוצגכאן">התשובה תוצג כאן…</string>
     <string name="דףראשי">דף ראשי</string>
     <string name="התחברות">התחברות</string>
     <string name="הרשמה">הרשמה</string>
@@ -49,12 +49,12 @@
     <string name="שםהתרופה">שם התרופה</string>
     <string name="תאריךאחרוןלשימוש">תאריך אחרון לשימוש</string>
     <string name="הוספתמשתמש">הוספת משתמש</string>
-    <string name="הקלדכאן">הקלד כאן...</string>
+    <string name="הקלדכאן">הקלד כאן…</string>
     <string name="חפשלפי">חפש לפי:</string>
     <string name="עריכתפרטים">עריכת פרטים</string>
     <string name="מצאיריב">מצא יריב</string>
     <string name="הוספתתמונהשלתרופה">הוספת תמונה של תרופה</string>
-    <string name="חפשלפיid">חפש לפי ID (למשל card1)...</string>
+    <string name="חפשלפיid">חפש לפי ID (למשל card1)…</string>
     <string name="אפשרויות">אפשרויות</string>
     <string name="תמונתפרופיל">תמונת פרופיל</string>
     <string name="אייקוןמצלמה">אייקון מצלמה</string>

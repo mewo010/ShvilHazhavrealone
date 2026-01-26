@@ -52,11 +52,8 @@ public class AdminPageActivity extends BaseActivity {
         btnLogout.setOnClickListener(view -> logout());
 
         User user = SharedPreferencesUtil.getUser(this);
-        if (user.getFullName() == null || user.getFullName().trim().isEmpty()) {
-            txtAdminTitle.setText("שלום מנהל יקר");
-        } else {
-            txtAdminTitle.setText("שלום " + user.getFullName());
-        }
+        assert user != null;
+        txtAdminTitle.setText(String.format("שלום %s", user.getFullName()));
     }
 
     //התראה על יום הולדת

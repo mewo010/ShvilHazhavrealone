@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -123,8 +124,9 @@ public class UsersTableActivity extends BaseActivity {
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.search_types)
         ) {
+            @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 Typeface typeface = ResourcesCompat.getFont(UsersTableActivity.this, R.font.text_hebrew);
@@ -138,7 +140,7 @@ public class UsersTableActivity extends BaseActivity {
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 Typeface typeface = ResourcesCompat.getFont(UsersTableActivity.this, R.font.text_hebrew);
