@@ -2,6 +2,8 @@ package com.example.sagivproject.models;
 
 import androidx.annotation.NonNull;
 
+import com.example.sagivproject.models.enums.UserRole;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashMap;

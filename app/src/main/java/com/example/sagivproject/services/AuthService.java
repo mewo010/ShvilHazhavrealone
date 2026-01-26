@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.models.UserRole;
+import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;

@@ -1,5 +1,6 @@
 package com.example.sagivproject.models;
 
+import com.example.sagivproject.models.enums.MedicationType;
 import com.google.firebase.database.Exclude;
 
 import java.util.Date;

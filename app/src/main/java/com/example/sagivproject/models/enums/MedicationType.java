@@ -1,4 +1,4 @@
-package com.example.sagivproject.models;
+package com.example.sagivproject.models.enums;
 
 public enum MedicationType {
     PILL("כדור"),

@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.models.MedicationType;
+import com.example.sagivproject.models.enums.MedicationType;
 import com.example.sagivproject.utils.CalendarUtil;
 
 import java.text.ParseException;
