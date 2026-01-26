@@ -42,7 +42,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     @Override
-    public int getItemCount() { return userList.size(); }
+    public int getItemCount() {
+        return userList.size();
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvName, tvEmail, tvWins;

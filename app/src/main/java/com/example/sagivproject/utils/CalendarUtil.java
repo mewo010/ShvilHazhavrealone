@@ -12,10 +12,6 @@ public class CalendarUtil {
 
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 
-    public interface OnDateSelectedListener {
-        void onDateSelected(long dateMillis, String formattedDate);
-    }
-
     public static void openDatePicker(Context context, long initialMillis, OnDateSelectedListener listener) {
         openDatePicker(context, initialMillis, listener, false, DEFAULT_DATE_FORMAT);
     }
@@ -59,5 +55,9 @@ public class CalendarUtil {
     public static String formatDate(long millis, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         return sdf.format(new Date(millis));
+    }
+
+    public interface OnDateSelectedListener {
+        void onDateSelected(long dateMillis, String formattedDate);
     }
 }

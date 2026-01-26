@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurface"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -23,10 +22,10 @@
                 android:id="@+id/edt_medication_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/שםהתרופה"
-                android:textSize="22sp"
                 android:inputType="text"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -34,16 +33,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textColorHint="@color/buttons_text_color"
-            android:hint="@string/סוגההתרופה">
+            android:hint="@string/סוגההתרופה"
+            android:textColorHint="@color/buttons_text_color">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_medication_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
                 android:fontFamily="@font/text_hebrew"
-                android:textSize="22sp"/>
+                android:inputType="none"
+                android:textSize="22sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,10 +56,10 @@
                 android:id="@+id/edt_medication_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/פרטים"
-                android:textSize="22sp"
                 android:inputType="text"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -73,39 +72,39 @@
                 android:id="@+id/edt_medication_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/תאריךאחרוןלשימוש"
-                android:textSize="22sp"
-                android:focusable="false"
                 android:clickable="true"
+                android:focusable="false"
+                android:fontFamily="@font/text_hebrew"
+                android:hint="@string/תאריךאחרוןלשימוש"
                 android:inputType="none"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_medication_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/הוסף"
-                android:textSize="22sp"
-                android:layout_margin="4dp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_medication_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/ביטול"
-                android:textSize="22sp"
-                android:layout_margin="4dp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

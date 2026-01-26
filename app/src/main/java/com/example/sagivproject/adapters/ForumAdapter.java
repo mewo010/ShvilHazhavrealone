@@ -27,17 +27,12 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
     private final List<ForumMessage> messages;
     private ForumMessageListener listener;
 
-    public interface ForumMessageListener {
-        void onClick(ForumMessage message);
-        boolean isShowMenuOptions(ForumMessage message);
+    public ForumAdapter(List<ForumMessage> messages) {
+        this.messages = messages;
     }
 
     public void setForumMessageListener(ForumMessageListener listener) {
         this.listener = listener;
-    }
-
-    public ForumAdapter(List<ForumMessage> messages) {
-        this.messages = messages;
     }
 
     @NonNull
@@ -114,6 +109,12 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
     @Override
     public int getItemCount() {
         return messages.size();
+    }
+
+    public interface ForumMessageListener {
+        void onClick(ForumMessage message);
+
+        boolean isShowMenuOptions(ForumMessage message);
     }
 
     public static class ForumViewHolder extends RecyclerView.ViewHolder {

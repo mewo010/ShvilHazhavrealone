@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="10dp"
     app:cardCornerRadius="18dp"
     app:cardElevation="6dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="?attr/colorOutline">
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,37 +20,37 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/קלף"
             android:scaleType="centerInside"
             android:src="@drawable/fold_card_img"
-            android:contentDescription="@string/קלף"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="1:1" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_ItemCard_image_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            tools:text="ID: card1"
-            android:textSize="17sp"
             android:fontFamily="@font/text_english"
-            app:layout_constraintTop_toBottomOf="@id/img_ItemCard_card_image"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="17sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_ItemCard_card_image"
+            tools:text="ID: card1" />
 
         <ImageButton
             android:id="@+id/btn_ItemCard_delete"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_delete"
             android:contentDescription="@string/מחק"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -15,16 +15,6 @@ public class CustomTypefaceSpan extends TypefaceSpan {
         newType = type;
     }
 
-    @Override
-    public void updateDrawState(@NonNull TextPaint ds) {
-        applyCustomTypeFace(ds, newType);
-    }
-
-    @Override
-    public void updateMeasureState(@NonNull TextPaint paint) {
-        applyCustomTypeFace(paint, newType);
-    }
-
     private static void applyCustomTypeFace(Paint paint, Typeface tf) {
         int oldStyle;
         Typeface old = paint.getTypeface();
@@ -44,5 +34,15 @@ public class CustomTypefaceSpan extends TypefaceSpan {
         }
 
         paint.setTypeface(tf);
+    }
+
+    @Override
+    public void updateDrawState(@NonNull TextPaint ds) {
+        applyCustomTypeFace(ds, newType);
+    }
+
+    @Override
+    public void updateMeasureState(@NonNull TextPaint paint) {
+        applyCustomTypeFace(paint, newType);
     }
 }

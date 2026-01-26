@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gameHomeScreenPage"
@@ -11,74 +11,74 @@
         android:id="@+id/topMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btn_GameHomeScreen_to_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףהבית"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/דףהבית"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_GameHomeScreen_to_DetailsAboutUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/משתמש"
-            android:textSize="23sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/משתמש"
+            android:textSize="23sp" />
 
         <Button
             android:id="@+id/btn_GameHomeScreen_to_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="23sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="23sp" />
 
         <Button
             android:id="@+id/btn_GameHomeScreen_to_exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התנתקות"
-            android:textSize="23sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/התנתקות"
+            android:textSize="23sp" />
 
         <ImageButton
             android:id="@+id/btn_GameHomeScreen_to_settings"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
-            android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <View
@@ -86,91 +86,91 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?attr/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/topMenu" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:fillViewport="true"
         android:clipToPadding="false"
+        android:fillViewport="true"
         android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/headline_hebrew"
                 android:text="@string/משחקזיכרון"
                 android:textColor="@color/headline"
-                android:textSize="40sp"
-                android:fontFamily="@font/headline_hebrew"/>
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/tv_GameHomeScreen_victories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="ניצחונות: "
-                android:textSize="25sp"
-                android:gravity="right"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/text_hebrew"
-                tools:ignore="RtlHardcoded" />
+                android:gravity="right"
+                android:textSize="25sp"
+                tools:ignore="RtlHardcoded"
+                tools:text="ניצחונות: " />
 
             <TextView
                 android:id="@+id/tv_GameHomeScreen_status_of_finding_enemy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="מחפש יריב..."
-                android:textSize="25sp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/text_hebrew"
                 android:gravity="center"
+                android:textSize="25sp"
                 android:visibility="gone"
-                android:fontFamily="@font/text_hebrew"/>
+                tools:text="מחפש יריב..." />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_GameHomeScreen_find_enemy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/text_hebrew"
                     android:text="@string/מצאיריב"
                     android:textAllCaps="false"
                     android:textSize="25sp"
                     app:cornerRadius="30dp"
                     app:icon="@drawable/ic_search"
-                    app:iconSize="28dp"
                     app:iconGravity="textStart"
                     app:iconPadding="12dp"
-                    android:fontFamily="@font/text_hebrew"/>
+                    app:iconSize="28dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_GameHomeScreen_cancel_find_enemy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:fontFamily="@font/text_hebrew"
                     android:text="@string/בטלחיפוש"
                     android:textAllCaps="false"
                     android:textSize="25sp"
+                    android:visibility="gone"
                     app:cornerRadius="30dp"
                     app:icon="@drawable/ic_cancel"
-                    app:iconSize="28dp"
                     app:iconGravity="textStart"
                     app:iconPadding="12dp"
-                    android:fontFamily="@font/text_hebrew"
-                    android:visibility="gone"/>
+                    app:iconSize="28dp" />
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
@@ -191,97 +191,97 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/הוראותהמשחק"
-                        android:textSize="30sp"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="@font/headline_hebrew"
                         android:gravity="center"
-                        android:layout_marginBottom="16dp" />
+                        android:text="@string/הוראותהמשחק"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
                         android:text="@string/טקסט1משחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:gravity="right"
-                        android:layout_marginBottom="16dp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="right"
                         android:text="@string/מטרתהמשחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/headline_hebrew"
-                        android:gravity="right"
-                        android:layout_marginBottom="8dp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
                         android:text="@string/טקסט2משחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:gravity="right"
-                        android:layout_marginBottom="16dp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/headline_hebrew"
+                        android:gravity="right"
                         android:text="@string/כלליהמשחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/headline_hebrew"
-                        android:gravity="right"
-                        android:layout_marginBottom="8dp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
                         android:text="@string/טקסט3משחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:gravity="right"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
                         android:text="@string/טקסט4משחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:gravity="right"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="right"
                         android:text="@string/טקסט5משחק"
                         android:textSize="22sp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:gravity="right"
-                        android:layout_marginBottom="16dp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/שיטתהניקוד"
-                        android:textSize="22sp"
+                        android:layout_marginBottom="8dp"
                         android:fontFamily="@font/headline_hebrew"
                         android:gravity="right"
-                        android:layout_marginBottom="8dp"
+                        android:text="@string/שיטתהניקוד"
+                        android:textSize="22sp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/טקסט6משחק"
-                        android:textSize="22sp"
                         android:fontFamily="@font/text_hebrew"
                         android:gravity="right"
+                        android:text="@string/טקסט6משחק"
+                        android:textSize="22sp"
                         tools:ignore="RtlHardcoded" />
 
                 </LinearLayout>
@@ -290,54 +290,54 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/טבלתמובילים"
-                android:textSize="30sp"
+                android:layout_marginTop="50dp"
                 android:fontFamily="@font/headline_hebrew"
                 android:gravity="center"
-                android:layout_marginTop="50dp" />
+                android:text="@string/טבלתמובילים"
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="1dp"
                 android:paddingVertical="10dp"
-                android:layout_marginTop="15dp"
                 android:weightSum="10">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/שםמלא"
+                    android:fontFamily="@font/headline_hebrew"
                     android:gravity="center"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/headline_hebrew"/>
+                    android:text="@string/שםמלא"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="@string/אימייל"
+                    android:fontFamily="@font/headline_hebrew"
                     android:gravity="center"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/headline_hebrew"/>
+                    android:text="@string/אימייל"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:gravity="center"
                     android:text="@string/אייקוןגביע"
-                    android:textSize="18sp"
-                    android:gravity="center" />
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_GameHomeScreen_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:nestedScrollingEnabled="false" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

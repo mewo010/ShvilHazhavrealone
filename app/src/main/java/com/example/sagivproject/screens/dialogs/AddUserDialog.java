@@ -20,10 +20,6 @@ public class AddUserDialog {
     private final AuthService authService;
     private long birthDateMillis = -1;
 
-    public interface AddUserListener {
-        void onUserAdded(User newUser);
-    }
-
     public AddUserDialog(Context context, AddUserListener listener) {
         this.context = context;
         this.listener = listener;
@@ -130,5 +126,9 @@ public class AddUserDialog {
         if (millis > 0) {
             editText.setText(CalendarUtil.formatDate(millis));
         }
+    }
+
+    public interface AddUserListener {
+        void onUserAdded(User newUser);
     }
 }

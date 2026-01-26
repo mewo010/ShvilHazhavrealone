@@ -52,8 +52,7 @@ public class ContactActivity extends BaseActivity {
             btnToDetailsAboutUser.setVisibility(View.VISIBLE);
             btnToExit.setVisibility(View.VISIBLE);
             btnToSettings1.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             //הופך את כפתורי המשתמש הלא מחובר ל-VISIBLE
             btnToLanding.setVisibility(View.VISIBLE);
             btnToLoginPage.setVisibility(View.VISIBLE);

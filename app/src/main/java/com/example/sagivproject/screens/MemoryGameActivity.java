@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapter.MemoryGameListener {
+    private static final long TURN_TIME_LIMIT = 15000; //15 שניות
     private RecyclerView recyclerCards;
     private boolean endDialogShown = false, localLock = false;
     private String roomId;
@@ -43,7 +44,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     private MemoryGameAdapter adapter;
     private TextView tvTimer, tvTurnStatus, tvScore, tvOpponentName;
     private CountDownTimer turnTimer;
-    private static final long TURN_TIME_LIMIT = 15000; //15 שניות
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

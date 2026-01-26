@@ -5,32 +5,32 @@
     android:id="@+id/contactPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.ContactActivity" >
+    tools:context=".screens.ContactActivity">
 
     <LinearLayout
         android:id="@+id/topMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btn_contact_to_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףהבית"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/דףהבית"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -38,13 +38,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/משתמש"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/משתמש"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -52,13 +52,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -66,37 +66,37 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התנתקות"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/התנתקות"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btn_contact_to_settings1"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
             android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_contact_to_landing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףראשי"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/דףראשי"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -104,13 +104,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -118,13 +118,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התחברות"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/התחברות"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <Button
@@ -132,24 +132,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/הרשמה"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"
+            android:singleLine="true"
+            android:text="@string/הרשמה"
+            android:textSize="22sp"
             android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btn_contact_to_settings2"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
             android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <View
@@ -157,41 +157,41 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?attr/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/topMenu" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/separatorLine"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/separatorLine">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:gravity="center_horizontal">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/headline_hebrew"
                 android:text="@string/צורקשר"
                 android:textColor="@color/headline"
-                android:textSize="40sp"
-                android:layout_marginBottom="24dp"
-                android:fontFamily="@font/headline_hebrew"/>
+                android:textSize="40sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
-                android:layout_marginBottom="24dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
@@ -211,29 +211,29 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/כתובתמייללפניות"
-                        android:textSize="30sp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/text_hebrew"
+                        android:text="@string/כתובתמייללפניות"
+                        android:textSize="30sp"
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/אימייל"
-                        android:autoLink="email"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="24dp"
                         android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/text_english" />
+                        android:layout_marginBottom="24dp"
+                        android:autoLink="email"
+                        android:fontFamily="@font/text_english"
+                        android:text="@string/אימייל"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/טקסטצורקשר"
                         android:textSize="25sp"
-                        android:fontFamily="@font/text_hebrew"
                         tools:ignore="RtlHardcoded" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

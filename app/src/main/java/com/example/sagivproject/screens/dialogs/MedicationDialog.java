@@ -20,17 +20,11 @@ import java.util.Date;
 import java.util.List;
 
 public class MedicationDialog {
-    public interface OnMedicationSubmitListener {
-        void onAdd(Medication medication);
-        void onEdit(Medication medication);
-    }
-
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private final Context context;
     private final Medication medToEdit;
     private final String uid;
     private final OnMedicationSubmitListener listener;
-
     public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener) {
         this.context = context;
         this.medToEdit = medToEdit;
@@ -119,5 +113,11 @@ public class MedicationDialog {
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+
+    public interface OnMedicationSubmitListener {
+        void onAdd(Medication medication);
+
+        void onEdit(Medication medication);
     }
 }

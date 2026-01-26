@@ -36,20 +36,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MedicationImagesTableActivity extends BaseActivity {
-    private MedicationImagesTableAdapter adapter;
     private final List<ImageData> allImages = new ArrayList<>();
     private final List<ImageData> filteredList = new ArrayList<>();
+    private MedicationImagesTableAdapter adapter;
     private TextInputEditText etSearch;
 
     //פתיחת גלריה לבחירת תמונה
     private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        result -> {
-            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                Uri imageUri = result.getData().getData();
-                uploadImage(imageUri);
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri imageUri = result.getData().getData();
+                    uploadImage(imageUri);
+                }
             }
-        }
     );
 
     @Override
@@ -105,10 +105,14 @@ public class MedicationImagesTableActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterImages(s.toString());
             }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         loadImages();
@@ -166,7 +170,9 @@ public class MedicationImagesTableActivity extends BaseActivity {
                     }
                 });
             }
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteImageAndReorder(ImageData imageToDelete) {

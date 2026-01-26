@@ -20,17 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseForumActivity extends BaseActivity {
+    protected final List<ForumMessage> messages = new ArrayList<>();
     protected RecyclerView recycler;
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
     protected ForumAdapter adapter;
-    protected final List<ForumMessage> messages = new ArrayList<>();
     protected ForumService forumService;
     protected ForumPermissions permissions;
-
-    public interface ForumPermissions {
-        boolean canDelete(ForumMessage message);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,5 +152,9 @@ public abstract class BaseForumActivity extends BaseActivity {
                 recycler.post(() -> recycler.scrollToPosition(adapter.getItemCount() - 1));
             }
         }
+    }
+
+    public interface ForumPermissions {
+        boolean canDelete(ForumMessage message);
     }
 }

@@ -11,74 +11,74 @@
         android:id="@+id/topMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btn_forum_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףהבית"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/דףהבית"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_forum_DetailsAboutUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/משתמש"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/משתמש"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_forum_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_forum_exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התנתקות"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/התנתקות"
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/btn_forum_to_settings"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
-            android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <View
@@ -86,37 +86,37 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?attr/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/topMenu" />
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/headline_hebrew"
         android:text="@string/קשרקרוב"
         android:textColor="@color/headline"
         android:textSize="40sp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/headline_hebrew"
-        app:layout_constraintTop_toBottomOf="@id/separatorLine"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/separatorLine" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
-        app:strokeColor="?attr/colorOutline"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
         app:layout_constraintBottom_toTopOf="@id/layoutNewMessage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:strokeColor="?attr/colorOutline">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -136,11 +136,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="12dp"
-                android:text="@string/התקבלוהודעותחדשות"
-                android:visibility="gone"
-                app:cornerRadius="20dp"
                 android:fontFamily="@font/text_hebrew"
-                android:textSize="16sp" />
+                android:text="@string/התקבלוהודעותחדשות"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:cornerRadius="20dp" />
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -157,16 +157,16 @@
         app:boxCornerRadiusTopEnd="25dp"
         app:boxCornerRadiusTopStart="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_forum_send_message">
+        app:layout_constraintEnd_toStartOf="@id/btn_forum_send_message"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_forum_new_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/text_hebrew"
             android:inputType="textMultiLine"
             android:maxLines="3"
-            android:fontFamily="@font/text_hebrew"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,14 +175,14 @@
         android:layout_width="54dp"
         android:layout_height="54dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/שלחהודעה"
         app:cornerRadius="30dp"
+        app:icon="@drawable/ic_send"
         app:iconGravity="textEnd"
         app:iconPadding="0dp"
-        app:icon="@drawable/ic_send"
-        android:contentDescription="@string/שלחהודעה"
         app:iconSize="28dp"
         app:layout_constraintBottom_toBottomOf="@id/layoutNewMessage"
-        app:layout_constraintTop_toTopOf="@id/layoutNewMessage"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layoutNewMessage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

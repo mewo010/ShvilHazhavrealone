@@ -35,20 +35,18 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AiActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
-    private Button send;
-    private ProgressBar progressBar;
-    private EditText questionInput;
-    private TextView answerView;
-
     private static final String API_KEY = EncryptionAPIKey.decode(BuildConfig.API_KEY);
     private static final String MODEL = "models/gemini-2.5-flash";
     private static final String ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/" + MODEL + ":generateContent?key=" + API_KEY;
-
     private final OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .build();
+    private Button send;
+    private ProgressBar progressBar;
+    private EditText questionInput;
+    private TextView answerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +74,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
         btnToContact.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, ContactActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, DetailsAboutUserActivity.class)));
         send.setOnClickListener(view -> sendQuestion());
-        btnToExit.setOnClickListener(view ->  logout());
+        btnToExit.setOnClickListener(view -> logout());
         btnToSettings.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, SettingsActivity.class)));
     }
 

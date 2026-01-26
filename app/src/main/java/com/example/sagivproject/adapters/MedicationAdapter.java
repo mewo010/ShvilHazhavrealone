@@ -33,11 +33,6 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public interface OnMedicationActionListener {
-        void onEdit(int position);
-        void onDelete(int position);
-    }
-
     public MedicationAdapter(Context context, ArrayList<Medication> medications, OnMedicationActionListener listener) {
         this.context = context;
         this.medications = medications;
@@ -118,6 +113,12 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
     @Override
     public int getItemCount() {
         return medications.size();
+    }
+
+    public interface OnMedicationActionListener {
+        void onEdit(int position);
+
+        void onDelete(int position);
     }
 
     static class MedicationViewHolder extends RecyclerView.ViewHolder {

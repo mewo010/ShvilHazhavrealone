@@ -3,151 +3,151 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurface"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/headline_hebrew"
             android:gravity="center"
             android:text="@string/הוספתמשתמשחדש"
             android:textColor="@color/headline"
-            android:textSize="35sp"
-            android:fontFamily="@font/headline_hebrew"
-            android:layout_marginBottom="16dp" />
+            android:textSize="35sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_edit"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/text_hebrew"
             app:boxBackgroundMode="outline"
             app:boxStrokeWidth="1dp"
-            android:fontFamily="@font/text_hebrew">
+            app:startIconDrawable="@drawable/ic_edit">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAddUserFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/שםפרטי"
                 android:inputType="textPersonName"
-                android:textSize="23sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="23sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_edit"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/text_hebrew"
             app:boxBackgroundMode="outline"
             app:boxStrokeWidth="1dp"
-            android:fontFamily="@font/text_hebrew">
+            app:startIconDrawable="@drawable/ic_edit">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAddUserLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/שםמשפחה"
                 android:inputType="textPersonName"
-                android:textSize="23sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="23sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_calendar"
             android:layout_marginBottom="12dp"
             app:boxBackgroundMode="outline"
-            app:boxStrokeWidth="1dp">
+            app:boxStrokeWidth="1dp"
+            app:startIconDrawable="@drawable/ic_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAddUserBirthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/תאריךלידה"
-                android:focusable="false"
                 android:clickable="true"
-                android:textSize="23sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:focusable="false"
+                android:fontFamily="@font/text_hebrew"
+                android:hint="@string/תאריךלידה"
+                android:textSize="23sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_email"
             android:layout_marginBottom="12dp"
+            android:fontFamily="@font/text_english"
             app:boxBackgroundMode="outline"
             app:boxStrokeWidth="1dp"
-            android:fontFamily="@font/text_english">
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAddUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/כתובתאימייל"
                 android:inputType="textEmailAddress"
                 android:textDirection="ltr"
-                android:textSize="23sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="23sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/ic_password"
-            app:endIconMode="password_toggle"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/text_english"
             app:boxBackgroundMode="outline"
             app:boxStrokeWidth="1dp"
-            android:fontFamily="@font/text_english">
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputAddUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/סיסמה"
                 android:inputType="textPassword"
                 android:textDirection="ltr"
                 android:textSize="23sp"
                 app:boxBackgroundMode="outline"
-                app:boxStrokeWidth="1dp"
-                android:fontFamily="@font/text_hebrew"/>
+                app:boxStrokeWidth="1dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddUserSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/הוסף"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"
-                android:layout_margin="4dp" />
+                android:textSize="22sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddUserCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/ביטול"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"
-                android:layout_margin="4dp" />
+                android:textSize="22sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

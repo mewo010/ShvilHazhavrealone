@@ -21,7 +21,8 @@ public class User implements Serializable {
     private HashMap<String, Medication> medications;
     private int count_wins;
 
-    public User() { }
+    public User() {
+    }
 
     public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications, int count_wins) {
         this.uid = uid;
@@ -36,14 +37,30 @@ public class User implements Serializable {
         this.count_wins = count_wins;
     }
 
-    public String getFirstName() { return this.firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-    public String getLastName() { return this.lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public long getBirthDateMillis() { return this.birthDateMillis; }
-    public void setBirthDateMillis(long birthDateMillis) { this.birthDateMillis = birthDateMillis; }
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public long getBirthDateMillis() {
+        return this.birthDateMillis;
+    }
+
+    public void setBirthDateMillis(long birthDateMillis) {
+        this.birthDateMillis = birthDateMillis;
+    }
+
     public int getAge() {
         Calendar birth = Calendar.getInstance();
         birth.setTimeInMillis(birthDateMillis);
@@ -59,27 +76,65 @@ public class User implements Serializable {
         return age;
     }
 
-    public String getEmail() { return this.email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() {
+        return this.email;
+    }
 
-    public String getPassword() { return this.password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public UserRole getRole() { return role == null ? UserRole.REGULAR : role; }
-    public void setRole(UserRole role) { this.role = role; }
-    public boolean isAdmin() { return this.role == UserRole.ADMIN; }
+    public String getPassword() {
+        return this.password;
+    }
 
-    public String getUid() { return this.uid; }
-    public void setUid(String uid) { this.uid = uid; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public String getProfileImage() { return profileImage; }
-    public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
+    public UserRole getRole() {
+        return role == null ? UserRole.REGULAR : role;
+    }
 
-    public HashMap<String, Medication> getMedications() { return this.medications; }
-    public void setMedications(HashMap<String, Medication> medications) { this.medications = medications; }
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
-    public int getCountWins() { return this.count_wins; }
-    public void setCountWins(int count_wins) { this.count_wins = count_wins; }
+    public boolean isAdmin() {
+        return this.role == UserRole.ADMIN;
+    }
+
+    public String getUid() {
+        return this.uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public HashMap<String, Medication> getMedications() {
+        return this.medications;
+    }
+
+    public void setMedications(HashMap<String, Medication> medications) {
+        this.medications = medications;
+    }
+
+    public int getCountWins() {
+        return this.count_wins;
+    }
+
+    public void setCountWins(int count_wins) {
+        this.count_wins = count_wins;
+    }
 
     public String getFullName() {
         return this.firstName + " " + this.lastName;

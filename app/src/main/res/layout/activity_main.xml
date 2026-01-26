@@ -5,79 +5,79 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.MainActivity" >
+    tools:context=".screens.MainActivity">
 
     <LinearLayout
         android:id="@+id/topMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףהבית"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/דףהבית"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_main_to_DetailsAboutUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/משתמש"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/משתמש"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_main_to_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_main_to_exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התנתקות"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/התנתקות"
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/btn_main_to_settings"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
-            android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <View
@@ -85,164 +85,164 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?attr/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/topMenu" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/separatorLine"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/separatorLine">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center_horizontal">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/txt_main_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/headline_hebrew"
                 android:text="@string/שלוםמטופליקר"
                 android:textColor="@color/headline"
-                android:textSize="30sp"
-                android:layout_marginBottom="16dp"
-                android:fontFamily="@font/headline_hebrew"/>
+                android:textSize="30sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="12dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp"
-                    android:gravity="center">
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_medication"
+                        android:layout_marginBottom="6dp"
                         android:contentDescription="@string/אייקוןתרופה"
-                        android:layout_marginBottom="6dp" />
+                        android:src="@drawable/ic_medication" />
 
                     <Button
                         android:id="@+id/btn_main_to_MedicationList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/רשימתהתרופותשלי"
-                        android:textSize="25sp"
                         android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        android:text="@string/רשימתהתרופותשלי"
+                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="12dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp"
-                    android:gravity="center">
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_forum"
+                        android:layout_marginBottom="6dp"
                         android:contentDescription="@string/אייקוןפורום"
-                        android:layout_marginBottom="6dp" />
+                        android:src="@drawable/ic_forum" />
 
                     <Button
                         android:id="@+id/btn_main_to_forum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/קשרקרוב"
-                        android:textSize="25sp"
                         android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        android:text="@string/קשרקרוב"
+                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="12dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp"
-                    android:gravity="center">
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_ai_assistant"
+                        android:layout_marginBottom="6dp"
                         android:contentDescription="@string/אייקוןיועץבינהמלאכותית"
-                        android:layout_marginBottom="6dp" />
+                        android:src="@drawable/ic_ai_assistant" />
 
                     <Button
                         android:id="@+id/btn_main_to_Ai"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/יועץבינהמלאכותית"
-                        android:textSize="25sp"
                         android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        android:text="@string/יועץבינהמלאכותית"
+                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="12dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="12dp"
-                    android:gravity="center">
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/ic_memory_game"
+                        android:layout_marginBottom="6dp"
                         android:contentDescription="@string/אייקוןמשחק"
-                        android:layout_marginBottom="6dp" />
+                        android:src="@drawable/ic_memory_game" />
 
                     <Button
                         android:id="@+id/btn_main_to_GameHomeScreen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/משחקזיכרון"
-                        android:textSize="25sp"
                         android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        android:text="@string/משחקזיכרון"
+                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

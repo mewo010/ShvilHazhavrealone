@@ -20,10 +20,6 @@ import java.util.List;
 public abstract class BaseActivity extends AppCompatActivity {
     protected DatabaseService databaseService;
 
-    public interface RequiresPermissions {
-
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,5 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         permissions.add(Manifest.permission.POST_NOTIFICATIONS);
 
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), 1001);
+    }
+
+    public interface RequiresPermissions {
+
     }
 }

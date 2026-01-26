@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:iconSpaceReserved="false">
 
     <PreferenceCategory
-        app:title="תצוגה"
+        android:layout_marginBottom="8dp"
         app:iconSpaceReserved="false"
-        app:titleTextColor="@color/headline"
-        android:layout_marginBottom="8dp">
+        app:title="תצוגה"
+        app:titleTextColor="@color/headline">
 
         <SwitchPreferenceCompat
-            app:key="dark_mode"
-            app:title="מצב כהה"
-            app:summary="הפעל מצב כהה / בהיר"
-            app:defaultValue="false"
+            android:layout_marginBottom="12dp"
             android:fontFamily="@font/text_hebrew"
             android:padding="12dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:layout_marginBottom="12dp"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="dark_mode"
+            app:summary="הפעל מצב כהה / בהיר"
 
-            app:iconSpaceReserved="false"/>
+            app:title="מצב כהה" />
 
     </PreferenceCategory>
 

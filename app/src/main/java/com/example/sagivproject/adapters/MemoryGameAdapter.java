@@ -18,14 +18,9 @@ import com.example.sagivproject.utils.ImageUtil;
 import java.util.List;
 
 public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.CardViewHolder> {
-    public interface MemoryGameListener {
-        void onCardClicked(Card card, View itemView, ImageView imageView);
-    }
-
+    private static final int CAMERA_DISTANCE = 8000;
     private final List<Card> cards;
     private final MemoryGameListener listener;
-    private static final int CAMERA_DISTANCE = 8000;
-
     public MemoryGameAdapter(List<Card> cards, MemoryGameListener listener) {
         this.cards = cards;
         this.listener = listener;
@@ -136,6 +131,10 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
                     view.animate().scaleX(0.9f).scaleY(0.9f).setDuration(150).start()
             ).start();
         }
+    }
+
+    public interface MemoryGameListener {
+        void onCardClicked(Card card, View itemView, ImageView imageView);
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {

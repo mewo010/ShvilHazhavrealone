@@ -9,15 +9,13 @@
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="AppTextInputLayoutStyle"
-        parent="Widget.Material3.TextInputLayout.OutlinedBox">
+    <style name="AppTextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/text_color</item>
         <item name="boxStrokeWidthFocused">1dp</item>
         <item name="hintTextColor">@color/text_color</item>
     </style>
 
-    <style name="AppTextInputEditTextStyle"
-        parent="Widget.Material3.TextInputEditText.OutlinedBox">
+    <style name="AppTextInputEditTextStyle" parent="Widget.Material3.TextInputEditText.OutlinedBox">
         <item name="android:textColor">@color/text_color</item>
         <item name="android:fontFamily">@font/text_hebrew</item>
     </style>

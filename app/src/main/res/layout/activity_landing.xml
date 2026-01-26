@@ -11,73 +11,73 @@
         android:id="@+id/topMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/separatorLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/separatorLine">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/דףראשי"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/דףראשי"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_landing_to_contact"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/צורקשר"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/צורקשר"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_landing_to_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/התחברות"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/התחברות"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btn_landing_to_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/הרשמה"
-            android:textSize="22sp"
-            android:singleLine="true"
             android:ellipsize="none"
+            android:fontFamily="@font/text_hebrew"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:fontFamily="@font/text_hebrew"/>
+            android:singleLine="true"
+            android:text="@string/הרשמה"
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/btn_landing_to_settings"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/הגדרות"
-            android:src="@drawable/ic_settings"
-            android:layout_marginEnd="8dp" />
+            android:src="@drawable/ic_settings" />
     </LinearLayout>
 
     <View
@@ -85,23 +85,23 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?attr/colorOnSurface"
-        app:layout_constraintTop_toBottomOf="@id/topMenu"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/topMenu" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:fillViewport="true"
         android:clipToPadding="false"
+        android:fillViewport="true"
         android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="280dp"
@@ -115,79 +115,79 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/headline_hebrew"
                 android:text="@string/ברוכיםהבאים"
                 android:textColor="@color/headline"
-                android:textSize="50sp"
-                android:fontFamily="@font/headline_hebrew"
-                android:layout_marginBottom="40dp" />
+                android:textSize="50sp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="8dp"
-                android:layout_marginBottom="32dp"
                 app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:padding="24dp"
-                    android:gravity="center_horizontal">
+                    android:padding="24dp">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_landingBody_to_login"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/התחברות"
                         android:textAllCaps="false"
                         android:textSize="25sp"
                         app:cornerRadius="30dp"
                         app:icon="@drawable/ic_login"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_landingBody_to_register"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/הרשמה"
                         android:textAllCaps="false"
                         android:textSize="25sp"
                         app:cornerRadius="30dp"
-                        android:layout_marginTop="16dp"
                         app:icon="@drawable/ic_register"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_landingBody_to_contact"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/צורקשר"
                         android:textAllCaps="false"
                         android:textSize="25sp"
                         app:cornerRadius="30dp"
-                        android:layout_marginTop="16dp"
                         app:icon="@drawable/ic_contact_support"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        app:iconSize="28dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:text="@string/app_name"
-                android:textSize="20sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="20sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

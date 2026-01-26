@@ -19,31 +19,6 @@ public class AuthService {
         this.databaseService = DatabaseService.getInstance();
     }
 
-    public interface LoginCallback {
-        void onSuccess(User user);
-        void onError(String message);
-    }
-
-    public interface RegisterCallback {
-        void onSuccess();
-        void onError(String message);
-    }
-
-    public interface AddUserCallback {
-        void onSuccess(User user);
-        void onError(String message);
-    }
-
-    public interface UpdateUserCallback {
-        void onSuccess(User updatedUser);
-        void onError(String message);
-    }
-
-    private interface CreateUserCallback {
-        void onSuccess(User user);
-        void onError(String message);
-    }
-
     public void login(String email, String password, LoginCallback callback) {
         databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<>() {
             @Override
@@ -192,5 +167,35 @@ public class AuthService {
         SharedPreferencesUtil.signOutUser(context);
 
         return email;
+    }
+
+    public interface LoginCallback {
+        void onSuccess(User user);
+
+        void onError(String message);
+    }
+
+    public interface RegisterCallback {
+        void onSuccess();
+
+        void onError(String message);
+    }
+
+    public interface AddUserCallback {
+        void onSuccess(User user);
+
+        void onError(String message);
+    }
+
+    public interface UpdateUserCallback {
+        void onSuccess(User updatedUser);
+
+        void onError(String message);
+    }
+
+    private interface CreateUserCallback {
+        void onSuccess(User user);
+
+        void onError(String message);
     }
 }

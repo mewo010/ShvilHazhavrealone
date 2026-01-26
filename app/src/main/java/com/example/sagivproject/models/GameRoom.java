@@ -19,7 +19,8 @@ public class GameRoom {
     private boolean processingMatch; //דגל למניעת לחיצות בזמן אנימציית סגירה
     private String winnerUid; //
 
-    public GameRoom() {}
+    public GameRoom() {
+    }
 
     public GameRoom(String roomId, User player1) {
         this.roomId = roomId;
@@ -32,42 +33,91 @@ public class GameRoom {
         this.processingMatch = false;
     }
 
-    public String getRoomId() { return roomId; }
-    public void setRoomId(String roomId) { this.roomId = roomId; }
+    public String getRoomId() {
+        return roomId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
 
-    public User getPlayer1() { return player1; }
-    public void setPlayer1(User player1) { this.player1 = player1; }
+    public String getStatus() {
+        return status;
+    }
 
-    public User getPlayer2() { return player2; }
-    public void setPlayer2(User player2) { this.player2 = player2; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public List<Card> getCards() { return cards; }
-    public void setCards(List<Card> cards) { this.cards = cards; }
+    public User getPlayer1() {
+        return player1;
+    }
 
-    public String getCurrentTurnUid() { return currentTurnUid; }
+    public void setPlayer1(User player1) {
+        this.player1 = player1;
+    }
+
+    public User getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer2(User player2) {
+        this.player2 = player2;
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public String getCurrentTurnUid() {
+        return currentTurnUid;
+    }
+
     public void setCurrentTurnUid(String currentTurnUid) {
         this.currentTurnUid = currentTurnUid;
     }
 
-    public int getPlayer1Score() { return player1Score; }
+    public int getPlayer1Score() {
+        return player1Score;
+    }
+
     public void setPlayer1Score(int player1Score) {
         this.player1Score = player1Score;
     }
 
-    public int getPlayer2Score() { return player2Score; }
+    public int getPlayer2Score() {
+        return player2Score;
+    }
+
     public void setPlayer2Score(int player2Score) {
         this.player2Score = player2Score;
     }
 
-    public Integer getFirstSelectedCardIndex() { return firstSelectedCardIndex; }
-    public void setFirstSelectedCardIndex(Integer index) { this.firstSelectedCardIndex = index; }
-    public boolean isProcessingMatch() { return processingMatch; }
-    public void setProcessingMatch(boolean processingMatch) { this.processingMatch = processingMatch; }
+    public Integer getFirstSelectedCardIndex() {
+        return firstSelectedCardIndex;
+    }
 
-    public String getWinnerUid() {return winnerUid;}
+    public void setFirstSelectedCardIndex(Integer index) {
+        this.firstSelectedCardIndex = index;
+    }
 
-    public void setWinnerUid(String winnerUid) {this.winnerUid = winnerUid;}
+    public boolean isProcessingMatch() {
+        return processingMatch;
+    }
+
+    public void setProcessingMatch(boolean processingMatch) {
+        this.processingMatch = processingMatch;
+    }
+
+    public String getWinnerUid() {
+        return winnerUid;
+    }
+
+    public void setWinnerUid(String winnerUid) {
+        this.winnerUid = winnerUid;
+    }
 }

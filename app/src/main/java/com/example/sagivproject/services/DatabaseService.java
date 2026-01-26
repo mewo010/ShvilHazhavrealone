@@ -27,43 +27,34 @@ import java.util.function.UnaryOperator;
 
 /// a service to interact with the Firebase Realtime Database.
 /// this class is a singleton, use getInstance() to get an instance of this class
+///
 /// @see #getInstance()
 /// @see FirebaseDatabase
 public class DatabaseService {
     /// paths for different data types in the database
+    ///
     /// @see DatabaseService#readData(String)
     private static final String USERS_PATH = "users",
             FORUM_PATH = "forum",
             ROOMS_PATH = "rooms",
             IMAGES_PATH = "images";
-
-    /// callback interface for database operations
-    /// @param <T> the type of the object to return
-    /// @see DatabaseCallback#onCompleted(Object)
-    /// @see DatabaseCallback#onFailed(Exception)
-    public interface DatabaseCallback<T> {
-        /// called when the operation is completed successfully
-        void onCompleted(T object);
-
-        /// called when the operation fails with an exception
-        void onFailed(Exception e);
-    }
-
     /// the instance of this class
+    ///
     /// @see #getInstance()
     private static DatabaseService instance;
-
     /// the reference to the database
+    ///
     /// @see DatabaseReference
     /// @see FirebaseDatabase#getReference()
     private final DatabaseReference databaseReference;
-
     /// the listener for realtime updates on the active game
+    ///
     /// @see DatabaseService#listenToGame(String, DatabaseCallback)
     /// @see DatabaseCallback
     private ValueEventListener activeGameListener;
 
     /// use getInstance() to get an instance of this class
+    ///
     /// @see DatabaseService#getInstance()
     private DatabaseService() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -71,6 +62,7 @@ public class DatabaseService {
     }
 
     /// get an instance of this class
+    ///
     /// @return an instance of this class
     /// @see DatabaseService
     public static DatabaseService getInstance() {
@@ -80,13 +72,10 @@ public class DatabaseService {
         return instance;
     }
 
-
-    // region private generic methods
-    // to write and read data from the database
-
     /// write data to the database at a specific path
-    /// @param path the path to write the data to
-    /// @param data the data to write (can be any object, but must be serializable, i.e. must have a default constructor and all fields must have getters and setters)
+    ///
+    /// @param path     the path to write the data to
+    /// @param data     the data to write (can be any object, but must be serializable, i.e. must have a default constructor and all fields must have getters and setters)
     /// @param callback the callback to call when the operation is completed
     /// @see DatabaseCallback
     private void writeData(@NotNull final String path, @NotNull final Object data, final @Nullable DatabaseCallback<Void> callback) {
@@ -101,8 +90,13 @@ public class DatabaseService {
         });
     }
 
+
+    // region private generic methods
+    // to write and read data from the database
+
     /// remove data from the database at a specific path
-    /// @param path the path to remove the data from
+    ///
+    /// @param path     the path to remove the data from
     /// @param callback the callback to call when the operation is completed
     /// @see DatabaseCallback
     private void deleteData(@NotNull final String path, @Nullable final DatabaseCallback<Void> callback) {
@@ -118,6 +112,7 @@ public class DatabaseService {
     }
 
     /// read data from the database at a specific path
+    ///
     /// @param path the path to read the data from
     /// @return a DatabaseReference object to read the data from
     /// @see DatabaseReference
@@ -126,10 +121,10 @@ public class DatabaseService {
         return databaseReference.child(path);
     }
 
-
     /// get data from the database at a specific path
-    /// @param path the path to get the data from
-    /// @param clazz the class of the object to return
+    ///
+    /// @param path     the path to get the data from
+    /// @param clazz    the class of the object to return
     /// @param callback the callback to call when the operation is completed
     /// @see DatabaseCallback
     /// @see Class
@@ -145,8 +140,9 @@ public class DatabaseService {
     }
 
     /// get a list of data from the database at a specific path
-    /// @param path the path to get the data from
-    /// @param clazz the class of the objects to return
+    ///
+    /// @param path     the path to get the data from
+    /// @param clazz    the class of the objects to return
     /// @param callback the callback to call when the operation is completed
     private <T> void getDataList(@NotNull final String path, @NotNull final Class<T> clazz, @NotNull final DatabaseCallback<List<T>> callback) {
         readData(path).get().addOnCompleteListener(task -> {
@@ -165,6 +161,7 @@ public class DatabaseService {
     }
 
     /// generate a new id for a new object in the database
+    ///
     /// @param path the path to generate the id for
     /// @return a new id for the object
     /// @see String
@@ -176,8 +173,9 @@ public class DatabaseService {
 
     /// run a transaction on the data at a specific path </br>
     /// good for incrementing a value or modifying an object in the database
-    /// @param path the path to run the transaction on
-    /// @param clazz the class of the object to return
+    ///
+    /// @param path     the path to run the transaction on
+    /// @param clazz    the class of the object to return
     /// @param function the function to apply to the current value of the data
     /// @param callback the callback to call when the operation is completed
     /// @see DatabaseReference#runTransaction(Transaction.Handler)
@@ -209,13 +207,8 @@ public class DatabaseService {
 
     }
 
-    // endregion of private methods for reading and writing data
-
-    // public methods to interact with the database
-
-    // region User Section
-
     /// generate a new id for a new user in the database
+    ///
     /// @return a new id for the user
     /// @see #generateNewId(String)
     /// @see User
@@ -223,11 +216,18 @@ public class DatabaseService {
         return generateNewId(USERS_PATH);
     }
 
+    // endregion of private methods for reading and writing data
+
+    // public methods to interact with the database
+
+    // region User Section
+
     /// create a new user in the database
-    /// @param user the user object to create
+    ///
+    /// @param user     the user object to create
     /// @param callback the callback to call when the operation is completed
-    ///              the callback will receive void
-    ///            if the operation fails, the callback will receive an exception
+    ///                                              the callback will receive void
+    ///                                            if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void createNewUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
@@ -235,10 +235,11 @@ public class DatabaseService {
     }
 
     /// get a user from the database
-    /// @param uid the id of the user to get
+    ///
+    /// @param uid      the id of the user to get
     /// @param callback the callback to call when the operation is completed
-    ///               the callback will receive the user object
-    ///             if the operation fails, the callback will receive an exception
+    ///                                               the callback will receive the user object
+    ///                                             if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void getUser(@NotNull final String uid, @NotNull final DatabaseCallback<User> callback) {
@@ -246,9 +247,10 @@ public class DatabaseService {
     }
 
     /// get all the users from the database
+    ///
     /// @param callback the callback to call when the operation is completed
-    ///              the callback will receive a list of user objects
-    ///            if the operation fails, the callback will receive an exception
+    ///                                              the callback will receive a list of user objects
+    ///                                            if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see List
     /// @see User
@@ -257,18 +259,20 @@ public class DatabaseService {
     }
 
     /// delete a user from the database
-    /// @param uid the user id to delete
+    ///
+    /// @param uid      the user id to delete
     /// @param callback the callback to call when the operation is completed
     public void deleteUser(@NotNull final String uid, @Nullable final DatabaseCallback<Void> callback) {
         deleteData(USERS_PATH + "/" + uid, callback);
     }
 
     /// get a user by email and password
-    /// @param email the email of the user
+    ///
+    /// @param email    the email of the user
     /// @param password the password of the user
     /// @param callback the callback to call when the operation is completed
-    ///            the callback will receive the user object
-    ///          if the operation fails, the callback will receive an exception
+    ///                                            the callback will receive the user object
+    ///                                          if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see User
     public void getUserByEmailAndPassword(@NotNull final String email, @NotNull final String password, @NotNull final DatabaseCallback<User> callback) {
@@ -296,7 +300,8 @@ public class DatabaseService {
     }
 
     /// check if an email already exists in the database
-    /// @param email the email to check
+    ///
+    /// @param email    the email to check
     /// @param callback the callback to call when the operation is completed
     public void checkIfEmailExists(@NotNull final String email, @NotNull final DatabaseCallback<Boolean> callback) {
         Query query = readData(USERS_PATH).orderByChild("email").equalTo(email);
@@ -314,7 +319,8 @@ public class DatabaseService {
     }
 
     /// update a user in the database
-    /// @param user the user object to update
+    ///
+    /// @param user     the user object to update
     /// @param callback the callback to call when the operation is completed
     public void updateUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
         runTransaction(USERS_PATH + "/" + user.getUid(), User.class, currentUser -> user, new DatabaseCallback<>() {
@@ -335,8 +341,9 @@ public class DatabaseService {
     }
 
     /// update only the admin status of a user
-    /// @param uid user id
-    /// @param isAdmin new admin value (true/false)
+    ///
+    /// @param uid      user id
+    /// @param isAdmin  new admin value (true/false)
     /// @param callback result callback
     public void updateUserAdminStatus(@NotNull final String uid, boolean isAdmin, @Nullable final DatabaseCallback<Void> callback) {
         readData(USERS_PATH + "/" + uid + "/isAdmin")
@@ -349,52 +356,54 @@ public class DatabaseService {
                 });
     }
 
-    // endregion User Section
-
-    // region Medication Section
-
     /// create a new medication in the database
-    /// @param uid the id of the user
+    ///
+    /// @param uid        the id of the user
     /// @param medication the medication object to create
-    /// @param callback the callback to call when the operation is completed
+    /// @param callback   the callback to call when the operation is completed
     public void createNewMedication(@NotNull final String uid, @NotNull final Medication medication, @Nullable final DatabaseCallback<Void> callback) {
         writeData(USERS_PATH + "/" + uid + "/medications/" + medication.getId(), medication, callback);
     }
 
+    // endregion User Section
+
+    // region Medication Section
+
     /// get all the medications of a specific user
-    /// @param uid the id of the user
+    ///
+    /// @param uid      the id of the user
     /// @param callback the callback
     public void getUserMedicationList(@NotNull final String uid, @NotNull final DatabaseCallback<List<Medication>> callback) {
         getDataList(USERS_PATH + "/" + uid + "/medications", Medication.class, callback);
     }
 
     /// generate a new id for a medication under a specific user
+    ///
     /// @return a new id for the medication
     public String generateMedicationId(@NotNull final String uid) {
         return generateNewId(USERS_PATH + "/" + uid + "/medications");
     }
 
     /// delete a medication from the database
-    /// @param uid user id
+    ///
+    /// @param uid          user id
     /// @param medicationId id to delete
-    /// @param callback callback
+    /// @param callback     callback
     public void deleteMedication(@NotNull final String uid, @NotNull final String medicationId, @Nullable final DatabaseCallback<Void> callback) {
         deleteData(USERS_PATH + "/" + uid + "/medications/" + medicationId, callback);
     }
 
     /// update a medication in the database
-    /// @param uid user id
+    ///
+    /// @param uid        user id
     /// @param medication medication to update
-    /// @param callback callback
+    /// @param callback   callback
     public void updateMedication(String uid, Medication medication, @Nullable DatabaseCallback<Void> callback) {
         writeData(USERS_PATH + "/" + uid + "/medications/" + medication.getId(), medication, callback);
     }
 
-    // endregion Medication Section
-
-    // region Forum Section
-
     /// generate a new id for a new forum message
+    ///
     /// @return a new id for the forum message
     /// @see #generateNewId(String)
     /// @see ForumMessage
@@ -402,10 +411,15 @@ public class DatabaseService {
         return generateNewId(FORUM_PATH);
     }
 
+    // endregion Medication Section
+
+    // region Forum Section
+
     /// send a new message to the forum
-    /// @param message the ForumMessage object to send
+    ///
+    /// @param message  the ForumMessage object to send
     /// @param callback the callback to call when the operation is completed
-    ///                 the callback will receive void on success or an exception on fail
+    ///                                                 the callback will receive void on success or an exception on fail
     /// @see DatabaseCallback
     /// @see ForumMessage
     public void sendForumMessage(ForumMessage message, DatabaseCallback<Void> callback) {
@@ -413,8 +427,9 @@ public class DatabaseService {
     }
 
     /// get all forum messages in realtime (live updates)
+    ///
     /// @param callback the callback that will receive a List<ForumMessage> when data changes
-    ///                 if the operation fails, the callback will receive an exception
+    ///                                                 if the operation fails, the callback will receive an exception
     /// @see DatabaseCallback
     /// @see ForumMessage
     /// @see ValueEventListener
@@ -440,35 +455,13 @@ public class DatabaseService {
     }
 
     /// delete a specific forum message from the database
+    ///
     /// @param messageId the id of the forum message to delete
-    /// @param callback the callback to call when the operation is completed
-    ///                 the callback will receive void on success or an exception on fail
+    /// @param callback  the callback to call when the operation is completed
+    ///                                                   the callback will receive void on success or an exception on fail
     /// @see DatabaseCallback
     public void deleteForumMessage(@NotNull final String messageId, @Nullable final DatabaseCallback<Void> callback) {
         deleteData(FORUM_PATH + "/" + messageId, callback);
-    }
-
-    // endregion Forum Section
-
-    // region Game Section
-
-    /// callback interface for realtime room status updates
-    /// used to notify listeners when a room starts playing, is deleted,
-    /// or when an error occurs while listening
-    /// @see GameRoom
-    public interface RoomStatusCallback {
-        /// called when the room status changes to "playing"
-        /// usually means that both players are connected and the game can start
-        /// @param room the updated GameRoom object
-        void onRoomStarted(GameRoom room);
-
-        /// called when the room no longer exists in the database
-        /// usually happens when the room is cancelled or deleted
-        void onRoomDeleted();
-
-        /// called when the listener fails due to a database error
-        /// @param e the exception describing the failure
-        void onFailed(Exception e);
     }
 
     /// find an existing waiting room or create a new one if none is available
@@ -478,9 +471,10 @@ public class DatabaseService {
     ///     - the room status changes to "playing"
     /// if no waiting room exists:
     ///     - a new room is created with the user as player1
-    /// @param user the user who wants to join or create a game room
+    ///
+    /// @param user     the user who wants to join or create a game room
     /// @param callback callback that returns the matched or newly created GameRoom
-    ///                 or an exception if the transaction fails
+    ///                                                 or an exception if the transaction fails
     /// @see GameRoom
     /// @see Transaction
     public void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback) {
@@ -524,7 +518,12 @@ public class DatabaseService {
         });
     }
 
+    // endregion Forum Section
+
+    // region Game Section
+
     /// Listen to all game rooms in real-time
+    ///
     /// @param callback the callback that will receive the updated list of rooms
     public void getAllRoomsRealtime(@NotNull final DatabaseCallback<List<GameRoom>> callback) {
         readData(ROOMS_PATH).addValueEventListener(new ValueEventListener() {
@@ -551,7 +550,8 @@ public class DatabaseService {
     /// used mainly before the game starts, to detect:
     ///     - when the room status becomes "playing"
     ///     - when the room is deleted or cancelled
-    /// @param roomId the id of the room to listen to
+    ///
+    /// @param roomId   the id of the room to listen to
     /// @param callback callback to notify about room start, deletion or errors
     /// @return the ValueEventListener instance so it can later be removed
     /// @see RoomStatusCallback
@@ -589,7 +589,8 @@ public class DatabaseService {
     /// remove a previously registered room status listener
     /// should be called when leaving the waiting screen
     /// to prevent memory leaks and unnecessary updates
-    /// @param roomId the id of the room
+    ///
+    /// @param roomId   the id of the room
     /// @param listener the listener instance returned from listenToRoomStatus
     /// @see ValueEventListener
     public void removeRoomListener(@NotNull String roomId,
@@ -599,7 +600,8 @@ public class DatabaseService {
 
     /// cancel and delete a game room from the database
     /// usually called when a player leaves before the game starts
-    /// @param roomId the id of the room to cancel
+    ///
+    /// @param roomId   the id of the room to cancel
     /// @param callback optional callback for success or failure
     public void cancelRoom(@NotNull String roomId,
                            @Nullable DatabaseCallback<Void> callback) {
@@ -612,10 +614,11 @@ public class DatabaseService {
     ///     - the UID of the player whose turn is first
     ///     - the room status to "playing"
     /// should be called once both players are connected
-    /// @param roomId the id of the game room
-    /// @param cards the shuffled list of cards for the game
+    ///
+    /// @param roomId       the id of the game room
+    /// @param cards        the shuffled list of cards for the game
     /// @param firstTurnUid the UID of the player who starts the game
-    /// @param callback callback for success or failure
+    /// @param callback     callback for success or failure
     /// @see Card
     public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback) {
         readData(ROOMS_PATH + "/" + roomId + "/cards").setValue(cards);
@@ -632,7 +635,8 @@ public class DatabaseService {
     /// receives full GameRoom updates whenever any field changes
     /// only one active game listener is kept at a time
     /// if a listener already exists, it will be removed before adding a new one
-    /// @param roomId the id of the game room
+    ///
+    /// @param roomId   the id of the game room
     /// @param callback callback that receives updated GameRoom objects
     /// @see GameRoom
     /// @see ValueEventListener
@@ -659,6 +663,7 @@ public class DatabaseService {
     /// stop listening to realtime game updates
     /// removes the active game listener if one exists
     /// should be called when leaving the game screen
+    ///
     /// @param roomId the id of the game room
     public void stopListeningToGame(String roomId) {
         if (activeGameListener != null) {
@@ -672,19 +677,21 @@ public class DatabaseService {
     ///     - currentTurnUid
     ///     - status
     ///     - winnerUid
+    ///
     /// @param roomId the id of the game room
-    /// @param field the field name to update
-    /// @param value the new value for the field
+    /// @param field  the field name to update
+    /// @param value  the new value for the field
     public void updateRoomField(String roomId, String field, Object value) {
         readData(ROOMS_PATH + "/" + roomId + "/" + field).setValue(value);
     }
 
     /// update the reveal and match state of a specific card in the game board
     /// typically called after a player flips or matches cards
-    /// @param roomId the id of the game room
-    /// @param index the index of the card in the cards list
+    ///
+    /// @param roomId   the id of the game room
+    /// @param index    the index of the card in the cards list
     /// @param revealed whether the card is currently revealed
-    /// @param matched whether the card has been successfully matched
+    /// @param matched  whether the card has been successfully matched
     /// @see Card
     public void updateCardStatus(String roomId, int index, boolean revealed, boolean matched) {
         readData(ROOMS_PATH + "/" + roomId + "/cards/" + index + "/isRevealed").setValue(revealed);
@@ -693,7 +700,8 @@ public class DatabaseService {
 
     /// set the processing state of the game
     /// used to prevent players from acting while a match is being evaluated
-    /// @param roomId the id of the game room
+    ///
+    /// @param roomId       the id of the game room
     /// @param isProcessing true if the game is currently processing a move
     public void setProcessing(String roomId, boolean isProcessing) {
         updateRoomField(roomId, "processingMatch", isProcessing);
@@ -702,6 +710,7 @@ public class DatabaseService {
     /// increment the win counter of a user
     /// uses a transaction to safely increase the value
     /// ignored if the uid is null, empty or represents a draw
+    ///
     /// @param uid the UID of the winning user
     public void addUserWin(String uid) {
         if (uid == null || uid.isEmpty() || uid.equals("draw")) return;
@@ -724,7 +733,8 @@ public class DatabaseService {
     ///     - room status is set to "finished"
     ///     - the opponent is declared as the winner
     /// uses Firebase onDisconnect handlers
-    /// @param roomId the id of the game room
+    ///
+    /// @param roomId      the id of the game room
     /// @param opponentUid the UID of the opponent who will win by forfeit
     public void setupForfeitOnDisconnect(String roomId, String opponentUid) {
         // הגדרת הערכים שישתנו ב-DB ברגע שהשרת מזהה ניתוק
@@ -735,15 +745,12 @@ public class DatabaseService {
     /// cancel previously defined onDisconnect forfeit actions
     /// should be called when the game ends normally
     /// to prevent incorrect forfeit handling
+    ///
     /// @param roomId the id of the game room
     public void removeForfeitOnDisconnect(String roomId) {
         readData(ROOMS_PATH + "/" + roomId + "/status").onDisconnect().cancel();
         readData(ROOMS_PATH + "/" + roomId + "/winnerUid").onDisconnect().cancel();
     }
-
-    // endregion Game Section
-
-    // region ImageMedication section
 
     public void getAllImages(DatabaseCallback<List<ImageData>> callback) {
         getDataList(IMAGES_PATH, ImageData.class, callback);
@@ -752,6 +759,10 @@ public class DatabaseService {
     public void createImage(@NonNull ImageData image, @Nullable DatabaseCallback<Void> callback) {
         writeData(IMAGES_PATH + "/" + image.getId(), image, callback);
     }
+
+    // endregion Game Section
+
+    // region ImageMedication section
 
     public void updateAllImages(List<ImageData> list, DatabaseCallback<Void> callback) {
         //נמחוק את כל התמונות הקיימות ונכתוב את הרשימה המעודכנת
@@ -766,6 +777,41 @@ public class DatabaseService {
                 callback.onFailed(task.getException());
             }
         });
+    }
+
+    /// callback interface for database operations
+    ///
+    /// @param <T> the type of the object to return
+    /// @see DatabaseCallback#onCompleted(Object)
+    /// @see DatabaseCallback#onFailed(Exception)
+    public interface DatabaseCallback<T> {
+        /// called when the operation is completed successfully
+        void onCompleted(T object);
+
+        /// called when the operation fails with an exception
+        void onFailed(Exception e);
+    }
+
+    /// callback interface for realtime room status updates
+    /// used to notify listeners when a room starts playing, is deleted,
+    /// or when an error occurs while listening
+    ///
+    /// @see GameRoom
+    public interface RoomStatusCallback {
+        /// called when the room status changes to "playing"
+        /// usually means that both players are connected and the game can start
+        ///
+        /// @param room the updated GameRoom object
+        void onRoomStarted(GameRoom room);
+
+        /// called when the room no longer exists in the database
+        /// usually happens when the room is cancelled or deleted
+        void onRoomDeleted();
+
+        /// called when the listener fails due to a database error
+        ///
+        /// @param e the exception describing the failure
+        void onFailed(Exception e);
     }
 
     // endregion ImageMedication section

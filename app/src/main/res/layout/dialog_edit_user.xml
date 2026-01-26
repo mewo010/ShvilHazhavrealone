@@ -3,24 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="?attr/colorSurface">
+    android:background="?attr/colorSurface"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_height="wrap_content"
             android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/headline_hebrew"
             android:gravity="center"
             android:text="@string/עריכתפרטימשתמש"
             android:textColor="@color/headline"
-            android:textSize="35sp"
-            android:fontFamily="@font/headline_hebrew"
-            android:layout_marginBottom="16dp" />
+            android:textSize="35sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -32,10 +32,10 @@
                 android:id="@+id/inputEditUserFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/שםפרטי"
-                android:textSize="22sp"
                 android:inputType="textPersonName"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -49,10 +49,10 @@
                 android:id="@+id/inputEditUserLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/שםמשפחה"
-                android:textSize="22sp"
                 android:inputType="textPersonName"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,75 +65,75 @@
                 android:id="@+id/inputEditUserBirthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/תאריךלידה"
-                android:focusable="false"
                 android:clickable="true"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:focusable="false"
+                android:fontFamily="@font/text_hebrew"
+                android:hint="@string/תאריךלידה"
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            app:boxBackgroundMode="outline"
-            android:fontFamily="@font/text_english">
+            android:fontFamily="@font/text_english"
+            app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/כתובתאימייל"
                 android:inputType="textEmailAddress"
                 android:textDirection="ltr"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/text_english"
             app:boxBackgroundMode="outline"
-            app:endIconMode="password_toggle"
-            android:fontFamily="@font/text_english">
+            app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEditUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/text_hebrew"
                 android:hint="@string/סיסמה"
-                android:textSize="22sp"
                 android:inputType="textPassword"
-                android:fontFamily="@font/text_hebrew"/>
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEditUserSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/שמור"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"
-                android:layout_margin="4dp" />
+                android:textSize="22sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEditUserCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/text_hebrew"
                 android:minWidth="80dp"
                 android:text="@string/ביטול"
-                android:textSize="22sp"
-                android:fontFamily="@font/text_hebrew"
-                android:layout_margin="4dp" />
+                android:textSize="22sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

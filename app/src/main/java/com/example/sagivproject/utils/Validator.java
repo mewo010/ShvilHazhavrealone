@@ -9,7 +9,8 @@ import java.util.Calendar;
 public final class Validator {
     private static final int MIN_AGE = 12;
 
-    private Validator() {} // מונע יצירה
+    private Validator() {
+    } // מונע יצירה
 
     public static boolean isNameValid(@Nullable String name) {
         return name == null || name.trim().length() < 3;

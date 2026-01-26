@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/adminPage"
@@ -13,37 +12,37 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:paddingBottom="30dp">
-            
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/דףמנהלים"
-                android:textSize="40sp"
-                android:textColor="@color/headline"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/headline_hebrew"/>
+                android:fontFamily="@font/headline_hebrew"
+                android:text="@string/דףמנהלים"
+                android:textColor="@color/headline"
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/txt_admin_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/שלוםמנהליקר"
-                android:textSize="37sp"
                 android:layout_marginBottom="30dp"
-                android:fontFamily="@font/text_hebrew"/>
-            
+                android:fontFamily="@font/text_hebrew"
+                android:text="@string/שלוםמנהליקר"
+                android:textSize="37sp" />
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,37 +50,37 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 app:cardCornerRadius="20dp"
-                app:strokeColor="?attr/colorOutline"
-                app:cardElevation="6dp">
+                app:cardElevation="6dp"
+                app:strokeColor="?attr/colorOutline">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:padding="25dp"
-                    android:gravity="center_horizontal">
+                    android:padding="25dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/אפשרויותניהול"
-                        android:textSize="30sp"
-                        android:gravity="center"
                         android:layout_marginBottom="20dp"
-                        android:fontFamily="@font/text_hebrew"/>
+                        android:fontFamily="@font/text_hebrew"
+                        android:gravity="center"
+                        android:text="@string/אפשרויותניהול"
+                        android:textSize="30sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_UsersTablePage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/טבלתמשתמשים"
                         android:textSize="25sp"
-                        android:layout_marginBottom="16dp"
                         app:icon="@drawable/ic_users"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_MemoryGameLogsTablePage"
@@ -100,62 +99,62 @@
                         android:id="@+id/btn_admin_to_MedicineImagesTablePage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/טבלתתמונותהתרופות"
                         android:textSize="25sp"
-                        android:layout_marginBottom="16dp"
                         app:icon="@drawable/ic_medication"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_AdminForum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/קשרקרוב"
                         android:textSize="25sp"
-                        android:layout_marginBottom="16dp"
                         app:icon="@drawable/ic_forum"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_DetailsAboutUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/משתמש"
                         android:textSize="25sp"
-                        android:layout_marginBottom="16dp"
                         app:icon="@drawable/ic_user"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_Settings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/הגדרות"
                         android:textSize="25sp"
-                        android:layout_marginBottom="16dp"
                         app:icon="@drawable/ic_settings"
-                        app:iconSize="28dp"
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
-                        android:fontFamily="@font/text_hebrew" />
+                        app:iconSize="28dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_admin_to_exit"
-                        android:fontFamily="@font/text_hebrew"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/error"
+                        android:fontFamily="@font/text_hebrew"
                         android:text="@string/התנתקות"
-                        android:textSize="25sp"
-                        android:backgroundTint="@color/error"/>
+                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

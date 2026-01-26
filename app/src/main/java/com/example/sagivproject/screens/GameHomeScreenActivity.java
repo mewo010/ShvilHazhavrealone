@@ -58,7 +58,8 @@ public class GameHomeScreenActivity extends BaseActivity {
         ImageButton btnToSettings = findViewById(R.id.btn_GameHomeScreen_to_settings);
 
         btnFindEnemy = findViewById(R.id.btn_GameHomeScreen_find_enemy);
-        btnCancelFindEnemy = findViewById(R.id.btn_GameHomeScreen_cancel_find_enemy);TVictories = findViewById(R.id.tv_GameHomeScreen_victories);
+        btnCancelFindEnemy = findViewById(R.id.btn_GameHomeScreen_cancel_find_enemy);
+        TVictories = findViewById(R.id.tv_GameHomeScreen_victories);
         TVStatusOfFindingEnemy = findViewById(R.id.tv_GameHomeScreen_status_of_finding_enemy);
         rvLeaderboard = findViewById(R.id.recyclerView_GameHomeScreen_leaderboard);
 

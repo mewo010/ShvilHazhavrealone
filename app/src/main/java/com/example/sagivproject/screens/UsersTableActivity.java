@@ -42,8 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersTableActivity extends BaseActivity {
-    private UsersTableAdapter adapter;
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
+    private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
     private User currentUser;
@@ -111,8 +111,14 @@ public class UsersTableActivity extends BaseActivity {
         spinnerSearchType = findViewById(R.id.spinner_UsersTable_search_type);
 
         editSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterUsers(s.toString().trim());
@@ -163,7 +169,8 @@ public class UsersTableActivity extends BaseActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 

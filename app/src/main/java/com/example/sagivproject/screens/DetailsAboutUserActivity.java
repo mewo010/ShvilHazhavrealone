@@ -31,9 +31,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 
 public class DetailsAboutUserActivity extends BaseActivity {
+    private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
-    private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
     private User user;
 
     @Override
@@ -68,8 +68,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
             btnToAdmin.setVisibility(View.VISIBLE);
             topMenu.setVisibility(View.GONE);
             separatorLine.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             //הופך את כפתורי המשתמש המחובר ל-VISIBLE
             btnToMain.setVisibility(View.VISIBLE);
             btnToDetailsAboutUser.setVisibility(View.VISIBLE);
@@ -223,8 +222,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         if (requestCode == REQ_CAMERA && data != null) {
             bitmap = (Bitmap) data.getExtras().get("data");
-        }
-        else if (requestCode == REQ_GALLERY && data != null) {
+        } else if (requestCode == REQ_GALLERY && data != null) {
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())
                 );

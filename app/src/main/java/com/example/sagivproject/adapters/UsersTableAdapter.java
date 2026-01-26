@@ -19,17 +19,8 @@ import java.util.List;
 
 public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.UserViewHolder> {
     private final User currentUser;
-
-    public interface OnUserActionListener {
-        void onToggleAdmin(User user);
-        void onDeleteUser(User user);
-        void onUserClicked(User user);
-        void onUserImageClicked(User user);
-    }
-
     private final List<User> users;
     private final OnUserActionListener listener;
-
     public UsersTableAdapter(List<User> users, User currentUser, OnUserActionListener listener) {
         this.users = users;
         this.currentUser = currentUser;
@@ -119,6 +110,16 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
     @Override
     public int getItemCount() {
         return users.size();
+    }
+
+    public interface OnUserActionListener {
+        void onToggleAdmin(User user);
+
+        void onDeleteUser(User user);
+
+        void onUserClicked(User user);
+
+        void onUserImageClicked(User user);
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

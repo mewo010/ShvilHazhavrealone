@@ -21,11 +21,6 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
     private final List<ImageData> imageList;
     private final OnImageActionListener listener;
 
-    public interface OnImageActionListener {
-        void onDeleteImage(ImageData image);
-        void onImageClicked(ImageData image);
-    }
-
     public MedicationImagesTableAdapter(List<ImageData> imageList, OnImageActionListener listener) {
         this.imageList = imageList;
         this.listener = listener;
@@ -73,6 +68,12 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
     @Override
     public int getItemCount() {
         return imageList.size();
+    }
+
+    public interface OnImageActionListener {
+        void onDeleteImage(ImageData image);
+
+        void onImageClicked(ImageData image);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

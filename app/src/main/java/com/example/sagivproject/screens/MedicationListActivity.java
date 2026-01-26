@@ -30,8 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MedicationListActivity extends BaseActivity {
-    private MedicationAdapter adapter;
     private final ArrayList<Medication> medications = new ArrayList<>();
+    private MedicationAdapter adapter;
     private User user;
     private String uid;
 
@@ -86,7 +86,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void loadMedications() {
-        if(user.getMedications() != null) {
+        if (user.getMedications() != null) {
             List<Medication> cachedList = new ArrayList<>(user.getMedications().values());
 
             medications.clear();
