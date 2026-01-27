@@ -14,6 +14,7 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +35,7 @@ public class MedicationWorker extends BaseWorkerActivity {
         String userId = SharedPreferencesUtil.getUserId(context);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUserMedicationList(userId, new DatabaseService.DatabaseCallback<>() {
+        databaseService.getUserMedicationList(Objects.requireNonNull(userId), new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> medications) {
                 processMedications(context, userId, medications);

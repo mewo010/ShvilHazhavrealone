@@ -28,6 +28,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
@@ -49,7 +50,7 @@ public class MedicationListActivity extends BaseActivity {
         });
 
         user = SharedPreferencesUtil.getUser(this);
-        uid = user.getUid();
+        uid = Objects.requireNonNull(user).getUid();
 
         Button btnToMain = findViewById(R.id.btn_MedicationList_to_main);
         Button btnToContact = findViewById(R.id.btn_MedicationList_to_contact);

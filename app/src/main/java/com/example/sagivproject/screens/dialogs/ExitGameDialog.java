@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.example.sagivproject.R;
 
+import java.util.Objects;
+
 public class ExitGameDialog {
     private final Context context;
     private final Runnable onConfirm;
@@ -19,7 +21,7 @@ public class ExitGameDialog {
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_exit);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
 
         TextView txtTitle = dialog.findViewById(R.id.txt_DialogExit_title);

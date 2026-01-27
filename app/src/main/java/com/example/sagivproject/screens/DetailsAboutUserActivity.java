@@ -29,6 +29,7 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class DetailsAboutUserActivity extends BaseActivity {
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
@@ -221,10 +222,10 @@ public class DetailsAboutUserActivity extends BaseActivity {
         Bitmap bitmap = null;
 
         if (requestCode == REQ_CAMERA && data != null) {
-            bitmap = (Bitmap) data.getExtras().get("data");
+            bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
         } else if (requestCode == REQ_GALLERY && data != null) {
             try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData())
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Objects.requireNonNull(data.getData()))
                 );
             } catch (Exception e) {
                 e.printStackTrace();

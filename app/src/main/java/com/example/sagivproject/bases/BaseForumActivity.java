@@ -18,6 +18,7 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class BaseForumActivity extends BaseActivity {
     protected final List<ForumMessage> messages = new ArrayList<>();
@@ -119,7 +120,7 @@ public abstract class BaseForumActivity extends BaseActivity {
 
         User user = SharedPreferencesUtil.getUser(this);
 
-        forumService.sendMessage(user, text, new ForumService.ForumCallback<>() {
+        forumService.sendMessage(Objects.requireNonNull(user), text, new ForumService.ForumCallback<>() {
             @Override
             public void onSuccess(Void data) {
                 edtMessage.setText("");

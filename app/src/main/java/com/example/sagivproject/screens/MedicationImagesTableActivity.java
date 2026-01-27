@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MedicationImagesTableActivity extends BaseActivity {
     private final List<ImageData> allImages = new ArrayList<>();
@@ -124,7 +125,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
             public void onCompleted(List<ImageData> list) {
                 allImages.clear();
                 if (list != null) allImages.addAll(list);
-                filterImages(etSearch.getText().toString());
+                filterImages(Objects.requireNonNull(etSearch.getText()).toString());
             }
 
             @Override
