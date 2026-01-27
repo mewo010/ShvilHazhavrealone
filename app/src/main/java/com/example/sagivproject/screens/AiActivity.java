@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -34,7 +35,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class AiActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
+public class AiActivity extends BaseActivity {
     private static final String API_KEY = EncryptionAPIKey.decode(BuildConfig.API_KEY);
     private static final String MODEL = "models/gemini-2.5-flash";
     private static final String ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/" + MODEL + ":generateContent?key=" + API_KEY;
@@ -131,7 +132,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.GONE);
-                        answerView.setText("שגיאה: " + e.getMessage());
+                        answerView.setText(String.format("שגיאה: %s", e.getMessage()));
                     });
                 }
 
@@ -142,7 +143,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
                         progressBar.setVisibility(View.GONE);
                         send.setVisibility(View.VISIBLE);
                         if (!response.isSuccessful()) {
-                            answerView.setText("קוד שגיאה: " + response.code() + "\n" + r);
+                            answerView.setText(MessageFormat.format("קוד שגיאה: {0}\n{1}", response.code(), r));
                             return;
                         }
                         try {
@@ -157,7 +158,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
 
                             displayTextWithAnimation(answerView, text);
                         } catch (Exception e) {
-                            answerView.setText("פירוק תשובה נכשל: " + e.getMessage());
+                            answerView.setText(String.format("פירוק תשובה נכשל: %s", e.getMessage()));
                         }
                     });
                 }
@@ -166,7 +167,7 @@ public class AiActivity extends BaseActivity implements BaseActivity.RequiresPer
         } catch (Exception e) {
             progressBar.setVisibility(View.GONE);
             send.setVisibility(View.VISIBLE);
-            answerView.setText("שגיאה: " + e.getMessage());
+            answerView.setText(String.format("שגיאה: %s", e.getMessage()));
         }
     }
 }
