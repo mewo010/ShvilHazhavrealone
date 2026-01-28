@@ -297,8 +297,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
                     if (myUid.equals(room.getWinnerUid())) {
                         databaseService.addUserWin(myUid);
-                        user.setCountWins(user.getCountWins() + 1);
-                        SharedPreferencesUtil.saveUser(MemoryGameActivity.this, user);
                     }
 
                     showGameEndDialog(room);

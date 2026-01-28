@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MedicationDialog {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -54,6 +55,8 @@ public class MedicationDialog {
         for (MedicationType type : MedicationType.values()) {
             typeNames.add(type.getDisplayName());
         }
+
+        spinnerType.setAdapter(createMedicationTypeAdapter(typeNames));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 context,
@@ -128,7 +131,7 @@ public class MedicationDialog {
             }
 
             try {
-                Date date = new SimpleDateFormat(DATE_FORMAT).parse(dateString);
+                Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateString);
 
                 if (medToEdit == null) {
                     listener.onAdd(new Medication(name, details, selectedType, date, uid));
@@ -150,6 +153,42 @@ public class MedicationDialog {
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
+    }
+
+    private ArrayAdapter<String> createMedicationTypeAdapter(List<String> typeNames) {
+        return new ArrayAdapter<>(
+                context,
+                android.R.layout.simple_spinner_item,
+                typeNames
+        ) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getView(position, convertView, parent);
+                styleTextView(tv, false);
+                return tv;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
+                styleTextView(tv, true);
+                return tv;
+            }
+        };
+    }
+
+    private void styleTextView(TextView tv, boolean isDropdown) {
+        tv.setTypeface(ResourcesCompat.getFont(context, R.font.text_hebrew));
+        tv.setTextSize(22);
+        tv.setTextColor(context.getColor(R.color.text_color));
+        tv.setPadding(24, 24, 24, 24);
+
+        if (isDropdown) {
+            tv.setBackgroundColor(
+                    context.getColor(R.color.background_color_buttons)
+            );
+        }
     }
 
     public interface OnMedicationSubmitListener {

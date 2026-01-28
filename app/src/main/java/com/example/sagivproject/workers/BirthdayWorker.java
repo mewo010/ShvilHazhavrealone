@@ -45,9 +45,15 @@ public class BirthdayWorker extends BaseWorkerActivity {
             }
         });
 
+        boolean completed;
+
         try {
-            latch.await(1, TimeUnit.MINUTES);
+            completed = latch.await(1, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
+            return Result.retry();
+        }
+
+        if (!completed) {
             return Result.retry();
         }
 

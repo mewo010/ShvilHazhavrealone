@@ -3,6 +3,7 @@ package com.example.sagivproject.models;
 import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.enums.UserRole;
+import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private int count_wins;
 
     public User() {
+        this.role = UserRole.REGULAR;
     }
 
     public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications, int count_wins) {
@@ -100,6 +102,7 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    @Exclude
     public boolean isAdmin() {
         return this.role == UserRole.ADMIN;
     }
@@ -136,6 +139,7 @@ public class User implements Serializable {
         this.count_wins = count_wins;
     }
 
+    @Exclude
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
