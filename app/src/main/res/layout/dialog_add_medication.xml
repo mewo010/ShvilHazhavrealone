@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="@string/סוגההתרופה"
-            android:textColorHint="@color/buttons_text_color">
+            android:textColorHint="@color/text_color">
 
             <AutoCompleteTextView
                 android:id="@+id/spinner_medication_type"
@@ -43,7 +43,6 @@
                 android:fontFamily="@font/text_hebrew"
                 android:inputType="none"
                 android:textSize="22sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

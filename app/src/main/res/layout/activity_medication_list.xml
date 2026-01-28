@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/text_hebrew"
             android:text="@string/הוספתתרופה"
             android:textSize="22sp" />
@@ -138,14 +138,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <Spinner
-                    android:id="@+id/spinner_Medication_search_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,9 +145,25 @@
                     app:boxCornerRadiusBottomEnd="16dp"
                     app:boxCornerRadiusBottomStart="16dp"
                     app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusTopStart="16dp">
+
+                    <Spinner
+                        android:id="@+id/spinner_Medication_search_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="חפש תרופה..."
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
                     app:boxCornerRadiusTopStart="16dp"
-                    app:boxStrokeWidth="1dp"
-                    android:hint="חפש תרופה...">
+                    app:boxStrokeWidth="1dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Medication_search"
@@ -173,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:padding="0dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:padding="0dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

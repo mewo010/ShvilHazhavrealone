@@ -2,11 +2,17 @@ package com.example.sagivproject.screens.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.Medication;
@@ -48,7 +54,37 @@ public class MedicationDialog {
         for (MedicationType type : MedicationType.values()) {
             typeNames.add(type.getDisplayName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, typeNames);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                context,
+                android.R.layout.simple_spinner_item,
+                typeNames
+        ) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(context, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(context.getColor(R.color.text_color));
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(context, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(context.getColor(R.color.text_color));
+                tv.setBackgroundColor(
+                        context.getColor(R.color.background_color_buttons)
+                );
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
+            }
+        };
+
         spinnerType.setAdapter(adapter);
 
         long initialDateMillis = -1;

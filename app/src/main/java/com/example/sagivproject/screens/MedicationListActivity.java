@@ -97,18 +97,37 @@ public class MedicationListActivity extends BaseActivity {
         spinnerSearchType = findViewById(R.id.spinner_Medication_search_type);
 
         String[] searchOptions = {"שם תרופה", "סוג תרופה", "הכל"};
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, searchOptions) {
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                searchOptions
+        ) {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                ((TextView) v).setTextSize(18f); // גודל טקסט כמו במשתמשים
-                ((TextView) v).setTypeface(ResourcesCompat.getFont(getContext(), R.font.text_hebrew)); // פונט עברי
-                return v;
+                TextView tv = (TextView) super.getView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(getColor(R.color.text_color));
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(getColor(R.color.text_color));
+                tv.setBackgroundColor(
+                        getColor(R.color.background_color_buttons)
+                );
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
             }
         };
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSearchType.setAdapter(spinnerAdapter);
 
         editSearch.addTextChangedListener(new android.text.TextWatcher() {
