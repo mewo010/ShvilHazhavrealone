@@ -2,11 +2,19 @@ package com.example.sagivproject.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -14,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
-import com.example.sagivproject.adapters.MedicationAdapter;
+import com.example.sagivproject.adapters.MedicationListAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
@@ -32,9 +40,12 @@ import java.util.Objects;
 
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
-    private MedicationAdapter adapter;
+    private MedicationListAdapter adapter;
     private User user;
     private String uid;
+    private final ArrayList<Medication> filteredMedications = new ArrayList<>();
+    private EditText editSearch;
+    private Spinner spinnerSearchType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +80,55 @@ public class MedicationListActivity extends BaseActivity {
         RecyclerView recyclerViewMedications = findViewById(R.id.recyclerView_medications);
         recyclerViewMedications.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new MedicationAdapter(this, medications, new MedicationAdapter.OnMedicationActionListener() {
+        adapter = new MedicationListAdapter(this, filteredMedications, new MedicationListAdapter.OnMedicationActionListener() {
             @Override
             public void onEdit(int position) {
-                openMedicationDialog(medications.get(position));
+                openMedicationDialog(filteredMedications.get(position));
             }
 
             @Override
             public void onDelete(int position) {
-                deleteMedicationById(medications.get(position).getId());
+                deleteMedicationById(filteredMedications.get(position).getId());
             }
         });
-
         recyclerViewMedications.setAdapter(adapter);
+
+        editSearch = findViewById(R.id.edit_Medication_search);
+        spinnerSearchType = findViewById(R.id.spinner_Medication_search_type);
+
+        String[] searchOptions = {"שם תרופה", "סוג תרופה", "הכל"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, searchOptions) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                ((TextView) v).setTextSize(18f); // גודל טקסט כמו במשתמשים
+                ((TextView) v).setTypeface(ResourcesCompat.getFont(getContext(), R.font.text_hebrew)); // פונט עברי
+                return v;
+            }
+        };
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSearchType.setAdapter(spinnerAdapter);
+
+        editSearch.addTextChangedListener(new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterMedications(s.toString());
+            }
+            @Override public void afterTextChanged(android.text.Editable s) {}
+        });
+
+        spinnerSearchType.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                filterMedications(editSearch.getText().toString());
+            }
+            @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+        });
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSearchType.setAdapter(spinnerAdapter);
 
         loadMedications();
     }
@@ -139,6 +186,8 @@ public class MedicationListActivity extends BaseActivity {
                 medications.sort(Comparator.comparing(Medication::getDate));
 
                 adapter.notifyDataSetChanged();
+
+                filterMedications(editSearch.getText().toString());
 
                 user.setMedications(updatedMedicationsMap);
                 SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
@@ -228,5 +277,33 @@ public class MedicationListActivity extends BaseActivity {
                 updateMedication(medication);
             }
         }).show();
+    }
+
+    private void filterMedications(String query) {
+        filteredMedications.clear();
+        String lowerQuery = query.toLowerCase().trim();
+        String searchType = spinnerSearchType.getSelectedItem().toString();
+
+        for (Medication med : medications) {
+            boolean matches = false;
+            String medName = med.getName() != null ? med.getName().toLowerCase() : "";
+            String medType = med.getType() != null ? med.getType().getDisplayName().toLowerCase() : "";
+
+            switch (searchType) {
+                case "שם תרופה":
+                    if (medName.contains(lowerQuery)) matches = true;
+                    break;
+                case "סוג תרופה":
+                    if (medType.contains(lowerQuery)) matches = true;
+                    break;
+                default: // "הכל"
+                    if (medName.contains(lowerQuery) || medType.contains(lowerQuery)) matches = true;
+                    break;
+            }
+            if (matches) filteredMedications.add(med);
+        }
+
+        filteredMedications.sort(Comparator.comparing(Medication::getDate, Comparator.nullsLast(Comparator.naturalOrder())));
+        adapter.notifyDataSetChanged();
     }
 }

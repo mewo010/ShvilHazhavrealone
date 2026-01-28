@@ -23,17 +23,18 @@ import com.example.sagivproject.ui.CustomTypefaceSpan;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
-public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
+public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder> {
     private final Context context;
     private final ArrayList<Medication> medications;
     private final OnMedicationActionListener listener;
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public MedicationAdapter(Context context, ArrayList<Medication> medications, OnMedicationActionListener listener) {
+    public MedicationListAdapter(Context context, ArrayList<Medication> medications, OnMedicationActionListener listener) {
         this.context = context;
         this.medications = medications;
         this.listener = listener;
