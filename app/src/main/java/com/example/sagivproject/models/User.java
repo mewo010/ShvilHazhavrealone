@@ -21,12 +21,13 @@ public class User implements Serializable {
     private String profileImage;
     private HashMap<String, Medication> medications;
     private int count_wins;
+    private MathProblemsStats mathProblemsStats;
 
     public User() {
         this.role = UserRole.REGULAR;
     }
 
-    public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications, int count_wins) {
+    public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications) {
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,7 +37,9 @@ public class User implements Serializable {
         this.role = role;
         this.profileImage = profileImage;
         this.medications = medications;
-        this.count_wins = count_wins;
+        this.count_wins = 0;
+        this.mathProblemsStats.setCorrectAnswers(0);
+        this.mathProblemsStats.setWrongAnswers(0);
     }
 
     public String getFirstName() {
@@ -137,6 +140,15 @@ public class User implements Serializable {
 
     public void setCountWins(int count_wins) {
         this.count_wins = count_wins;
+    }
+
+    public MathProblemsStats getMathProblemsStats() {
+        if (mathProblemsStats == null) mathProblemsStats = new MathProblemsStats();
+        return mathProblemsStats;
+    }
+
+    public void setMathProblemsStats(MathProblemsStats mathProblemsStats) {
+        this.mathProblemsStats = mathProblemsStats;
     }
 
     @Exclude

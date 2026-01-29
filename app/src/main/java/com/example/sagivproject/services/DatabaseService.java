@@ -117,7 +117,6 @@ public class DatabaseService {
     /// @param path the path to read the data from
     /// @return a DatabaseReference object to read the data from
     /// @see DatabaseReference
-
     private DatabaseReference readData(@NotNull final String path) {
         return databaseReference.child(path);
     }
@@ -167,7 +166,6 @@ public class DatabaseService {
     /// @return a new id for the object
     /// @see String
     /// @see DatabaseReference#push()
-
     private String generateNewId(@NotNull final String path) {
         return databaseReference.child(path).push().getKey();
     }
@@ -641,7 +639,6 @@ public class DatabaseService {
     /// @see GameRoom
     /// @see ValueEventListener
     public void listenToGame(String roomId, DatabaseCallback<GameRoom> callback) {
-        // אם כבר יש מאזין פעיל, נסיר אותו קודם כדי למנוע כפל האזנות
         stopListeningToGame(roomId);
 
         activeGameListener = new ValueEventListener() {
@@ -752,10 +749,16 @@ public class DatabaseService {
         readData(ROOMS_PATH + "/" + roomId + "/winnerUid").onDisconnect().cancel();
     }
 
+    /// create a new image in the database
+    ///
+    /// @param callback the callback to call when the operation is completed
     public void getAllImages(DatabaseCallback<List<ImageData>> callback) {
         getDataList(IMAGES_PATH, ImageData.class, callback);
     }
 
+    /// create a new image in the database
+    ///
+    /// @param image the image object to create
     public void createImage(@NonNull ImageData image, @Nullable DatabaseCallback<Void> callback) {
         writeData(IMAGES_PATH + "/" + image.getId(), image, callback);
     }
@@ -764,6 +767,10 @@ public class DatabaseService {
 
     // region ImageMedication section
 
+    /// update all images in the database
+    ///
+    /// @param list     the list of images to update
+    /// @param callback the callback to call when the operation is completed
     public void updateAllImages(List<ImageData> list, DatabaseCallback<Void> callback) {
         //נמחוק את כל התמונות הקיימות ונכתוב את הרשימה המעודכנת
         readData(IMAGES_PATH).removeValue().addOnCompleteListener(task -> {
@@ -815,4 +822,32 @@ public class DatabaseService {
     }
 
     // endregion ImageMedication section
+
+    // region MathProblems section
+
+    /// add a correct answer to the user's stats
+    ///
+    /// @param uid the UID of the user
+    public void addCorrectAnswer(String uid) {
+        runTransaction(USERS_PATH + "/" + uid + "/mathProblemsStats/correctAnswers", Integer.class,
+                current -> (current == null) ? 1 : current + 1, new DatabaseCallback<>() {
+                    @Override
+                    public void onCompleted(Integer object) {}
+                    @Override
+                    public void onFailed(Exception e) {}
+                } );
+    }
+
+    /// add a wrong answer to the user's stats
+    ///
+    /// @param uid the UID of the user
+    public void addWrongAnswer(String uid) {
+        runTransaction(USERS_PATH + "/" + uid + "/mathProblemsStats/wrongAnswers", Integer.class,
+                current -> (current == null) ? 1 : current + 1, new DatabaseCallback<>() {
+                    @Override
+                    public void onCompleted(Integer object) {}
+                    @Override
+                    public void onFailed(Exception e) {}
+                });
+    }
 }

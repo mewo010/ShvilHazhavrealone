@@ -116,6 +116,43 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                app:strokeColor="?attr/colorOnSurface"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_MathProblemsPage_correct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="32dp"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textColor="@color/headline"
+                        android:textSize="23sp"
+                        tools:text="נכונות: 0" />
+
+                    <TextView
+                        android:id="@+id/tv_MathProblemsPage_wrong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/text_hebrew"
+                        android:textColor="@color/headline"
+                        android:textSize="23sp"
+                        tools:text="טעויות: 0" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
                 app:strokeColor="?attr/colorOnSurface"

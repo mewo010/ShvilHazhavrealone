@@ -105,6 +105,7 @@
     <string name="_3">3</string>
     <string name="clean">C</string>
     <string name="_0">0</string>
+    <string name="חפשתרופה">חפש תרופה…</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

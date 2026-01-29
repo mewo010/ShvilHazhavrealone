@@ -16,10 +16,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
+import com.example.sagivproject.models.User;
+import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.text.MessageFormat;
 
 public class MathProblemsActivity extends BaseActivity {
+    private TextView tvCorrect, tvWrong;
+    private User user;
     private final StringBuilder userInput = new StringBuilder();
     private TextView tvQuestion, tvAnswer;
     private int correctAnswer;
@@ -35,11 +39,15 @@ public class MathProblemsActivity extends BaseActivity {
             return insets;
         });
 
+        user = SharedPreferencesUtil.getUser(MathProblemsActivity.this);
+
         Button btnToMain = findViewById(R.id.btn_MathProblemsPage_to_main);
         Button btnToContact = findViewById(R.id.btn_MathProblemsPage_to_contact);
         Button btnToDetailsAboutUser = findViewById(R.id.btn_MathProblemsPage_to_DetailsAboutUser);
         Button btnToExit = findViewById(R.id.btn_MathProblemsPage_to_exit);
         ImageButton btnToSettings = findViewById(R.id.btn_MathProblemsPage_to_settings);
+        tvCorrect = findViewById(R.id.tv_MathProblemsPage_correct);
+        tvWrong = findViewById(R.id.tv_MathProblemsPage_wrong);
         tvQuestion = findViewById(R.id.tv_MathProblemsPage_question);
         tvAnswer = findViewById(R.id.tv_MathProblemsPage_user_answer);
 
@@ -51,6 +59,12 @@ public class MathProblemsActivity extends BaseActivity {
 
         generateProblem();
         setupKeypad();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateStatsUI();
     }
 
     private void generateProblem() {
@@ -108,10 +122,25 @@ public class MathProblemsActivity extends BaseActivity {
         int userAnswer = Integer.parseInt(userInput.toString());
 
         if (userAnswer == correctAnswer) {
+            user.getMathProblemsStats().setCorrectAnswers(user.getMathProblemsStats().getCorrectAnswers() + 1);
+
             Toast.makeText(this, "נכון! ✅", Toast.LENGTH_SHORT).show();
             generateProblem();
+            databaseService.addCorrectAnswer(user.getUid());
         } else {
+            user.getMathProblemsStats().setWrongAnswers(user.getMathProblemsStats().getWrongAnswers() + 1);
+
             Toast.makeText(this, "טעות, נסה שוב ❌", Toast.LENGTH_SHORT).show();
+            databaseService.addWrongAnswer(user.getUid());
         }
+
+        SharedPreferencesUtil.saveUser(this, user);
+
+        updateStatsUI();
+    }
+
+    private void updateStatsUI() {
+        tvCorrect.setText(MessageFormat.format("נכונות: {0}", user.getMathProblemsStats().getCorrectAnswers()));
+        tvWrong.setText(MessageFormat.format("טעויות: {0}", user.getMathProblemsStats().getWrongAnswers()));
     }
 }
