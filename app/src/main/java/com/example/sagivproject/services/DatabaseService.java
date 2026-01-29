@@ -9,6 +9,7 @@ import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.models.enums.UserRole;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -343,17 +344,16 @@ public class DatabaseService {
     /// update only the admin status of a user
     ///
     /// @param uid      user id
-    /// @param isAdmin  new admin value (true/false)
+    /// @param role     new role
     /// @param callback result callback
-    public void updateUserAdminStatus(@NotNull final String uid, boolean isAdmin, @Nullable final DatabaseCallback<Void> callback) {
-        readData(USERS_PATH + "/" + uid + "/isAdmin")
-                .setValue(isAdmin, (error, ref) -> {
-                    if (error != null) {
-                        if (callback != null) callback.onFailed(error.toException());
-                    } else {
-                        if (callback != null) callback.onCompleted(null);
-                    }
-                });
+    public void updateUserRole(@NonNull String uid, @NonNull UserRole role, @Nullable DatabaseCallback<Void> callback) {
+        readData(USERS_PATH + "/" + uid + "/role").setValue(role, (error, ref) -> {
+            if (error != null) {
+                if (callback != null) callback.onFailed(error.toException());
+            } else {
+                if (callback != null) callback.onCompleted(null);
+            }
+        });
     }
 
     /// create a new medication in the database

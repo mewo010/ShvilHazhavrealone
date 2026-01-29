@@ -52,8 +52,6 @@ public class MedicationListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_medication_list);
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.medicationListPage), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -131,11 +129,18 @@ public class MedicationListActivity extends BaseActivity {
         spinnerSearchType.setAdapter(spinnerAdapter);
 
         editSearch.addTextChangedListener(new android.text.TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterMedications(s.toString());
             }
-            @Override public void afterTextChanged(android.text.Editable s) {}
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+            }
         });
 
         spinnerSearchType.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
@@ -143,7 +148,10 @@ public class MedicationListActivity extends BaseActivity {
             public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
                 filterMedications(editSearch.getText().toString());
             }
-            @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) {
+            }
         });
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -316,7 +324,8 @@ public class MedicationListActivity extends BaseActivity {
                     if (medType.contains(lowerQuery)) matches = true;
                     break;
                 default: // "הכל"
-                    if (medName.contains(lowerQuery) || medType.contains(lowerQuery)) matches = true;
+                    if (medName.contains(lowerQuery) || medType.contains(lowerQuery))
+                        matches = true;
                     break;
             }
             if (matches) filteredMedications.add(med);

@@ -41,6 +41,7 @@ public class AdminPageActivity extends BaseActivity {
         Button btnToMemoryGameLogsTable = findViewById(R.id.btn_admin_to_MemoryGameLogsTablePage);
         Button btnToForum = findViewById(R.id.btn_admin_to_AdminForum);
         Button btnToDetailsAboutUser = findViewById(R.id.btn_admin_to_DetailsAboutUser);
+        Button btnToSettings = findViewById(R.id.btn_admin_to_Settings);
         Button btnLogout = findViewById(R.id.btn_admin_to_exit);
         TextView txtAdminTitle = findViewById(R.id.txt_admin_title);
 
@@ -49,6 +50,7 @@ public class AdminPageActivity extends BaseActivity {
         btnToMemoryGameLogsTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, MemoryGameLogsTableActivity.class)));
         btnToForum.setOnClickListener(v -> startActivity(new Intent(AdminPageActivity.this, AdminForumActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, DetailsAboutUserActivity.class)));
+        btnToSettings.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, SettingsActivity.class)));
         btnLogout.setOnClickListener(view -> logout());
 
         User user = SharedPreferencesUtil.getUser(this);

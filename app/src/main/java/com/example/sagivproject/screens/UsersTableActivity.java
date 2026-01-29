@@ -31,6 +31,7 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.adapters.UsersTableAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.screens.dialogs.AddUserDialog;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
@@ -205,18 +206,26 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void handleToggleAdmin(User user) {
-        boolean newRole = !user.isAdmin();
+        UserRole newRole = user.getRole() == UserRole.ADMIN ? UserRole.REGULAR : UserRole.ADMIN;
 
-        databaseService.updateUserAdminStatus(user.getUid(), newRole, new DatabaseService.DatabaseCallback<>() {
+        databaseService.updateUserRole(user.getUid(), newRole, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                Toast.makeText(UsersTableActivity.this, "הסטטוס עודכן בהצלחה", Toast.LENGTH_SHORT).show();
-                loadUsers(); //רענון
+                Toast.makeText(
+                        UsersTableActivity.this,
+                        "הסטטוס עודכן בהצלחה",
+                        Toast.LENGTH_SHORT
+                ).show();
+                loadUsers(); // רענון
             }
 
             @Override
             public void onFailed(Exception e) {
-                Toast.makeText(UsersTableActivity.this, "שגיאה בעדכון סטטוס", Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        UsersTableActivity.this,
+                        "שגיאה בעדכון סטטוס",
+                        Toast.LENGTH_SHORT
+                ).show();
             }
         });
     }
