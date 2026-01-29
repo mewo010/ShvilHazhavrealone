@@ -22,9 +22,9 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 import java.text.MessageFormat;
 
 public class MathProblemsActivity extends BaseActivity {
+    private final StringBuilder userInput = new StringBuilder();
     private TextView tvCorrect, tvWrong;
     private User user;
-    private final StringBuilder userInput = new StringBuilder();
     private TextView tvQuestion, tvAnswer;
     private int correctAnswer;
 

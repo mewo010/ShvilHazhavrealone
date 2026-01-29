@@ -177,10 +177,12 @@ public class User implements Serializable {
                 ", role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", birthDateMillis=" + birthDateMillis +
                 ", password='" + password + '\'' +
                 ", profileImage='" + profileImage + '\'' +
                 ", medications=" + medications +
                 ", count_wins=" + count_wins +
+                ", mathProblemsStats=" + mathProblemsStats +
                 '}';
     }
 }
