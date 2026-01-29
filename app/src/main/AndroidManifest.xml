@@ -25,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SagivProject">
         <activity
+            android:name=".screens.MathProblemsActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.SettingsActivity"
             android:exported="false"
             android:label="@string/הגדרות" />

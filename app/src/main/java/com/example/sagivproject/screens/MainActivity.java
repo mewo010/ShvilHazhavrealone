@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         Button btnToForum = findViewById(R.id.btn_main_to_forum);
         Button btnToAi = findViewById(R.id.btn_main_to_Ai);
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
+        Button btnToMathProblems = findViewById(R.id.btn_main_to_MathProblems);
         Button btnToExit = findViewById(R.id.btn_main_to_exit);
         ImageButton btnToSettings = findViewById(R.id.btn_main_to_settings);
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
@@ -70,6 +71,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumActivity.class)));
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
+        btnToMathProblems.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MathProblemsActivity.class)));
         btnToSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
         btnToExit.setOnClickListener(view -> logout());
 

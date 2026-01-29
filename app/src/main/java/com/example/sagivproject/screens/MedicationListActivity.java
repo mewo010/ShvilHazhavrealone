@@ -40,10 +40,10 @@ import java.util.Objects;
 
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
+    private final ArrayList<Medication> filteredMedications = new ArrayList<>();
     private MedicationListAdapter adapter;
     private User user;
     private String uid;
-    private final ArrayList<Medication> filteredMedications = new ArrayList<>();
     private EditText editSearch;
     private Spinner spinnerSearchType;
 
