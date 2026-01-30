@@ -8,6 +8,15 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/btn_menu_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/הגדרות"
+            android:src="@drawable/ic_settings" />
+
         <Button
             android:id="@+id/btn_menu_main"
             android:layout_width="0dp"
@@ -59,15 +68,6 @@
             android:singleLine="true"
             android:text="@string/התנתקות"
             android:textSize="23sp" />
-
-        <ImageButton
-            android:id="@+id/btn_menu_settings"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/הגדרות"
-            android:src="@drawable/ic_settings" />
 
     </LinearLayout>
 </merge>

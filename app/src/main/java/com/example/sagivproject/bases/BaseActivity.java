@@ -47,19 +47,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setupTopMenu(ViewGroup menuContainer) {
         boolean isUserLoggedIn = SharedPreferencesUtil.isUserLoggedIn(this);
-        @LayoutRes int menuLayout = isUserLoggedIn ?
-                R.layout.top_menu_logged_in :
-                R.layout.top_menu_logged_out;
-
-        getLayoutInflater().inflate(menuLayout, menuContainer, true);
 
         if (isUserLoggedIn) {
             if (Objects.requireNonNull(SharedPreferencesUtil.getUser(this)).isAdmin()) {
+                @LayoutRes int menuLayout = R.layout.top_menu_admin;
+                getLayoutInflater().inflate(menuLayout, menuContainer, true);
+
                 Button btnAdmin = findViewById(R.id.btn_menu_admin_back);
                 btnAdmin.setOnClickListener(v -> finish());
-            }
-            else{
-                //Logged-in menu
+            } else {
+                @LayoutRes int menuLayout = R.layout.top_menu_logged_in;
+                getLayoutInflater().inflate(menuLayout, menuContainer, true);
+
                 Button btnMain = findViewById(R.id.btn_menu_main);
                 Button btnContact = findViewById(R.id.btn_menu_contact);
                 Button btnDetailsAboutUser = findViewById(R.id.btn_menu_details);
@@ -73,7 +72,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 btnLogout.setOnClickListener(v -> logout());
             }
         } else {
-            //Logged-out menu
+            @LayoutRes int menuLayout = R.layout.top_menu_logged_out;
+            getLayoutInflater().inflate(menuLayout, menuContainer, true);
+
             Button btnLanding = findViewById(R.id.btn_menu_main);
             Button btnContact = findViewById(R.id.btn_menu_contact);
             Button btnLogin = findViewById(R.id.btn_menu_login);
