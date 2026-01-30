@@ -94,37 +94,7 @@ public class MedicationListActivity extends BaseActivity {
         editSearch = findViewById(R.id.edit_Medication_search);
         spinnerSearchType = findViewById(R.id.spinner_Medication_search_type);
 
-        String[] searchOptions = {"שם תרופה", "סוג תרופה", "הכל"};
-
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                searchOptions
-        ) {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                TextView tv = (TextView) super.getView(position, convertView, parent);
-                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
-                tv.setTextSize(22);
-                tv.setTextColor(getColor(R.color.text_color));
-                tv.setPadding(24, 24, 24, 24);
-                return tv;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
-                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
-                tv.setTextSize(22);
-                tv.setTextColor(getColor(R.color.text_color));
-                tv.setBackgroundColor(
-                        getColor(R.color.background_color_buttons)
-                );
-                tv.setPadding(24, 24, 24, 24);
-                return tv;
-            }
-        };
+        ArrayAdapter<String> spinnerAdapter = getStringArrayAdapter();
 
         spinnerSearchType.setAdapter(spinnerAdapter);
 
@@ -158,6 +128,37 @@ public class MedicationListActivity extends BaseActivity {
         spinnerSearchType.setAdapter(spinnerAdapter);
 
         loadMedications();
+    }
+
+    @NonNull
+    private ArrayAdapter<String> getStringArrayAdapter() {
+        String[] searchOptions = {"שם תרופה", "סוג תרופה", "הכל"};
+
+        return new ArrayAdapter<>(MedicationListActivity.this, android.R.layout.simple_spinner_item, searchOptions) {
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(getColor(R.color.text_color));
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
+                tv.setTypeface(ResourcesCompat.getFont(MedicationListActivity.this, R.font.text_hebrew));
+                tv.setTextSize(22);
+                tv.setTextColor(getColor(R.color.text_color));
+                tv.setBackgroundColor(
+                        getColor(R.color.background_color_buttons)
+                );
+                tv.setPadding(24, 24, 24, 24);
+                return tv;
+            }
+        };
     }
 
     private void loadMedications() {
