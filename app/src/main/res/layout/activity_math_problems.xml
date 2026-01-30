@@ -120,35 +120,53 @@
                 app:cardCornerRadius="18dp"
                 app:cardElevation="2dp"
                 app:strokeColor="?attr/colorOnSurface"
-                app:strokeWidth="1dp">
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView
-                        android:id="@+id/tv_MathProblemsPage_correct"
+                    <!-- נתונים -->
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="32dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:textColor="@color/headline"
-                        android:textSize="23sp"
-                        tools:text="נכונות: 0" />
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_MathProblemsPage_wrong"
+                        <TextView
+                            android:id="@+id/tv_MathProblemsPage_correct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="32dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:textColor="@color/headline"
+                            android:textSize="23sp"
+                            tools:text="נכונות: 0" />
+
+                        <TextView
+                            android:id="@+id/tv_MathProblemsPage_wrong"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/text_hebrew"
+                            android:textColor="@color/headline"
+                            android:textSize="23sp"
+                            tools:text="טעויות: 0" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_MathProblemsPage_resetStats"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/text_hebrew"
-                        android:textColor="@color/headline"
-                        android:textSize="23sp"
-                        tools:text="טעויות: 0" />
+                        android:text="@string/איפוסנתונים"
+                        android:textSize="20sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -156,7 +174,7 @@
                 app:cardCornerRadius="20dp"
                 app:cardElevation="4dp"
                 app:strokeColor="?attr/colorOnSurface"
-                app:strokeWidth="2dp">
+                app:strokeWidth="1.5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

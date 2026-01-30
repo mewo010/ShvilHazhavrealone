@@ -68,7 +68,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         }
 
         holder.txtMedicationDetails.setText(med.getDetails());
-        holder.txtMedicationDate.setText("תוקף: " + dateFormat.format(med.getDate()));
+        holder.txtMedicationDate.setText(String.format("תוקף: %s", dateFormat.format(med.getDate())));
 
         if (med.getDate() != null && med.getDate().before(new Date())) {
             holder.txtMedicationDate.setTextColor(context.getColor(R.color.error));

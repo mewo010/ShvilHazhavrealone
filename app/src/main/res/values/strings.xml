@@ -106,6 +106,7 @@
     <string name="clean">C</string>
     <string name="_0">0</string>
     <string name="חפשתרופה">חפש תרופה…</string>
+    <string name="איפוסנתונים">איפוס נתונים</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

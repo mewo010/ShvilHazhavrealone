@@ -15,6 +15,7 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.utils.ImageUtil;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.UserViewHolder> {
@@ -41,10 +42,10 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
 
         holder.txtUserFullName.setText(user.getFullName());
         holder.txtUserEmail.setText(user.getEmail());
-        holder.txtUserPassword.setText("סיסמה: " + user.getPassword());
-        holder.txtUserAge.setText("גיל: " + user.getAge());
-        holder.txtUserIsAdmin.setText("מנהל: " + (user.isAdmin() ? "כן" : "לא"));
-        holder.txtUserWins.setText("ניצחונות: " + user.getCountWins());
+        holder.txtUserPassword.setText(String.format("סיסמה: %s", user.getPassword()));
+        holder.txtUserAge.setText(MessageFormat.format("גיל: {0}", user.getAge()));
+        holder.txtUserIsAdmin.setText(String.format("מנהל: %s", user.isAdmin() ? "כן" : "לא"));
+        holder.txtUserWins.setText(MessageFormat.format("ניצחונות: {0}", user.getCountWins()));
 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         cal.setTimeInMillis(user.getBirthDateMillis());
@@ -54,7 +55,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
                 cal.get(java.util.Calendar.MONTH) + 1,
                 cal.get(java.util.Calendar.YEAR));
 
-        holder.txtUserBirthDate.setText("תאריך לידה: " + birthDateStr);
+        holder.txtUserBirthDate.setText(String.format("תאריך לידה: %s", birthDateStr));
 
         String base64Image = user.getProfileImage();
 

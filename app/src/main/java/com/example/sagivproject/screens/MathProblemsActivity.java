@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.screens.dialogs.ResetMathStatsDialog;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.text.MessageFormat;
@@ -48,6 +49,7 @@ public class MathProblemsActivity extends BaseActivity {
         ImageButton btnToSettings = findViewById(R.id.btn_MathProblemsPage_to_settings);
         tvCorrect = findViewById(R.id.tv_MathProblemsPage_correct);
         tvWrong = findViewById(R.id.tv_MathProblemsPage_wrong);
+        Button btnResetStats = findViewById(R.id.btn_MathProblemsPage_resetStats);
         tvQuestion = findViewById(R.id.tv_MathProblemsPage_question);
         tvAnswer = findViewById(R.id.tv_MathProblemsPage_user_answer);
 
@@ -57,6 +59,8 @@ public class MathProblemsActivity extends BaseActivity {
         btnToExit.setOnClickListener(view -> logout());
         btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
+        btnResetStats.setOnClickListener(v -> new ResetMathStatsDialog(this, this::resetStats).show());
+
         generateProblem();
         setupKeypad();
     }
@@ -65,6 +69,22 @@ public class MathProblemsActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         updateStatsUI();
+    }
+
+    private void updateStatsUI() {
+        tvCorrect.setText(MessageFormat.format("נכונות: {0}", user.getMathProblemsStats().getCorrectAnswers()));
+        tvWrong.setText(MessageFormat.format("טעויות: {0}", user.getMathProblemsStats().getWrongAnswers()));
+    }
+
+    private void resetStats() {
+        user.getMathProblemsStats().setCorrectAnswers(0);
+        user.getMathProblemsStats().setWrongAnswers(0);
+
+        databaseService.resetMathStats(user.getUid());
+        SharedPreferencesUtil.saveUser(this, user);
+
+        updateStatsUI();
+        Toast.makeText(this, "הנתונים אופסו בהצלחה", Toast.LENGTH_SHORT).show();
     }
 
     private void generateProblem() {
@@ -137,10 +157,5 @@ public class MathProblemsActivity extends BaseActivity {
         SharedPreferencesUtil.saveUser(this, user);
 
         updateStatsUI();
-    }
-
-    private void updateStatsUI() {
-        tvCorrect.setText(MessageFormat.format("נכונות: {0}", user.getMathProblemsStats().getCorrectAnswers()));
-        tvWrong.setText(MessageFormat.format("טעויות: {0}", user.getMathProblemsStats().getWrongAnswers()));
     }
 }

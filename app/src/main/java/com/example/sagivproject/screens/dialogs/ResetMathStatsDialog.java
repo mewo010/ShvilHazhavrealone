@@ -9,11 +9,11 @@ import com.example.sagivproject.R;
 
 import java.util.Objects;
 
-public class LogoutDialog {
+public class ResetMathStatsDialog {
     private final Context context;
     private final Runnable onConfirm;
 
-    public LogoutDialog(Context context, Runnable onConfirm) {
+    public ResetMathStatsDialog(Context context, Runnable onConfirm) {
         this.context = context;
         this.onConfirm = onConfirm;
     }
@@ -21,7 +21,8 @@ public class LogoutDialog {
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_confirm);
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        Objects.requireNonNull(dialog.getWindow())
+                .setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
 
         TextView txtTitle = dialog.findViewById(R.id.txt_DialogConfirm_title);
@@ -29,8 +30,8 @@ public class LogoutDialog {
         Button btnConfirm = dialog.findViewById(R.id.btn_DialogConfirm_confirm);
         Button btnCancel = dialog.findViewById(R.id.btn_DialogConfirm_cancel);
 
-        txtTitle.setText("התנתקות");
-        txtMessage.setText("האם ברצונך להתנתק?");
+        txtTitle.setText("איפוס נתונים");
+        txtMessage.setText("האם לאפס את הנתונים?");
 
         btnConfirm.setOnClickListener(v -> {
             onConfirm.run();

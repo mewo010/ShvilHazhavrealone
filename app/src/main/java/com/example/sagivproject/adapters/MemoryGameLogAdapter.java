@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.GameRoom;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdapter.ViewHolder> {
@@ -34,9 +35,9 @@ public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdap
         String p1Name = room.getPlayer1() != null ? room.getPlayer1().getFullName() : "שחקן לא ידוע";
         String p2Name = room.getPlayer2() != null ? room.getPlayer2().getFullName() : "ממתין...";
 
-        holder.txtPlayers.setText(p1Name + " נגד " + p2Name);
-        holder.txtScore.setText("תוצאה: " + room.getPlayer1Score() + " - " + room.getPlayer2Score());
-        holder.txtStatus.setText("סטטוס: " + room.getStatus());
+        holder.txtPlayers.setText(String.format("%s נגד %s", p1Name, p2Name));
+        holder.txtScore.setText(MessageFormat.format("תוצאה: {0} - {1}", room.getPlayer1Score(), room.getPlayer2Score()));
+        holder.txtStatus.setText(String.format("סטטוס: %s", room.getStatus()));
     }
 
     @Override

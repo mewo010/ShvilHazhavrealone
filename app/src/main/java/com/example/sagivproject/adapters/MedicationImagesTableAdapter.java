@@ -40,7 +40,7 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
 
         if (data.getId() != null) {
             holder.txtId.setVisibility(View.VISIBLE);
-            holder.txtId.setText("ID: " + data.getId());
+            holder.txtId.setText(String.format("ID: %s", data.getId()));
         } else {
             holder.txtId.setVisibility(View.GONE);
         }

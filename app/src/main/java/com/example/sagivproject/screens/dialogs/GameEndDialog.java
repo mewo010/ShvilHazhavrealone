@@ -22,14 +22,14 @@ public class GameEndDialog {
 
     public void show() {
         Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_exit);
+        dialog.setContentView(R.layout.dialog_confirm);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(false);
 
-        TextView txtTitle = dialog.findViewById(R.id.txt_DialogExit_title);
-        TextView txtMessage = dialog.findViewById(R.id.txt_DialogExit_message);
-        Button btnConfirm = dialog.findViewById(R.id.btn_DialogExit_confirm);
-        Button btnCancel = dialog.findViewById(R.id.btn_DialogExit_cancel);
+        TextView txtTitle = dialog.findViewById(R.id.txt_DialogConfirm_title);
+        TextView txtMessage = dialog.findViewById(R.id.txt_DialogConfirm_message);
+        Button btnConfirm = dialog.findViewById(R.id.btn_DialogConfirm_confirm);
+        Button btnCancel = dialog.findViewById(R.id.btn_DialogConfirm_cancel);
 
         txtTitle.setText("המשחק הסתיים");
         txtMessage.setText(message);

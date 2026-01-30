@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.ViewHolder> {
@@ -35,7 +36,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         holder.tvWins.setText(String.valueOf(user.getCountWins()));
 
         if (position == 0 && user.getCountWins() > 0) {
-            holder.tvWins.setText("🥇 " + user.getCountWins());
+            holder.tvWins.setText(MessageFormat.format("\uD83E\uDD47 {0}", user.getCountWins()));
         } else {
             holder.tvWins.setText(String.valueOf(user.getCountWins()));
         }

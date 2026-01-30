@@ -850,4 +850,13 @@ public class DatabaseService {
                     public void onFailed(Exception e) {}
                 });
     }
+
+    /// reset math problems statistics for a user
+    /// sets correctAnswers = 0 and wrongAnswers = 0 atomically
+    ///
+    /// @param uid the UID of the user
+    public void resetMathStats(@NonNull String uid) {
+        readData(USERS_PATH + "/" + uid + "/mathProblemsStats/correctAnswers").setValue(0);
+        readData(USERS_PATH + "/" + uid + "/mathProblemsStats/wrongAnswers").setValue(0);
+    }
 }
