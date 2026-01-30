@@ -1,7 +1,7 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,8 +28,8 @@ public class AdminForumActivity extends BaseForumActivity implements BaseForumAc
             return insets;
         });
 
-        Button btnToAdminPage = findViewById(R.id.btn_AdminForum_to_admin);
-        btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(AdminForumActivity.this, AdminPageActivity.class)));
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         Button btnSendMessage = findViewById(R.id.btn_AdminForum_send_message);
         EditText edtNewMessage = findViewById(R.id.edt_AdminForum_new_message);

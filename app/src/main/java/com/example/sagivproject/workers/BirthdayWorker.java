@@ -3,9 +3,9 @@ package com.example.sagivproject.workers;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.sagivproject.bases.BaseWorkerActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.services.NotificationService;
@@ -16,9 +16,12 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class BirthdayWorker extends BaseWorkerActivity {
+public class BirthdayWorker extends Worker {
+    protected final DatabaseService databaseService;
+
     public BirthdayWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
+        databaseService = DatabaseService.getInstance();
     }
 
     @NonNull

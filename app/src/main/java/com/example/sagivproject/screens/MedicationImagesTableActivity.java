@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -64,8 +65,8 @@ public class MedicationImagesTableActivity extends BaseActivity {
             return insets;
         });
 
-        Button btnToAdminPage = findViewById(R.id.btn_MedicineImagesTablePage_to_admin);
-        btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(MedicationImagesTableActivity.this, AdminPageActivity.class)));
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_MedicineImagesTablePage);
 

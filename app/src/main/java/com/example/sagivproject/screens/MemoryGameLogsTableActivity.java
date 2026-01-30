@@ -1,8 +1,7 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,8 +33,8 @@ public class MemoryGameLogsTableActivity extends BaseActivity {
             return insets;
         });
 
-        Button btnToAdminPage = findViewById(R.id.btn_MemoryGameLogsTable_to_admin);
-        btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(MemoryGameLogsTableActivity.this, AdminPageActivity.class)));
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_MemoryGameLogsTable);
         recyclerView.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));

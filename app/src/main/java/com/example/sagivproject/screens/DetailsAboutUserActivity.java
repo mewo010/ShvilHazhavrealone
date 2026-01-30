@@ -52,18 +52,12 @@ public class DetailsAboutUserActivity extends BaseActivity {
         assert user != null;
         boolean isAdmin = user.isAdmin();
 
-        if (isAdmin) {
-            //הופך את כפתורי המנהל ל-VISIBLE
-            Button btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
-            btnToAdmin.setVisibility(View.VISIBLE);
-            btnToAdmin.setOnClickListener(v -> startActivity(new Intent(this, AdminPageActivity.class)));
-        } else {
-            //הופך את כפתורי המשתמש המחובר ל-VISIBLE
-            ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
+
+        if (!isAdmin) {
             View separatorLine = findViewById(R.id.separatorLine);
-            setupTopMenu(topMenuContainer);
             separatorLine.setVisibility(View.VISIBLE);
-            topMenuContainer.setVisibility(View.VISIBLE);
         }
 
         Button btnEditUser = findViewById(R.id.btn_DetailsAboutUser_edit_user);

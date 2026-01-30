@@ -24,9 +24,11 @@ import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
 import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected DatabaseService databaseService;
@@ -44,37 +46,45 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setupTopMenu(ViewGroup menuContainer) {
-        @LayoutRes int menuLayout = authService.isUserLoggedIn() ?
+        boolean isUserLoggedIn = SharedPreferencesUtil.isUserLoggedIn(this);
+        @LayoutRes int menuLayout = isUserLoggedIn ?
                 R.layout.top_menu_logged_in :
                 R.layout.top_menu_logged_out;
 
         getLayoutInflater().inflate(menuLayout, menuContainer, true);
 
-        if (authService.isUserLoggedIn()) {
-            //Logged-in menu
-            Button btnMain = findViewById(R.id.btn_menu_main);
-            Button btnContact = findViewById(R.id.btn_menu_contact);
-            Button btnDetailsAboutUser = findViewById(R.id.btn_menu_details);
-            ImageButton btnSettings = findViewById(R.id.btn_menu_settings);
-            Button btnLogout = findViewById(R.id.btn_menu_logout);
+        if (isUserLoggedIn) {
+            if (Objects.requireNonNull(SharedPreferencesUtil.getUser(this)).isAdmin()) {
+                Button btnAdmin = findViewById(R.id.btn_menu_admin_back);
+                btnAdmin.setOnClickListener(v -> finish());
+            }
+            else{
+                //Logged-in menu
+                Button btnMain = findViewById(R.id.btn_menu_main);
+                Button btnContact = findViewById(R.id.btn_menu_contact);
+                Button btnDetailsAboutUser = findViewById(R.id.btn_menu_details);
+                ImageButton btnSettings = findViewById(R.id.btn_menu_settings);
+                Button btnLogout = findViewById(R.id.btn_menu_logout);
 
-            btnMain.setOnClickListener(v -> navigateIfNotCurrent(MainActivity.class));
-            btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
-            btnDetailsAboutUser.setOnClickListener(v -> navigateIfNotCurrent(DetailsAboutUserActivity.class));
-            btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
-            btnLogout.setOnClickListener(v -> logout());
-
+                btnMain.setOnClickListener(v -> navigateIfNotCurrent(MainActivity.class));
+                btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
+                btnDetailsAboutUser.setOnClickListener(v -> navigateIfNotCurrent(DetailsAboutUserActivity.class));
+                btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
+                btnLogout.setOnClickListener(v -> logout());
+            }
         } else {
             //Logged-out menu
             Button btnLanding = findViewById(R.id.btn_menu_main);
             Button btnContact = findViewById(R.id.btn_menu_contact);
             Button btnLogin = findViewById(R.id.btn_menu_login);
             Button btnRegister = findViewById(R.id.btn_menu_register);
+            ImageButton btnSettings = findViewById(R.id.btn_menu_settings);
 
             btnLanding.setOnClickListener(v -> navigateIfNotCurrent(LandingActivity.class));
             btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
             btnLogin.setOnClickListener(v -> navigateIfNotCurrent(LoginActivity.class));
             btnRegister.setOnClickListener(v -> navigateIfNotCurrent(RegisterActivity.class));
+            btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
         }
     }
 

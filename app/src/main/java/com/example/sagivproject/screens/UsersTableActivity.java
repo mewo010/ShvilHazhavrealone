@@ -62,8 +62,8 @@ public class UsersTableActivity extends BaseActivity {
 
         currentUser = SharedPreferencesUtil.getUser(UsersTableActivity.this);
 
-        Button btnToAdminPage = findViewById(R.id.btn_UsersTable_to_admin);
-        btnToAdminPage.setOnClickListener(view -> startActivity(new Intent(UsersTableActivity.this, AdminPageActivity.class)));
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
         btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers()).show());
