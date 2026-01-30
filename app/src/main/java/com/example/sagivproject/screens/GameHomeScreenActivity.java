@@ -3,8 +3,8 @@ package com.example.sagivproject.screens;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,23 +51,14 @@ public class GameHomeScreenActivity extends BaseActivity {
 
         user = SharedPreferencesUtil.getUser(this);
 
-        Button btnToMain = findViewById(R.id.btn_GameHomeScreen_to_main);
-        Button btnToContact = findViewById(R.id.btn_GameHomeScreen_to_contact);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_GameHomeScreen_to_DetailsAboutUser);
-        Button btnToExit = findViewById(R.id.btn_GameHomeScreen_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_GameHomeScreen_to_settings);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         btnFindEnemy = findViewById(R.id.btn_GameHomeScreen_find_enemy);
         btnCancelFindEnemy = findViewById(R.id.btn_GameHomeScreen_cancel_find_enemy);
         TVictories = findViewById(R.id.tv_GameHomeScreen_victories);
         TVStatusOfFindingEnemy = findViewById(R.id.tv_GameHomeScreen_status_of_finding_enemy);
         rvLeaderboard = findViewById(R.id.recyclerView_GameHomeScreen_leaderboard);
-
-        btnToMain.setOnClickListener(view -> startActivity(new Intent(GameHomeScreenActivity.this, MainActivity.class)));
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(GameHomeScreenActivity.this, ContactActivity.class)));
-        btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(GameHomeScreenActivity.this, DetailsAboutUserActivity.class)));
-        btnToExit.setOnClickListener(view -> logout());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         btnFindEnemy.setOnClickListener(view -> findEnemy());
         btnCancelFindEnemy.setOnClickListener(view -> cancel());

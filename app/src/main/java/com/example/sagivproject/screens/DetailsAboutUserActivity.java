@@ -5,10 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,41 +49,22 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         user = SharedPreferencesUtil.getUser(this);
 
-        //משתמש מחובר
-        LinearLayout topMenu = findViewById(R.id.topMenuDetailsAboutUser);
-        Button btnToMain = findViewById(R.id.btn_DetailsAboutUser_to_main);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_DetailsAboutUser_to_DetailsAboutUserPage);
-        Button btnToContact = findViewById(R.id.btn_DetailsAboutUser_to_contact);
-        Button btnToExit = findViewById(R.id.btn_DetailsAboutUser_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_DetailsAboutUser_to_settings);
-        View separatorLine = findViewById(R.id.separatorLine_DetailsAboutUser);
-
-        //מנהל
-        Button btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
-
+        assert user != null;
         boolean isAdmin = user.isAdmin();
 
         if (isAdmin) {
             //הופך את כפתורי המנהל ל-VISIBLE
+            Button btnToAdmin = findViewById(R.id.btn_DetailsAboutUser_to_admin);
             btnToAdmin.setVisibility(View.VISIBLE);
-            topMenu.setVisibility(View.GONE);
-            separatorLine.setVisibility(View.GONE);
+            btnToAdmin.setOnClickListener(v -> startActivity(new Intent(this, AdminPageActivity.class)));
         } else {
             //הופך את כפתורי המשתמש המחובר ל-VISIBLE
-            btnToMain.setVisibility(View.VISIBLE);
-            btnToDetailsAboutUser.setVisibility(View.VISIBLE);
-            btnToContact.setVisibility(View.VISIBLE);
-            btnToExit.setVisibility(View.VISIBLE);
-            btnToSettings.setVisibility(View.VISIBLE);
+            ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+            View separatorLine = findViewById(R.id.separatorLine);
+            setupTopMenu(topMenuContainer);
             separatorLine.setVisibility(View.VISIBLE);
-            topMenu.setVisibility(View.VISIBLE);
+            topMenuContainer.setVisibility(View.VISIBLE);
         }
-
-        btnToMain.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
-        btnToContact.setOnClickListener(v -> startActivity(new Intent(this, ContactActivity.class)));
-        btnToExit.setOnClickListener(v -> logout());
-        btnToSettings.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
-        btnToAdmin.setOnClickListener(v -> startActivity(new Intent(this, AdminPageActivity.class)));
 
         Button btnEditUser = findViewById(R.id.btn_DetailsAboutUser_edit_user);
         btnEditUser.setOnClickListener(v -> openEditDialog());

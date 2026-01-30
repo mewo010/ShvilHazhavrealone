@@ -2,8 +2,8 @@ package com.example.sagivproject.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -50,30 +50,25 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
             return insets;
         });
 
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
+
         User user = SharedPreferencesUtil.getUser(this);
         setupDailyNotifications();
         setupBirthdayNotification();
 
-        Button btnToContact = findViewById(R.id.btn_main_to_contact);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_main_to_DetailsAboutUser);
         Button btnToMedicationList = findViewById(R.id.btn_main_to_MedicationList);
         Button btnToForum = findViewById(R.id.btn_main_to_forum);
         Button btnToAi = findViewById(R.id.btn_main_to_Ai);
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
         Button btnToMathProblems = findViewById(R.id.btn_main_to_MathProblems);
-        Button btnToExit = findViewById(R.id.btn_main_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_main_to_settings);
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
 
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactActivity.class)));
-        btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, DetailsAboutUserActivity.class)));
         btnToMedicationList.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MedicationListActivity.class)));
         btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumActivity.class)));
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToMathProblems.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MathProblemsActivity.class)));
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
-        btnToExit.setOnClickListener(view -> logout());
 
         assert user != null;
         txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));

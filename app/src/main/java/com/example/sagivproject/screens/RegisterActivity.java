@@ -2,9 +2,9 @@ package com.example.sagivproject.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,11 +36,10 @@ public class RegisterActivity extends BaseActivity {
 
         authService = new AuthService(this);
 
-        Button btnToContact = findViewById(R.id.btn_register_to_contact);
-        Button btnToLanding = findViewById(R.id.btn_register_to_landing);
-        Button btnToLogin = findViewById(R.id.btn_register_to_login);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
+
         Button btnRegister = findViewById(R.id.btnRegister);
-        ImageButton btnToSettings = findViewById(R.id.btn_register_to_settings);
 
         editTextFirstName = findViewById(R.id.edt_register_first_name);
         editTextLastName = findViewById(R.id.edt_register_last_name);
@@ -52,12 +51,7 @@ public class RegisterActivity extends BaseActivity {
         editTextBirthDate.setClickable(true);
 
         editTextBirthDate.setOnClickListener(v -> openDatePicker());
-
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, ContactActivity.class)));
-        btnToLanding.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, LandingActivity.class)));
-        btnToLogin.setOnClickListener(view -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
         btnRegister.setOnClickListener(view -> tryRegister());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
     }
 
     private void tryRegister() {

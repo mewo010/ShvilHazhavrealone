@@ -19,6 +19,10 @@ public class AuthService {
         this.databaseService = DatabaseService.getInstance();
     }
 
+    public boolean isUserLoggedIn() {
+        return SharedPreferencesUtil.getUser(context) != null;
+    }
+
     public void login(String email, String password, LoginCallback callback) {
         databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<>() {
             @Override

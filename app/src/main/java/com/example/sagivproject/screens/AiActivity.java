@@ -1,11 +1,10 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -60,23 +59,13 @@ public class AiActivity extends BaseActivity {
             return insets;
         });
 
-        Button btnToMain = findViewById(R.id.btn_Ai_to_main);
-        Button btnToContact = findViewById(R.id.btn_Ai_to_contact);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_Ai_to_DetailsAboutUser);
-        Button btnToExit = findViewById(R.id.btn_Ai_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_Ai_to_settings);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
         send = findViewById(R.id.btn_Ai_send_to_Ai);
         questionInput = findViewById(R.id.edit_Ai_question);
         answerView = findViewById(R.id.TV_Ai_txt_response);
         progressBar = findViewById(R.id.progressBar_Ai);
-
-        btnToMain.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, MainActivity.class)));
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, ContactActivity.class)));
-        btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, DetailsAboutUserActivity.class)));
-        send.setOnClickListener(view -> sendQuestion());
-        btnToExit.setOnClickListener(view -> logout());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(AiActivity.this, SettingsActivity.class)));
     }
 
     private void displayTextWithAnimation(TextView textView, String fullText) {

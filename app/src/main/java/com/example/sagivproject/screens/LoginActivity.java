@@ -2,9 +2,9 @@ package com.example.sagivproject.screens;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -35,20 +35,15 @@ public class LoginActivity extends BaseActivity {
 
         authService = new AuthService(this);
 
-        Button btnToLanding = findViewById(R.id.btn_login_to_landing);
-        Button btnToContact = findViewById(R.id.btn_login_to_contact);
-        Button btnToRegister = findViewById(R.id.btn_login_to_register);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
+
         Button btnLogin = findViewById(R.id.btnLogin);
-        ImageButton btnToSettings = findViewById(R.id.btn_login_to_settings);
 
         editTextEmail = findViewById(R.id.edt_login_email);
         editTextPassword = findViewById(R.id.edt_login_password);
 
-        btnToLanding.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, LandingActivity.class)));
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, ContactActivity.class)));
-        btnToRegister.setOnClickListener(view -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
         btnLogin.setOnClickListener(view -> tryLogin());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         String lastEmail = getIntent().getStringExtra("userEmail");
         if (lastEmail != null && !lastEmail.isEmpty()) {

@@ -1,11 +1,10 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,22 +41,14 @@ public class MathProblemsActivity extends BaseActivity {
 
         user = SharedPreferencesUtil.getUser(MathProblemsActivity.this);
 
-        Button btnToMain = findViewById(R.id.btn_MathProblemsPage_to_main);
-        Button btnToContact = findViewById(R.id.btn_MathProblemsPage_to_contact);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_MathProblemsPage_to_DetailsAboutUser);
-        Button btnToExit = findViewById(R.id.btn_MathProblemsPage_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_MathProblemsPage_to_settings);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
+
         tvCorrect = findViewById(R.id.tv_MathProblemsPage_correct);
         tvWrong = findViewById(R.id.tv_MathProblemsPage_wrong);
         Button btnResetStats = findViewById(R.id.btn_MathProblemsPage_resetStats);
         tvQuestion = findViewById(R.id.tv_MathProblemsPage_question);
         tvAnswer = findViewById(R.id.tv_MathProblemsPage_user_answer);
-
-        btnToMain.setOnClickListener(view -> startActivity(new Intent(this, MainActivity.class)));
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(this, ContactActivity.class)));
-        btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(this, DetailsAboutUserActivity.class)));
-        btnToExit.setOnClickListener(view -> logout());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
 
         btnResetStats.setOnClickListener(v -> new ResetMathStatsDialog(this, this::resetStats).show());
 

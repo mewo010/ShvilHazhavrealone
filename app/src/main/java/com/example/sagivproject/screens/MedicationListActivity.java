@@ -1,13 +1,10 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,19 +58,10 @@ public class MedicationListActivity extends BaseActivity {
         user = SharedPreferencesUtil.getUser(this);
         uid = Objects.requireNonNull(user).getUid();
 
-        Button btnToMain = findViewById(R.id.btn_MedicationList_to_main);
-        Button btnToContact = findViewById(R.id.btn_MedicationList_to_contact);
-        Button btnToDetailsAboutUser = findViewById(R.id.btn_MedicationList_to_DetailsAboutUser);
-        Button btnAddMedication = findViewById(R.id.btn_MedicationList_add_medication);
-        Button btnToExit = findViewById(R.id.btn_MedicationList_to_exit);
-        ImageButton btnToSettings = findViewById(R.id.btn_MedicationList_to_settings);
+        ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
+        setupTopMenu(topMenuContainer);
 
-        btnToMain.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, MainActivity.class)));
-        btnToContact.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, ContactActivity.class)));
-        btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(MedicationListActivity.this, DetailsAboutUserActivity.class)));
-        btnAddMedication.setOnClickListener(view -> openMedicationDialog(null));
-        btnToExit.setOnClickListener(view -> logout());
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
+        findViewById(R.id.btn_MedicationList_add_medication).setOnClickListener(view -> openMedicationDialog(null));
 
         RecyclerView recyclerViewMedications = findViewById(R.id.recyclerView_medications);
         recyclerViewMedications.setLayoutManager(new LinearLayoutManager(this));
@@ -283,7 +271,6 @@ public class MedicationListActivity extends BaseActivity {
                     SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
                 }
                 loadMedications();
-                Toast.makeText(MedicationListActivity.this, "התרופה נמחקה בהצלחה", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -309,30 +296,26 @@ public class MedicationListActivity extends BaseActivity {
 
     private void filterMedications(String query) {
         filteredMedications.clear();
-        String lowerQuery = query.toLowerCase().trim();
-        String searchType = spinnerSearchType.getSelectedItem().toString();
+        String selectedType = spinnerSearchType.getSelectedItem().toString();
 
-        for (Medication med : medications) {
-            boolean matches = false;
-            String medName = med.getName() != null ? med.getName().toLowerCase() : "";
-            String medType = med.getType() != null ? med.getType().getDisplayName().toLowerCase() : "";
-
-            switch (searchType) {
-                case "שם תרופה":
-                    if (medName.contains(lowerQuery)) matches = true;
-                    break;
-                case "סוג תרופה":
-                    if (medType.contains(lowerQuery)) matches = true;
-                    break;
-                default: // "הכל"
-                    if (medName.contains(lowerQuery) || medType.contains(lowerQuery))
-                        matches = true;
-                    break;
+        if (query.isEmpty() && selectedType.equals("הכל")) {
+            filteredMedications.addAll(medications);
+        } else {
+            for (Medication med : medications) {
+                boolean matches = true;
+                if (!query.isEmpty()) {
+                    if (selectedType.equals("שם תרופה") && !med.getName().toLowerCase().contains(query.toLowerCase())) {
+                        matches = false;
+                    }
+                    if (selectedType.equals("סוג תרופה") && (med.getType() == null || !med.getType().getDisplayName().toLowerCase().contains(query.toLowerCase()))) {
+                        matches = false;
+                    }
+                }
+                if (matches) {
+                    filteredMedications.add(med);
+                }
             }
-            if (matches) filteredMedications.add(med);
         }
-
-        filteredMedications.sort(Comparator.comparing(Medication::getDate, Comparator.nullsLast(Comparator.naturalOrder())));
         adapter.notifyDataSetChanged();
     }
 }

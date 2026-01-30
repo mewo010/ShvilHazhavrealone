@@ -16,93 +16,24 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/topMenuDetailsAboutUser"
+            android:id="@+id/topMenuContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/btn_DetailsAboutUser_to_main"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="none"
-                android:fontFamily="@font/text_hebrew"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:text="@string/דףהבית"
-                android:textSize="22sp"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_DetailsAboutUser_to_DetailsAboutUserPage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="none"
-                android:fontFamily="@font/text_hebrew"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:text="@string/משתמש"
-                android:textSize="22sp"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_DetailsAboutUser_to_contact"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="none"
-                android:fontFamily="@font/text_hebrew"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:text="@string/צורקשר"
-                android:textSize="22sp"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btn_DetailsAboutUser_to_exit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="none"
-                android:fontFamily="@font/text_hebrew"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:text="@string/התנתקות"
-                android:textSize="22sp"
-                android:visibility="gone" />
-
-            <ImageButton
-                android:id="@+id/btn_DetailsAboutUser_to_settings"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/הגדרות"
-                android:src="@drawable/ic_settings"
-                android:visibility="gone" />
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/separatorLine_DetailsAboutUser"
+            android:id="@+id/separatorLine"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="?attr/colorOnSurface"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topMenuDetailsAboutUser" />
+            app:layout_constraintTop_toBottomOf="@+id/topMenuContainer" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_DetailsAboutUser_to_admin"
