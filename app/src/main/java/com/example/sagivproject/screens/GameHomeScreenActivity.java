@@ -24,6 +24,7 @@ import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class GameHomeScreenActivity extends BaseActivity {
@@ -68,7 +69,7 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void loadWins(User user) {
-        TVictories.setText("ניצחונות: " + user.getCountWins());
+        TVictories.setText(MessageFormat.format("ניצחונות: {0}", user.getCountWins()));
     }
 
     private void setupLeaderboard() {
