@@ -51,170 +51,202 @@
                 android:textColor="@color/headline"
                 android:textSize="30sp" />
 
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="?attr/colorOutline">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="?attr/colorOutline">
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="6dp"
-                        android:contentDescription="@string/אייקוןתרופה"
-                        android:src="@drawable/ic_medication" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <Button
-                        android:id="@+id/btn_main_to_MedicationList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/רשימתהתרופותשלי"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="6dp"
+                            android:contentDescription="@string/אייקוןתרופה"
+                            android:src="@drawable/ic_medication" />
 
-            <com.google.android.material.card.MaterialCardView
+                        <Button
+                            android:id="@+id/btn_main_to_MedicationList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:text="@string/רשימתהתרופותשלי"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="?attr/colorOutline">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="6dp"
+                            android:contentDescription="@string/אייקוןפורום"
+                            android:src="@drawable/ic_forum" />
+
+                        <Button
+                            android:id="@+id/btn_main_to_forum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:text="@string/קשרקרוב"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="?attr/colorOutline">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="?attr/colorOutline">
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="6dp"
-                        android:contentDescription="@string/אייקוןפורום"
-                        android:src="@drawable/ic_forum" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <Button
-                        android:id="@+id/btn_main_to_forum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/קשרקרוב"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="6dp"
+                            android:contentDescription="@string/אייקוןיועץבינהמלאכותית"
+                            android:src="@drawable/ic_ai_assistant" />
 
-            <com.google.android.material.card.MaterialCardView
+                        <Button
+                            android:id="@+id/btn_main_to_Ai"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:text="@string/יועץבינהמלאכותית"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="?attr/colorOutline">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="6dp"
+                            android:contentDescription="@string/אייקוןמשחק"
+                            android:src="@drawable/ic_memory_game" />
+
+                        <Button
+                            android:id="@+id/btn_main_to_GameHomeScreen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:text="@string/משחקזיכרון"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="?attr/colorOutline">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp"
+                    app:strokeColor="?attr/colorOutline">
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="6dp"
-                        android:contentDescription="@string/אייקוןיועץבינהמלאכותית"
-                        android:src="@drawable/ic_ai_assistant" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <Button
-                        android:id="@+id/btn_main_to_Ai"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/יועץבינהמלאכותית"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginBottom="6dp"
+                            android:contentDescription="@string/אייקוןמשחק"
+                            android:src="@drawable/ic_math_game" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="?attr/colorOutline">
+                        <Button
+                            android:id="@+id/btn_main_to_MathProblems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="6dp"
+                            android:fontFamily="@font/text_hebrew"
+                            android:text="@string/תרגיליחשבון"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="6dp"
-                        android:contentDescription="@string/אייקוןמשחק"
-                        android:src="@drawable/ic_memory_game" />
-
-                    <Button
-                        android:id="@+id/btn_main_to_GameHomeScreen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/משחקזיכרון"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:strokeColor="?attr/colorOutline">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_marginBottom="6dp"
-                        android:contentDescription="@string/אייקוןמשחק"
-                        android:src="@drawable/ic_math_game" />
-
-                    <Button
-                        android:id="@+id/btn_main_to_MathProblems"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/תרגיליחשבון"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

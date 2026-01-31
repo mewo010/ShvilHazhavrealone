@@ -30,6 +30,7 @@ import com.example.sagivproject.screens.dialogs.GameEndDialog;
 import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -123,7 +124,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         int myScore = amIPlayer1 ? room.getPlayer1Score() : room.getPlayer2Score();
         int opponentScore = amIPlayer1 ? room.getPlayer2Score() : room.getPlayer1Score();
 
-        tvScore.setText("אני: " + myScore + " | יריב: " + opponentScore);
+        tvScore.setText(MessageFormat.format("אני: {0} | יריב: {1}", myScore, opponentScore));
     }
 
     private void setupGameBoard(GameRoom room) {
@@ -225,7 +226,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             adapter.animateError(idx1, recyclerCards);
             adapter.animateError(idx2, recyclerCards);
 
-            // חשוב! השהייה של חצי שנייה כדי שהשחקן יראה את הרעד לפני שהקלפים נסגרים ב-DB
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 databaseService.updateCardStatus(roomId, idx1, false, false);
                 databaseService.updateCardStatus(roomId, idx2, false, false);
@@ -270,7 +270,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 if (room.getPlayer1() != null && room.getPlayer2() != null) {
                     String opponentName = user.getUid().equals(room.getPlayer1().getUid()) ?
                             room.getPlayer2().getFullName() : room.getPlayer1().getFullName();
-                    tvOpponentName.setText("משחק נגד: " + opponentName);
+                    tvOpponentName.setText(String.format("משחק נגד: %s", opponentName));
                 }
 
                 updateScoreUI(room);
@@ -351,7 +351,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         turnTimer = new android.os.CountDownTimer(TURN_TIME_LIMIT, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tvTimer.setText("זמן נותר: " + (millisUntilFinished / 1000));
+                tvTimer.setText(MessageFormat.format("זמן נותר: {0}", millisUntilFinished / 1000));
             }
 
             @Override

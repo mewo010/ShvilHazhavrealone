@@ -26,17 +26,6 @@ import com.example.sagivproject.workers.MedicationWorker;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-//למחוק בסיום הפרויקט
-/*
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-import android.widget.Toast;
-import com.example.sagivproject.models.ImageData;
-import com.example.sagivproject.services.DatabaseService;
-import java.io.ByteArrayOutputStream;
- */
-
 public class MainActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
 
     @Override

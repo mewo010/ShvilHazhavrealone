@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.models.enums.Operation;
 import com.example.sagivproject.screens.dialogs.ResetMathStatsDialog;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -79,16 +80,59 @@ public class MathProblemsActivity extends BaseActivity {
     }
 
     private void generateProblem() {
-        int a = 10 + (int) (Math.random() * 90);
-        int b = 10 + (int) (Math.random() * 90);
+        Operation operation = Operation.values()[(int) (Math.random() * Operation.values().length)];
 
-        correctAnswer = a + b;
+        int a, b;
 
-        tvQuestion.setTextDirection(View.TEXT_DIRECTION_LTR);
-        tvQuestion.setText(MessageFormat.format("{0} + {1} =", a, b));
+        switch (operation) {
+            case ADD:
+                a = rand(10, 99);
+                b = rand(10, 99);
+                correctAnswer = a + b;
+                tvQuestion.setText(MessageFormat.format("{0} + {1} =", a, b));
+                break;
+
+            case SUBTRACT:
+                a = rand(10, 99);
+                b = rand(10, a);
+                correctAnswer = a - b;
+                tvQuestion.setText(MessageFormat.format("{0} - {1} =", a, b));
+                break;
+
+            case MULTIPLY:
+                a = rand(2, 12);
+                b = rand(2, 12);
+                correctAnswer = a * b;
+                tvQuestion.setText(MessageFormat.format("{0} × {1} =", a, b));
+                break;
+
+            case DIVIDE:
+                b = rand(2, 12);
+                correctAnswer = rand(2, 12);
+                a = b * correctAnswer;
+                tvQuestion.setText(MessageFormat.format("{0} ÷ {1} =", a, b));
+                break;
+
+            case POWER:
+                a = rand(2, 5);
+                b = rand(2, 3);
+                correctAnswer = (int) Math.pow(a, b);
+                tvQuestion.setText(MessageFormat.format("{0}^{1} =", a, b));
+                break;
+
+            case SQRT:
+                correctAnswer = rand(2, 12);
+                a = correctAnswer * correctAnswer;
+                tvQuestion.setText(MessageFormat.format("√{0} =", a));
+                break;
+        }
 
         userInput.setLength(0);
         tvAnswer.setText("");
+    }
+
+    private int rand(int min, int max) {
+        return min + (int) (Math.random() * (max - min + 1));
     }
 
     private void setupKeypad() {
