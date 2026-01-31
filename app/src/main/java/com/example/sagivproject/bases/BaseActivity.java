@@ -22,8 +22,8 @@ import com.example.sagivproject.screens.MainActivity;
 import com.example.sagivproject.screens.RegisterActivity;
 import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
-import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.utils.Injector;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -31,8 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public abstract class BaseActivity extends AppCompatActivity {
-    protected DatabaseService databaseService;
+    @Inject
+    protected IDatabaseService databaseService;
     private IAuthService authService;
 
     protected IAuthService getAuthService() {
@@ -45,7 +48,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        databaseService = DatabaseService.getInstance();
 
         if (this instanceof RequiresPermissions) {
             requestPermissions();

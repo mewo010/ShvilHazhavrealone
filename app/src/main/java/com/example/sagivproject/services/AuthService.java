@@ -10,13 +10,18 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
 public class AuthService implements IAuthService {
     private final Context context;
-    private final DatabaseService databaseService;
+    private final IDatabaseService databaseService;
 
-    public AuthService(@NonNull Context context) {
+    @Inject
+    public AuthService(@ApplicationContext @NonNull Context context, IDatabaseService databaseService) {
         this.context = context.getApplicationContext();
-        this.databaseService = DatabaseService.getInstance();
+        this.databaseService = databaseService;
     }
 
     @Override

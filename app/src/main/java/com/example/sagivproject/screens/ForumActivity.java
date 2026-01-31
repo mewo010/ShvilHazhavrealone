@@ -17,6 +17,9 @@ import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ForumActivity extends BaseForumActivity implements BaseForumActivity.ForumPermissions {
     private User user;
 

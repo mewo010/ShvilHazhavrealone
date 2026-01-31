@@ -1,6 +1,8 @@
 [versions]
 agp = "9.0.0"
 gson = "2.13.2"
+hiltAndroid = "2.59"
+hiltCompiler = "2.59"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -19,6 +21,8 @@ workRuntime = "2.11.1"
 [libraries]
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 google-firebase-database = { module = "com.google.firebase:firebase-database" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }

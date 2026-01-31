@@ -1,58 +1,76 @@
 package com.example.sagivproject.services;
 
+import androidx.annotation.NonNull;
+
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.services.DatabaseService.DatabaseCallback;
 
 import java.util.List;
 
-public class ForumService {
-    private final DatabaseService databaseService;
+import javax.inject.Inject;
 
-    public ForumService(DatabaseService databaseService) {
+public class ForumService {
+    private final IDatabaseService databaseService;
+
+    @Inject
+    public ForumService(IDatabaseService databaseService) {
         this.databaseService = databaseService;
     }
 
-    public void listenToMessages(ForumCallback<List<ForumMessage>> callback) {
-        databaseService.getForumMessagesRealtime(new DatabaseService.DatabaseCallback<>() {
-            @Override
-            public void onCompleted(List<ForumMessage> list) {
-                callback.onSuccess(list);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                callback.onError(e);
-            }
-        });
-    }
-
     public void sendMessage(User user, String text, ForumCallback<Void> callback) {
-        String id = databaseService.generateForumMessageId();
-        ForumMessage msg = new ForumMessage(id, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
+        String messageId = databaseService.generateForumMessageId();
+        ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
 
-        databaseService.sendForumMessage(msg, new DatabaseService.DatabaseCallback<>() {
+        databaseService.sendForumMessage(msg, new DatabaseCallback<>() {
             @Override
-            public void onCompleted(Void obj) {
-                callback.onSuccess(null);
+            public void onCompleted(Void object) {
+                if (callback != null) {
+                    callback.onSuccess(object);
+                }
             }
 
             @Override
             public void onFailed(Exception e) {
-                callback.onError(e);
+                if (callback != null) {
+                    callback.onError(e);
+                }
             }
         });
     }
 
-    public void deleteMessage(String messageId, ForumCallback<Void> callback) {
-        databaseService.deleteForumMessage(messageId, new DatabaseService.DatabaseCallback<>() {
+    public void listenToMessages(ForumCallback<List<ForumMessage>> callback) {
+        databaseService.getForumMessagesRealtime(new DatabaseCallback<>() {
             @Override
-            public void onCompleted(Void obj) {
-                callback.onSuccess(null);
+            public void onCompleted(List<ForumMessage> data) {
+                if (callback != null) {
+                    callback.onSuccess(data);
+                }
             }
 
             @Override
             public void onFailed(Exception e) {
-                callback.onError(e);
+                if (callback != null) {
+                    callback.onError(e);
+                }
+            }
+        });
+    }
+
+    public void deleteMessage(@NonNull String messageId, ForumCallback<Void> callback) {
+        databaseService.deleteForumMessage(messageId, new DatabaseCallback<>() {
+            @Override
+            public void onCompleted(Void data) {
+                if (callback != null) {
+                    callback.onSuccess(data);
+                }
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                if (callback != null) {
+                    callback.onError(e);
+                }
             }
         });
     }

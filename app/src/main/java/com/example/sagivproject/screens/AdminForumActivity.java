@@ -15,6 +15,9 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseForumActivity;
 import com.example.sagivproject.models.ForumMessage;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class AdminForumActivity extends BaseForumActivity implements BaseForumActivity.ForumPermissions {
 
     @Override

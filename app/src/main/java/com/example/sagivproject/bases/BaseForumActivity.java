@@ -20,19 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public abstract class BaseForumActivity extends BaseActivity {
     protected final List<ForumMessage> messages = new ArrayList<>();
     protected RecyclerView recycler;
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
     protected ForumAdapter adapter;
+    @Inject
     protected ForumService forumService;
     protected ForumPermissions permissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        forumService = new ForumService(databaseService);
     }
 
     protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages) {
