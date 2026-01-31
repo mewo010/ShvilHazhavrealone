@@ -66,7 +66,7 @@ public class UsersTableActivity extends BaseActivity {
         setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers()).show());
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), getAuthService()).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -86,7 +86,8 @@ public class UsersTableActivity extends BaseActivity {
                         new EditUserDialog(
                                 UsersTableActivity.this,
                                 clickedUser,
-                                () -> loadUsers()
+                                () -> loadUsers(),
+                                getAuthService()
                         ).show();
                     }
 

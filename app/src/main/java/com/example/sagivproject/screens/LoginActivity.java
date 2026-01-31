@@ -15,12 +15,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.Validator;
 
 public class LoginActivity extends BaseActivity {
     private EditText editTextEmail, editTextPassword;
-    private AuthService authService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +31,6 @@ public class LoginActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        authService = new AuthService(this);
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -59,7 +56,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        authService.login(email, password, new AuthService.LoginCallback() {
+        getAuthService().login(email, password, new IAuthService.LoginCallback() {
             @Override
             public void onSuccess(User user) {
                 Intent intent;

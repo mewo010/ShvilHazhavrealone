@@ -10,7 +10,7 @@ import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 
-public class AuthService {
+public class AuthService implements IAuthService {
     private final Context context;
     private final DatabaseService databaseService;
 
@@ -19,6 +19,7 @@ public class AuthService {
         this.databaseService = DatabaseService.getInstance();
     }
 
+    @Override
     public void login(String email, String password, LoginCallback callback) {
         databaseService.getUserByEmailAndPassword(email, password, new DatabaseService.DatabaseCallback<>() {
             @Override
@@ -40,6 +41,7 @@ public class AuthService {
         });
     }
 
+    @Override
     public void register(String firstName, String lastName, long birthDateMillis, String email, String password, RegisterCallback callback) {
         databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<>() {
             @Override
@@ -70,6 +72,7 @@ public class AuthService {
         });
     }
 
+    @Override
     public void addUser(String firstName, String lastName, long birthDateMillis, String email, String password, AddUserCallback callback) {
         databaseService.checkIfEmailExists(email, new DatabaseService.DatabaseCallback<>() {
             @Override
@@ -98,6 +101,7 @@ public class AuthService {
         });
     }
 
+    @Override
     public void updateUser(User user, String newFirstName, String newLastName, long newBirthDateMillis, String newEmail, String newPassword, UpdateUserCallback callback) {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
@@ -160,6 +164,7 @@ public class AuthService {
         });
     }
 
+    @Override
     public String logout() {
         User user = SharedPreferencesUtil.getUser(context);
 
@@ -167,30 +172,6 @@ public class AuthService {
         SharedPreferencesUtil.signOutUser(context);
 
         return email;
-    }
-
-    public interface LoginCallback {
-        void onSuccess(User user);
-
-        void onError(String message);
-    }
-
-    public interface RegisterCallback {
-        void onSuccess();
-
-        void onError(String message);
-    }
-
-    public interface AddUserCallback {
-        void onSuccess(User user);
-
-        void onError(String message);
-    }
-
-    public interface UpdateUserCallback {
-        void onSuccess(User updatedUser);
-
-        void onError(String message);
     }
 
     private interface CreateUserCallback {

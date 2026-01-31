@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
@@ -18,14 +18,14 @@ public class EditUserDialog {
     private final Context context;
     private final User user;
     private final Runnable onSuccess;
-    private final AuthService authService;
+    private final IAuthService authService;
     private long birthDateMillis = -1;
 
-    public EditUserDialog(Context context, User user, Runnable onSuccess) {
+    public EditUserDialog(Context context, User user, Runnable onSuccess, IAuthService authService) {
         this.context = context;
         this.user = user;
         this.onSuccess = onSuccess;
-        this.authService = new AuthService(context);
+        this.authService = authService;
     }
 
     public void show() {
@@ -65,7 +65,7 @@ public class EditUserDialog {
                 return;
             }
 
-            authService.updateUser(user, fName, lName, birthDateMillis, email, pass, new AuthService.UpdateUserCallback() {
+            authService.updateUser(user, fName, lName, birthDateMillis, email, pass, new IAuthService.UpdateUserCallback() {
                 @Override
                 public void onSuccess(User updatedUser) {
                     Toast.makeText(context, "הפרטים עודכנו!", Toast.LENGTH_SHORT).show();

@@ -22,8 +22,9 @@ import com.example.sagivproject.screens.MainActivity;
 import com.example.sagivproject.screens.RegisterActivity;
 import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
-import com.example.sagivproject.services.AuthService;
 import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.utils.Injector;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -32,13 +33,19 @@ import java.util.Objects;
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected DatabaseService databaseService;
-    protected AuthService authService;
+    private IAuthService authService;
+
+    protected IAuthService getAuthService() {
+        if (authService == null) {
+            authService = Injector.provideAuthService(this);
+        }
+        return authService;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         databaseService = DatabaseService.getInstance();
-        authService = new AuthService(this);
 
         if (this instanceof RequiresPermissions) {
             requestPermissions();
@@ -98,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void logout() {
         new LogoutDialog(this, () -> {
-            String email = authService.logout();
+            String email = getAuthService().logout();
             Toast.makeText(this, "התנתקת בהצלחה", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, LoginActivity.class);

@@ -14,14 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
-import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
 public class RegisterActivity extends BaseActivity {
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
     private long birthDateMillis = -1;
-    private AuthService authService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +32,6 @@ public class RegisterActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        authService = new AuthService(this);
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -65,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        authService.register(firstName, lastName, birthDateMillis, email, password, new AuthService.RegisterCallback() {
+        getAuthService().register(firstName, lastName, birthDateMillis, email, password, new IAuthService.RegisterCallback() {
             @Override
             public void onSuccess() {
                 Toast.makeText(RegisterActivity.this, "ההרשמה בוצעה בהצלחה!", Toast.LENGTH_SHORT).show();

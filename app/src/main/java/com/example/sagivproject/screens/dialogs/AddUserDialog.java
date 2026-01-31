@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.AuthService;
+import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
@@ -17,13 +17,13 @@ import java.util.Objects;
 public class AddUserDialog {
     private final Context context;
     private final AddUserListener listener;
-    private final AuthService authService;
+    private final IAuthService authService;
     private long birthDateMillis = -1;
 
-    public AddUserDialog(Context context, AddUserListener listener) {
+    public AddUserDialog(Context context, AddUserListener listener, IAuthService authService) {
         this.context = context;
         this.listener = listener;
-        this.authService = new AuthService(context);
+        this.authService = authService;
     }
 
     public void show() {
@@ -56,7 +56,7 @@ public class AddUserDialog {
                 return;
             }
 
-            authService.addUser(fName, lName, birthDateMillis, email, password, new AuthService.AddUserCallback() {
+            authService.addUser(fName, lName, birthDateMillis, email, password, new IAuthService.AddUserCallback() {
                 @Override
                 public void onSuccess(User user) {
                     if (listener != null) {
