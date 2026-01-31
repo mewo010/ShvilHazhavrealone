@@ -90,7 +90,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserFromDatabase() {
-        DatabaseService.getInstance().getUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
+        databaseService.getUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
@@ -141,7 +141,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new EditUserDialog(this, user, () -> {
             SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
             loadUserDetailsToUI();
-        }).show();
+        }, getAuthService()).show();
     }
 
     private void openImagePicker() {
