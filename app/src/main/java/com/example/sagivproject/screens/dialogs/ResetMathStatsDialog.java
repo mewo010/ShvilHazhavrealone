@@ -21,8 +21,7 @@ public class ResetMathStatsDialog {
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_confirm);
-        Objects.requireNonNull(dialog.getWindow())
-                .setBackgroundDrawableResource(android.R.color.transparent);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(true);
 
         TextView txtTitle = dialog.findViewById(R.id.txt_DialogConfirm_title);

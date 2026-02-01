@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MedicationDialog {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -43,6 +44,7 @@ public class MedicationDialog {
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_medication);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
         EditText edtName = dialog.findViewById(R.id.edt_medication_name);
         AutoCompleteTextView spinnerType = dialog.findViewById(R.id.spinner_medication_type);
