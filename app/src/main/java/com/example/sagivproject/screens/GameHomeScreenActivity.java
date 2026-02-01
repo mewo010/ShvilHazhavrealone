@@ -21,7 +21,6 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.DatabaseService;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
@@ -50,7 +49,7 @@ public class GameHomeScreenActivity extends BaseActivity {
             return insets;
         });
 
-        user = SharedPreferencesUtil.getUser(this);
+        user = sharedPreferencesUtil.getUser();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);

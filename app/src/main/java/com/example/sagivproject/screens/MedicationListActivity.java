@@ -25,7 +25,7 @@ import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
 import com.example.sagivproject.services.DatabaseService;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.example.sagivproject.utils.CalendarUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,9 +35,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
     private final ArrayList<Medication> filteredMedications = new ArrayList<>();
+    @Inject
+    CalendarUtil calendarUtil;
     private MedicationListAdapter adapter;
     private User user;
     private String uid;
@@ -55,7 +59,7 @@ public class MedicationListActivity extends BaseActivity {
             return insets;
         });
 
-        user = SharedPreferencesUtil.getUser(this);
+        user = sharedPreferencesUtil.getUser();
         uid = Objects.requireNonNull(user).getUid();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
@@ -206,7 +210,7 @@ public class MedicationListActivity extends BaseActivity {
                 filterMedications(editSearch.getText().toString());
 
                 user.setMedications(updatedMedicationsMap);
-                SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
+                sharedPreferencesUtil.saveUser(user);
             }
 
             @Override
@@ -227,7 +231,7 @@ public class MedicationListActivity extends BaseActivity {
                 }
                 medsMap.put(medication.getId(), medication);
                 user.setMedications(medsMap);
-                SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
+                sharedPreferencesUtil.saveUser(user);
                 Toast.makeText(MedicationListActivity.this, "התרופה נוספה", Toast.LENGTH_SHORT).show();
                 loadMedications();
             }
@@ -247,7 +251,7 @@ public class MedicationListActivity extends BaseActivity {
                 if (medsMap != null) {
                     medsMap.put(med.getId(), med);
                     user.setMedications(medsMap);
-                    SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
+                    sharedPreferencesUtil.saveUser(user);
                 }
                 Toast.makeText(MedicationListActivity.this, "התרופה עודכנה", Toast.LENGTH_SHORT).show();
                 loadMedications();
@@ -268,7 +272,7 @@ public class MedicationListActivity extends BaseActivity {
                 if (medsMap != null) {
                     medsMap.remove(id);
                     user.setMedications(medsMap);
-                    SharedPreferencesUtil.saveUser(MedicationListActivity.this, user);
+                    sharedPreferencesUtil.saveUser(user);
                 }
                 loadMedications();
             }
@@ -291,7 +295,7 @@ public class MedicationListActivity extends BaseActivity {
             public void onEdit(Medication medication) {
                 updateMedication(medication);
             }
-        }).show();
+        }, calendarUtil).show();
     }
 
     private void filterMedications(String query) {

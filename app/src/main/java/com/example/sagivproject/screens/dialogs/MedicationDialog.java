@@ -33,18 +33,22 @@ public class MedicationDialog {
     private final Medication medToEdit;
     private final String uid;
     private final OnMedicationSubmitListener listener;
+    private CalendarUtil calendarUtil;
 
-    public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener) {
+    public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener, CalendarUtil calendarUtil) {
         this.context = context;
         this.medToEdit = medToEdit;
         this.uid = uid;
         this.listener = listener;
+        this.calendarUtil = calendarUtil;
     }
 
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_medication);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        calendarUtil = new CalendarUtil();
 
         EditText edtName = dialog.findViewById(R.id.edt_medication_name);
         AutoCompleteTextView spinnerType = dialog.findViewById(R.id.spinner_medication_type);
@@ -101,12 +105,12 @@ public class MedicationDialog {
             }
             if (medToEdit.getDate() != null) {
                 initialDateMillis = medToEdit.getDate().getTime();
-                edtDate.setText(CalendarUtil.formatDate(initialDateMillis, DATE_FORMAT));
+                edtDate.setText(calendarUtil.formatDate(initialDateMillis, DATE_FORMAT));
             }
         }
 
         final long finalInitialDateMillis = initialDateMillis;
-        edtDate.setOnClickListener(v -> CalendarUtil.openDatePicker(context, finalInitialDateMillis, (millis, dateStr) -> edtDate.setText(dateStr), true, DATE_FORMAT));
+        edtDate.setOnClickListener(v -> calendarUtil.openDatePicker(context, finalInitialDateMillis, (millis, dateStr) -> edtDate.setText(dateStr), true, DATE_FORMAT));
 
         btnConfirm.setOnClickListener(v -> {
             String name = edtName.getText().toString().trim();

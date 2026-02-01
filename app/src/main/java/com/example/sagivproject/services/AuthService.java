@@ -1,9 +1,5 @@
 package com.example.sagivproject.services;
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
@@ -12,16 +8,14 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.qualifiers.ApplicationContext;
-
 public class AuthService implements IAuthService {
-    private final Context context;
     private final IDatabaseService iDatabaseService;
+    private final SharedPreferencesUtil sharedPreferencesUtil;
 
     @Inject
-    public AuthService(@ApplicationContext @NonNull Context context, IDatabaseService iDatabaseService) {
-        this.context = context.getApplicationContext();
+    public AuthService(IDatabaseService iDatabaseService, SharedPreferencesUtil sharedPreferencesUtil) {
         this.iDatabaseService = iDatabaseService;
+        this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
     @Override
@@ -34,13 +28,13 @@ public class AuthService implements IAuthService {
                     return;
                 }
 
-                SharedPreferencesUtil.saveUser(context, user);
+                sharedPreferencesUtil.saveUser(user);
                 callback.onSuccess(user);
             }
 
             @Override
             public void onFailed(Exception e) {
-                SharedPreferencesUtil.signOutUser(context);
+                sharedPreferencesUtil.signOutUser();
                 callback.onError("שגיאה בהתחברות המשתמש");
             }
         });
@@ -57,13 +51,13 @@ public class AuthService implements IAuthService {
                     createUser(firstName, lastName, birthDateMillis, email, password, new CreateUserCallback() {
                         @Override
                         public void onSuccess(User user) {
-                            SharedPreferencesUtil.saveUser(context, user);
+                            sharedPreferencesUtil.saveUser(user);
                             callback.onSuccess();
                         }
 
                         @Override
                         public void onError(String message) {
-                            SharedPreferencesUtil.signOutUser(context);
+                            sharedPreferencesUtil.signOutUser();
                             callback.onError(message);
                         }
                     });
@@ -171,10 +165,10 @@ public class AuthService implements IAuthService {
 
     @Override
     public String logout() {
-        User user = SharedPreferencesUtil.getUser(context);
+        User user = sharedPreferencesUtil.getUser();
 
         String email = user != null ? user.getEmail() : "";
-        SharedPreferencesUtil.signOutUser(context);
+        sharedPreferencesUtil.signOutUser();
 
         return email;
     }

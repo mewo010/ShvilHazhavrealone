@@ -36,14 +36,21 @@ import com.example.sagivproject.screens.dialogs.AddUserDialog;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.example.sagivproject.utils.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class UsersTableActivity extends BaseActivity {
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
+    @Inject
+    Validator validator;
+    @Inject
+    CalendarUtil calendarUtil;
     private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
@@ -60,13 +67,13 @@ public class UsersTableActivity extends BaseActivity {
             return insets;
         });
 
-        currentUser = SharedPreferencesUtil.getUser(UsersTableActivity.this);
+        currentUser = sharedPreferencesUtil.getUser();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), getAuthService()).show());
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), getAuthService(), validator, calendarUtil).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -87,7 +94,9 @@ public class UsersTableActivity extends BaseActivity {
                                 UsersTableActivity.this,
                                 clickedUser,
                                 () -> loadUsers(),
-                                getAuthService()
+                                getAuthService(),
+                                validator,
+                                calendarUtil
                         ).show();
                     }
 
@@ -237,7 +246,7 @@ public class UsersTableActivity extends BaseActivity {
             @Override
             public void onCompleted(Void object) {
                 if (isSelf) {
-                    SharedPreferencesUtil.signOutUser(UsersTableActivity.this);
+                    sharedPreferencesUtil.signOutUser();
                     Intent intent = new Intent(UsersTableActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);

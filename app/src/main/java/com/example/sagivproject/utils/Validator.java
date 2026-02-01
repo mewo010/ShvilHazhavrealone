@@ -6,25 +6,30 @@ import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 
-public final class Validator {
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
+public class Validator {
     private static final int MIN_AGE = 12;
 
-    private Validator() {
-    } // מונע יצירה
+    @Inject
+    public Validator() {
+    }
 
-    public static boolean isNameValid(@Nullable String name) {
+    public boolean isNameValid(@Nullable String name) {
         return name == null || name.trim().length() < 3;
     }
 
-    public static boolean isEmailValid(@Nullable String email) {
+    public boolean isEmailValid(@Nullable String email) {
         return email == null || !Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean isPasswordValid(@Nullable String password) {
+    public boolean isPasswordValid(@Nullable String password) {
         return password == null || password.length() < 6;
     }
 
-    public static boolean isAgeValid(long birthDateMillis) {
+    public boolean isAgeValid(long birthDateMillis) {
         Calendar birth = Calendar.getInstance();
         birth.setTimeInMillis(birthDateMillis);
 

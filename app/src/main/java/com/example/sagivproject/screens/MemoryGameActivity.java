@@ -28,7 +28,6 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.ExitGameDialog;
 import com.example.sagivproject.screens.dialogs.GameEndDialog;
 import com.example.sagivproject.services.DatabaseService;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         });
 
         roomId = getIntent().getStringExtra("roomId");
-        user = SharedPreferencesUtil.getUser(this);
+        user = sharedPreferencesUtil.getUser();
 
         recyclerCards = findViewById(R.id.recycler_OnlineMemoryGame);
         recyclerCards.setLayoutManager(new GridLayoutManager(this, 3));

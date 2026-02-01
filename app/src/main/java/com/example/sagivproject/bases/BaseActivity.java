@@ -40,6 +40,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected IDatabaseService databaseService;
     @Inject
     protected IAuthService authService;
+    @Inject
+    protected SharedPreferencesUtil sharedPreferencesUtil;
 
     protected IAuthService getAuthService() {
         return authService;
@@ -55,10 +57,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void setupTopMenu(ViewGroup menuContainer) {
-        boolean isUserLoggedIn = SharedPreferencesUtil.isUserLoggedIn(this);
+        boolean isUserLoggedIn = sharedPreferencesUtil.isUserLoggedIn();
 
         if (isUserLoggedIn) {
-            if (Objects.requireNonNull(SharedPreferencesUtil.getUser(this)).isAdmin()) {
+            if (Objects.requireNonNull(sharedPreferencesUtil.getUser()).isAdmin()) {
                 @LayoutRes int menuLayout = R.layout.top_menu_admin;
                 getLayoutInflater().inflate(menuLayout, menuContainer, true);
 

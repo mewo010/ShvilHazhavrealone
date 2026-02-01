@@ -4,22 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IDatabaseService;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     @Inject
     IDatabaseService databaseService;
     private Intent intent;
@@ -40,21 +39,21 @@ public class SplashActivity extends AppCompatActivity {
                 Thread.sleep(5000);
             } catch (InterruptedException ignored) {
             } finally {
-                if (SharedPreferencesUtil.isUserLoggedIn(this)) {
-                    User current = SharedPreferencesUtil.getUser(this);
+                if (sharedPreferencesUtil.isUserLoggedIn()) {
+                    User current = sharedPreferencesUtil.getUser();
                     if (current != null) {
                         databaseService.getUser(current.getUid(), new IDatabaseService.DatabaseCallback<>() {
                             @Override
                             public void onCompleted(User user) {
                                 if (user != null) {
-                                    SharedPreferencesUtil.saveUser(SplashActivity.this, user);
+                                    sharedPreferencesUtil.saveUser(user);
                                     if (user.isAdmin()) {
                                         intent = new Intent(SplashActivity.this, AdminPageActivity.class);
                                     } else {
                                         intent = new Intent(SplashActivity.this, MainActivity.class);
                                     }
                                 } else {
-                                    SharedPreferencesUtil.signOutUser(SplashActivity.this);
+                                    sharedPreferencesUtil.signOutUser();
                                     intent = new Intent(SplashActivity.this, LandingActivity.class);
                                 }
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -63,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailed(Exception e) {
-                                SharedPreferencesUtil.signOutUser(SplashActivity.this);
+                                sharedPreferencesUtil.signOutUser();
                                 intent = new Intent(SplashActivity.this, LandingActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);

@@ -18,7 +18,6 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.Operation;
 import com.example.sagivproject.screens.dialogs.ResetMathStatsDialog;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.text.MessageFormat;
 
@@ -40,7 +39,7 @@ public class MathProblemsActivity extends BaseActivity {
             return insets;
         });
 
-        user = SharedPreferencesUtil.getUser(MathProblemsActivity.this);
+        user = sharedPreferencesUtil.getUser();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -73,7 +72,7 @@ public class MathProblemsActivity extends BaseActivity {
         user.getMathProblemsStats().setWrongAnswers(0);
 
         databaseService.resetMathStats(user.getUid());
-        SharedPreferencesUtil.saveUser(this, user);
+        sharedPreferencesUtil.saveUser(user);
 
         updateStatsUI();
         Toast.makeText(this, "הנתונים אופסו בהצלחה", Toast.LENGTH_SHORT).show();
@@ -189,7 +188,7 @@ public class MathProblemsActivity extends BaseActivity {
             databaseService.addWrongAnswer(user.getUid());
         }
 
-        SharedPreferencesUtil.saveUser(this, user);
+        sharedPreferencesUtil.saveUser(user);
 
         updateStatsUI();
     }

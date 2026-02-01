@@ -8,15 +8,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class CalendarUtil {
 
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 
-    public static void openDatePicker(Context context, long initialMillis, OnDateSelectedListener listener) {
+    @Inject
+    public CalendarUtil() {
+    }
+
+    public void openDatePicker(Context context, long initialMillis, OnDateSelectedListener listener) {
         openDatePicker(context, initialMillis, listener, false, DEFAULT_DATE_FORMAT);
     }
 
-    public static void openDatePicker(Context context, long initialMillis, OnDateSelectedListener listener, boolean futureOnly, String format) {
+    public void openDatePicker(Context context, long initialMillis, OnDateSelectedListener listener, boolean futureOnly, String format) {
         final Calendar calendar = Calendar.getInstance();
         if (initialMillis > 0) {
             calendar.setTimeInMillis(initialMillis);
@@ -48,11 +56,11 @@ public class CalendarUtil {
         dialog.show();
     }
 
-    public static String formatDate(long millis) {
+    public String formatDate(long millis) {
         return formatDate(millis, DEFAULT_DATE_FORMAT);
     }
 
-    public static String formatDate(long millis, String format) {
+    public String formatDate(long millis, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         return sdf.format(new Date(millis));
     }

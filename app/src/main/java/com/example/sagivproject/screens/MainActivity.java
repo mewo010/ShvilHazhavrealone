@@ -19,7 +19,6 @@ import androidx.work.WorkManager;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.example.sagivproject.workers.BirthdayWorker;
 import com.example.sagivproject.workers.MedicationWorker;
 
@@ -42,7 +41,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
 
-        User user = SharedPreferencesUtil.getUser(this);
+        User user = sharedPreferencesUtil.getUser();
         setupDailyNotifications();
         setupBirthdayNotification();
 

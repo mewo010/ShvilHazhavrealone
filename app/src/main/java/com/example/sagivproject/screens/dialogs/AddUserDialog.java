@@ -18,18 +18,25 @@ public class AddUserDialog {
     private final Context context;
     private final AddUserListener listener;
     private final IAuthService authService;
+    private CalendarUtil calendarUtil;
+    private Validator validator;
     private long birthDateMillis = -1;
 
-    public AddUserDialog(Context context, AddUserListener listener, IAuthService authService) {
+    public AddUserDialog(Context context, AddUserListener listener, IAuthService authService, Validator validator, CalendarUtil calendarUtil) {
         this.context = context;
         this.listener = listener;
         this.authService = authService;
+        this.validator = validator;
+        this.calendarUtil = calendarUtil;
     }
 
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_user);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        validator = new Validator();
+        calendarUtil = new CalendarUtil();
 
         EditText inputFirstName = dialog.findViewById(R.id.inputAddUserFirstName);
         EditText inputLastName = dialog.findViewById(R.id.inputAddUserLastName);
@@ -41,7 +48,7 @@ public class AddUserDialog {
 
         updateBirthDateText(inputBirthDate, birthDateMillis);
 
-        inputBirthDate.setOnClickListener(v -> CalendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
+        inputBirthDate.setOnClickListener(v -> calendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
             birthDateMillis = millis;
             inputBirthDate.setText(dateStr);
         }));
@@ -83,13 +90,13 @@ public class AddUserDialog {
             return false;
         }
 
-        if (Validator.isNameValid(fName)) {
+        if (validator.isNameValid(fName)) {
             firstName.requestFocus();
             Toast.makeText(context, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isNameValid(lName)) {
+        if (validator.isNameValid(lName)) {
             lastName.requestFocus();
             Toast.makeText(context, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -101,19 +108,19 @@ public class AddUserDialog {
             return false;
         }
 
-        if (Validator.isAgeValid(birthDateMillis)) {
+        if (validator.isAgeValid(birthDateMillis)) {
             birthDateEdt.requestFocus();
             Toast.makeText(context, "הגיל המינימלי הוא 12", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isEmailValid(email)) {
+        if (validator.isEmailValid(email)) {
             emailEdt.requestFocus();
             Toast.makeText(context, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isPasswordValid(password)) {
+        if (validator.isPasswordValid(password)) {
             passwordEdt.requestFocus();
             Toast.makeText(context, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -124,7 +131,7 @@ public class AddUserDialog {
 
     private void updateBirthDateText(EditText editText, long millis) {
         if (millis > 0) {
-            editText.setText(CalendarUtil.formatDate(millis));
+            editText.setText(calendarUtil.formatDate(millis));
         }
     }
 

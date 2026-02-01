@@ -18,7 +18,11 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.Validator;
 
+import javax.inject.Inject;
+
 public class LoginActivity extends BaseActivity {
+    @Inject
+    Validator validator;
     private EditText editTextEmail, editTextPassword;
 
     @Override
@@ -34,6 +38,8 @@ public class LoginActivity extends BaseActivity {
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
+
+        validator = new Validator();
 
         Button btnLogin = findViewById(R.id.btnLogin);
 
@@ -86,13 +92,13 @@ public class LoginActivity extends BaseActivity {
             return false;
         }
 
-        if (Validator.isEmailValid(email)) {
+        if (validator.isEmailValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isPasswordValid(password)) {
+        if (validator.isPasswordValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

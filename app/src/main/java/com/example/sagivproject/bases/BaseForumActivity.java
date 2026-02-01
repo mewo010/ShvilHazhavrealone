@@ -14,7 +14,6 @@ import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.ForumService;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,7 +119,7 @@ public abstract class BaseForumActivity extends BaseActivity {
         String text = edtMessage.getText().toString().trim();
         if (text.isEmpty()) return;
 
-        User user = SharedPreferencesUtil.getUser(this);
+        User user = sharedPreferencesUtil.getUser();
 
         forumService.sendMessage(Objects.requireNonNull(user), text, new ForumService.ForumCallback<>() {
             @Override

@@ -15,7 +15,6 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseForumActivity;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -34,7 +33,7 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
             return insets;
         });
 
-        user = SharedPreferencesUtil.getUser(this);
+        user = sharedPreferencesUtil.getUser();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);

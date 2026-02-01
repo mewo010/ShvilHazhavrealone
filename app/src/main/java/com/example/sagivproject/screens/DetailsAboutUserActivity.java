@@ -23,15 +23,22 @@ import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
 import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
-import com.example.sagivproject.utils.SharedPreferencesUtil;
+import com.example.sagivproject.utils.Validator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
 public class DetailsAboutUserActivity extends BaseActivity {
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
+    @Inject
+    Validator validator;
+    @Inject
+    CalendarUtil calendarUtil;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
@@ -47,7 +54,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
             return insets;
         });
 
-        user = SharedPreferencesUtil.getUser(this);
+        user = sharedPreferencesUtil.getUser();
 
         assert user != null;
         boolean isAdmin = user.isAdmin();
@@ -94,7 +101,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
-                SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
+                sharedPreferencesUtil.saveUser(user);
                 loadUserDetailsToUI();
             }
 
@@ -139,9 +146,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
     private void openEditDialog() {
         new EditUserDialog(this, user, () -> {
-            SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
+            sharedPreferencesUtil.saveUser(user);
             loadUserDetailsToUI();
-        }, getAuthService()).show();
+        }, getAuthService(), validator, calendarUtil).show();
     }
 
     private void openImagePicker() {
@@ -176,7 +183,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
+                sharedPreferencesUtil.saveUser(user);
                 Toast.makeText(DetailsAboutUserActivity.this, "תמונת הפרופיל נמחקה", Toast.LENGTH_SHORT).show();
             }
 
@@ -221,7 +228,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                SharedPreferencesUtil.saveUser(DetailsAboutUserActivity.this, user);
+                sharedPreferencesUtil.saveUser(user);
 
                 Toast.makeText(DetailsAboutUserActivity.this, "תמונת הפרופיל עודכנה!", Toast.LENGTH_SHORT).show();
             }

@@ -24,33 +24,35 @@ import dagger.assisted.AssistedInject;
 public class BirthdayWorker extends Worker {
     protected final IDatabaseService databaseService;
     protected final NotificationService notificationService;
+    protected final SharedPreferencesUtil sharedPreferencesUtil;
 
     @AssistedInject
     public BirthdayWorker(
             @Assisted @NonNull Context context,
             @Assisted @NonNull WorkerParameters workerParams,
             IDatabaseService databaseService,
-            NotificationService notificationService
+            NotificationService notificationService,
+            SharedPreferencesUtil sharedPreferencesUtil
     ) {
         super(context, workerParams);
         this.databaseService = databaseService;
         this.notificationService = notificationService;
+        this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        Context context = getApplicationContext();
-        if (!SharedPreferencesUtil.isUserLoggedIn(context)) return Result.success();
+        if (!sharedPreferencesUtil.isUserLoggedIn()) return Result.success();
 
-        String userId = SharedPreferencesUtil.getUserId(context);
+        String userId = sharedPreferencesUtil.getUserId();
         final CountDownLatch latch = new CountDownLatch(1);
 
         databaseService.getUser(Objects.requireNonNull(userId), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user != null) {
-                    checkAndNotifyBirthday(context, user);
+                    checkAndNotifyBirthday(user);
                 }
                 latch.countDown();
             }
@@ -76,7 +78,7 @@ public class BirthdayWorker extends Worker {
         return Result.success();
     }
 
-    private void checkAndNotifyBirthday(Context context, User user) {
+    private void checkAndNotifyBirthday(User user) {
         if (user.getBirthDateMillis() <= 0) return;
 
         Calendar today = Calendar.getInstance();

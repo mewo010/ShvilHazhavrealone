@@ -18,7 +18,14 @@ import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 
+import javax.inject.Inject;
+
 public class RegisterActivity extends BaseActivity {
+    @Inject
+    Validator validator;
+    @Inject
+    CalendarUtil calendarUtil;
+
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
     private long birthDateMillis = -1;
 
@@ -32,6 +39,9 @@ public class RegisterActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        validator = new Validator();
+        calendarUtil = new CalendarUtil();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -85,13 +95,13 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (Validator.isNameValid(firstName)) {
+        if (validator.isNameValid(firstName)) {
             editTextFirstName.requestFocus();
             Toast.makeText(this, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isNameValid(lastName)) {
+        if (validator.isNameValid(lastName)) {
             editTextLastName.requestFocus();
             Toast.makeText(this, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -103,19 +113,19 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (Validator.isAgeValid(birthDateMillis)) {
+        if (validator.isAgeValid(birthDateMillis)) {
             editTextBirthDate.requestFocus();
             Toast.makeText(this, "הגיל המינימלי להרשמה הוא 12", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isEmailValid(email)) {
+        if (validator.isEmailValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (Validator.isPasswordValid(password)) {
+        if (validator.isPasswordValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -125,7 +135,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void openDatePicker() {
-        CalendarUtil.openDatePicker(this, birthDateMillis, (dateMillis, formattedDate) -> {
+        calendarUtil.openDatePicker(this, birthDateMillis, (dateMillis, formattedDate) -> {
             this.birthDateMillis = dateMillis;
             editTextBirthDate.setText(formattedDate);
         });
