@@ -57,5 +57,6 @@ android {
         implementation libs.okhttp
         implementation libs.hilt.android
         annotationProcessor libs.hilt.compiler
+        implementation libs.hilt.work
     }
 }

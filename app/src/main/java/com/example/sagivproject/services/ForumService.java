@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseService.DatabaseCallback;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 

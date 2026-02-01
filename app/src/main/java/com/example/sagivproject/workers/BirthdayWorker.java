@@ -3,11 +3,12 @@ package com.example.sagivproject.workers;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.hilt.work.HiltWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -16,12 +17,24 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class BirthdayWorker extends Worker {
-    protected final DatabaseService databaseService;
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
 
-    public BirthdayWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+@HiltWorker
+public class BirthdayWorker extends Worker {
+    protected final IDatabaseService databaseService;
+    protected final NotificationService notificationService;
+
+    @AssistedInject
+    public BirthdayWorker(
+            @Assisted @NonNull Context context,
+            @Assisted @NonNull WorkerParameters workerParams,
+            IDatabaseService databaseService,
+            NotificationService notificationService
+    ) {
         super(context, workerParams);
-        databaseService = DatabaseService.getInstance();
+        this.databaseService = databaseService;
+        this.notificationService = notificationService;
     }
 
     @NonNull
@@ -33,7 +46,7 @@ public class BirthdayWorker extends Worker {
         String userId = SharedPreferencesUtil.getUserId(context);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUser(Objects.requireNonNull(userId), new DatabaseService.DatabaseCallback<>() {
+        databaseService.getUser(Objects.requireNonNull(userId), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user != null) {
@@ -71,7 +84,6 @@ public class BirthdayWorker extends Worker {
         birthDate.setTimeInMillis(user.getBirthDateMillis());
 
         if (today.get(Calendar.DAY_OF_MONTH) == birthDate.get(Calendar.DAY_OF_MONTH) && today.get(Calendar.MONTH) == birthDate.get(Calendar.MONTH)) {
-            NotificationService notificationService = new NotificationService(context);
             notificationService.show(
                     "מזל טוב!",
                     "יום הולדת שמח, " + user.getFirstName() + "! מאחלים לך בריאות ואושר."

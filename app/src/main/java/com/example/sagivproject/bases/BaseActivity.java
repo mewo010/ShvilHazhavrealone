@@ -24,7 +24,6 @@ import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
 import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.services.IDatabaseService;
-import com.example.sagivproject.utils.Injector;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -33,15 +32,16 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     protected IDatabaseService databaseService;
-    private IAuthService authService;
+    @Inject
+    protected IAuthService authService;
 
     protected IAuthService getAuthService() {
-        if (authService == null) {
-            authService = Injector.provideAuthService(this);
-        }
         return authService;
     }
 

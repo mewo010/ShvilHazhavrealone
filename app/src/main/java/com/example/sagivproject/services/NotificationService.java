@@ -8,12 +8,19 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.sagivproject.R;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
+@Singleton
 public class NotificationService {
     private static final String CHANNEL_ID = "medication_notifications", CHANNEL_NAME = "תזכורות תרופות";
     private final Context context;
     private final NotificationManager manager;
 
-    public NotificationService(Context context) {
+    @Inject
+    public NotificationService(@ApplicationContext Context context) {
         this.context = context.getApplicationContext();
         this.manager = (NotificationManager)
                 this.context.getSystemService(Context.NOTIFICATION_SERVICE);

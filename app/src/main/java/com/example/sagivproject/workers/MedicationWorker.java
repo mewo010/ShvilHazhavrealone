@@ -3,11 +3,12 @@ package com.example.sagivproject.workers;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.hilt.work.HiltWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -18,12 +19,24 @@ import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class MedicationWorker extends Worker {
-    protected final DatabaseService databaseService;
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
 
-    public MedicationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+@HiltWorker
+public class MedicationWorker extends Worker {
+    protected final IDatabaseService databaseService;
+    protected final NotificationService notificationService;
+
+    @AssistedInject
+    public MedicationWorker(
+            @Assisted @NonNull Context context,
+            @Assisted @NonNull WorkerParameters workerParams,
+            IDatabaseService databaseService,
+            NotificationService notificationService
+    ) {
         super(context, workerParams);
-        databaseService = DatabaseService.getInstance();
+        this.databaseService = databaseService;
+        this.notificationService = notificationService;
     }
 
     @NonNull
@@ -38,7 +51,7 @@ public class MedicationWorker extends Worker {
         String userId = SharedPreferencesUtil.getUserId(context);
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUserMedicationList(Objects.requireNonNull(userId), new DatabaseService.DatabaseCallback<>() {
+        databaseService.getUserMedicationList(Objects.requireNonNull(userId), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> medications) {
                 processMedications(context, userId, medications);
@@ -94,7 +107,6 @@ public class MedicationWorker extends Worker {
             }
         }
 
-        NotificationService notificationService = new NotificationService(context);
 
         //התראה 1: רק אם יש תרופות שנמחקו
         if (expiredCount > 0) {

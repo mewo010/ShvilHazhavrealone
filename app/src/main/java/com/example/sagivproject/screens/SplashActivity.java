@@ -11,10 +11,17 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SplashActivity extends AppCompatActivity {
+    @Inject
+    IDatabaseService databaseService;
     private Intent intent;
 
     @Override
@@ -36,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (SharedPreferencesUtil.isUserLoggedIn(this)) {
                     User current = SharedPreferencesUtil.getUser(this);
                     if (current != null) {
-                        DatabaseService.getInstance().getUser(current.getUid(), new DatabaseService.DatabaseCallback<>() {
+                        databaseService.getUser(current.getUid(), new IDatabaseService.DatabaseCallback<>() {
                             @Override
                             public void onCompleted(User user) {
                                 if (user != null) {
