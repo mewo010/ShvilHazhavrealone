@@ -16,17 +16,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 
 public class AuthService implements IAuthService {
     private final Context context;
-    private final IDatabaseService databaseService;
+    private final IDatabaseService iDatabaseService;
 
     @Inject
-    public AuthService(@ApplicationContext @NonNull Context context, IDatabaseService databaseService) {
+    public AuthService(@ApplicationContext @NonNull Context context, IDatabaseService iDatabaseService) {
         this.context = context.getApplicationContext();
-        this.databaseService = databaseService;
+        this.iDatabaseService = iDatabaseService;
     }
 
     @Override
     public void login(String email, String password, LoginCallback callback) {
-        databaseService.getUserByEmailAndPassword(email, password, new IDatabaseService.DatabaseCallback<>() {
+        iDatabaseService.getUserByEmailAndPassword(email, password, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user == null) {
@@ -48,7 +48,7 @@ public class AuthService implements IAuthService {
 
     @Override
     public void register(String firstName, String lastName, long birthDateMillis, String email, String password, RegisterCallback callback) {
-        databaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
+        iDatabaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
@@ -79,7 +79,7 @@ public class AuthService implements IAuthService {
 
     @Override
     public void addUser(String firstName, String lastName, long birthDateMillis, String email, String password, AddUserCallback callback) {
-        databaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
+        iDatabaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
@@ -111,7 +111,7 @@ public class AuthService implements IAuthService {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
         if (emailChanged) {
-            databaseService.checkIfEmailExists(newEmail, new IDatabaseService.DatabaseCallback<>() {
+            iDatabaseService.checkIfEmailExists(newEmail, new IDatabaseService.DatabaseCallback<>() {
                 @Override
                 public void onCompleted(Boolean exists) {
                     if (exists) {
@@ -132,11 +132,11 @@ public class AuthService implements IAuthService {
     }
 
     private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, CreateUserCallback callback) {
-        String uid = databaseService.generateUserId();
+        String uid = iDatabaseService.generateUserId();
 
         User user = new User(uid, firstName, lastName, birthDateMillis, email, password, UserRole.REGULAR, null, new HashMap<>());
 
-        databaseService.createNewUser(user, new IDatabaseService.DatabaseCallback<>() {
+        iDatabaseService.createNewUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);
@@ -156,7 +156,7 @@ public class AuthService implements IAuthService {
         user.setEmail(email);
         user.setPassword(password);
 
-        databaseService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
+        iDatabaseService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);
