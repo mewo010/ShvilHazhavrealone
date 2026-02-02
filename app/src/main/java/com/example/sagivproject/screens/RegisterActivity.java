@@ -20,6 +20,9 @@ import com.example.sagivproject.utils.Validator;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class RegisterActivity extends BaseActivity {
     @Inject
     Validator validator;
@@ -39,9 +42,6 @@ public class RegisterActivity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        validator = new Validator();
-        calendarUtil = new CalendarUtil();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -95,13 +95,13 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (validator.isNameValid(firstName)) {
+        if (validator.isNameNotValid(firstName)) {
             editTextFirstName.requestFocus();
             Toast.makeText(this, "שם פרטי קצר מדי", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (validator.isNameValid(lastName)) {
+        if (validator.isNameNotValid(lastName)) {
             editTextLastName.requestFocus();
             Toast.makeText(this, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             return false;
@@ -113,19 +113,19 @@ public class RegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (validator.isAgeValid(birthDateMillis)) {
+        if (validator.isAgeNotValid(birthDateMillis)) {
             editTextBirthDate.requestFocus();
             Toast.makeText(this, "הגיל המינימלי להרשמה הוא 12", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (validator.isEmailValid(email)) {
+        if (validator.isEmailNotValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (validator.isPasswordValid(password)) {
+        if (validator.isPasswordNotValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;

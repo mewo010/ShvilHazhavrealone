@@ -17,19 +17,19 @@ public class Validator {
     public Validator() {
     }
 
-    public boolean isNameValid(@Nullable String name) {
+    public boolean isNameNotValid(@Nullable String name) {
         return name == null || name.trim().length() < 3;
     }
 
-    public boolean isEmailValid(@Nullable String email) {
+    public boolean isEmailNotValid(@Nullable String email) {
         return email == null || !Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public boolean isPasswordValid(@Nullable String password) {
+    public boolean isPasswordNotValid(@Nullable String password) {
         return password == null || password.length() < 6;
     }
 
-    public boolean isAgeValid(long birthDateMillis) {
+    public boolean isAgeNotValid(long birthDateMillis) {
         Calendar birth = Calendar.getInstance();
         birth.setTimeInMillis(birthDateMillis);
 

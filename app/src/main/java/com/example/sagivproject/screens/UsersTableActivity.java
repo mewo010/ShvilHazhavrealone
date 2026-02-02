@@ -45,16 +45,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class UsersTableActivity extends BaseActivity {
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
-    @Inject
-    Validator validator;
-    @Inject
-    CalendarUtil calendarUtil;
     private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
     private User currentUser;
+    @Inject
+    CalendarUtil calendarUtil;
+    @Inject
+    Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,7 @@ public class UsersTableActivity extends BaseActivity {
         setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), getAuthService(), validator, calendarUtil).show());
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), getAuthService(), calendarUtil, validator).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -95,8 +98,8 @@ public class UsersTableActivity extends BaseActivity {
                                 clickedUser,
                                 () -> loadUsers(),
                                 getAuthService(),
-                                validator,
-                                calendarUtil
+                                calendarUtil,
+                                validator
                         ).show();
                     }
 

@@ -33,15 +33,18 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class DetailsAboutUserActivity extends BaseActivity {
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
-    @Inject
-    Validator validator;
-    @Inject
-    CalendarUtil calendarUtil;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
+    @Inject
+    CalendarUtil calendarUtil;
+    @Inject
+    Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +151,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new EditUserDialog(this, user, () -> {
             sharedPreferencesUtil.saveUser(user);
             loadUserDetailsToUI();
-        }, getAuthService(), validator, calendarUtil).show();
+        }, getAuthService(), calendarUtil, validator).show();
     }
 
     private void openImagePicker() {

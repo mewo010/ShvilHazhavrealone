@@ -20,6 +20,9 @@ import com.example.sagivproject.utils.Validator;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class LoginActivity extends BaseActivity {
     @Inject
     Validator validator;
@@ -38,8 +41,6 @@ public class LoginActivity extends BaseActivity {
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
-
-        validator = new Validator();
 
         Button btnLogin = findViewById(R.id.btnLogin);
 
@@ -92,13 +93,13 @@ public class LoginActivity extends BaseActivity {
             return false;
         }
 
-        if (validator.isEmailValid(email)) {
+        if (validator.isEmailNotValid(email)) {
             editTextEmail.requestFocus();
             Toast.makeText(this, "כתובת האימייל אינה תקינה", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (validator.isPasswordValid(password)) {
+        if (validator.isPasswordNotValid(password)) {
             editTextPassword.requestFocus();
             Toast.makeText(this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
             return false;
