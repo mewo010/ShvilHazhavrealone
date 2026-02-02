@@ -38,13 +38,13 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class DetailsAboutUserActivity extends BaseActivity {
     private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
-    private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
-    private ImageView imgUserProfile;
-    private User user;
     @Inject
     CalendarUtil calendarUtil;
     @Inject
     Validator validator;
+    private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
+    private ImageView imgUserProfile;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

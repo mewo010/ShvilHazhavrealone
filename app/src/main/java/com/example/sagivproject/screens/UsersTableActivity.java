@@ -50,14 +50,14 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class UsersTableActivity extends BaseActivity {
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
-    private UsersTableAdapter adapter;
-    private EditText editSearch;
-    private Spinner spinnerSearchType;
-    private User currentUser;
     @Inject
     CalendarUtil calendarUtil;
     @Inject
     Validator validator;
+    private UsersTableAdapter adapter;
+    private EditText editSearch;
+    private Spinner spinnerSearchType;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
