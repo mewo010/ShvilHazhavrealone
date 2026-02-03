@@ -17,14 +17,14 @@ public interface IGameService {
      * @param user     the user who wants to join or create a game room
      * @param callback callback that returns the matched or newly created GameRoom
      */
-    void findOrCreateRoom(User user, IDatabaseService.DatabaseCallback<GameRoom> callback);
+    void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback);
 
     /**
      * Listen to all game rooms in real-time
      *
      * @param callback the callback that will receive the updated list of rooms
      */
-    void getAllRoomsRealtime(@NonNull IDatabaseService.DatabaseCallback<List<GameRoom>> callback);
+    void getAllRoomsRealtime(@NonNull DatabaseCallback<List<GameRoom>> callback);
 
     /**
      * listen in realtime to changes in a specific room status
@@ -33,7 +33,7 @@ public interface IGameService {
      * @param callback callback to notify about room start, deletion or errors
      * @return the ValueEventListener instance so it can later be removed
      */
-    ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull IDatabaseService.RoomStatusCallback callback);
+    ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull RoomStatusCallback callback);
 
     /**
      * remove a previously registered room status listener
@@ -49,7 +49,7 @@ public interface IGameService {
      * @param roomId   the id of the room to cancel
      * @param callback optional callback for success or failure
      */
-    void cancelRoom(@NonNull String roomId, @Nullable IDatabaseService.DatabaseCallback<Void> callback);
+    void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback);
 
     /**
      * initialize the game board data for a room
@@ -59,7 +59,7 @@ public interface IGameService {
      * @param firstTurnUid the UID of the player who starts the game
      * @param callback     callback for success or failure
      */
-    void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, IDatabaseService.DatabaseCallback<Void> callback);
+    void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback);
 
     /**
      * listen in realtime to all changes in a game room
@@ -67,7 +67,7 @@ public interface IGameService {
      * @param roomId   the id of the game room
      * @param callback callback that receives updated GameRoom objects
      */
-    void listenToGame(String roomId, IDatabaseService.DatabaseCallback<GameRoom> callback);
+    void listenToGame(String roomId, DatabaseCallback<GameRoom> callback);
 
     /**
      * stop listening to realtime game updates

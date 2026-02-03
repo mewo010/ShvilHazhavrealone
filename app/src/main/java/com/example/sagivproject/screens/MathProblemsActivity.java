@@ -24,6 +24,9 @@ import java.text.MessageFormat;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MathProblemsActivity extends BaseActivity {
     private final StringBuilder userInput = new StringBuilder();
     @Inject

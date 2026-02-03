@@ -13,7 +13,7 @@ public interface IImageService {
      *
      * @param callback the callback to call when the operation is completed
      */
-    void getAllImages(IDatabaseService.DatabaseCallback<List<ImageData>> callback);
+    void getAllImages(DatabaseCallback<List<ImageData>> callback);
 
     /**
      * create a new image in the database
@@ -21,7 +21,7 @@ public interface IImageService {
      * @param image    the image object to create
      * @param callback the callback to call when the operation is completed
      */
-    void createImage(@NonNull ImageData image, @Nullable IDatabaseService.DatabaseCallback<Void> callback);
+    void createImage(@NonNull ImageData image, @Nullable DatabaseCallback<Void> callback);
 
     /**
      * update all images in the database
@@ -29,5 +29,5 @@ public interface IImageService {
      * @param list     the list of images to update
      * @param callback the callback to call when the operation is completed
      */
-    void updateAllImages(List<ImageData> list, IDatabaseService.DatabaseCallback<Void> callback);
+    void updateAllImages(List<ImageData> list, DatabaseCallback<Void> callback);
 }

@@ -35,7 +35,8 @@ import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.screens.dialogs.AddUserDialog;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
 import com.example.sagivproject.utils.Validator;
@@ -54,6 +55,8 @@ public class UsersTableActivity extends BaseActivity {
     CalendarUtil calendarUtil;
     @Inject
     Validator validator;
+    @Inject
+    IUserService userService;
     private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
@@ -195,7 +198,7 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void loadUsers() {
-        databaseService.getUserList(new DatabaseService.DatabaseCallback<>() {
+        userService.getUserList(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> list) {
                 usersList.clear();
@@ -221,7 +224,7 @@ public class UsersTableActivity extends BaseActivity {
     private void handleToggleAdmin(User user) {
         UserRole newRole = user.getRole() == UserRole.ADMIN ? UserRole.REGULAR : UserRole.ADMIN;
 
-        databaseService.updateUserRole(user.getUid(), newRole, new DatabaseService.DatabaseCallback<>() {
+        userService.updateUserRole(user.getUid(), newRole, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(
@@ -245,7 +248,7 @@ public class UsersTableActivity extends BaseActivity {
 
     private void handleDeleteUser(User user) {
         boolean isSelf = user.equals(currentUser);
-        databaseService.deleteUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
+        userService.deleteUser(user.getUid(), new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 if (isSelf) {

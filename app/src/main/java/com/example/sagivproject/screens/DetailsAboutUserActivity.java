@@ -22,7 +22,7 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
 import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
@@ -103,7 +103,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserFromDatabase() {
-        userService.getUser(user.getUid(), new IDatabaseService.DatabaseCallback<>() {
+        userService.getUser(user.getUid(), new DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
@@ -186,7 +186,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         imgUserProfile.setImageResource(R.drawable.ic_user);
 
-        userService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
+        userService.updateUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);
@@ -231,7 +231,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void saveProfileImage() {
-        userService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
+        userService.updateUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);

@@ -28,7 +28,8 @@ import com.example.sagivproject.adapters.MedicationImagesTableAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IImageService;
 import com.example.sagivproject.utils.ImageUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -37,9 +38,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MedicationImagesTableActivity extends BaseActivity {
     private final List<ImageData> allImages = new ArrayList<>();
     private final List<ImageData> filteredList = new ArrayList<>();
+    @Inject
+    IImageService imageService;
     private MedicationImagesTableAdapter adapter;
     private TextInputEditText etSearch;
 
@@ -121,7 +129,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
     }
 
     private void loadImages() {
-        databaseService.getAllImages(new DatabaseService.DatabaseCallback<>() {
+        imageService.getAllImages(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ImageData> list) {
                 allImages.clear();
@@ -159,7 +167,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
                 String newId = "card" + nextNumber;
 
                 ImageData newImg = new ImageData(newId, base64);
-                databaseService.createImage(newImg, new DatabaseService.DatabaseCallback<>() {
+                imageService.createImage(newImg, new DatabaseCallback<>() {
                     @Override
                     public void onCompleted(Void object) {
                         Toast.makeText(MedicationImagesTableActivity.this, "התמונה נוספה כ-" + newId, Toast.LENGTH_SHORT).show();
@@ -184,7 +192,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
             allImages.get(i).setId("card" + (i + 1));
         }
 
-        databaseService.updateAllImages(allImages, new DatabaseService.DatabaseCallback<>() {
+        imageService.updateAllImages(allImages, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(MedicationImagesTableActivity.this, "התמונה נמחקה והרשימה סודרה מחדש", Toast.LENGTH_SHORT).show();

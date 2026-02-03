@@ -15,7 +15,7 @@ public interface IMedicationService {
      * @param medication the medication object to create
      * @param callback   the callback to call when the operation is completed
      */
-    void createNewMedication(@NonNull String uid, @NonNull Medication medication, @Nullable IDatabaseService.DatabaseCallback<Void> callback);
+    void createNewMedication(@NonNull String uid, @NonNull Medication medication, @Nullable DatabaseCallback<Void> callback);
 
     /**
      * get all the medications of a specific user
@@ -23,7 +23,7 @@ public interface IMedicationService {
      * @param uid      the id of the user
      * @param callback the callback
      */
-    void getUserMedicationList(@NonNull String uid, @NonNull IDatabaseService.DatabaseCallback<List<Medication>> callback);
+    void getUserMedicationList(@NonNull String uid, @NonNull DatabaseCallback<List<Medication>> callback);
 
     /**
      * generate a new id for a medication under a specific user
@@ -40,7 +40,7 @@ public interface IMedicationService {
      * @param medicationId id to delete
      * @param callback     callback
      */
-    void deleteMedication(@NonNull String uid, @NonNull String medicationId, @Nullable IDatabaseService.DatabaseCallback<Void> callback);
+    void deleteMedication(@NonNull String uid, @NonNull String medicationId, @Nullable DatabaseCallback<Void> callback);
 
     /**
      * update a medication in the database
@@ -49,5 +49,5 @@ public interface IMedicationService {
      * @param medication medication to update
      * @param callback   callback
      */
-    void updateMedication(String uid, Medication medication, @Nullable IDatabaseService.DatabaseCallback<Void> callback);
+    void updateMedication(String uid, Medication medication, @Nullable DatabaseCallback<Void> callback);
 }

@@ -14,12 +14,20 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.adapters.MemoryGameLogAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IGameService;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MemoryGameLogsTableActivity extends BaseActivity {
+    @Inject
+    IGameService gameService;
     private MemoryGameLogAdapter adapter;
 
     @Override
@@ -45,7 +53,7 @@ public class MemoryGameLogsTableActivity extends BaseActivity {
     }
 
     private void listenToGamesRealtime() {
-        databaseService.getAllRoomsRealtime(new DatabaseService.DatabaseCallback<>() {
+        gameService.getAllRoomsRealtime(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<GameRoom> allRooms) {
                 if (allRooms == null) return;

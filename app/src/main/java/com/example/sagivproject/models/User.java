@@ -38,6 +38,7 @@ public class User implements Serializable {
         this.profileImage = profileImage;
         this.medications = medications;
         this.count_wins = 0;
+        this.mathProblemsStats = new MathProblemsStats();
         this.mathProblemsStats.setCorrectAnswers(0);
         this.mathProblemsStats.setWrongAnswers(0);
     }

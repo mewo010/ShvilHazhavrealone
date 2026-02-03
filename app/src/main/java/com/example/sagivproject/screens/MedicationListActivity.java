@@ -24,7 +24,8 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IMedicationService;
 import com.example.sagivproject.utils.CalendarUtil;
 
 import java.util.ArrayList;
@@ -34,12 +35,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
     private final ArrayList<Medication> filteredMedications = new ArrayList<>();
+    @Inject
+    IMedicationService medicationService;
     @Inject
     CalendarUtil calendarUtil;
     private MedicationListAdapter adapter;
@@ -119,7 +126,78 @@ public class MedicationListActivity extends BaseActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSearchType.setAdapter(spinnerAdapter);
 
-        loadMedications();
+        loadMedicationsFromCache();
+        fetchMedicationsFromServer();
+    }
+
+    private void loadMedicationsFromCache() {
+        if (user.getMedications() != null) {
+            List<Medication> cachedList = new ArrayList<>(user.getMedications().values());
+            updateMedicationList(cachedList);
+        }
+    }
+
+    private void fetchMedicationsFromServer() {
+        medicationService.getUserMedicationList(uid, new DatabaseCallback<>() {
+            @Override
+            public void onCompleted(List<Medication> list) {
+                processServerResponse(list);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(MedicationListActivity.this, "שגיאה בטעינה", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void processServerResponse(List<Medication> serverList) {
+        List<Medication> validMedications = serverList.stream()
+                .filter(med -> med.getDate() == null || !isExpired(med.getDate()))
+                .collect(Collectors.toList());
+
+        List<String> expiredIds = serverList.stream()
+                .filter(med -> med.getDate() != null && isExpired(med.getDate()))
+                .map(Medication::getId)
+                .collect(Collectors.toList());
+
+        if (!expiredIds.isEmpty()) {
+            deleteExpiredMedications(expiredIds);
+        }
+
+        updateMedicationList(validMedications);
+        updateUserCache(validMedications);
+    }
+
+    private boolean isExpired(Date date) {
+        Calendar expiryCal = Calendar.getInstance();
+        expiryCal.setTime(date);
+        expiryCal.add(Calendar.DAY_OF_YEAR, 1);
+        return new Date().after(expiryCal.getTime());
+    }
+
+    private void deleteExpiredMedications(List<String> expiredIds) {
+        for (String id : expiredIds) {
+            medicationService.deleteMedication(uid, id, null);
+        }
+        Toast.makeText(MedicationListActivity.this, "נמחקו תרופות שפגו תוקפן", Toast.LENGTH_SHORT).show();
+    }
+
+    private void updateUserCache(List<Medication> medicationList) {
+        HashMap<String, Medication> updatedMedicationsMap = new HashMap<>();
+        for (Medication med : medicationList) {
+            updatedMedicationsMap.put(med.getId(), med);
+        }
+        user.setMedications(updatedMedicationsMap);
+        sharedPreferencesUtil.saveUser(user);
+    }
+
+    private void updateMedicationList(List<Medication> medicationList) {
+        medications.clear();
+        medications.addAll(medicationList);
+        medications.sort(Comparator.comparing(Medication::getDate));
+        filterMedications(editSearch.getText().toString());
+        adapter.notifyDataSetChanged();
     }
 
     @NonNull
@@ -153,87 +231,13 @@ public class MedicationListActivity extends BaseActivity {
         };
     }
 
-    private void loadMedications() {
-        if (user.getMedications() != null) {
-            List<Medication> cachedList = new ArrayList<>(user.getMedications().values());
-
-            medications.clear();
-            medications.addAll(cachedList);
-
-            medications.sort(Comparator.comparing(Medication::getDate));
-            adapter.notifyDataSetChanged();
-        }
-
-        databaseService.getUserMedicationList(uid, new DatabaseService.DatabaseCallback<>() {
-            @Override
-            public void onCompleted(List<Medication> list) {
-                medications.clear();
-
-                HashMap<String, Medication> updatedMedicationsMap = new HashMap<>();
-
-                Date today = new Date();
-                List<String> expiredIds = new ArrayList<>();
-
-                for (Medication med : list) {
-                    if (med.getDate() != null) {
-                        Calendar expiryCal = Calendar.getInstance();
-                        expiryCal.setTime(med.getDate());
-                        expiryCal.add(Calendar.DAY_OF_YEAR, 1);
-
-                        if (today.after(expiryCal.getTime())) {
-                            expiredIds.add(med.getId());
-                        } else {
-                            medications.add(med);
-                            updatedMedicationsMap.put(med.getId(), med);
-                        }
-                    } else {
-                        medications.add(med);
-                        updatedMedicationsMap.put(med.getId(), med);
-                    }
-                }
-
-                //מחיקה של פגי תוקף
-                for (String id : expiredIds) {
-                    databaseService.deleteMedication(uid, id, null);
-                }
-
-                //אם נמחקו תרופות, להציג Toast
-                if (!expiredIds.isEmpty()) {
-                    Toast.makeText(MedicationListActivity.this, "נמחקו תרופות שפגו תוקפן", Toast.LENGTH_SHORT).show();
-                }
-
-                // סידור רשימת התרופות התקינות
-                medications.sort(Comparator.comparing(Medication::getDate));
-
-                adapter.notifyDataSetChanged();
-
-                filterMedications(editSearch.getText().toString());
-
-                user.setMedications(updatedMedicationsMap);
-                sharedPreferencesUtil.saveUser(user);
-            }
-
-            @Override
-            public void onFailed(Exception e) {
-                Toast.makeText(MedicationListActivity.this, "שגיאה בטעינה", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void saveMedication(Medication medication) {
-        medication.setId(databaseService.generateMedicationId(uid));
-        databaseService.createNewMedication(uid, medication, new DatabaseService.DatabaseCallback<>() {
+        medication.setId(medicationService.generateMedicationId(uid));
+        medicationService.createNewMedication(uid, medication, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                HashMap<String, Medication> medsMap = user.getMedications();
-                if (medsMap == null) {
-                    medsMap = new HashMap<>();
-                }
-                medsMap.put(medication.getId(), medication);
-                user.setMedications(medsMap);
-                sharedPreferencesUtil.saveUser(user);
+                fetchMedicationsFromServer(); // Refresh list from server
                 Toast.makeText(MedicationListActivity.this, "התרופה נוספה", Toast.LENGTH_SHORT).show();
-                loadMedications();
             }
 
             @Override
@@ -244,17 +248,11 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void updateMedication(Medication med) {
-        databaseService.updateMedication(uid, med, new DatabaseService.DatabaseCallback<>() {
+        medicationService.updateMedication(uid, med, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                HashMap<String, Medication> medsMap = user.getMedications();
-                if (medsMap != null) {
-                    medsMap.put(med.getId(), med);
-                    user.setMedications(medsMap);
-                    sharedPreferencesUtil.saveUser(user);
-                }
+                fetchMedicationsFromServer(); // Refresh list from server
                 Toast.makeText(MedicationListActivity.this, "התרופה עודכנה", Toast.LENGTH_SHORT).show();
-                loadMedications();
             }
 
             @Override
@@ -265,16 +263,10 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void deleteMedicationById(String id) {
-        databaseService.deleteMedication(uid, id, new DatabaseService.DatabaseCallback<>() {
+        medicationService.deleteMedication(uid, id, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                HashMap<String, Medication> medsMap = user.getMedications();
-                if (medsMap != null) {
-                    medsMap.remove(id);
-                    user.setMedications(medsMap);
-                    sharedPreferencesUtil.saveUser(user);
-                }
-                loadMedications();
+                fetchMedicationsFromServer(); // Refresh list from server
             }
 
             @Override

@@ -8,9 +8,9 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
-import com.example.sagivproject.services.interfaces.IMedicationService;
 import com.example.sagivproject.services.NotificationService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IMedicationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class MedicationWorker extends Worker {
 
         final CountDownLatch latch = new CountDownLatch(1);
 
-        medicationService.getUserMedicationList(userId, new IDatabaseService.DatabaseCallback<List<Medication>>() {
+        medicationService.getUserMedicationList(userId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> medications) {
                 processMedications(userId, medications);

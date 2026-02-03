@@ -27,15 +27,26 @@ import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.ExitGameDialog;
 import com.example.sagivproject.screens.dialogs.GameEndDialog;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IGameService;
+import com.example.sagivproject.services.interfaces.IImageService;
+import com.example.sagivproject.services.interfaces.IUserService;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapter.MemoryGameListener {
     private static final long TURN_TIME_LIMIT = 15000; //15 שניות
+    @Inject
+    IGameService gameService;
+    @Inject
+    IImageService imageService;
+    @Inject
+    IUserService userService;
     private RecyclerView recyclerCards;
     private boolean endDialogShown = false, localLock = false;
     private String roomId;
@@ -83,8 +94,8 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 String opponentUid = myUid.equals(currentRoom.getPlayer1().getUid()) ?
                         currentRoom.getPlayer2().getUid() : currentRoom.getPlayer1().getUid();
 
-                databaseService.updateRoomField(roomId, "winnerUid", opponentUid);
-                databaseService.updateRoomField(roomId, "status", "finished");
+                gameService.updateRoomField(roomId, "winnerUid", opponentUid);
+                gameService.updateRoomField(roomId, "status", "finished");
             }
 
             Intent intent = new Intent(this, GameHomeScreenActivity.class);
@@ -129,7 +140,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     private void setupGameBoard(GameRoom room) {
         // רק השחקן הראשון יוצר את הלוח
         if (room.getCards() == null && user.getUid().equals(room.getPlayer1().getUid())) {
-            databaseService.getAllImages(new DatabaseService.DatabaseCallback<>() {
+            imageService.getAllImages(new DatabaseCallback<>() {
                 @Override
                 public void onCompleted(List<ImageData> allImages) {
                     if (allImages == null || allImages.size() < 6) {
@@ -151,7 +162,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                     Collections.shuffle(cards);
 
                     // שמירה ל-Firebase
-                    databaseService.initGameBoard(roomId, cards, room.getPlayer1().getUid(), null);
+                    gameService.initGameBoard(roomId, cards, room.getPlayer1().getUid(), null);
                 }
 
                 @Override
@@ -188,15 +199,15 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
         if (firstIndex == null) {
             // --- בחירת קלף ראשון ---
-            databaseService.updateCardStatus(roomId, clickedIndex, true, false);
-            databaseService.updateRoomField(roomId, "firstSelectedCardIndex", clickedIndex);
+            gameService.updateCardStatus(roomId, clickedIndex, true, false);
+            gameService.updateRoomField(roomId, "firstSelectedCardIndex", clickedIndex);
         } else {
             // --- בחירת קלף שני ---
             if (firstIndex == clickedIndex) return; //לחיצה על אותו קלף
 
             localLock = true;
-            databaseService.setProcessing(roomId, true); //חסימת לחיצות נוספות
-            databaseService.updateCardStatus(roomId, clickedIndex, true, false);
+            gameService.setProcessing(roomId, true); //חסימת לחיצות נוספות
+            gameService.updateCardStatus(roomId, clickedIndex, true, false);
 
             //בדיקה אם יש התאמה
             new Handler(Looper.getMainLooper()).postDelayed(() -> checkMatch(firstIndex, clickedIndex), 1000); //השהייה כדי שהשחקן יראה את הקלף השני
@@ -212,12 +223,12 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             adapter.animateSuccess(idx1, recyclerCards);
             adapter.animateSuccess(idx2, recyclerCards);
 
-            databaseService.updateCardStatus(roomId, idx1, true, true);
-            databaseService.updateCardStatus(roomId, idx2, true, true);
+            gameService.updateCardStatus(roomId, idx1, true, true);
+            gameService.updateCardStatus(roomId, idx2, true, true);
 
             String scoreField = user.getUid().equals(currentRoom.getPlayer1().getUid()) ? "player1Score" : "player2Score";
 
-            databaseService.updateRoomField(roomId, scoreField, user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
+            gameService.updateRoomField(roomId, scoreField, user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
                     currentRoom.getPlayer1Score() + 1 : currentRoom.getPlayer2Score() + 1);
 
         } else {
@@ -226,20 +237,20 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             adapter.animateError(idx2, recyclerCards);
 
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                databaseService.updateCardStatus(roomId, idx1, false, false);
-                databaseService.updateCardStatus(roomId, idx2, false, false);
+                gameService.updateCardStatus(roomId, idx1, false, false);
+                gameService.updateCardStatus(roomId, idx2, false, false);
 
                 String nextTurn = user.getUid().equals(currentRoom.getPlayer1().getUid())
                         ? currentRoom.getPlayer2().getUid()
                         : currentRoom.getPlayer1().getUid();
-                databaseService.updateRoomField(roomId, "currentTurnUid", nextTurn);
+                gameService.updateRoomField(roomId, "currentTurnUid", nextTurn);
             }, 600);
         }
 
-        databaseService.updateRoomField(roomId, "firstSelectedCardIndex", null);
+        gameService.updateRoomField(roomId, "firstSelectedCardIndex", null);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            databaseService.setProcessing(roomId, false);
+            gameService.setProcessing(roomId, false);
             localLock = false;
         }, 700);
     }
@@ -255,12 +266,12 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         if ("finished".equals(room.getStatus())) return;
 
         String winnerUid = calculateWinner(room);
-        databaseService.updateRoomField(roomId, "winnerUid", winnerUid);
-        databaseService.updateRoomField(roomId, "status", "finished");
+        gameService.updateRoomField(roomId, "winnerUid", winnerUid);
+        gameService.updateRoomField(roomId, "status", "finished");
     }
 
     private void listenToGame() {
-        databaseService.listenToGame(roomId, new DatabaseService.DatabaseCallback<>() {
+        gameService.listenToGame(roomId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
                 if (room == null) return;
@@ -288,14 +299,14 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 String myUid = user.getUid();
                 String opponentUid = myUid.equals(room.getPlayer1().getUid()) ?
                         room.getPlayer2().getUid() : room.getPlayer1().getUid();
-                databaseService.setupForfeitOnDisconnect(roomId, opponentUid);
+                gameService.setupForfeitOnDisconnect(roomId, opponentUid);
 
                 if ("finished".equals(room.getStatus())) {
                     if (turnTimer != null) turnTimer.cancel();
-                    databaseService.removeForfeitOnDisconnect(roomId);
+                    gameService.removeForfeitOnDisconnect(roomId);
 
                     if (myUid.equals(room.getWinnerUid())) {
-                        databaseService.addUserWin(myUid);
+                        gameService.addUserWin(myUid);
                     }
 
                     showGameEndDialog(room);
@@ -327,7 +338,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     protected void onDestroy() {
         super.onDestroy();
         if (roomId != null) {
-            databaseService.stopListeningToGame(roomId);
+            gameService.stopListeningToGame(roomId);
         }
     }
 
@@ -356,13 +367,13 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
             @Override
             public void onFinish() {
                 if (currentRoom.getFirstSelectedCardIndex() != null) {
-                    databaseService.updateCardStatus(roomId, currentRoom.getFirstSelectedCardIndex(), false, false);
-                    databaseService.updateRoomField(roomId, "firstSelectedCardIndex", null);
+                    gameService.updateCardStatus(roomId, currentRoom.getFirstSelectedCardIndex(), false, false);
+                    gameService.updateRoomField(roomId, "firstSelectedCardIndex", null);
                 }
 
                 String opponentUid = user.getUid().equals(currentRoom.getPlayer1().getUid()) ?
                         currentRoom.getPlayer2().getUid() : currentRoom.getPlayer1().getUid();
-                databaseService.updateRoomField(roomId, "currentTurnUid", opponentUid);
+                gameService.updateRoomField(roomId, "currentTurnUid", opponentUid);
             }
         }.start();
     }

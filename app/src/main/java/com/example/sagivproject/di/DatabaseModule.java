@@ -1,33 +1,37 @@
 package com.example.sagivproject.di;
 
-import com.example.sagivproject.services.DatabaseService;
 import com.example.sagivproject.services.ForumService;
 import com.example.sagivproject.services.GameService;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.ImageService;
+import com.example.sagivproject.services.MedicationService;
+import com.example.sagivproject.services.StatsService;
+import com.example.sagivproject.services.UserService;
 import com.example.sagivproject.services.interfaces.IForumService;
 import com.example.sagivproject.services.interfaces.IGameService;
 import com.example.sagivproject.services.interfaces.IImageService;
 import com.example.sagivproject.services.interfaces.IMedicationService;
 import com.example.sagivproject.services.interfaces.IStatsService;
 import com.example.sagivproject.services.interfaces.IUserService;
-import com.example.sagivproject.services.ImageService;
-import com.example.sagivproject.services.MedicationService;
-import com.example.sagivproject.services.StatsService;
-import com.example.sagivproject.services.UserService;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
 @Module
 @InstallIn(SingletonComponent.class)
 public abstract class DatabaseModule {
-    @Binds
+
+    @Provides
     @Singleton
-    public abstract IDatabaseService bindDatabaseService(DatabaseService databaseService);
+    public static DatabaseReference provideDatabaseReference() {
+        return FirebaseDatabase.getInstance().getReference();
+    }
 
     @Binds
     @Singleton
