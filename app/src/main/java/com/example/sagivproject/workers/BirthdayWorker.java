@@ -8,7 +8,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -22,7 +23,7 @@ import dagger.assisted.AssistedInject;
 
 @HiltWorker
 public class BirthdayWorker extends Worker {
-    protected final IDatabaseService databaseService;
+    protected final IUserService userService;
     protected final NotificationService notificationService;
     protected final SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -30,12 +31,12 @@ public class BirthdayWorker extends Worker {
     public BirthdayWorker(
             @Assisted @NonNull Context context,
             @Assisted @NonNull WorkerParameters workerParams,
-            IDatabaseService databaseService,
+            IUserService userService,
             NotificationService notificationService,
             SharedPreferencesUtil sharedPreferencesUtil
     ) {
         super(context, workerParams);
-        this.databaseService = databaseService;
+        this.userService = userService;
         this.notificationService = notificationService;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
@@ -48,7 +49,7 @@ public class BirthdayWorker extends Worker {
         String userId = sharedPreferencesUtil.getUserId();
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUser(Objects.requireNonNull(userId), new IDatabaseService.DatabaseCallback<>() {
+        userService.getUser(Objects.requireNonNull(userId), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user != null) {

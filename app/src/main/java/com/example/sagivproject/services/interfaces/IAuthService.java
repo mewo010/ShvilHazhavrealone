@@ -1,10 +1,7 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.interfaces;
 
 import com.example.sagivproject.models.User;
 
-/**
- * Service for handling user authentication.
- */
 public interface IAuthService {
     /**
      * Logs in a user with the given email and password.

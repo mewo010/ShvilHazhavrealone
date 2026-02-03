@@ -1,7 +1,7 @@
 package com.example.sagivproject.di;
 
 import com.example.sagivproject.services.AuthService;
-import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.interfaces.IAuthService;
 
 import javax.inject.Singleton;
 

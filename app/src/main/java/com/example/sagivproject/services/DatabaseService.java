@@ -10,6 +10,7 @@ import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

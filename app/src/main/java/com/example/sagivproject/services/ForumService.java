@@ -4,13 +4,15 @@ import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IDatabaseService.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IForumService;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class ForumService {
+public class ForumService implements IForumService {
     private final IDatabaseService databaseService;
 
     @Inject
@@ -18,6 +20,7 @@ public class ForumService {
         this.databaseService = databaseService;
     }
 
+    @Override
     public void sendMessage(User user, String text, ForumCallback<Void> callback) {
         String messageId = databaseService.generateForumMessageId();
         ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
@@ -39,6 +42,7 @@ public class ForumService {
         });
     }
 
+    @Override
     public void listenToMessages(ForumCallback<List<ForumMessage>> callback) {
         databaseService.getForumMessagesRealtime(new DatabaseCallback<>() {
             @Override
@@ -57,6 +61,7 @@ public class ForumService {
         });
     }
 
+    @Override
     public void deleteMessage(@NonNull String messageId, ForumCallback<Void> callback) {
         databaseService.deleteForumMessage(messageId, new DatabaseCallback<>() {
             @Override

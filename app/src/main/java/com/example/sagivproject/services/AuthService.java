@@ -2,6 +2,9 @@ package com.example.sagivproject.services;
 
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
+import com.example.sagivproject.services.interfaces.IAuthService;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
@@ -9,18 +12,18 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 public class AuthService implements IAuthService {
-    private final IDatabaseService iDatabaseService;
+    private final IUserService userService;
     private final SharedPreferencesUtil sharedPreferencesUtil;
 
     @Inject
-    public AuthService(IDatabaseService iDatabaseService, SharedPreferencesUtil sharedPreferencesUtil) {
-        this.iDatabaseService = iDatabaseService;
+    public AuthService(IUserService userService, SharedPreferencesUtil sharedPreferencesUtil) {
+        this.userService = userService;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
     @Override
     public void login(String email, String password, LoginCallback callback) {
-        iDatabaseService.getUserByEmailAndPassword(email, password, new IDatabaseService.DatabaseCallback<>() {
+        userService.getUserByEmailAndPassword(email, password, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user == null) {
@@ -42,23 +45,23 @@ public class AuthService implements IAuthService {
 
     @Override
     public void register(String firstName, String lastName, long birthDateMillis, String email, String password, RegisterCallback callback) {
-        iDatabaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
+        userService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
                     callback.onError("אימייל זה תפוס");
                 } else {
-                    createUser(firstName, lastName, birthDateMillis, email, password, new CreateUserCallback() {
+                    createUser(firstName, lastName, birthDateMillis, email, password, new IDatabaseService.DatabaseCallback<>() {
                         @Override
-                        public void onSuccess(User user) {
+                        public void onCompleted(User user) {
                             sharedPreferencesUtil.saveUser(user);
                             callback.onSuccess();
                         }
 
                         @Override
-                        public void onError(String message) {
+                        public void onFailed(Exception e) {
                             sharedPreferencesUtil.signOutUser();
-                            callback.onError(message);
+                            callback.onError("שגיאה בשמירת הנתונים");
                         }
                     });
                 }
@@ -73,21 +76,21 @@ public class AuthService implements IAuthService {
 
     @Override
     public void addUser(String firstName, String lastName, long birthDateMillis, String email, String password, AddUserCallback callback) {
-        iDatabaseService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
+        userService.checkIfEmailExists(email, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
                     callback.onError("אימייל זה תפוס");
                 } else {
-                    createUser(firstName, lastName, birthDateMillis, email, password, new CreateUserCallback() {
+                    createUser(firstName, lastName, birthDateMillis, email, password, new IDatabaseService.DatabaseCallback<>() {
                         @Override
-                        public void onSuccess(User user) {
+                        public void onCompleted(User user) {
                             callback.onSuccess(user);
                         }
 
                         @Override
-                        public void onError(String message) {
-                            callback.onError(message);
+                        public void onFailed(Exception e) {
+                            callback.onError("שגיאה בשמירת הנתונים");
                         }
                     });
                 }
@@ -105,7 +108,7 @@ public class AuthService implements IAuthService {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
         if (emailChanged) {
-            iDatabaseService.checkIfEmailExists(newEmail, new IDatabaseService.DatabaseCallback<>() {
+            userService.checkIfEmailExists(newEmail, new IDatabaseService.DatabaseCallback<>() {
                 @Override
                 public void onCompleted(Boolean exists) {
                     if (exists) {
@@ -125,20 +128,20 @@ public class AuthService implements IAuthService {
         }
     }
 
-    private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, CreateUserCallback callback) {
-        String uid = iDatabaseService.generateUserId();
+    private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, IDatabaseService.DatabaseCallback<User> callback) {
+        String uid = userService.generateUserId();
 
         User user = new User(uid, firstName, lastName, birthDateMillis, email, password, UserRole.REGULAR, null, new HashMap<>());
 
-        iDatabaseService.createNewUser(user, new IDatabaseService.DatabaseCallback<>() {
+        userService.createNewUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
-                callback.onSuccess(user);
+                callback.onCompleted(user);
             }
 
             @Override
             public void onFailed(Exception e) {
-                callback.onError("שגיאה בשמירת הנתונים");
+                callback.onFailed(e);
             }
         });
     }
@@ -150,7 +153,7 @@ public class AuthService implements IAuthService {
         user.setEmail(email);
         user.setPassword(password);
 
-        iDatabaseService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
+        userService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);
@@ -171,11 +174,5 @@ public class AuthService implements IAuthService {
         sharedPreferencesUtil.signOutUser();
 
         return email;
-    }
-
-    private interface CreateUserCallback {
-        void onSuccess(User user);
-
-        void onError(String message);
     }
 }

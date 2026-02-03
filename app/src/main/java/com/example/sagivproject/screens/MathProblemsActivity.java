@@ -18,11 +18,16 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.Operation;
 import com.example.sagivproject.screens.dialogs.ResetMathStatsDialog;
+import com.example.sagivproject.services.interfaces.IStatsService;
 
 import java.text.MessageFormat;
 
+import javax.inject.Inject;
+
 public class MathProblemsActivity extends BaseActivity {
     private final StringBuilder userInput = new StringBuilder();
+    @Inject
+    IStatsService statsService;
     private TextView tvCorrect, tvWrong;
     private User user;
     private TextView tvQuestion, tvAnswer;
@@ -71,7 +76,7 @@ public class MathProblemsActivity extends BaseActivity {
         user.getMathProblemsStats().setCorrectAnswers(0);
         user.getMathProblemsStats().setWrongAnswers(0);
 
-        databaseService.resetMathStats(user.getUid());
+        statsService.resetMathStats(user.getUid());
         sharedPreferencesUtil.saveUser(user);
 
         updateStatsUI();
@@ -180,12 +185,12 @@ public class MathProblemsActivity extends BaseActivity {
 
             Toast.makeText(this, "נכון! ✅", Toast.LENGTH_SHORT).show();
             generateProblem();
-            databaseService.addCorrectAnswer(user.getUid());
+            statsService.addCorrectAnswer(user.getUid());
         } else {
             user.getMathProblemsStats().setWrongAnswers(user.getMathProblemsStats().getWrongAnswers() + 1);
 
             Toast.makeText(this, "טעות, נסה שוב ❌", Toast.LENGTH_SHORT).show();
-            databaseService.addWrongAnswer(user.getUid());
+            statsService.addWrongAnswer(user.getUid());
         }
 
         sharedPreferencesUtil.saveUser(user);

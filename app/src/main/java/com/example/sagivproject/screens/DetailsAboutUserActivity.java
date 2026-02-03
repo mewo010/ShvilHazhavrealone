@@ -22,7 +22,8 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
-import com.example.sagivproject.services.DatabaseService;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
 import com.example.sagivproject.utils.Validator;
@@ -42,6 +43,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
     CalendarUtil calendarUtil;
     @Inject
     Validator validator;
+    @Inject
+    IUserService userService;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
@@ -100,7 +103,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserFromDatabase() {
-        databaseService.getUser(user.getUid(), new DatabaseService.DatabaseCallback<>() {
+        userService.getUser(user.getUid(), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
@@ -183,7 +186,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         imgUserProfile.setImageResource(R.drawable.ic_user);
 
-        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
+        userService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);
@@ -228,7 +231,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void saveProfileImage() {
-        databaseService.updateUser(user, new DatabaseService.DatabaseCallback<>() {
+        userService.updateUser(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);

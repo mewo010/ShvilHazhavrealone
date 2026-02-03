@@ -1,4 +1,4 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.interfaces;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

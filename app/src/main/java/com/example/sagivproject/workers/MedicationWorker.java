@@ -8,7 +8,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IMedicationService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -22,7 +23,7 @@ import dagger.assisted.AssistedInject;
 
 @HiltWorker
 public class MedicationWorker extends Worker {
-    protected final IDatabaseService databaseService;
+    protected final IMedicationService medicationService;
     protected final NotificationService notificationService;
     protected final SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -30,12 +31,12 @@ public class MedicationWorker extends Worker {
     public MedicationWorker(
             @Assisted @NonNull Context context,
             @Assisted @NonNull WorkerParameters workerParams,
-            IDatabaseService databaseService,
+            IMedicationService medicationService,
             NotificationService notificationService,
             SharedPreferencesUtil sharedPreferencesUtil
     ) {
         super(context, workerParams);
-        this.databaseService = databaseService;
+        this.medicationService = medicationService;
         this.notificationService = notificationService;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
@@ -54,7 +55,7 @@ public class MedicationWorker extends Worker {
 
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.getUserMedicationList(userId, new IDatabaseService.DatabaseCallback<List<Medication>>() {
+        medicationService.getUserMedicationList(userId, new IDatabaseService.DatabaseCallback<List<Medication>>() {
             @Override
             public void onCompleted(List<Medication> medications) {
                 processMedications(userId, medications);
@@ -109,7 +110,7 @@ public class MedicationWorker extends Worker {
                 // So, if today is after the expiry date, it's expired.
                 if (today.after(expiryDate)) {
                     expiredCount++;
-                    databaseService.deleteMedication(userId, med.getId(), null);
+                    medicationService.deleteMedication(userId, med.getId(), null);
                 } else {
                     remainingCount++;
                     long diffMillis = expiryDate.getTimeInMillis() - today.getTimeInMillis();
