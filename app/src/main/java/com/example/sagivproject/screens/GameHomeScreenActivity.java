@@ -67,8 +67,14 @@ public class GameHomeScreenActivity extends BaseActivity {
         btnFindEnemy.setOnClickListener(view -> findEnemy());
         btnCancelFindEnemy.setOnClickListener(view -> cancel());
         rvLeaderboard.setLayoutManager(new LinearLayoutManager(this));
-        loadWins(user);
         setupLeaderboard();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = sharedPreferencesUtil.getUser();
+        loadWins(user);
     }
 
     private void loadWins(User user) {

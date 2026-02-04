@@ -107,6 +107,7 @@
     <string name="_0">0</string>
     <string name="חפשתרופה">חפש תרופה…</string>
     <string name="איפוסנתונים">איפוס נתונים</string>
+    <string name="מחפשיריב">מחפש יריב...</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>
