@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.ForumService;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.interfaces.IForumService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.inject.Inject;
 
 public abstract class BaseForumActivity extends BaseActivity {
     protected final List<ForumMessage> messages = new ArrayList<>();
@@ -27,8 +26,7 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
     protected ForumAdapter adapter;
-    @Inject
-    protected ForumService forumService;
+    protected IForumService forumService;
     protected ForumPermissions permissions;
 
     @Override
@@ -36,10 +34,11 @@ public abstract class BaseForumActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages) {
+    protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages, IForumService forumService) {
         this.recycler = recycler;
         this.edtMessage = edtMessage;
         this.btnNewMessagesIndicator = btnNewMessages;
+        this.forumService = forumService;
 
         //הגדרת לחיצה על כפתור "הודעות חדשות"
         if (btnNewMessagesIndicator != null) {
@@ -68,14 +67,14 @@ public abstract class BaseForumActivity extends BaseActivity {
         adapter.setForumMessageListener(new ForumAdapter.ForumMessageListener() {
             @Override
             public void onClick(ForumMessage message) {
-                forumService.deleteMessage(message.getMessageId(), new ForumService.ForumCallback<>() {
+                forumService.deleteMessage(message.getMessageId(), new DatabaseCallback<>() {
                     @Override
-                    public void onSuccess(Void data) {
+                    public void onCompleted(Void data) {
                         Toast.makeText(BaseForumActivity.this, "ההודעה נמחקה", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onError(Exception e) {
+                    public void onFailed(Exception e) {
                         Toast.makeText(BaseForumActivity.this, "שגיאה במחיקה", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -89,9 +88,9 @@ public abstract class BaseForumActivity extends BaseActivity {
     }
 
     protected void loadMessages() {
-        forumService.listenToMessages(new ForumService.ForumCallback<>() {
+        forumService.listenToMessages(new DatabaseCallback<>() {
             @Override
-            public void onSuccess(List<ForumMessage> list) {
+            public void onCompleted(List<ForumMessage> list) {
                 //בודקים אם המשתמש היה בסוף לפני העדכון
                 boolean wasAtBottom = isLastItemVisible();
 
@@ -109,7 +108,7 @@ public abstract class BaseForumActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Exception e) {
+            public void onFailed(Exception e) {
                 Toast.makeText(BaseForumActivity.this, "שגיאה בטעינה", Toast.LENGTH_SHORT).show();
             }
         });
@@ -121,16 +120,16 @@ public abstract class BaseForumActivity extends BaseActivity {
 
         User user = sharedPreferencesUtil.getUser();
 
-        forumService.sendMessage(Objects.requireNonNull(user), text, new ForumService.ForumCallback<>() {
+        forumService.sendMessage(Objects.requireNonNull(user), text, new DatabaseCallback<>() {
             @Override
-            public void onSuccess(Void data) {
+            public void onCompleted(Void data) {
                 edtMessage.setText("");
                 //גלילה למטה ברגע שאני שלחתי הודעה
                 scrollToBottom(true);
             }
 
             @Override
-            public void onError(Exception e) {
+            public void onFailed(Exception e) {
                 Toast.makeText(BaseForumActivity.this, "שגיאה בשליחה", Toast.LENGTH_SHORT).show();
             }
         });

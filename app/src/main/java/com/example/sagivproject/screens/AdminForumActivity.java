@@ -40,7 +40,7 @@ public class AdminForumActivity extends BaseForumActivity implements BaseForumAc
         RecyclerView recyclerForum = findViewById(R.id.recycler_AdminForum);
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
-        initForumViews(recyclerForum, edtNewMessage, btnNewMessages);
+        initForumViews(recyclerForum, edtNewMessage, btnNewMessages, databaseService.forum());
         this.permissions = this;
         setupForum();
     }

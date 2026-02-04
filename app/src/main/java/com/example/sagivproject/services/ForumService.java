@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.services.interfaces.DatabaseCallback;
 import com.example.sagivproject.services.interfaces.IForumService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,21 +28,21 @@ public class ForumService implements IForumService {
     }
 
     @Override
-    public void sendMessage(User user, String text, ForumCallback<Void> callback) {
+    public void sendMessage(User user, String text, DatabaseCallback<Void> callback) {
         String messageId = databaseReference.push().getKey();
         ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
 
         databaseReference.child(Objects.requireNonNull(messageId)).setValue(msg).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if (callback != null) callback.onSuccess(null);
+                if (callback != null) callback.onCompleted(null);
             } else {
-                if (callback != null) callback.onError(task.getException());
+                if (callback != null) callback.onFailed(task.getException());
             }
         });
     }
 
     @Override
-    public void listenToMessages(ForumCallback<List<ForumMessage>> callback) {
+    public void listenToMessages(DatabaseCallback<List<ForumMessage>> callback) {
         databaseReference.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -50,30 +51,24 @@ public class ForumService implements IForumService {
                     ForumMessage msg = child.getValue(ForumMessage.class);
                     list.add(msg);
                 }
-                if (callback != null) callback.onSuccess(list);
+                if (callback != null) callback.onCompleted(list);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                if (callback != null) callback.onError(error.toException());
+                if (callback != null) callback.onFailed(error.toException());
             }
         });
     }
 
     @Override
-    public void deleteMessage(@NonNull String messageId, ForumCallback<Void> callback) {
+    public void deleteMessage(@NonNull String messageId, DatabaseCallback<Void> callback) {
         databaseReference.child(messageId).removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if (callback != null) callback.onSuccess(null);
+                if (callback != null) callback.onCompleted(null);
             } else {
-                if (callback != null) callback.onError(task.getException());
+                if (callback != null) callback.onFailed(task.getException());
             }
         });
-    }
-
-    public interface ForumCallback<T> {
-        void onSuccess(T data);
-
-        void onError(Exception e);
     }
 }

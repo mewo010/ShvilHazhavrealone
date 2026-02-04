@@ -45,7 +45,7 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
 
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
-        initForumViews(recyclerForum, edtNewMessage, btnNewMessages);
+        initForumViews(recyclerForum, edtNewMessage, btnNewMessages, databaseService.forum());
         this.permissions = this;
         setupForum();
     }

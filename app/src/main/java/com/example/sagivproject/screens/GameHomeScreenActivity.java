@@ -21,24 +21,16 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IGameService;
-import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.services.interfaces.RoomStatusCallback;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class GameHomeScreenActivity extends BaseActivity {
-    @Inject
-    IGameService gameService;
-    @Inject
-    IUserService userService;
     private Button btnFindEnemy;
     private Button btnCancelFindEnemy;
     private TextView TVictories, TVStatusOfFindingEnemy;
@@ -84,7 +76,7 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void setupLeaderboard() {
-        userService.getUserList(new DatabaseCallback<>() {
+        databaseService.users().getUserList(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> users) {
                 if (users != null) {
@@ -110,7 +102,7 @@ public class GameHomeScreenActivity extends BaseActivity {
         btnCancelFindEnemy.setVisibility(View.VISIBLE);
         btnFindEnemy.setVisibility(View.GONE);
 
-        gameService.findOrCreateRoom(user, new DatabaseCallback<>() {
+        databaseService.games().findOrCreateRoom(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
                 currentRoom = room;
@@ -126,7 +118,7 @@ public class GameHomeScreenActivity extends BaseActivity {
 
     private void cancel() {
         if (currentRoom != null && "waiting".equals(currentRoom.getStatus()) && user.getUid().equals(currentRoom.getPlayer1().getUid())) {
-            gameService.cancelRoom(currentRoom.getRoomId(), null);
+            databaseService.games().cancelRoom(currentRoom.getRoomId(), null);
             currentRoom = null;
         }
 
@@ -136,7 +128,7 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void listenToRoom(String roomId) {
-        roomListener = gameService.listenToRoomStatus(roomId, new RoomStatusCallback() {
+        roomListener = databaseService.games().listenToRoomStatus(roomId, new RoomStatusCallback() {
             @Override
             public void onRoomStarted(GameRoom startedRoom) {
                 if (gameStarted) return;
@@ -158,7 +150,7 @@ public class GameHomeScreenActivity extends BaseActivity {
 
     private void startGame(GameRoom room) {
         if (roomListener != null) {
-            gameService.removeRoomListener(room.getRoomId(), roomListener);
+            databaseService.games().removeRoomListener(room.getRoomId(), roomListener);
             roomListener = null;
         }
 

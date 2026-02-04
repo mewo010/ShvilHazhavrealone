@@ -1,30 +1,70 @@
 package com.example.sagivproject.services;
 
-import com.example.sagivproject.bases.BaseTable;
-import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.models.User;
-import com.google.android.gms.games.Game;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IForumService;
+import com.example.sagivproject.services.interfaces.IGameService;
+import com.example.sagivproject.services.interfaces.IImageService;
+import com.example.sagivproject.services.interfaces.IMedicationService;
+import com.example.sagivproject.services.interfaces.IStatsService;
+import com.example.sagivproject.services.interfaces.IUserService;
 
-public class DatabaseService {
-    private static DatabaseService instance;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    public final BaseTable<User> users;
-    public final BaseTable<Medication> medications;
-    public final BaseTable<Game> games;
+@Singleton
+public class DatabaseService implements IDatabaseService {
 
-    private DatabaseService() {
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private final IUserService userService;
+    private final IMedicationService medicationService;
+    private final IGameService gameService;
+    private final IStatsService statsService;
+    private final IForumService forumService;
+    private final IImageService imageService;
 
-        users = new BaseTable<User>(db.getReference("Users"), User.class) {};
-        medications = new BaseTable<Medication>(db.getReference("Medications"), Medication.class) {};
-        games = new BaseTable<Game>(db.getReference("Games"), Game.class) {};
+    @Inject
+    public DatabaseService(
+            IUserService userService,
+            IMedicationService medicationService,
+            IGameService gameService,
+            IStatsService statsService,
+            IForumService forumService,
+            IImageService imageService
+    ) {
+        this.userService = userService;
+        this.medicationService = medicationService;
+        this.gameService = gameService;
+        this.statsService = statsService;
+        this.forumService = forumService;
+        this.imageService = imageService;
     }
 
-    public static synchronized DatabaseService getInstance() {
-        if (instance == null) {
-            instance = new DatabaseService();
-        }
-        return instance;
+    @Override
+    public IUserService users() {
+        return userService;
+    }
+
+    @Override
+    public IMedicationService medications() {
+        return medicationService;
+    }
+
+    @Override
+    public IGameService games() {
+        return gameService;
+    }
+
+    @Override
+    public IStatsService stats() {
+        return statsService;
+    }
+
+    @Override
+    public IForumService forum() {
+        return forumService;
+    }
+
+    @Override
+    public IImageService images() {
+        return imageService;
     }
 }

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.ForumService;
 
 import java.util.List;
 
@@ -19,14 +18,14 @@ public interface IForumService {
      * @param text     The content of the message.
      * @param callback A callback to be invoked when the operation is complete.
      */
-    void sendMessage(User user, String text, ForumService.ForumCallback<Void> callback);
+    void sendMessage(User user, String text, DatabaseCallback<Void> callback);
 
     /**
      * Listens for real-time updates to forum messages.
      *
      * @param callback A callback to be invoked with the list of messages.
      */
-    void listenToMessages(ForumService.ForumCallback<List<ForumMessage>> callback);
+    void listenToMessages(DatabaseCallback<List<ForumMessage>> callback);
 
     /**
      * Deletes a message from the forum.
@@ -34,5 +33,5 @@ public interface IForumService {
      * @param messageId The ID of the message to delete.
      * @param callback  A callback to be invoked when the operation is complete.
      */
-    void deleteMessage(@NonNull String messageId, ForumService.ForumCallback<Void> callback);
+    void deleteMessage(@NonNull String messageId, DatabaseCallback<Void> callback);
 }

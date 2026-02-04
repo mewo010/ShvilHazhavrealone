@@ -1,7 +1,5 @@
 package com.example.sagivproject.services.interfaces;
 
-import java.util.List;
-
 /**
  * A generic callback interface for database operations.
  *

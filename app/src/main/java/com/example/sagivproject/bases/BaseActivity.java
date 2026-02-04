@@ -23,6 +23,7 @@ import com.example.sagivproject.screens.RegisterActivity;
 import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
 import com.example.sagivproject.services.interfaces.IAuthService;
+import com.example.sagivproject.services.interfaces.IDatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected IAuthService authService;
     @Inject
     protected SharedPreferencesUtil sharedPreferencesUtil;
+    @Inject
+    protected IDatabaseService databaseService;
 
     protected IAuthService getAuthService() {
         return authService;
