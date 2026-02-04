@@ -25,20 +25,23 @@ import javax.inject.Inject;
 public class GameService implements IGameService {
 
     private static final String ROOMS_PATH = "rooms";
-    private final DatabaseReference databaseReference;
+    private static final String USERS_PATH = "users";
+    private final DatabaseReference roomsReference;
+    private final DatabaseReference usersReference;
     private ValueEventListener activeGameListener;
 
     @Inject
     public GameService(DatabaseReference databaseReference) {
-        this.databaseReference = databaseReference.child(ROOMS_PATH);
+        this.roomsReference = databaseReference.child(ROOMS_PATH);
+        this.usersReference = databaseReference.child(USERS_PATH);
     }
 
     @Override
     public void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback) {
-        String newRoomId = databaseReference.push().getKey();
+        String newRoomId = roomsReference.push().getKey();
         final String[] matchedRoomId = new String[1];
 
-        databaseReference.runTransaction(new Transaction.Handler() {
+        roomsReference.runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData currentData) {
@@ -77,7 +80,7 @@ public class GameService implements IGameService {
 
     @Override
     public void getAllRoomsRealtime(@NonNull DatabaseCallback<List<GameRoom>> callback) {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        roomsReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<GameRoom> roomList = new ArrayList<>();
@@ -122,18 +125,18 @@ public class GameService implements IGameService {
             }
         };
 
-        databaseReference.child(roomId).addValueEventListener(listener);
+        roomsReference.child(roomId).addValueEventListener(listener);
         return listener;
     }
 
     @Override
     public void removeRoomListener(@NonNull String roomId, @NonNull ValueEventListener listener) {
-        databaseReference.child(roomId).removeEventListener(listener);
+        roomsReference.child(roomId).removeEventListener(listener);
     }
 
     @Override
     public void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(roomId).removeValue().addOnCompleteListener(task -> {
+        roomsReference.child(roomId).removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (callback != null) callback.onCompleted(null);
             } else {
@@ -144,9 +147,9 @@ public class GameService implements IGameService {
 
     @Override
     public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback) {
-        databaseReference.child(roomId).child("cards").setValue(cards);
-        databaseReference.child(roomId).child("currentTurnUid").setValue(firstTurnUid);
-        databaseReference.child(roomId).child("status").setValue("playing",
+        roomsReference.child(roomId).child("cards").setValue(cards);
+        roomsReference.child(roomId).child("currentTurnUid").setValue(firstTurnUid);
+        roomsReference.child(roomId).child("status").setValue("playing",
                 (error, ref) -> {
                     if (callback == null) return;
                     if (error != null) callback.onFailed(error.toException());
@@ -171,26 +174,26 @@ public class GameService implements IGameService {
             }
         };
 
-        databaseReference.child(roomId).addValueEventListener(activeGameListener);
+        roomsReference.child(roomId).addValueEventListener(activeGameListener);
     }
 
     @Override
     public void stopListeningToGame(String roomId) {
         if (activeGameListener != null) {
-            databaseReference.child(roomId).removeEventListener(activeGameListener);
+            roomsReference.child(roomId).removeEventListener(activeGameListener);
             activeGameListener = null;
         }
     }
 
     @Override
     public void updateRoomField(String roomId, String field, Object value) {
-        databaseReference.child(roomId).child(field).setValue(value);
+        roomsReference.child(roomId).child(field).setValue(value);
     }
 
     @Override
     public void updateCardStatus(String roomId, int index, boolean revealed, boolean matched) {
-        databaseReference.child(roomId).child("cards").child(String.valueOf(index)).child("isRevealed").setValue(revealed);
-        databaseReference.child(roomId).child("cards").child(String.valueOf(index)).child("isMatched").setValue(matched);
+        roomsReference.child(roomId).child("cards").child(String.valueOf(index)).child("isRevealed").setValue(revealed);
+        roomsReference.child(roomId).child("cards").child(String.valueOf(index)).child("isMatched").setValue(matched);
     }
 
     @Override
@@ -200,18 +203,36 @@ public class GameService implements IGameService {
 
     @Override
     public void addUserWin(String uid) {
-        // This logic should be in UserService
+        if (uid == null || uid.isEmpty() || uid.equals("draw")) return;
+
+        usersReference.child(uid).child("countWins").runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                Integer currentWins = currentData.getValue(Integer.class);
+                if (currentWins == null) {
+                    currentData.setValue(1);
+                } else {
+                    currentData.setValue(currentWins + 1);
+                }
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+            }
+        });
     }
 
     @Override
     public void setupForfeitOnDisconnect(String roomId, String opponentUid) {
-        databaseReference.child(roomId).child("status").onDisconnect().setValue("finished");
-        databaseReference.child(roomId).child("winnerUid").onDisconnect().setValue(opponentUid);
+        roomsReference.child(roomId).child("status").onDisconnect().setValue("finished");
+        roomsReference.child(roomId).child("winnerUid").onDisconnect().setValue(opponentUid);
     }
 
     @Override
     public void removeForfeitOnDisconnect(String roomId) {
-        databaseReference.child(roomId).child("status").onDisconnect().cancel();
-        databaseReference.child(roomId).child("winnerUid").onDisconnect().cancel();
+        roomsReference.child(roomId).child("status").onDisconnect().cancel();
+        roomsReference.child(roomId).child("winnerUid").onDisconnect().cancel();
     }
 }
