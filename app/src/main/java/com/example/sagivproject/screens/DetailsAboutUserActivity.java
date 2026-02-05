@@ -29,6 +29,7 @@ import com.example.sagivproject.utils.Validator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -136,6 +137,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         cal.setTimeInMillis(user.getBirthDateMillis());
 
         String birthDate = String.format(
+                Locale.ROOT,
                 "%02d/%02d/%04d",
                 cal.get(Calendar.DAY_OF_MONTH),
                 cal.get(Calendar.MONTH) + 1,

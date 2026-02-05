@@ -39,21 +39,23 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_DialogConfirm_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:fontFamily="@font/text_hebrew"
+                android:minWidth="80dp"
                 android:text="@string/אישור"
                 android:textSize="24sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_DialogConfirm_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
+                android:layout_margin="4dp"
                 android:fontFamily="@font/text_hebrew"
+                android:minWidth="80dp"
                 android:text="@string/ביטול"
                 android:textSize="24sp" />
         </LinearLayout>

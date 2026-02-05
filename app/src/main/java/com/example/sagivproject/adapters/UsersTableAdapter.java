@@ -17,6 +17,7 @@ import com.example.sagivproject.utils.ImageUtil;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.UserViewHolder> {
     private final User currentUser;
@@ -50,10 +51,13 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
         java.util.Calendar cal = java.util.Calendar.getInstance();
         cal.setTimeInMillis(user.getBirthDateMillis());
 
-        String birthDateStr = String.format("%02d/%02d/%04d",
+        String birthDateStr = String.format(
+                Locale.ROOT,
+                "%02d/%02d/%04d",
                 cal.get(java.util.Calendar.DAY_OF_MONTH),
                 cal.get(java.util.Calendar.MONTH) + 1,
-                cal.get(java.util.Calendar.YEAR));
+                cal.get(java.util.Calendar.YEAR)
+        );
 
         holder.txtUserBirthDate.setText(String.format("תאריך לידה: %s", birthDateStr));
 

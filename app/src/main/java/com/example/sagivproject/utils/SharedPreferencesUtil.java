@@ -28,14 +28,14 @@ public class SharedPreferencesUtil {
         this.gson = new Gson();
     }
 
-    private void saveString(String key, String value) {
+    private void saveString(String value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
+        editor.putString("user", value);
         editor.apply();
     }
 
-    private String getString(String key, String defaultValue) {
-        return sharedPreferences.getString(key, defaultValue);
+    private String getString() {
+        return sharedPreferences.getString("user", null);
     }
 
     private void saveInt(String key, int value) {
@@ -54,46 +54,46 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    private void remove(String key) {
+    private void remove() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(key);
+        editor.remove("user");
         editor.apply();
     }
 
-    private boolean contains(String key) {
-        return sharedPreferences.contains(key);
+    private boolean contains() {
+        return sharedPreferences.contains("user");
     }
 
-    private <T> void saveObject(String key, T object) {
+    private <T> void saveObject(T object) {
         String json = gson.toJson(object);
-        saveString(key, json);
+        saveString(json);
     }
 
-    private <T> T getObject(String key, Class<T> type) {
-        String json = getString(key, null);
+    private User getObject() {
+        String json = getString();
         if (json == null) {
             return null;
         }
-        return gson.fromJson(json, type);
+        return gson.fromJson(json, User.class);
     }
 
     public void saveUser(User user) {
-        saveObject("user", user);
+        saveObject(user);
     }
 
     public User getUser() {
         if (!isUserLoggedIn()) {
             return null;
         }
-        return getObject("user", User.class);
+        return getObject();
     }
 
     public void signOutUser() {
-        remove("user");
+        remove();
     }
 
     public boolean isUserLoggedIn() {
-        return contains("user");
+        return contains();
     }
 
     @Nullable
