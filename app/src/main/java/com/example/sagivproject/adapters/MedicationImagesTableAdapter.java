@@ -76,7 +76,7 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
         void onImageClicked(ImageData image);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView imgView;
         final TextView txtId;
         final ImageButton btnDelete;

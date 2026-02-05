@@ -1,6 +1,8 @@
 package com.example.sagivproject.screens;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,6 +49,8 @@ public class AiActivity extends BaseActivity {
     private ProgressBar progressBar;
     private EditText questionInput;
     private TextView answerView;
+    private Handler animationHandler;
+    private int charIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +76,19 @@ public class AiActivity extends BaseActivity {
 
     private void displayTextWithAnimation(TextView textView, String fullText) {
         textView.setText("");
+        charIndex = 0;
+        animationHandler = new Handler(Looper.getMainLooper());
         final int delay = 15; //מהירות כתיבה במילישניות לכל תו
 
-        new Thread(() -> {
-            StringBuilder displayedText = new StringBuilder();
-
-            for (int i = 0; i < fullText.length(); i++) {
-                displayedText.append(fullText.charAt(i));
-                String current = displayedText.toString();
-
-                runOnUiThread(() -> textView.setText(current));
-
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        animationHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (charIndex < fullText.length()) {
+                    textView.append(String.valueOf(fullText.charAt(charIndex++)));
+                    animationHandler.postDelayed(this, delay);
                 }
             }
-        }).start();
+        });
     }
 
     private void sendQuestion() {

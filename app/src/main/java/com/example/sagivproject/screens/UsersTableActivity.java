@@ -24,10 +24,12 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.UserDiffCallback;
 import com.example.sagivproject.adapters.UsersTableAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
@@ -206,9 +208,7 @@ public class UsersTableActivity extends BaseActivity {
                     }
                 }
 
-                filteredList.clear();
-                filteredList.addAll(usersList);
-                adapter.notifyDataSetChanged();
+                filterUsers(editSearch.getText().toString().trim());
             }
 
             @Override
@@ -268,6 +268,7 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void filterUsers(String query) {
+        List<User> oldList = new ArrayList<>(filteredList);
         filteredList.clear();
         String searchType = spinnerSearchType.getSelectedItem().toString();
         String lowerQuery = query.toLowerCase();
@@ -329,8 +330,12 @@ public class UsersTableActivity extends BaseActivity {
                     }
                 }
                 break;
+            default: // "הכל"
+                filteredList.addAll(usersList);
+                break;
         }
-
-        adapter.notifyDataSetChanged();
+        UserDiffCallback diffCallback = new UserDiffCallback(oldList, filteredList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        diffResult.dispatchUpdatesTo(adapter);
     }
 }

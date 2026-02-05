@@ -2,6 +2,7 @@ package com.example.sagivproject.screens;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,10 +21,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.ImageDiffCallback;
 import com.example.sagivproject.adapters.MedicationImagesTableAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.ImageData;
@@ -145,19 +148,27 @@ public class MedicationImagesTableActivity extends BaseActivity {
     }
 
     private void filterImages(String query) {
-        filteredList.clear();
+        final List<ImageData> oldList = new ArrayList<>(filteredList);
+        final List<ImageData> newList = new ArrayList<>();
         String lowerQuery = query.toLowerCase().trim();
         for (ImageData img : allImages) {
             if (img.getId() != null && img.getId().toLowerCase().contains(lowerQuery)) {
-                filteredList.add(img);
+                newList.add(img);
             }
         }
-        adapter.notifyDataSetChanged();
+
+        final ImageDiffCallback diffCallback = new ImageDiffCallback(oldList, newList);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        filteredList.clear();
+        filteredList.addAll(newList);
+        diffResult.dispatchUpdatesTo(adapter);
     }
 
     private void uploadImage(Uri uri) {
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            Bitmap bitmap;
+            bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
             ImageView tempIv = new ImageView(this);
             tempIv.setImageBitmap(bitmap);
             String base64 = ImageUtil.convertTo64Base(tempIv);
@@ -181,7 +192,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
                 });
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(MedicationImagesTableActivity.this, "שגיאה בטעינת נתונים", Toast.LENGTH_SHORT).show();
         }
     }
 

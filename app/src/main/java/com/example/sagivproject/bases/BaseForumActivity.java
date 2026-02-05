@@ -7,10 +7,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.adapters.ForumAdapter;
+import com.example.sagivproject.adapters.ForumDiffCallback;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
@@ -94,9 +96,13 @@ public abstract class BaseForumActivity extends BaseActivity {
                 //בודקים אם המשתמש היה בסוף לפני העדכון
                 boolean wasAtBottom = isLastItemVisible();
 
+                final List<ForumMessage> oldMessages = new ArrayList<>(messages);
+                final ForumDiffCallback diffCallback = new ForumDiffCallback(oldMessages, list);
+                final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
                 messages.clear();
                 messages.addAll(list);
-                adapter.notifyDataSetChanged();
+                diffResult.dispatchUpdatesTo(adapter);
 
                 if (wasAtBottom) {
                     //אם הוא כבר היה למטה, נמשיך לגלול אותו למטה עם ההודעה החדשה

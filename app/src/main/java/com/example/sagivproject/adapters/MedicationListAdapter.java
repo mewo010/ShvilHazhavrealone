@@ -93,7 +93,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
             }
 
             menu.setOnMenuItemClickListener(item -> {
-                int currentPos = holder.getAdapterPosition();
+                int currentPos = holder.getBindingAdapterPosition();
                 if (currentPos == RecyclerView.NO_POSITION) return false;
 
                 if (item.getItemId() == R.id.action_edit) {
@@ -121,7 +121,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         void onDelete(int position);
     }
 
-    static class MedicationViewHolder extends RecyclerView.ViewHolder {
+    public static class MedicationViewHolder extends RecyclerView.ViewHolder {
         final TextView txtMedicationName, txtMedicationType, txtMedicationDetails, txtMedicationDate;
         final ImageButton btnMenu;
 

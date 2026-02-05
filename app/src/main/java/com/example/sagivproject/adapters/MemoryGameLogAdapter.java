@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
@@ -15,7 +16,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdapter.ViewHolder> {
-    private List<GameRoom> gameRooms;
+    private final List<GameRoom> gameRooms;
 
     public MemoryGameLogAdapter(List<GameRoom> gameRooms) {
         this.gameRooms = gameRooms;
@@ -46,8 +47,12 @@ public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdap
     }
 
     public void updateData(List<GameRoom> newRooms) {
-        this.gameRooms = newRooms;
-        notifyDataSetChanged(); //מעדכן את ה-RecyclerView על שינוי בנתונים
+        final GameRoomDiffCallback diffCallback = new GameRoomDiffCallback(this.gameRooms, newRooms);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.gameRooms.clear();
+        this.gameRooms.addAll(newRooms);
+        diffResult.dispatchUpdatesTo(this);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

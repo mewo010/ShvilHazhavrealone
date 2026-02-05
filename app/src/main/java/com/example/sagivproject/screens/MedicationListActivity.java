@@ -15,10 +15,12 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.MedicationDiffCallback;
 import com.example.sagivproject.adapters.MedicationListAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
@@ -194,7 +196,6 @@ public class MedicationListActivity extends BaseActivity {
         medications.addAll(medicationList);
         medications.sort(Comparator.comparing(Medication::getDate));
         filterMedications(editSearch.getText().toString());
-        adapter.notifyDataSetChanged();
     }
 
     @NonNull
@@ -288,6 +289,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void filterMedications(String query) {
+        List<Medication> oldList = new ArrayList<>(filteredMedications);
         filteredMedications.clear();
         String selectedType = spinnerSearchType.getSelectedItem().toString();
 
@@ -309,6 +311,8 @@ public class MedicationListActivity extends BaseActivity {
                 }
             }
         }
-        adapter.notifyDataSetChanged();
+        MedicationDiffCallback diffCallback = new MedicationDiffCallback(oldList, filteredMedications);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        diffResult.dispatchUpdatesTo(adapter);
     }
 }

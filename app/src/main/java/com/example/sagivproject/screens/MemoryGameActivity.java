@@ -15,10 +15,12 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.CardDiffCallback;
 import com.example.sagivproject.adapters.MemoryGameAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Card;
@@ -280,9 +282,13 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 }
 
                 if (room.getCards() != null) {
+                    List<Card> oldCards = new ArrayList<>(adapter.getCards());
+                    CardDiffCallback diffCallback = new CardDiffCallback(oldCards, room.getCards());
+                    DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
                     adapter.getCards().clear();
                     adapter.getCards().addAll(room.getCards());
-                    adapter.notifyDataSetChanged();
+                    diffResult.dispatchUpdatesTo(adapter);
                 }
 
                 String myUid = user.getUid();
@@ -307,11 +313,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 boolean isMyTurn = user.getUid().equals(room.getCurrentTurnUid());
                 if (isMyTurn) {
                     tvTurnStatus.setText("תורך!");
-                    tvTurnStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+                    tvTurnStatus.setTextColor(getColor(android.R.color.holo_green_dark));
                     startTurnTimer();
                 } else {
                     tvTurnStatus.setText("תור היריב...");
-                    tvTurnStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                    tvTurnStatus.setTextColor(getColor(android.R.color.holo_red_dark));
                     if (turnTimer != null) turnTimer.cancel();
                     tvTimer.setText("");
                 }

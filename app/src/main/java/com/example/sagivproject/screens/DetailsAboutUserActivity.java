@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -38,7 +40,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class DetailsAboutUserActivity extends BaseActivity {
-    private static final int REQ_CAMERA = 100, REQ_GALLERY = 200;
     @Inject
     CalendarUtil calendarUtil;
     @Inject
@@ -46,6 +47,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
+    private ActivityResultLauncher<Void> cameraLauncher;
+    private ActivityResultLauncher<Intent> galleryLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,32 @@ public class DetailsAboutUserActivity extends BaseActivity {
         txtWins = findViewById(R.id.txt_DetailsAboutUser_wins);
         txtEmail = findViewById(R.id.txt_DetailsAboutUser_email);
         txtPassword = findViewById(R.id.txt_DetailsAboutUser_password);
+
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.TakePicturePreview(),
+                bitmap -> {
+                    if (bitmap != null) {
+                        handleImageBitmap(bitmap);
+                    }
+                }
+        );
+
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        try {
+                            Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Objects.requireNonNull(result.getData().getData())));
+                            if (bitmap != null) {
+                                handleImageBitmap(bitmap);
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(DetailsAboutUserActivity.this, "שגיאה בטעינת גלריית התמונות", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -162,15 +191,14 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new ProfileImageDialog(this, hasImage, new ProfileImageDialog.ImagePickerListener() {
             @Override
             public void onCamera() {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, REQ_CAMERA);
+                cameraLauncher.launch(null);
             }
 
             @Override
             public void onGallery() {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK);
                 galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, REQ_GALLERY);
+                galleryLauncher.launch(galleryIntent);
             }
 
             @Override
@@ -199,34 +227,14 @@ public class DetailsAboutUserActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void handleImageBitmap(Bitmap bitmap) {
+        imgUserProfile.setImageBitmap(bitmap);
 
-        if (resultCode != RESULT_OK) return;
+        //המרה ל־Base64 ושמירה
+        String base64 = ImageUtil.convertTo64Base(imgUserProfile);
+        user.setProfileImage(base64);
 
-        Bitmap bitmap = null;
-
-        if (requestCode == REQ_CAMERA && data != null) {
-            bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-        } else if (requestCode == REQ_GALLERY && data != null) {
-            try {
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Objects.requireNonNull(data.getData()))
-                );
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (bitmap != null) {
-            imgUserProfile.setImageBitmap(bitmap);
-
-            //המרה ל־Base64 ושמירה
-            String base64 = ImageUtil.convertTo64Base(imgUserProfile);
-            user.setProfileImage(base64);
-
-            saveProfileImage();
-        }
+        saveProfileImage();
     }
 
     private void saveProfileImage() {
