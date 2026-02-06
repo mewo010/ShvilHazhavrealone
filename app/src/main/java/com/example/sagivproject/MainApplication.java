@@ -79,7 +79,7 @@ public class MainApplication extends Application implements Configuration.Provid
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "MedicationDailyWork",
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 notificationRequest
         );
     }
@@ -105,12 +105,11 @@ public class MainApplication extends Application implements Configuration.Provid
                         .addTag("BirthdayWorkTag")
                         .setConstraints(new Constraints.Builder()
                                 .setRequiresBatteryNotLow(true)
-                                .build())
-                        .build();
+                                .build()).build();
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "BirthdayDailyWork",
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 birthdayRequest
         );
     }

@@ -102,7 +102,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
             if (base64 != null) {
                 Glide.with(imageView.getContext())
                         .load(base64)
-                        .listener(new RequestListener<Drawable>() {
+                        .listener(new RequestListener<>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 flipIn.run();
