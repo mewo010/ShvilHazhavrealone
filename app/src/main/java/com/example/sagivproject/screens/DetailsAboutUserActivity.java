@@ -182,7 +182,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new EditUserDialog(this, user, () -> {
             sharedPreferencesUtil.saveUser(user);
             loadUserDetailsToUI();
-        }, getAuthService(), calendarUtil, validator).show();
+        }, databaseService.auth(), calendarUtil, validator).show();
     }
 
     private void openImagePicker() {

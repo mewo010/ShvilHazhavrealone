@@ -5,6 +5,11 @@ package com.example.sagivproject.services.interfaces;
  */
 public interface IDatabaseService {
     /**
+     * @return The auth service.
+     */
+    IAuthService auth();
+
+    /**
      * @return The user service.
      */
     IUserService users();

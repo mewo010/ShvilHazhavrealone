@@ -37,14 +37,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
     @Inject
-    protected IAuthService authService;
-    @Inject
     protected SharedPreferencesUtil sharedPreferencesUtil;
     @Inject
     protected IDatabaseService databaseService;
 
     protected IAuthService getAuthService() {
-        return authService;
+        return databaseService.auth();
     }
 
     @Override

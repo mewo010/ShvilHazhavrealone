@@ -72,7 +72,7 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        getAuthService().register(firstName, lastName, birthDateMillis, email, password, new IAuthService.RegisterCallback() {
+        databaseService.auth().register(firstName, lastName, birthDateMillis, email, password, new IAuthService.RegisterCallback() {
             @Override
             public void onSuccess() {
                 Toast.makeText(RegisterActivity.this, "ההרשמה בוצעה בהצלחה!", Toast.LENGTH_SHORT).show();

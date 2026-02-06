@@ -1,5 +1,6 @@
 package com.example.sagivproject.services;
 
+import com.example.sagivproject.services.interfaces.IAuthService;
 import com.example.sagivproject.services.interfaces.IDatabaseService;
 import com.example.sagivproject.services.interfaces.IForumService;
 import com.example.sagivproject.services.interfaces.IGameService;
@@ -14,6 +15,7 @@ import javax.inject.Singleton;
 @Singleton
 public class DatabaseService implements IDatabaseService {
 
+    private final IAuthService authService;
     private final IUserService userService;
     private final IMedicationService medicationService;
     private final IGameService gameService;
@@ -23,6 +25,7 @@ public class DatabaseService implements IDatabaseService {
 
     @Inject
     public DatabaseService(
+            IAuthService authService,
             IUserService userService,
             IMedicationService medicationService,
             IGameService gameService,
@@ -30,12 +33,18 @@ public class DatabaseService implements IDatabaseService {
             IForumService forumService,
             IImageService imageService
     ) {
+        this.authService = authService;
         this.userService = userService;
         this.medicationService = medicationService;
         this.gameService = gameService;
         this.statsService = statsService;
         this.forumService = forumService;
         this.imageService = imageService;
+    }
+
+    @Override
+    public IAuthService auth() {
+        return authService;
     }
 
     @Override

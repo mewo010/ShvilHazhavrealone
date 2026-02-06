@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        getAuthService().login(email, password, new IAuthService.LoginCallback() {
+        databaseService.auth().login(email, password, new IAuthService.LoginCallback() {
             @Override
             public void onSuccess(User user) {
                 Intent intent;

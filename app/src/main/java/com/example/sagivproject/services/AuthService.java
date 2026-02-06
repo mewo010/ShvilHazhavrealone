@@ -4,7 +4,7 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
 import com.example.sagivproject.services.interfaces.IAuthService;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.interfaces.IUserService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
@@ -12,18 +12,18 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 public class AuthService implements IAuthService {
-    private final IDatabaseService databaseService;
+    private final IUserService userService;
     private final SharedPreferencesUtil sharedPreferencesUtil;
 
     @Inject
-    public AuthService(IDatabaseService databaseService, SharedPreferencesUtil sharedPreferencesUtil) {
-        this.databaseService = databaseService;
+    public AuthService(IUserService userService, SharedPreferencesUtil sharedPreferencesUtil) {
+        this.userService = userService;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }
 
     @Override
     public void login(String email, String password, LoginCallback callback) {
-        databaseService.users().getUserByEmailAndPassword(email, password, new DatabaseCallback<>() {
+        userService.getUserByEmailAndPassword(email, password, new DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user == null) {
@@ -76,7 +76,7 @@ public class AuthService implements IAuthService {
     }
 
     private void handleUserCreation(String firstName, String lastName, long birthDateMillis, String email, String password, DatabaseCallback<User> successCallback, java.util.function.Consumer<String> errorCallback) {
-        databaseService.users().checkIfEmailExists(email, new DatabaseCallback<>() {
+        userService.checkIfEmailExists(email, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Boolean exists) {
                 if (exists) {
@@ -98,7 +98,7 @@ public class AuthService implements IAuthService {
         boolean emailChanged = !newEmail.equals(user.getEmail());
 
         if (emailChanged) {
-            databaseService.users().checkIfEmailExists(newEmail, new DatabaseCallback<>() {
+            userService.checkIfEmailExists(newEmail, new DatabaseCallback<>() {
                 @Override
                 public void onCompleted(Boolean exists) {
                     if (exists) {
@@ -119,11 +119,11 @@ public class AuthService implements IAuthService {
     }
 
     private void createUser(String firstName, String lastName, long birthDateMillis, String email, String password, DatabaseCallback<User> callback) {
-        String uid = databaseService.users().generateUserId();
+        String uid = userService.generateUserId();
 
         User user = new User(uid, firstName, lastName, birthDateMillis, email, password, UserRole.REGULAR, null, new HashMap<>());
 
-        databaseService.users().createNewUser(user, new DatabaseCallback<>() {
+        userService.createNewUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onCompleted(user);
@@ -143,7 +143,7 @@ public class AuthService implements IAuthService {
         user.setEmail(email);
         user.setPassword(password);
 
-        databaseService.users().updateUser(user, new DatabaseCallback<>() {
+        userService.updateUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 callback.onSuccess(user);
