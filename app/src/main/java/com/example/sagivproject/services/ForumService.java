@@ -1,6 +1,7 @@
 package com.example.sagivproject.services;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
@@ -13,37 +14,30 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class ForumService implements IForumService {
+public class ForumService extends BaseDatabaseService<ForumMessage> implements IForumService {
 
     private static final String FORUM_PATH = "forum";
-    private final DatabaseReference databaseReference;
+    private final DatabaseReference forumRef;
 
     @Inject
     public ForumService(DatabaseReference databaseReference) {
-        this.databaseReference = databaseReference.child(FORUM_PATH);
+        super(databaseReference);
+        this.forumRef = databaseReference.child(FORUM_PATH);
     }
 
     @Override
-    public void sendMessage(User user, String text, DatabaseCallback<Void> callback) {
-        String messageId = databaseReference.push().getKey();
+    public void sendMessage(User user, String text, @Nullable DatabaseCallback<Void> callback) {
+        String messageId = generateId(forumRef);
         ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
-
-        databaseReference.child(Objects.requireNonNull(messageId)).setValue(msg).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+        super.create(forumRef, messageId, msg, callback);
     }
 
     @Override
     public void listenToMessages(DatabaseCallback<List<ForumMessage>> callback) {
-        databaseReference.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+        forumRef.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<ForumMessage> list = new ArrayList<>();
@@ -62,13 +56,7 @@ public class ForumService implements IForumService {
     }
 
     @Override
-    public void deleteMessage(@NonNull String messageId, DatabaseCallback<Void> callback) {
-        databaseReference.child(messageId).removeValue().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+    public void deleteMessage(@NonNull String messageId, @Nullable DatabaseCallback<Void> callback) {
+        super.delete(forumRef, messageId, callback);
     }
 }

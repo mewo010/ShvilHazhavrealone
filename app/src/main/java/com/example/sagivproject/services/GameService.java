@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class GameService implements IGameService {
+public class GameService extends BaseDatabaseService<GameRoom> implements IGameService {
 
     private static final String ROOMS_PATH = "rooms";
     private static final String USERS_PATH = "users";
@@ -32,6 +32,7 @@ public class GameService implements IGameService {
 
     @Inject
     public GameService(DatabaseReference databaseReference) {
+        super(databaseReference);
         this.roomsReference = databaseReference.child(ROOMS_PATH);
         this.usersReference = databaseReference.child(USERS_PATH);
     }
@@ -145,13 +146,7 @@ public class GameService implements IGameService {
 
     @Override
     public void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback) {
-        roomsReference.child(roomId).removeValue().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+        super.delete(roomsReference, roomId, callback);
     }
 
     @Override

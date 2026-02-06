@@ -22,12 +22,12 @@ public interface RoomStatusCallback {
      * Called when the game room has finished.
      *
      */
-    void onRoomFinished(GameRoom room);
+    void onRoomFinished(GameRoom ignoredRoom);
 
     /**
      * Called when an error occurs while monitoring the game room.
      *
-     * @param e The exception that occurred.
+     * @param ignoredE The exception that occurred.
      */
-    void onFailed(Exception e);
+    void onFailed(Exception ignoredE);
 }

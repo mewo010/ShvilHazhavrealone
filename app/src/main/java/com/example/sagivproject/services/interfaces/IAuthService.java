@@ -118,9 +118,9 @@ public interface IAuthService {
         /**
          * Called when the user is updated successfully.
          *
-         * @param updatedUser The updated user.
+         * @param ignoredUpdatedUser The updated user.
          */
-        void onSuccess(User updatedUser);
+        void onSuccess(User ignoredUpdatedUser);
 
         /**
          * Called when updating the user fails.

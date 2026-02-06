@@ -133,6 +133,6 @@ public class AddUserDialog {
     }
 
     public interface AddUserListener {
-        void onUserAdded(User newUser);
+        void onUserAdded(User ignoredNewUser);
     }
 }

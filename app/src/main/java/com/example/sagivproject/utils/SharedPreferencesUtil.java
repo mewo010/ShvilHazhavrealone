@@ -5,11 +5,8 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.Nullable;
 
-import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.google.gson.Gson;
-
-import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -19,6 +16,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 @Singleton
 public class SharedPreferencesUtil {
     private static final String PREF_NAME = "com.example.sagivproject.PREFERENCE_FILE_KEY";
+    private static final String KEY_USER = "user";
+    private static final String KEY_DARK_MODE = "dark_mode";
     private final SharedPreferences sharedPreferences;
     private final Gson gson;
 
@@ -30,12 +29,12 @@ public class SharedPreferencesUtil {
 
     private void saveString(String value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("user", value);
+        editor.putString(SharedPreferencesUtil.KEY_USER, value);
         editor.apply();
     }
 
     private String getString() {
-        return sharedPreferences.getString("user", null);
+        return sharedPreferences.getString(SharedPreferencesUtil.KEY_USER, null);
     }
 
     private void saveInt(String key, int value) {
@@ -48,6 +47,16 @@ public class SharedPreferencesUtil {
         return sharedPreferences.getInt(key, defaultValue);
     }
 
+    private void saveBoolean(boolean value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SharedPreferencesUtil.KEY_DARK_MODE, value);
+        editor.apply();
+    }
+
+    private boolean getBoolean() {
+        return sharedPreferences.getBoolean(SharedPreferencesUtil.KEY_DARK_MODE, false);
+    }
+
     public void clear() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
@@ -56,12 +65,12 @@ public class SharedPreferencesUtil {
 
     private void remove() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove("user");
+        editor.remove(SharedPreferencesUtil.KEY_USER);
         editor.apply();
     }
 
     private boolean contains() {
-        return sharedPreferences.contains("user");
+        return sharedPreferences.contains(SharedPreferencesUtil.KEY_USER);
     }
 
     private <T> void saveObject(T object) {
@@ -96,20 +105,15 @@ public class SharedPreferencesUtil {
         return contains();
     }
 
+    public boolean isDarkMode() {
+        return getBoolean();
+    }
+
     @Nullable
     public String getUserId() {
         User user = getUser();
         if (user != null) {
             return user.getUid();
-        }
-        return null;
-    }
-
-    @Nullable
-    public HashMap<String, Medication> getMedications() {
-        User user = getUser();
-        if (user != null) {
-            return user.getMedications();
         }
         return null;
     }

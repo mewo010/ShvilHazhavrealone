@@ -13,80 +13,50 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class UserService implements IUserService {
+public class UserService extends BaseDatabaseService<User> implements IUserService {
 
     private static final String USERS_PATH = "users";
-    private final DatabaseReference databaseReference;
+    private final DatabaseReference usersRef;
 
     @Inject
     public UserService(DatabaseReference databaseReference) {
-        this.databaseReference = databaseReference.child(USERS_PATH);
+        super(databaseReference);
+        this.usersRef = databaseReference.child(USERS_PATH);
     }
 
     @Override
     public String generateUserId() {
-        return databaseReference.push().getKey();
+        return super.generateId(usersRef);
     }
 
     @Override
     public void createNewUser(@NonNull User user, @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(user.getUid()).setValue(user).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+        super.create(usersRef, user.getUid(), user, callback);
     }
 
     @Override
     public void getUser(@NonNull String uid, @NonNull DatabaseCallback<User> callback) {
-        databaseReference.child(uid).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                User user = task.getResult().getValue(User.class);
-                callback.onCompleted(user);
-            } else {
-                callback.onFailed(task.getException());
-            }
-        });
+        super.getById(usersRef, uid, User.class, callback);
     }
 
     @Override
     public void getUserList(@NonNull DatabaseCallback<List<User>> callback) {
-        databaseReference.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                List<User> userList = new ArrayList<>();
-                for (DataSnapshot snapshot : task.getResult().getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    userList.add(user);
-                }
-                callback.onCompleted(userList);
-            } else {
-                callback.onFailed(task.getException());
-            }
-        });
+        super.getAll(usersRef, User.class, callback);
     }
 
     @Override
     public void deleteUser(@NonNull String uid, @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(uid).removeValue().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+        super.delete(usersRef, uid, callback);
     }
 
     @Override
     public void getUserByEmailAndPassword(@NonNull String email, @NonNull String password, @NonNull DatabaseCallback<User> callback) {
-        Query query = databaseReference.orderByChild("email").equalTo(email);
+        Query query = usersRef.orderByChild("email").equalTo(email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -111,7 +81,7 @@ public class UserService implements IUserService {
 
     @Override
     public void checkIfEmailExists(@NonNull String email, @NonNull DatabaseCallback<Boolean> callback) {
-        Query query = databaseReference.orderByChild("email").equalTo(email);
+        Query query = usersRef.orderByChild("email").equalTo(email);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,18 +97,12 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUser(@NonNull User user, @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(user.getUid()).setValue(user).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (callback != null) callback.onCompleted(null);
-            } else {
-                if (callback != null) callback.onFailed(task.getException());
-            }
-        });
+        super.update(usersRef, user.getUid(), user, callback);
     }
 
     @Override
     public void updateUserRole(@NonNull String uid, @NonNull UserRole role, @Nullable DatabaseCallback<Void> callback) {
-        databaseReference.child(uid).child("role").setValue(role).addOnCompleteListener(task -> {
+        usersRef.child(uid).child("role").setValue(role).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (callback != null) callback.onCompleted(null);
             } else {

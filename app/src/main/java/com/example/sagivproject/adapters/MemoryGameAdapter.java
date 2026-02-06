@@ -135,7 +135,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
     }
 
     public interface MemoryGameListener {
-        void onCardClicked(Card card, View itemView, ImageView imageView);
+        void onCardClicked(Card card, View ignoredItemView, ImageView ignoredImageView);
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {

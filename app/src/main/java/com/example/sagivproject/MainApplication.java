@@ -1,13 +1,13 @@
 package com.example.sagivproject;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.hilt.work.HiltWorkerFactory;
-import androidx.preference.PreferenceManager;
 import androidx.work.Configuration;
+
+import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import javax.inject.Inject;
 
@@ -19,11 +19,13 @@ public class MainApplication extends Application implements Configuration.Provid
     @Inject
     HiltWorkerFactory workerFactory;
 
+    @Inject
+    SharedPreferencesUtil sharedPreferencesUtil;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
+        boolean isDarkMode = sharedPreferencesUtil.isDarkMode();
         AppCompatDelegate.setDefaultNightMode(isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 

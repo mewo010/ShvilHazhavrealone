@@ -1,9 +1,14 @@
 package com.example.sagivproject.services;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.sagivproject.services.interfaces.IStatsService;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import javax.inject.Inject;
 
@@ -17,26 +22,35 @@ public class StatsService implements IStatsService {
         this.databaseReference = databaseReference.child(USERS_PATH);
     }
 
-    @Override
-    public void addCorrectAnswer(String uid) {
-        databaseReference.child(uid).child("mathProblemsStats").child("correctAnswers").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Integer current = task.getResult().getValue(Integer.class);
-                if (current == null) current = 0;
-                databaseReference.child(uid).child("mathProblemsStats").child("correctAnswers").setValue(current + 1);
+    private void addAnswer(String uid, String key) {
+        databaseReference.child(uid).child("mathProblemsStats").child(key).runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                Integer current = currentData.getValue(Integer.class);
+                if (current == null) {
+                    currentData.setValue(1);
+                } else {
+                    currentData.setValue(current + 1);
+                }
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                // Transaction completed
             }
         });
     }
 
     @Override
+    public void addCorrectAnswer(String uid) {
+        addAnswer(uid, "correctAnswers");
+    }
+
+    @Override
     public void addWrongAnswer(String uid) {
-        databaseReference.child(uid).child("mathProblemsStats").child("wrongAnswers").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Integer current = task.getResult().getValue(Integer.class);
-                if (current == null) current = 0;
-                databaseReference.child(uid).child("mathProblemsStats").child("wrongAnswers").setValue(current + 1);
-            }
-        });
+        addAnswer(uid, "wrongAnswers");
     }
 
     @Override
