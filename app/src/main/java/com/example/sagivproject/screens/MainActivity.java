@@ -95,21 +95,39 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "MedicationDailyWork",
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 notificationRequest
         );
     }
 
     //התראה על יום הולדת
     private void setupBirthdayNotification() {
+        Calendar currentDate = Calendar.getInstance();
+        Calendar dueDate = Calendar.getInstance();
+
+        dueDate.set(Calendar.HOUR_OF_DAY, 9);
+        dueDate.set(Calendar.MINUTE, 0);
+        dueDate.set(Calendar.SECOND, 0);
+        dueDate.set(Calendar.MILLISECOND, 0);
+
+        if (dueDate.before(currentDate)) {
+            dueDate.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        long timeDiff = dueDate.getTimeInMillis() - currentDate.getTimeInMillis();
+        
         PeriodicWorkRequest birthdayRequest =
                 new PeriodicWorkRequest.Builder(BirthdayWorker.class, 24, TimeUnit.HOURS)
+                        .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                         .addTag("BirthdayWorkTag")
+                        .setConstraints(new Constraints.Builder()
+                                .setRequiresBatteryNotLow(true)
+                                .build())
                         .build();
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "BirthdayDailyWork",
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 birthdayRequest
         );
     }
