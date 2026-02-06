@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
-import com.example.sagivproject.adapters.MedicationDiffCallback;
 import com.example.sagivproject.adapters.MedicationListAdapter;
+import com.example.sagivproject.adapters.diffUtils.MedicationDiffCallback;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;

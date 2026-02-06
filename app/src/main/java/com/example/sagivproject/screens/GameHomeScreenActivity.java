@@ -148,6 +148,11 @@ public class GameHomeScreenActivity extends BaseActivity {
             }
 
             @Override
+            public void onRoomFinished(GameRoom room) {
+                cancel();
+            }
+
+            @Override
             public void onFailed(Exception e) {
 
             }

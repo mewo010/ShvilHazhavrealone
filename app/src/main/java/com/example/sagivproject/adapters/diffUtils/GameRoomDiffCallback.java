@@ -1,4 +1,4 @@
-package com.example.sagivproject.adapters;
+package com.example.sagivproject.adapters.diffUtils;
 
 import androidx.recyclerview.widget.DiffUtil;
 

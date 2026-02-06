@@ -33,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="@string/סוגההתרופה"
             android:textColorHint="@color/text_color">
 
             <AutoCompleteTextView
@@ -41,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/text_hebrew"
+                android:hint="@string/סוגההתרופה"
                 android:inputType="none"
                 android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>

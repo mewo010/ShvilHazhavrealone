@@ -26,8 +26,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
-import com.example.sagivproject.adapters.ImageDiffCallback;
 import com.example.sagivproject.adapters.MedicationImagesTableAdapter;
+import com.example.sagivproject.adapters.diffUtils.ImageDiffCallback;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;

@@ -38,6 +38,11 @@ public class GameService implements IGameService {
 
     @Override
     public void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback) {
+        if (user == null) {
+            callback.onFailed(new IllegalArgumentException("User cannot be null"));
+            return;
+        }
+
         String newRoomId = roomsReference.push().getKey();
         final String[] matchedRoomId = new String[1];
 
@@ -66,13 +71,15 @@ public class GameService implements IGameService {
             @Override
             public void onComplete(DatabaseError error, boolean committed, DataSnapshot snapshot) {
                 if (!committed || error != null) {
-                    callback.onFailed(error != null ? error.toException() : new Exception("Match failed"));
+                    callback.onFailed(error != null ? error.toException() : new Exception("Failed to find or create a room."));
                     return;
                 }
 
                 if (matchedRoomId[0] != null) {
                     GameRoom room = snapshot.child(matchedRoomId[0]).getValue(GameRoom.class);
                     callback.onCompleted(room);
+                } else {
+                    callback.onFailed(new Exception("Could not find or create a room."));
                 }
             }
         });
@@ -116,6 +123,8 @@ public class GameService implements IGameService {
 
                 if ("playing".equals(room.getStatus())) {
                     callback.onRoomStarted(room);
+                } else if ("finished".equals(room.getStatus())) {
+                    callback.onRoomFinished(room);
                 }
             }
 
@@ -164,6 +173,10 @@ public class GameService implements IGameService {
         activeGameListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    callback.onCompleted(null); // Room was deleted
+                    return;
+                }
                 GameRoom room = snapshot.getValue(GameRoom.class);
                 callback.onCompleted(room);
             }

@@ -19,6 +19,12 @@ public interface RoomStatusCallback {
     void onRoomDeleted();
 
     /**
+     * Called when the game room has finished.
+     *
+     */
+    void onRoomFinished(GameRoom room);
+
+    /**
      * Called when an error occurs while monitoring the game room.
      *
      * @param e The exception that occurred.

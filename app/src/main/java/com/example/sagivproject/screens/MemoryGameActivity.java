@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
-import com.example.sagivproject.adapters.CardDiffCallback;
 import com.example.sagivproject.adapters.MemoryGameAdapter;
+import com.example.sagivproject.adapters.diffUtils.CardDiffCallback;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.models.GameRoom;
@@ -136,6 +136,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 public void onCompleted(List<ImageData> allImages) {
                     if (allImages == null || allImages.size() < 6) {
                         Toast.makeText(MemoryGameActivity.this, "אין מספיק תמונות כדי להתחיל את המשחק.", Toast.LENGTH_LONG).show();
+                        databaseService.games().cancelRoom(roomId, null); // Cancel the room as the game cannot start
                         finish();
                         return;
                     }
@@ -159,6 +160,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                 @Override
                 public void onFailed(Exception e) {
                     Toast.makeText(MemoryGameActivity.this, "שגיאה בטעינת תמונות המשחק", Toast.LENGTH_SHORT).show();
+                    databaseService.games().cancelRoom(roomId, null); // Cancel the room on error
                     finish(); // חזרה למסך הקודם
                 }
             });
@@ -247,8 +249,15 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     }
 
     private void checkIfGameFinished() {
-        int totalPairsFound = currentRoom.getPlayer1Score() + currentRoom.getPlayer2Score();
-        if (totalPairsFound >= 6) {
+        boolean allCardsMatched = true;
+        for (Card card : currentRoom.getCards()) {
+            if (!card.getIsMatched()) {
+                allCardsMatched = false;
+                break;
+            }
+        }
+
+        if (allCardsMatched) {
             finishGame(currentRoom);
         }
     }
@@ -265,7 +274,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         databaseService.games().listenToGame(roomId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
-                if (room == null) return;
+                if (room == null) {
+                    Toast.makeText(MemoryGameActivity.this, "החדר נמחק.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
                 currentRoom = room;
 
                 if (room.getPlayer1() != null && room.getPlayer2() != null) {
@@ -325,6 +338,8 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
             @Override
             public void onFailed(Exception e) {
+                Toast.makeText(MemoryGameActivity.this, "שגיאה בהאזנה למשחק.", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

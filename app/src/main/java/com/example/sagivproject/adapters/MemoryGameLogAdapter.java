@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.diffUtils.GameRoomDiffCallback;
 import com.example.sagivproject.models.GameRoom;
 
 import java.text.MessageFormat;

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.adapters.ForumAdapter;
-import com.example.sagivproject.adapters.ForumDiffCallback;
+import com.example.sagivproject.adapters.diffUtils.ForumDiffCallback;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
