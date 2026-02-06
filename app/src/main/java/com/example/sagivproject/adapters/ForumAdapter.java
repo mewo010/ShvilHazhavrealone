@@ -15,20 +15,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.adapters.diffUtils.ForumDiffCallback;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.ui.CustomTypefaceSpan;
 
-import java.util.List;
-
-public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHolder> {
-    private final List<ForumMessage> messages;
+public class ForumAdapter extends ListAdapter<ForumMessage, ForumAdapter.ForumViewHolder> {
     private ForumMessageListener listener;
 
-    public ForumAdapter(List<ForumMessage> messages) {
-        this.messages = messages;
+    public ForumAdapter() {
+        super(new ForumDiffCallback());
     }
 
     public void setForumMessageListener(ForumMessageListener listener) {
@@ -45,7 +44,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ForumViewHolder holder, int position) {
-        ForumMessage msg = messages.get(position);
+        ForumMessage msg = getItem(position);
 
         Typeface customFont = ResourcesCompat.getFont(holder.itemView.getContext(), R.font.text_hebrew);
         SpannableString userNameSpannable = new SpannableString(msg.getFullName());
@@ -104,11 +103,6 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
         } else {
             holder.btnMenu.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        return messages.size();
     }
 
     public interface ForumMessageListener {

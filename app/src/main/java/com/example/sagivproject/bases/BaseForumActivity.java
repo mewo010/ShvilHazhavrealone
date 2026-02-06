@@ -7,23 +7,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sagivproject.adapters.ForumAdapter;
-import com.example.sagivproject.adapters.diffUtils.ForumDiffCallback;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
 import com.example.sagivproject.services.interfaces.IForumService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class BaseForumActivity extends BaseActivity {
-    protected final List<ForumMessage> messages = new ArrayList<>();
     protected RecyclerView recycler;
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
@@ -53,7 +49,7 @@ public abstract class BaseForumActivity extends BaseActivity {
 
     protected void setupForum() {
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ForumAdapter(messages);
+        adapter = new ForumAdapter();
         recycler.setAdapter(adapter);
 
         //האזנה לגלילה של המשתמש - אם הוא מגיע לסוף ידנית, נעלים את הכפתור
@@ -95,22 +91,17 @@ public abstract class BaseForumActivity extends BaseActivity {
             public void onCompleted(List<ForumMessage> list) {
                 //בודקים אם המשתמש היה בסוף לפני העדכון
                 boolean wasAtBottom = isLastItemVisible();
+                int previousItemCount = adapter.getItemCount();
 
-                final List<ForumMessage> oldMessages = new ArrayList<>(messages);
-                final ForumDiffCallback diffCallback = new ForumDiffCallback(oldMessages, list);
-                final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-                messages.clear();
-                messages.addAll(list);
-                diffResult.dispatchUpdatesTo(adapter);
-
-                if (wasAtBottom) {
-                    //אם הוא כבר היה למטה, נמשיך לגלול אותו למטה עם ההודעה החדשה
-                    scrollToBottom(false);
-                } else if (!list.isEmpty() && btnNewMessagesIndicator != null) {
-                    //אם הוא באמצע הרשימה והגיעה הודעה - נציג את הכפתור
-                    btnNewMessagesIndicator.setVisibility(View.VISIBLE);
-                }
+                adapter.submitList(list, () -> {
+                    if (wasAtBottom) {
+                        //אם הוא כבר היה למטה, נמשיך לגלול אותו למטה עם ההודעה החדשה
+                        scrollToBottom(false);
+                    } else if (list.size() > previousItemCount && btnNewMessagesIndicator != null) {
+                        //אם הוא באמצע הרשימה והגיעה הודעה - נציג את הכפתור
+                        btnNewMessagesIndicator.setVisibility(View.VISIBLE);
+                    }
+                });
             }
 
             @Override

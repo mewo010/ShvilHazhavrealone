@@ -1,6 +1,5 @@
 package com.example.sagivproject.adapters;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,14 +46,11 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
 
         holder.btnDelete.setVisibility(View.VISIBLE);
 
-        if (data.getBase64() != null) {
-            Bitmap bitmap = ImageUtil.convertFrom64base(data.getBase64());
-            holder.imgView.setImageBitmap(bitmap);
-        }
+        ImageUtil.loadImage(holder.itemView.getContext(), data.getBase64(), holder.imgView);
 
         holder.imgView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onImageClicked(data);
+                listener.onImageClicked(data, holder.imgView);
             }
         });
 
@@ -73,7 +69,7 @@ public class MedicationImagesTableAdapter extends RecyclerView.Adapter<Medicatio
     public interface OnImageActionListener {
         void onDeleteImage(ImageData image);
 
-        void onImageClicked(ImageData image);
+        void onImageClicked(ImageData image, ImageView imageView);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

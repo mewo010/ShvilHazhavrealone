@@ -27,7 +27,6 @@ import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.utils.CalendarUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,16 +37,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MedicationListActivity extends BaseActivity {
     private final ArrayList<Medication> medications = new ArrayList<>();
     private final ArrayList<Medication> filteredMedications = new ArrayList<>();
-    @Inject
-    CalendarUtil calendarUtil;
     private MedicationListAdapter adapter;
     private User user;
     private String uid;
@@ -285,7 +280,7 @@ public class MedicationListActivity extends BaseActivity {
             public void onEdit(Medication medication) {
                 updateMedication(medication);
             }
-        }, calendarUtil).show();
+        }).show();
     }
 
     private void filterMedications(String query) {

@@ -120,7 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void requestPermissions() {
         List<String> permissions = new ArrayList<>();
         permissions.add(Manifest.permission.CAMERA);
-        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.READ_MEDIA_IMAGES);
         permissions.add(Manifest.permission.POST_NOTIFICATIONS);
 
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), 1001);

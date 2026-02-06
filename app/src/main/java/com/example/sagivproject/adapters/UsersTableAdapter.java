@@ -1,6 +1,5 @@
 package com.example.sagivproject.adapters;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,14 +62,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
 
         String base64Image = user.getProfileImage();
 
-        if (base64Image != null && !base64Image.isEmpty()) {
-            Bitmap bmp = ImageUtil.convertFrom64base(base64Image);
-
-            if (bmp != null) {
-                holder.imgUserProfile.setImageBitmap(bmp);
-                holder.imgUserProfile.setVisibility(View.VISIBLE);
-            }
-        }
+        ImageUtil.loadImage(holder.itemView.getContext(), base64Image, holder.imgUserProfile);
 
         boolean isSelf = user.equals(currentUser);
 
@@ -108,7 +100,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
 
         holder.imgUserProfile.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onUserImageClicked(user);
+                listener.onUserImageClicked(user, holder.imgUserProfile);
             }
         });
     }
@@ -125,7 +117,7 @@ public class UsersTableAdapter extends RecyclerView.Adapter<UsersTableAdapter.Us
 
         void onUserClicked(User user);
 
-        void onUserImageClicked(User user);
+        void onUserImageClicked(User user, ImageView imageView);
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

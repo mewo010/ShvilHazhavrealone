@@ -1,15 +1,20 @@
 package com.example.sagivproject.adapters;
 
-import android.graphics.Bitmap;
-import android.util.Base64;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.screens.MemoryGameActivity;
@@ -52,11 +57,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
         holder.itemView.setAlpha(1f);
 
         if (card.getIsMatched() || card.getIsRevealed()) {
-            if (card.getBase64Content() != null) {
-                byte[] decodedString = Base64.decode(card.getBase64Content(), Base64.DEFAULT);
-                Bitmap decodedByte = android.graphics.BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                holder.cardImage.setImageBitmap(decodedByte);
-            }
+            ImageUtil.loadImage(holder.itemView.getContext(), card.getBase64Content(), holder.cardImage);
 
             if (card.getIsMatched()) {
                 holder.itemView.setAlpha(0.6f);
@@ -93,11 +94,32 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Ca
     // אנימציית הפיכה לפתיחה
     private void animateFlipOpen(ImageView imageView, String base64) {
         imageView.animate().rotationY(90f).setDuration(150).withEndAction(() -> {
+            Runnable flipIn = () -> {
+                imageView.setRotationY(-90f);
+                imageView.animate().rotationY(0f).setDuration(150).start();
+            };
+
             if (base64 != null) {
-                imageView.setImageBitmap(ImageUtil.convertFrom64base(base64));
+                Glide.with(imageView.getContext())
+                        .load(base64)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                flipIn.run();
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                flipIn.run();
+                                return false;
+                            }
+                        })
+                        .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.fold_card_img);
+                flipIn.run();
             }
-            imageView.setRotationY(-90f);
-            imageView.animate().rotationY(0f).setDuration(150).start();
         }).start();
     }
 

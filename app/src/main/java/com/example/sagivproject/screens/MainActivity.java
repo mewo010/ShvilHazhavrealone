@@ -10,20 +10,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.work.Constraints;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.NetworkType;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.workers.BirthdayWorker;
-import com.example.sagivproject.workers.MedicationWorker;
-
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
 
@@ -42,8 +32,6 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         setupTopMenu(topMenuContainer);
 
         User user = sharedPreferencesUtil.getUser();
-        setupDailyNotifications();
-        setupBirthdayNotification();
 
         Button btnToMedicationList = findViewById(R.id.btn_main_to_MedicationList);
         Button btnToForum = findViewById(R.id.btn_main_to_forum);
@@ -58,77 +46,8 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToMathProblems.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MathProblemsActivity.class)));
 
-        assert user != null;
-        txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));
-
-        //להעלאת תמונות - למחוק בסוף הפרויקט!
-        //uploadAllImages();
-    }
-
-    //התראות לגבי התרופות
-    private void setupDailyNotifications() {
-        Calendar currentDate = Calendar.getInstance();
-        Calendar dueDate = Calendar.getInstance();
-
-        dueDate.set(Calendar.HOUR_OF_DAY, 8);
-        dueDate.set(Calendar.MINUTE, 0);
-        dueDate.set(Calendar.SECOND, 0);
-        dueDate.set(Calendar.MILLISECOND, 0);
-
-        if (dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_YEAR, 1);
+        if (user != null) {
+            txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));
         }
-
-        long timeDiff = dueDate.getTimeInMillis() - currentDate.getTimeInMillis();
-
-        PeriodicWorkRequest notificationRequest =
-                new PeriodicWorkRequest.Builder(
-                        MedicationWorker.class,
-                        24, TimeUnit.HOURS)
-                        .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
-                        .addTag("MedicationWorkTag")
-                        .setConstraints(new Constraints.Builder()
-                                .setRequiredNetworkType(NetworkType.CONNECTED)
-                                .setRequiresBatteryNotLow(true)
-                                .build())
-                        .build();
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "MedicationDailyWork",
-                ExistingPeriodicWorkPolicy.REPLACE,
-                notificationRequest
-        );
-    }
-
-    //התראה על יום הולדת
-    private void setupBirthdayNotification() {
-        Calendar currentDate = Calendar.getInstance();
-        Calendar dueDate = Calendar.getInstance();
-
-        dueDate.set(Calendar.HOUR_OF_DAY, 9);
-        dueDate.set(Calendar.MINUTE, 0);
-        dueDate.set(Calendar.SECOND, 0);
-        dueDate.set(Calendar.MILLISECOND, 0);
-
-        if (dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_YEAR, 1);
-        }
-
-        long timeDiff = dueDate.getTimeInMillis() - currentDate.getTimeInMillis();
-        
-        PeriodicWorkRequest birthdayRequest =
-                new PeriodicWorkRequest.Builder(BirthdayWorker.class, 24, TimeUnit.HOURS)
-                        .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
-                        .addTag("BirthdayWorkTag")
-                        .setConstraints(new Constraints.Builder()
-                                .setRequiresBatteryNotLow(true)
-                                .build())
-                        .build();
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "BirthdayDailyWork",
-                ExistingPeriodicWorkPolicy.REPLACE,
-                birthdayRequest
-        );
     }
 }

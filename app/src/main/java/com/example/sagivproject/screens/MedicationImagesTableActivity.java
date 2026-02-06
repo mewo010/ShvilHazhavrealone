@@ -3,7 +3,6 @@ package com.example.sagivproject.screens;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -92,11 +91,9 @@ public class MedicationImagesTableActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onImageClicked(ImageData image) {
-                        Bitmap bitmap = ImageUtil.convertFrom64base(image.getBase64());
-                        if (bitmap == null) return;
-
-                        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                    public void onImageClicked(ImageData image, ImageView imageView) {
+                        Drawable drawable = imageView.getDrawable();
+                        if (drawable == null) return;
 
                         new FullImageDialog(MedicationImagesTableActivity.this, drawable).show();
                     }

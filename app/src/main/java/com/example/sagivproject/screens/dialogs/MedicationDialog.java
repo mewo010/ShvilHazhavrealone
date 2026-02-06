@@ -33,22 +33,18 @@ public class MedicationDialog {
     private final Medication medToEdit;
     private final String uid;
     private final OnMedicationSubmitListener listener;
-    private CalendarUtil calendarUtil;
 
-    public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener, CalendarUtil calendarUtil) {
+    public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener) {
         this.context = context;
         this.medToEdit = medToEdit;
         this.uid = uid;
         this.listener = listener;
-        this.calendarUtil = calendarUtil;
     }
 
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_medication);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-
-        calendarUtil = new CalendarUtil();
 
         EditText edtName = dialog.findViewById(R.id.edt_medication_name);
         AutoCompleteTextView spinnerType = dialog.findViewById(R.id.spinner_medication_type);
@@ -64,38 +60,6 @@ public class MedicationDialog {
 
         spinnerType.setAdapter(createMedicationTypeAdapter(typeNames));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                context,
-                android.R.layout.simple_spinner_item,
-                typeNames
-        ) {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                TextView tv = (TextView) super.getView(position, convertView, parent);
-                tv.setTypeface(ResourcesCompat.getFont(context, R.font.text_hebrew));
-                tv.setTextSize(22);
-                tv.setTextColor(context.getColor(R.color.text_color));
-                tv.setPadding(24, 24, 24, 24);
-                return tv;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                TextView tv = (TextView) super.getDropDownView(position, convertView, parent);
-                tv.setTypeface(ResourcesCompat.getFont(context, R.font.text_hebrew));
-                tv.setTextSize(22);
-                tv.setTextColor(context.getColor(R.color.text_color));
-                tv.setBackgroundColor(
-                        context.getColor(R.color.background_color_buttons)
-                );
-                tv.setPadding(24, 24, 24, 24);
-                return tv;
-            }
-        };
-
-        spinnerType.setAdapter(adapter);
-
         long initialDateMillis = -1;
         if (medToEdit != null) {
             edtName.setText(medToEdit.getName());
@@ -105,12 +69,12 @@ public class MedicationDialog {
             }
             if (medToEdit.getDate() != null) {
                 initialDateMillis = medToEdit.getDate().getTime();
-                edtDate.setText(calendarUtil.formatDate(initialDateMillis, DATE_FORMAT));
+                edtDate.setText(CalendarUtil.formatDate(initialDateMillis, DATE_FORMAT));
             }
         }
 
         final long finalInitialDateMillis = initialDateMillis;
-        edtDate.setOnClickListener(v -> calendarUtil.openDatePicker(context, finalInitialDateMillis, (millis, dateStr) -> edtDate.setText(dateStr), true, DATE_FORMAT));
+        edtDate.setOnClickListener(v -> CalendarUtil.openDatePicker(context, finalInitialDateMillis, (millis, dateStr) -> edtDate.setText(dateStr), true, DATE_FORMAT));
 
         btnConfirm.setOnClickListener(v -> {
             String name = edtName.getText().toString().trim();

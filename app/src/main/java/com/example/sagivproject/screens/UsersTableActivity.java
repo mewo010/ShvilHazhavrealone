@@ -1,9 +1,7 @@
 package com.example.sagivproject.screens;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,24 +37,15 @@ import com.example.sagivproject.screens.dialogs.AddUserDialog;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.utils.CalendarUtil;
-import com.example.sagivproject.utils.ImageUtil;
-import com.example.sagivproject.utils.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class UsersTableActivity extends BaseActivity {
     private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
-    @Inject
-    CalendarUtil calendarUtil;
-    @Inject
-    Validator validator;
     private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
@@ -78,7 +68,7 @@ public class UsersTableActivity extends BaseActivity {
         setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), databaseService.auth(), calendarUtil, validator).show());
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), databaseService.auth()).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -99,21 +89,17 @@ public class UsersTableActivity extends BaseActivity {
                                 UsersTableActivity.this,
                                 clickedUser,
                                 () -> loadUsers(),
-                                databaseService.auth(),
-                                calendarUtil,
-                                validator
+                                databaseService.auth()
                         ).show();
                     }
 
                     @Override
-                    public void onUserImageClicked(User user) {
+                    public void onUserImageClicked(User user, ImageView imageView) {
                         String base64Image = user.getProfileImage();
                         if (base64Image == null || base64Image.isEmpty()) return;
 
-                        Bitmap bitmap = ImageUtil.convertFrom64base(base64Image);
-                        if (bitmap == null) return;
-
-                        Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+                        Drawable drawable = imageView.getDrawable();
+                        if (drawable == null) return;
 
                         new FullImageDialog(UsersTableActivity.this, drawable).show();
                     }

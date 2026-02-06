@@ -25,25 +25,17 @@ import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
 import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.ImageUtil;
-import com.example.sagivproject.utils.Validator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class DetailsAboutUserActivity extends BaseActivity {
-    @Inject
-    CalendarUtil calendarUtil;
-    @Inject
-    Validator validator;
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
@@ -150,14 +142,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         txtEmail.setText(user.getEmail());
         txtPassword.setText(user.getPassword());
 
-        if (user.getProfileImage() != null && !user.getProfileImage().isEmpty()) {
-            Bitmap bmp = ImageUtil.convertFrom64base(user.getProfileImage());
-            if (bmp != null) {
-                imgUserProfile.setImageBitmap(bmp);
-            }
-        } else {
-            imgUserProfile.setImageResource(R.drawable.ic_user);
-        }
+        ImageUtil.loadImage(this, user.getProfileImage(), imgUserProfile);
 
         int age = user.getAge();
         txtAge.setText(String.valueOf(age));
@@ -182,7 +167,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new EditUserDialog(this, user, () -> {
             sharedPreferencesUtil.saveUser(user);
             loadUserDetailsToUI();
-        }, databaseService.auth(), calendarUtil, validator).show();
+        }, databaseService.auth()).show();
     }
 
     private void openImagePicker() {
