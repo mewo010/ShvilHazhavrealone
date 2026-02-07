@@ -1,9 +1,9 @@
 package com.example.sagivproject.di;
 
 import com.example.sagivproject.services.DatabaseService;
-import com.example.sagivproject.services.impl.ImageServiceImpl;
 import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.IImageService;
+import com.example.sagivproject.services.impl.ImageServiceImpl;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
