@@ -1,7 +1,7 @@
 package com.example.sagivproject.di;
 
-import com.example.sagivproject.services.impl.GameServiceImpl;
 import com.example.sagivproject.services.IGameService;
+import com.example.sagivproject.services.impl.GameServiceImpl;
 
 import dagger.Binds;
 import dagger.Module;
