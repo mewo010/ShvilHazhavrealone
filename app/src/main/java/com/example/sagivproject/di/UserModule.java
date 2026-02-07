@@ -1,7 +1,7 @@
 package com.example.sagivproject.di;
 
-import com.example.sagivproject.services.UserService;
-import com.example.sagivproject.services.interfaces.IUserService;
+import com.example.sagivproject.services.impl.UserService;
+import com.example.sagivproject.services.IUserService;
 
 import dagger.Binds;
 import dagger.Module;

@@ -25,12 +25,10 @@ public class Base64DataFetcher implements DataFetcher<ByteBuffer> {
 
     @Override
     public void cleanup() {
-        // Intentionally empty.
     }
 
     @Override
     public void cancel() {
-        // Intentionally empty.
     }
 
     @NonNull

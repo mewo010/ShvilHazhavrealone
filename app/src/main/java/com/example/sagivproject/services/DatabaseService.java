@@ -1,14 +1,5 @@
 package com.example.sagivproject.services;
 
-import com.example.sagivproject.services.interfaces.IAuthService;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
-import com.example.sagivproject.services.interfaces.IForumService;
-import com.example.sagivproject.services.interfaces.IGameService;
-import com.example.sagivproject.services.interfaces.IImageService;
-import com.example.sagivproject.services.interfaces.IMedicationService;
-import com.example.sagivproject.services.interfaces.IStatsService;
-import com.example.sagivproject.services.interfaces.IUserService;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

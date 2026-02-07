@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CalendarUtil {
-
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 
     private CalendarUtil() {

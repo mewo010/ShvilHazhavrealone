@@ -25,10 +25,8 @@ import dagger.hilt.android.HiltAndroidApp;
 
 @HiltAndroidApp
 public class MainApplication extends Application implements Configuration.Provider {
-
     @Inject
     HiltWorkerFactory workerFactory;
-
     @Inject
     SharedPreferencesUtil sharedPreferencesUtil;
 
@@ -79,7 +77,7 @@ public class MainApplication extends Application implements Configuration.Provid
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "MedicationDailyWork",
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 notificationRequest
         );
     }
@@ -104,12 +102,13 @@ public class MainApplication extends Application implements Configuration.Provid
                         .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                         .addTag("BirthdayWorkTag")
                         .setConstraints(new Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
                                 .setRequiresBatteryNotLow(true)
                                 .build()).build();
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
                 "BirthdayDailyWork",
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 birthdayRequest
         );
     }

@@ -1,4 +1,4 @@
-package com.example.sagivproject.services.interfaces;
+package com.example.sagivproject.services;
 
 import com.example.sagivproject.models.User;
 

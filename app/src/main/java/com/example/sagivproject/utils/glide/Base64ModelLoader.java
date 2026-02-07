@@ -32,7 +32,6 @@ public class Base64ModelLoader implements ModelLoader<String, ByteBuffer> {
 
         @Override
         public void teardown() {
-            // Do nothing.
         }
     }
 }

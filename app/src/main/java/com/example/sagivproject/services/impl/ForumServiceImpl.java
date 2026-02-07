@@ -1,12 +1,12 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IForumService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IForumService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,13 +17,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ForumService extends BaseDatabaseService<ForumMessage> implements IForumService {
+public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implements IForumService {
 
     private static final String FORUM_PATH = "forum";
     private final DatabaseReference forumRef;
 
     @Inject
-    public ForumService(DatabaseReference databaseReference) {
+    public ForumServiceImpl(DatabaseReference databaseReference) {
         super(databaseReference);
         this.forumRef = databaseReference.child(FORUM_PATH);
     }

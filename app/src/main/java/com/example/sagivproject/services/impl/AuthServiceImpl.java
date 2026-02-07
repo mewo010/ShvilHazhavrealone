@@ -1,22 +1,22 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IAuthService;
-import com.example.sagivproject.services.interfaces.IUserService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.IUserService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
-public class AuthService implements IAuthService {
+public class AuthServiceImpl implements IAuthService {
     private final IUserService userService;
     private final SharedPreferencesUtil sharedPreferencesUtil;
 
     @Inject
-    public AuthService(IUserService userService, SharedPreferencesUtil sharedPreferencesUtil) {
+    public AuthServiceImpl(IUserService userService, SharedPreferencesUtil sharedPreferencesUtil) {
         this.userService = userService;
         this.sharedPreferencesUtil = sharedPreferencesUtil;
     }

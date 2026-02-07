@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.interfaces.IAuthService;
+import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
 

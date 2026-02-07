@@ -1,9 +1,9 @@
 package com.example.sagivproject.di;
 
 import com.example.sagivproject.services.DatabaseService;
-import com.example.sagivproject.services.ImageService;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
-import com.example.sagivproject.services.interfaces.IImageService;
+import com.example.sagivproject.services.impl.ImageServiceImpl;
+import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.IImageService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,5 +28,5 @@ public abstract class DatabaseModule {
     public abstract IDatabaseService bindDatabaseService(DatabaseService databaseService);
 
     @Binds
-    public abstract IImageService bindImageService(ImageService imageService);
+    public abstract IImageService bindImageService(ImageServiceImpl imageService);
 }

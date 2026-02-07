@@ -22,8 +22,8 @@ import com.example.sagivproject.screens.MainActivity;
 import com.example.sagivproject.screens.RegisterActivity;
 import com.example.sagivproject.screens.SettingsActivity;
 import com.example.sagivproject.screens.dialogs.LogoutDialog;
-import com.example.sagivproject.services.interfaces.IAuthService;
-import com.example.sagivproject.services.interfaces.IDatabaseService;
+import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;

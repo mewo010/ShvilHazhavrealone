@@ -14,7 +14,7 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.adapters.MemoryGameLogAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.DatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;

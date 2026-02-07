@@ -28,8 +28,8 @@ import com.example.sagivproject.adapters.diffUtils.ImageDiffCallback;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IImageService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IImageService;
 import com.example.sagivproject.utils.ImageUtil;
 import com.google.android.material.textfield.TextInputEditText;
 

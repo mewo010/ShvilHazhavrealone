@@ -26,7 +26,7 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.DatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -9,8 +9,8 @@ import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.services.NotificationService;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IMedicationService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IMedicationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
 import java.util.Calendar;

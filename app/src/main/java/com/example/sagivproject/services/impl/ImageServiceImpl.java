@@ -1,24 +1,23 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ImageData;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IImageService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IImageService;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class ImageService extends BaseDatabaseService<ImageData> implements IImageService {
-
+public class ImageServiceImpl extends BaseDatabaseService<ImageData> implements IImageService {
     private static final String IMAGES_PATH = "images";
     private final DatabaseReference imagesRef;
 
     @Inject
-    public ImageService(DatabaseReference databaseReference) {
+    public ImageServiceImpl(DatabaseReference databaseReference) {
         super(databaseReference);
         this.imagesRef = databaseReference.child(IMAGES_PATH);
     }

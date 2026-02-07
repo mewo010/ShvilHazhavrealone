@@ -1,7 +1,7 @@
 package com.example.sagivproject.di;
 
-import com.example.sagivproject.services.GameService;
-import com.example.sagivproject.services.interfaces.IGameService;
+import com.example.sagivproject.services.impl.GameServiceImpl;
+import com.example.sagivproject.services.IGameService;
 
 import dagger.Binds;
 import dagger.Module;
@@ -13,5 +13,5 @@ import dagger.hilt.components.SingletonComponent;
 public abstract class GameModule {
 
     @Binds
-    public abstract IGameService bindGameService(GameService gameService);
+    public abstract IGameService bindGameService(GameServiceImpl gameService);
 }

@@ -1,4 +1,4 @@
-package com.example.sagivproject.services.interfaces;
+package com.example.sagivproject.services;
 
 /**
  * A central interface for accessing all data services.

@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IForumService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IForumService;
 
 import java.util.List;
 import java.util.Objects;

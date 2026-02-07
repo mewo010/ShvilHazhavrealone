@@ -20,8 +20,8 @@ import com.example.sagivproject.adapters.LeaderboardAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.RoomStatusCallback;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.RoomStatusCallback;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;

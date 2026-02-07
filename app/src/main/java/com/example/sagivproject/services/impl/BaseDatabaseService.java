@@ -1,9 +1,9 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.DatabaseCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 

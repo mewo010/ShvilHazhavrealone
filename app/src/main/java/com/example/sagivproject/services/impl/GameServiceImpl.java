@@ -1,4 +1,4 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,9 +6,9 @@ import androidx.annotation.Nullable;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IGameService;
-import com.example.sagivproject.services.interfaces.RoomStatusCallback;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IGameService;
+import com.example.sagivproject.services.RoomStatusCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-public class GameService extends BaseDatabaseService<GameRoom> implements IGameService {
+public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IGameService {
 
     private static final String ROOMS_PATH = "rooms";
     private static final String USERS_PATH = "users";
@@ -31,7 +31,7 @@ public class GameService extends BaseDatabaseService<GameRoom> implements IGameS
     private ValueEventListener activeGameListener;
 
     @Inject
-    public GameService(DatabaseReference databaseReference) {
+    public GameServiceImpl(DatabaseReference databaseReference) {
         super(databaseReference);
         this.roomsReference = databaseReference.child(ROOMS_PATH);
         this.usersReference = databaseReference.child(USERS_PATH);

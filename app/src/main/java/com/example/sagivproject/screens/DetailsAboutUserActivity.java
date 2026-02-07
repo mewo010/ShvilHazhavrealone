@@ -23,7 +23,7 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
+import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.utils.ImageUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

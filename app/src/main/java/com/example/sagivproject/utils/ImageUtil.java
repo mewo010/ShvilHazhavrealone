@@ -14,7 +14,6 @@ import org.jetbrains.annotations.Nullable;
 import java.io.ByteArrayOutputStream;
 
 public class ImageUtil {
-
     private static final String BASE64_PREFIX = "data:image/jpeg;base64,";
 
     public static @Nullable String convertTo64Base(@NotNull final ImageView postImage) {

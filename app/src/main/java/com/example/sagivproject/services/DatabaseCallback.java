@@ -1,4 +1,4 @@
-package com.example.sagivproject.services.interfaces;
+package com.example.sagivproject.services;
 
 /**
  * A generic callback interface for database operations.

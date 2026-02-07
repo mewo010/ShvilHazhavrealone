@@ -1,25 +1,25 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.impl;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.services.interfaces.DatabaseCallback;
-import com.example.sagivproject.services.interfaces.IMedicationService;
+import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IMedicationService;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class MedicationService extends BaseDatabaseService<Medication> implements IMedicationService {
+public class MedicationServiceImpl extends BaseDatabaseService<Medication> implements IMedicationService {
 
     private static final String USERS_PATH = "users";
     private static final String MEDICATIONS_PATH = "medications";
     private final DatabaseReference usersRef;
 
     @Inject
-    public MedicationService(DatabaseReference databaseReference) {
+    public MedicationServiceImpl(DatabaseReference databaseReference) {
         super(databaseReference);
         this.usersRef = databaseReference.child(USERS_PATH);
     }

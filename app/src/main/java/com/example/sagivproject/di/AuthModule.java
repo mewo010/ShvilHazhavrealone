@@ -1,13 +1,13 @@
 package com.example.sagivproject.di;
 
-import com.example.sagivproject.services.AuthService;
-import com.example.sagivproject.services.ForumService;
-import com.example.sagivproject.services.MedicationService;
-import com.example.sagivproject.services.StatsService;
-import com.example.sagivproject.services.interfaces.IAuthService;
-import com.example.sagivproject.services.interfaces.IForumService;
-import com.example.sagivproject.services.interfaces.IMedicationService;
-import com.example.sagivproject.services.interfaces.IStatsService;
+import com.example.sagivproject.services.impl.AuthServiceImpl;
+import com.example.sagivproject.services.impl.ForumServiceImpl;
+import com.example.sagivproject.services.impl.MedicationServiceImpl;
+import com.example.sagivproject.services.impl.StatsServiceImpl;
+import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.IForumService;
+import com.example.sagivproject.services.IMedicationService;
+import com.example.sagivproject.services.IStatsService;
 
 import javax.inject.Singleton;
 
@@ -22,17 +22,17 @@ public abstract class AuthModule {
 
     @Binds
     @Singleton
-    public abstract IAuthService bindAuthService(AuthService authService);
+    public abstract IAuthService bindAuthService(AuthServiceImpl authService);
 
     @Binds
     @Singleton
-    public abstract IMedicationService bindMedicationService(MedicationService medicationService);
+    public abstract IMedicationService bindMedicationService(MedicationServiceImpl medicationService);
 
     @Binds
     @Singleton
-    public abstract IStatsService bindStatsService(StatsService statsService);
+    public abstract IStatsService bindStatsService(StatsServiceImpl statsService);
 
     @Binds
     @Singleton
-    public abstract IForumService bindForumService(ForumService forumService);
+    public abstract IForumService bindForumService(ForumServiceImpl forumService);
 }
