@@ -1,12 +1,10 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ViewGroup;
@@ -52,17 +50,7 @@ public class MedicationImagesTableActivity extends BaseActivity {
     IImageService imageService;
     private MedicationImagesTableAdapter adapter;
     private TextInputEditText etSearch;
-
-    //פתיחת גלריה לבחירת תמונה
-    private final ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri imageUri = result.getData().getData();
-                    uploadImage(imageUri);
-                }
-            }
-    );
+    private ActivityResultLauncher<androidx.activity.result.PickVisualMediaRequest> photoPickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +93,11 @@ public class MedicationImagesTableActivity extends BaseActivity {
         etSearch = findViewById(R.id.edit_MedicineImagesTablePage_search);
         Button btnAdd = findViewById(R.id.btn_MedicineImagesTablePage_add);
 
-        btnAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            pickImageLauncher.launch(intent);
-        });
+        btnAdd.setOnClickListener(v -> photoPickerLauncher.launch(
+                new androidx.activity.result.PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build()
+        ));
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -124,6 +113,15 @@ public class MedicationImagesTableActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        photoPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),
+                uri -> {
+                    if (uri != null) {
+                        uploadImage(uri);
+                    }
+                }
+        );
 
         loadImages();
     }

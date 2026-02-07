@@ -1,6 +1,5 @@
 package com.example.sagivproject.screens;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -39,8 +37,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
     private ImageView imgUserProfile;
     private User user;
+    private ActivityResultLauncher<androidx.activity.result.PickVisualMediaRequest> photoPickerLauncher;
     private ActivityResultLauncher<Void> cameraLauncher;
-    private ActivityResultLauncher<Intent> galleryLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,18 +95,19 @@ public class DetailsAboutUserActivity extends BaseActivity {
                 }
         );
 
-        galleryLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+        photoPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),
+                uri -> {
+                    if (uri != null) {
                         try {
-                            Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Objects.requireNonNull(result.getData().getData())));
+                            Bitmap bitmap = BitmapFactory.decodeStream(
+                                    getContentResolver().openInputStream(uri)
+                            );
                             if (bitmap != null) {
                                 handleImageBitmap(bitmap);
                             }
                         } catch (Exception e) {
-                            Toast.makeText(DetailsAboutUserActivity.this, "שגיאה בטעינת גלריית התמונות", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(this, "שגיאה בטעינת התמונה", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -181,9 +180,11 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
             @Override
             public void onGallery() {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-                galleryIntent.setType("image/*");
-                galleryLauncher.launch(galleryIntent);
+                photoPickerLauncher.launch(
+                        new androidx.activity.result.PickVisualMediaRequest.Builder()
+                                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                                .build()
+                );
             }
 
             @Override
