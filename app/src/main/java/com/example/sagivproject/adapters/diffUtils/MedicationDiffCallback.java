@@ -37,7 +37,8 @@ public class MedicationDiffCallback extends DiffUtil.Callback {
         Medication oldItem = oldList.get(oldItemPosition);
         Medication newItem = newList.get(newItemPosition);
 
-        return Objects.equals(oldItem.getName(), newItem.getName())
+        return Objects.equals(oldItem.getId(), newItem.getId())
+                && Objects.equals(oldItem.getName(), newItem.getName())
                 && Objects.equals(oldItem.getDetails(), newItem.getDetails())
                 && Objects.equals(oldItem.getType(), newItem.getType())
                 && Objects.equals(oldItem.getDate(), newItem.getDate());

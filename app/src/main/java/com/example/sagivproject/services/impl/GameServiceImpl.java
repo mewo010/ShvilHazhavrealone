@@ -6,7 +6,8 @@ import androidx.annotation.Nullable;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.IGameService;
 import com.example.sagivproject.services.RoomStatusCallback;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +24,6 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IGameService {
-
     private static final String ROOMS_PATH = "rooms";
     private static final String USERS_PATH = "users";
     private final DatabaseReference roomsReference;
@@ -32,7 +32,7 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
 
     @Inject
     public GameServiceImpl(DatabaseReference databaseReference) {
-        super(databaseReference);
+        super("rooms", GameRoom.class);
         this.roomsReference = databaseReference.child(ROOMS_PATH);
         this.usersReference = databaseReference.child(USERS_PATH);
     }
@@ -58,7 +58,7 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
                         room.setPlayer2(user);
                         room.setStatus("playing");
                         roomData.setValue(room);
-                        matchedRoomId[0] = room.getRoomId();
+                        matchedRoomId[0] = room.getId();
                         return Transaction.success(currentData);
                     }
                 }
@@ -109,6 +109,16 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     }
 
     @Override
+    public void findOrCreateRoom(User user, IDatabaseService.DatabaseCallback<GameRoom> callback) {
+
+    }
+
+    @Override
+    public void getAllRoomsRealtime(@NonNull IDatabaseService.DatabaseCallback<List<GameRoom>> callback) {
+
+    }
+
+    @Override
     public ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull RoomStatusCallback callback) {
         ValueEventListener listener = new ValueEventListener() {
 
@@ -142,6 +152,21 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     @Override
     public void removeRoomListener(@NonNull String roomId, @NonNull ValueEventListener listener) {
         roomsReference.child(roomId).removeEventListener(listener);
+    }
+
+    @Override
+    public void cancelRoom(@NonNull String roomId, @Nullable IDatabaseService.DatabaseCallback<Void> callback) {
+
+    }
+
+    @Override
+    public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, IDatabaseService.DatabaseCallback<Void> callback) {
+
+    }
+
+    @Override
+    public void listenToGame(String roomId, IDatabaseService.DatabaseCallback<GameRoom> callback) {
+
     }
 
     @Override

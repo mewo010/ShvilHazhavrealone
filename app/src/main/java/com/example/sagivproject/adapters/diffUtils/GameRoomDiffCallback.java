@@ -29,7 +29,7 @@ public class GameRoomDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldList.get(oldItemPosition).getRoomId().equals(newList.get(newItemPosition).getRoomId());
+        return oldList.get(oldItemPosition).getId().equals(newList.get(newItemPosition).getId());
     }
 
     @Override

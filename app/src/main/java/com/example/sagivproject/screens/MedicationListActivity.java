@@ -26,7 +26,6 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
-import com.example.sagivproject.services.DatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,7 +60,7 @@ public class MedicationListActivity extends BaseActivity {
         });
 
         user = sharedPreferencesUtil.getUser();
-        uid = Objects.requireNonNull(user).getUid();
+        uid = Objects.requireNonNull(user).getId();
 
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
@@ -132,7 +131,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void fetchMedicationsFromServer() {
-        databaseService.medications().getUserMedicationList(uid, new DatabaseCallback<>() {
+        databaseService.getMedicationService().getUserMedicationList(uid, new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<Medication> list) {
                 processServerResponse(list);
@@ -172,7 +171,7 @@ public class MedicationListActivity extends BaseActivity {
 
     private void deleteExpiredMedications(List<String> expiredIds) {
         for (String id : expiredIds) {
-            databaseService.medications().deleteMedication(uid, id, null);
+            databaseService.getMedicationService().deleteMedication(uid, id, null);
         }
         Toast.makeText(MedicationListActivity.this, "נמחקו תרופות שפגו תוקפן", Toast.LENGTH_SHORT).show();
     }
@@ -225,8 +224,9 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void saveMedication(Medication medication) {
-        medication.setId(databaseService.medications().generateMedicationId(uid));
-        databaseService.medications().createNewMedication(uid, medication, new DatabaseCallback<>() {
+        medication.setId(databaseService.getMedicationService().generateMedicationId(uid));
+        medication.setUserId(uid);
+        databaseService.getMedicationService().createNewMedication(uid, medication, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 fetchMedicationsFromServer(); // Refresh list from server
@@ -241,7 +241,8 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void updateMedication(Medication med) {
-        databaseService.medications().updateMedication(uid, med, new DatabaseCallback<>() {
+        med.setUserId(uid);
+        databaseService.getMedicationService().updateMedication(uid, med, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 fetchMedicationsFromServer(); // Refresh list from server
@@ -256,7 +257,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void deleteMedicationById(String id) {
-        databaseService.medications().deleteMedication(uid, id, new DatabaseCallback<>() {
+        databaseService.getMedicationService().deleteMedication(uid, id, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 fetchMedicationsFromServer(); // Refresh list from server
@@ -270,7 +271,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void openMedicationDialog(Medication medToEdit) {
-        new MedicationDialog(this, medToEdit, uid, new MedicationDialog.OnMedicationSubmitListener() {
+        new MedicationDialog(this, medToEdit, new MedicationDialog.OnMedicationSubmitListener() {
             @Override
             public void onAdd(Medication medication) {
                 saveMedication(medication);

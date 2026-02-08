@@ -30,6 +30,9 @@
             tools:node="remove" />
 
         <activity
+            android:name=".screens.ForumCategoriesActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.MathProblemsActivity"
             android:exported="false" />
         <activity
@@ -46,6 +49,9 @@
             android:name=".screens.AdminForumActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".screens.AdminForumCategoriesActivity"
+            android:exported="false" />
         <activity
             android:name=".screens.UsersTableActivity"
             android:exported="false" />

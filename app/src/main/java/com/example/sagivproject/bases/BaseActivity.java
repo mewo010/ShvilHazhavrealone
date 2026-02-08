@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected IDatabaseService databaseService;
 
     protected IAuthService getAuthService() {
-        return databaseService.auth();
+        return databaseService.getAuthService();
     }
 
     @Override

@@ -36,7 +36,7 @@ import com.example.sagivproject.models.enums.UserRole;
 import com.example.sagivproject.screens.dialogs.AddUserDialog;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
-import com.example.sagivproject.services.DatabaseCallback;
+import com.example.sagivproject.services.IDatabaseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class UsersTableActivity extends BaseActivity {
         setupTopMenu(topMenuContainer);
 
         Button btnAddUser = findViewById(R.id.btn_UsersTable_add_user);
-        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), databaseService.auth()).show());
+        btnAddUser.setOnClickListener(v -> new AddUserDialog(this, newUser -> loadUsers(), databaseService.getAuthService()).show());
 
         adapter = new UsersTableAdapter(filteredList, currentUser,
                 new UsersTableAdapter.OnUserActionListener() {
@@ -89,7 +89,7 @@ public class UsersTableActivity extends BaseActivity {
                                 UsersTableActivity.this,
                                 clickedUser,
                                 () -> loadUsers(),
-                                databaseService.auth()
+                                databaseService.getAuthService()
                         ).show();
                     }
 
@@ -183,13 +183,13 @@ public class UsersTableActivity extends BaseActivity {
     }
 
     private void loadUsers() {
-        databaseService.users().getUserList(new DatabaseCallback<>() {
+        databaseService.getUserService().getUserList(new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> list) {
                 usersList.clear();
 
                 for (User user : list) {
-                    if (user != null && user.getUid() != null) {
+                    if (user != null && user.getId() != null) {
                         usersList.add(user);
                     }
                 }
@@ -207,7 +207,7 @@ public class UsersTableActivity extends BaseActivity {
     private void handleToggleAdmin(User user) {
         UserRole newRole = user.getRole() == UserRole.ADMIN ? UserRole.REGULAR : UserRole.ADMIN;
 
-        databaseService.users().updateUserRole(user.getUid(), newRole, new DatabaseCallback<>() {
+        databaseService.getUserService().updateUserRole(user.getId(), newRole, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 Toast.makeText(
@@ -231,7 +231,7 @@ public class UsersTableActivity extends BaseActivity {
 
     private void handleDeleteUser(User user) {
         boolean isSelf = user.equals(currentUser);
-        databaseService.users().deleteUser(user.getUid(), new DatabaseCallback<>() {
+        databaseService.getUserService().deleteUser(user.getId(), new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 if (isSelf) {

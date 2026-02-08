@@ -2,8 +2,10 @@ package com.example.sagivproject.models;
 
 import androidx.annotation.NonNull;
 
-public class ForumMessage {
-    private String messageId;
+import java.io.Serializable;
+
+public class ForumMessage implements Serializable, Idable {
+    private String id;
     private String fullName;
     private String email;
     private String message;
@@ -14,8 +16,8 @@ public class ForumMessage {
     public ForumMessage() {
     }
 
-    public ForumMessage(String messageId, String fullName, String email, String message, long timestamp, String userId, boolean sentByAdmin) {
-        this.messageId = messageId;
+    public ForumMessage(String id, String fullName, String email, String message, long timestamp, String userId, boolean sentByAdmin) {
+        this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.message = message;
@@ -24,12 +26,14 @@ public class ForumMessage {
         this.sentByAdmin = sentByAdmin;
     }
 
-    public String getMessageId() {
-        return messageId;
+    @Override
+    public String getId() {
+        return this.id;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    @Override
+    public void setId(String messageId) {
+        this.id = messageId;
     }
 
     public String getFullName() {
@@ -84,7 +88,7 @@ public class ForumMessage {
     @Override
     public String toString() {
         return "ForumMessage{" +
-                "messageId='" + messageId + '\'' +
+                "messageId='" + id + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", message='" + message + '\'' +

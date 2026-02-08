@@ -8,7 +8,6 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.services.IMedicationService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;

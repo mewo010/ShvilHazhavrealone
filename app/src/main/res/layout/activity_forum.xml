@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@+id/topMenuContainer" />
 
     <TextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/txtForumTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -47,10 +47,10 @@
         android:layout_marginBottom="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toTopOf="@id/layoutNewMessage"
+        app:layout_constraintBottom_toTopOf="@+id/layoutNewMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintTop_toBottomOf="@id/txtForumTitle"
         app:strokeColor="?attr/colorOutline">
 
         <FrameLayout
@@ -92,7 +92,7 @@
         app:boxCornerRadiusTopEnd="25dp"
         app:boxCornerRadiusTopStart="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_forum_send_message"
+        app:layout_constraintEnd_toStartOf="@+id/btn_forum_send_message"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText

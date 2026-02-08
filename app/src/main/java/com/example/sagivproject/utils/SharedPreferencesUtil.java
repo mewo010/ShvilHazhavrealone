@@ -113,7 +113,7 @@ public class SharedPreferencesUtil {
     public String getUserId() {
         User user = getUser();
         if (user != null) {
-            return user.getUid();
+            return user.getId();
         }
         return null;
     }

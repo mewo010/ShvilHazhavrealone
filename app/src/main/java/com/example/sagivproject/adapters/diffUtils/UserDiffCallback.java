@@ -29,7 +29,7 @@ public class UserDiffCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return oldList.get(oldItemPosition).getUid().equals(newList.get(newItemPosition).getUid());
+        return oldList.get(oldItemPosition).getId().equals(newList.get(newItemPosition).getId());
     }
 
     @Override

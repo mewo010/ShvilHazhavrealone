@@ -31,13 +31,11 @@ public class MedicationDialog {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private final Context context;
     private final Medication medToEdit;
-    private final String uid;
     private final OnMedicationSubmitListener listener;
 
-    public MedicationDialog(Context context, Medication medToEdit, String uid, OnMedicationSubmitListener listener) {
+    public MedicationDialog(Context context, Medication medToEdit, OnMedicationSubmitListener listener) {
         this.context = context;
         this.medToEdit = medToEdit;
-        this.uid = uid;
         this.listener = listener;
     }
 
@@ -103,14 +101,17 @@ public class MedicationDialog {
             try {
                 Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateString);
 
+                Medication medicationData = new Medication();
+                medicationData.setName(name);
+                medicationData.setDetails(details);
+                medicationData.setType(selectedType);
+                medicationData.setDate(date);
+
                 if (medToEdit == null) {
-                    listener.onAdd(new Medication(name, details, selectedType, date, uid));
+                    listener.onAdd(medicationData);
                 } else {
-                    medToEdit.setName(name);
-                    medToEdit.setDetails(details);
-                    medToEdit.setType(selectedType);
-                    medToEdit.setDate(date);
-                    listener.onEdit(medToEdit);
+                    medicationData.setId(medToEdit.getId());
+                    listener.onEdit(medicationData);
                 }
 
                 dialog.dismiss();

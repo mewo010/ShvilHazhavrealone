@@ -3,10 +3,12 @@ package com.example.sagivproject.models;
 import com.example.sagivproject.models.enums.MedicationType;
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Medication {
+public class Medication implements Serializable, Idable {
     private String id;
+    private String userId;
     private String name;
     private String details;
     private MedicationType type;
@@ -16,20 +18,31 @@ public class Medication {
     public Medication() {
     }
 
-    public Medication(String name, String details, MedicationType type, Date date, String userId) {
+    public Medication(String id, String name, String details, MedicationType type, Date date, String userId) {
+        this.id = id;
         this.name = name;
         this.details = details;
         this.type = type;
         this.date = date;
-        this.id = userId;
+        this.userId = userId;
     }
 
+    @Override
     public String getId() {
         return this.id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public void setId(String messageId) {
+        this.id = messageId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

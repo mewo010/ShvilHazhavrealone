@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
 
         btnToMedicationList.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MedicationListActivity.class)));
-        btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumActivity.class)));
+        btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumCategoriesActivity.class)));
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToMathProblems.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MathProblemsActivity.class)));

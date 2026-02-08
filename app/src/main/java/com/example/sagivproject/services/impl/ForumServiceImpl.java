@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.services.IForumService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,26 +17,30 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implements IForumService {
-
-    private static final String FORUM_PATH = "forum";
-    private final DatabaseReference forumRef;
+    private static final String FORUM_PATH = "forum_messages";
+    private final DatabaseReference dbRef;
 
     @Inject
     public ForumServiceImpl(DatabaseReference databaseReference) {
         super(databaseReference);
-        this.forumRef = databaseReference.child(FORUM_PATH);
+        this.dbRef = databaseReference;
+    }
+
+    private DatabaseReference getCategoryMessagesRef(String categoryId) {
+        return dbRef.child(FORUM_PATH).child(categoryId);
     }
 
     @Override
-    public void sendMessage(User user, String text, @Nullable DatabaseCallback<Void> callback) {
-        String messageId = generateId(forumRef);
-        ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getUid(), user.isAdmin());
-        super.create(forumRef, messageId, msg, callback);
+    public void sendMessage(User user, String text, String categoryId, @Nullable DatabaseCallback<Void> callback) {
+        DatabaseReference categoryMessagesRef = getCategoryMessagesRef(categoryId);
+        String messageId = generateId(categoryMessagesRef);
+        ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getId(), user.isAdmin());
+        super.create(categoryMessagesRef, messageId, msg, callback);
     }
 
     @Override
-    public void listenToMessages(DatabaseCallback<List<ForumMessage>> callback) {
-        forumRef.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
+    public void listenToMessages(String categoryId, DatabaseCallback<List<ForumMessage>> callback) {
+        getCategoryMessagesRef(categoryId).orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<ForumMessage> list = new ArrayList<>();
@@ -56,7 +59,7 @@ public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implemen
     }
 
     @Override
-    public void deleteMessage(@NonNull String messageId, @Nullable DatabaseCallback<Void> callback) {
-        super.delete(forumRef, messageId, callback);
+    public void deleteMessage(@NonNull String messageId, String categoryId, @Nullable DatabaseCallback<Void> callback) {
+        super.delete(getCategoryMessagesRef(categoryId), messageId, callback);
     }
 }

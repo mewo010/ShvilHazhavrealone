@@ -2,8 +2,9 @@ package com.example.sagivproject.services.impl;
 
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.models.enums.UserRole;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.services.IAuthService;
+import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.IUserService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -23,7 +24,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public void login(String email, String password, LoginCallback callback) {
-        userService.getUserByEmailAndPassword(email, password, new DatabaseCallback<>() {
+        userService.getUserByEmailAndPassword(email, password, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user == null) {

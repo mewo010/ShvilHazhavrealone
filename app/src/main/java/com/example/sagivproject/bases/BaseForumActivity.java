@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.services.IForumService;
 
 import java.util.List;
@@ -26,10 +25,15 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected ForumAdapter adapter;
     protected IForumService forumService;
     protected ForumPermissions permissions;
+    protected String categoryId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        categoryId = getIntent().getStringExtra("categoryId");
+        if (categoryId == null) {
+            categoryId = "general";
+        }
     }
 
     protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages, IForumService forumService) {
@@ -65,7 +69,7 @@ public abstract class BaseForumActivity extends BaseActivity {
         adapter.setForumMessageListener(new ForumAdapter.ForumMessageListener() {
             @Override
             public void onClick(ForumMessage message) {
-                forumService.deleteMessage(message.getMessageId(), new DatabaseCallback<>() {
+                forumService.deleteMessage(message.getMessageId(), categoryId, new DatabaseCallback<>() {
                     @Override
                     public void onCompleted(Void data) {
                         Toast.makeText(BaseForumActivity.this, "ההודעה נמחקה", Toast.LENGTH_SHORT).show();
@@ -86,7 +90,7 @@ public abstract class BaseForumActivity extends BaseActivity {
     }
 
     protected void loadMessages() {
-        forumService.listenToMessages(new DatabaseCallback<>() {
+        forumService.listenToMessages(categoryId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ForumMessage> list) {
                 //בודקים אם המשתמש היה בסוף לפני העדכון
@@ -117,7 +121,7 @@ public abstract class BaseForumActivity extends BaseActivity {
 
         User user = sharedPreferencesUtil.getUser();
 
-        forumService.sendMessage(Objects.requireNonNull(user), text, new DatabaseCallback<>() {
+        forumService.sendMessage(Objects.requireNonNull(user), text, categoryId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void data) {
                 edtMessage.setText("");

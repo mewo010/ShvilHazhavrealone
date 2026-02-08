@@ -8,7 +8,6 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
@@ -49,7 +48,7 @@ public class BirthdayWorker extends Worker {
         String userId = sharedPreferencesUtil.getUserId();
         final CountDownLatch latch = new CountDownLatch(1);
 
-        databaseService.users().getUser(Objects.requireNonNull(userId), new DatabaseCallback<>() {
+        databaseService.getUserService().getUser(Objects.requireNonNull(userId), new DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (user != null) {

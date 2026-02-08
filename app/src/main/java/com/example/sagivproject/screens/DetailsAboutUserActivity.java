@@ -23,7 +23,6 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
-import com.example.sagivproject.services.DatabaseCallback;
 import com.example.sagivproject.utils.ImageUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -121,7 +120,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserFromDatabase() {
-        databaseService.users().getUser(user.getUid(), new DatabaseCallback<>() {
+        databaseService.getUserService().getUser(user.getId(), new DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
                 user = dbUser;
@@ -166,7 +165,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
         new EditUserDialog(this, user, () -> {
             sharedPreferencesUtil.saveUser(user);
             loadUserDetailsToUI();
-        }, databaseService.auth()).show();
+        }, databaseService.getAuthService()).show();
     }
 
     private void openImagePicker() {
@@ -199,7 +198,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
 
         imgUserProfile.setImageResource(R.drawable.ic_user);
 
-        databaseService.users().updateUser(user, new DatabaseCallback<>() {
+        databaseService.getUserService().updateUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);
@@ -224,7 +223,7 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void saveProfileImage() {
-        databaseService.users().updateUser(user, new DatabaseCallback<>() {
+        databaseService.getUserService().updateUser(user, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void object) {
                 sharedPreferencesUtil.saveUser(user);

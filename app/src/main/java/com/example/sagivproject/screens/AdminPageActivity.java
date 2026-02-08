@@ -33,6 +33,7 @@ public class AdminPageActivity extends BaseActivity {
         Button btnToMedicationsTable = findViewById(R.id.btn_admin_to_MedicineImagesTablePage);
         Button btnToMemoryGameLogsTable = findViewById(R.id.btn_admin_to_MemoryGameLogsTablePage);
         Button btnToForum = findViewById(R.id.btn_admin_to_AdminForum);
+        Button btnToForumCategories = findViewById(R.id.btn_admin_to_ForumCategories);
         Button btnToDetailsAboutUser = findViewById(R.id.btn_admin_to_DetailsAboutUser);
         Button btnToSettings = findViewById(R.id.btn_admin_to_Settings);
         Button btnLogout = findViewById(R.id.btn_admin_to_exit);
@@ -42,6 +43,7 @@ public class AdminPageActivity extends BaseActivity {
         btnToMedicationsTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, MedicationImagesTableActivity.class)));
         btnToMemoryGameLogsTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, MemoryGameLogsTableActivity.class)));
         btnToForum.setOnClickListener(v -> startActivity(new Intent(AdminPageActivity.this, AdminForumActivity.class)));
+        btnToForumCategories.setOnClickListener(v -> startActivity(new Intent(AdminPageActivity.this, AdminForumCategoriesActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, DetailsAboutUserActivity.class)));
         btnToSettings.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, SettingsActivity.class)));
         btnLogout.setOnClickListener(view -> logout());

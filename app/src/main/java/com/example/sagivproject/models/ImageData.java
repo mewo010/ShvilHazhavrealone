@@ -1,6 +1,8 @@
 package com.example.sagivproject.models;
 
-public class ImageData {
+import java.io.Serializable;
+
+public class ImageData implements Serializable, Idable {
     private String id;
     private String base64;
 
@@ -12,10 +14,12 @@ public class ImageData {
         this.base64 = base64;
     }
 
+    @Override
     public String getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(String id) {
         this.id = id;
     }

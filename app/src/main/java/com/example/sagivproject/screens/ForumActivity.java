@@ -45,14 +45,14 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
 
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
-        initForumViews(recyclerForum, edtNewMessage, btnNewMessages, databaseService.forum());
+        initForumViews(recyclerForum, edtNewMessage, btnNewMessages, databaseService.getForumService());
         this.permissions = this;
         setupForum();
     }
 
     @Override
     public boolean canDelete(ForumMessage message) {
-        return message.getUserId() != null && message.getUserId().equals(user.getUid());
+        return message.getUserId() != null && message.getUserId().equals(user.getId());
     }
 
     @Override

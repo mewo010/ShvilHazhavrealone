@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;

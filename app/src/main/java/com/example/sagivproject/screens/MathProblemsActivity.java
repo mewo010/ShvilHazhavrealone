@@ -74,7 +74,7 @@ public class MathProblemsActivity extends BaseActivity {
         user.getMathProblemsStats().setCorrectAnswers(0);
         user.getMathProblemsStats().setWrongAnswers(0);
 
-        databaseService.stats().resetMathStats(user.getUid());
+        databaseService.getStatsService().resetMathStats(user.getId());
         sharedPreferencesUtil.saveUser(user);
 
         updateStatsUI();
@@ -183,12 +183,12 @@ public class MathProblemsActivity extends BaseActivity {
 
             Toast.makeText(this, "נכון! ✅", Toast.LENGTH_SHORT).show();
             generateProblem();
-            databaseService.stats().addCorrectAnswer(user.getUid());
+            databaseService.getStatsService().addCorrectAnswer(user.getId());
         } else {
             user.getMathProblemsStats().setWrongAnswers(user.getMathProblemsStats().getWrongAnswers() + 1);
 
             Toast.makeText(this, "טעות, נסה שוב ❌", Toast.LENGTH_SHORT).show();
-            databaseService.stats().addWrongAnswer(user.getUid());
+            databaseService.getStatsService().addWrongAnswer(user.getId());
         }
 
         sharedPreferencesUtil.saveUser(user);

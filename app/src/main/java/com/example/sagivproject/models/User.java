@@ -10,8 +10,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class User implements Serializable {
-    private String uid;
+public class User implements Serializable, Idable {
+    private String id;
     private String email;
     private UserRole role;
     private String firstName;
@@ -27,8 +27,8 @@ public class User implements Serializable {
         this.role = UserRole.REGULAR;
     }
 
-    public User(String uid, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications) {
-        this.uid = uid;
+    public User(String id, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDateMillis = birthDateMillis;
@@ -41,6 +41,16 @@ public class User implements Serializable {
         this.mathProblemsStats = new MathProblemsStats();
         this.mathProblemsStats.setCorrectAnswers(0);
         this.mathProblemsStats.setWrongAnswers(0);
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -111,14 +121,6 @@ public class User implements Serializable {
         return this.role == UserRole.ADMIN;
     }
 
-    public String getUid() {
-        return this.uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getProfileImage() {
         return profileImage;
     }
@@ -161,19 +163,19 @@ public class User implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(uid, user.uid);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(uid);
+        return Objects.hashCode(id);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "User{" +
-                "uid='" + uid + '\'' +
+                "uid='" + id + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", firstName='" + firstName + '\'' +

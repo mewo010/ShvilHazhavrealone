@@ -7,35 +7,52 @@ public interface IDatabaseService {
     /**
      * @return The auth service.
      */
-    IAuthService auth();
+    IAuthService getAuthService();
 
     /**
      * @return The user service.
      */
-    IUserService users();
+    IUserService getUserService();
 
     /**
      * @return The medication service.
      */
-    IMedicationService medications();
+    IMedicationService getMedicationService();
 
     /**
      * @return The game service.
      */
-    IGameService games();
+    IGameService getGameService();
 
     /**
      * @return The stats service.
      */
-    IStatsService stats();
+    IStatsService getStatsService();
 
     /**
      * @return The forum service.
      */
-    IForumService forum();
+    IForumService getForumService();
 
     /**
      * @return The image service.
      */
-    IImageService images();
+    IImageService getImageService();
+
+    /**
+     * @return The forum category service.
+     */
+    IForumCategoriesService getForumCategoriesService();
+
+    interface DatabaseCallback<T> {
+        /// called when the operation completes successfully
+        ///
+        /// @param object the result of the operation, or null for void operations
+        void onCompleted(T object);
+
+        /// called when the operation fails
+        ///
+        /// @param e the exception describing what went wrong
+        void onFailed(Exception e);
+    }
 }

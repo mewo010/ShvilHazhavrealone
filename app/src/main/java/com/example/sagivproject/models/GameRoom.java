@@ -1,9 +1,10 @@
 package com.example.sagivproject.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GameRoom {
-    private String roomId;
+public class GameRoom implements Serializable, Idable {
+    private String id;
     private String status; // waiting | playing | finished
 
     private User player1;
@@ -22,8 +23,8 @@ public class GameRoom {
     public GameRoom() {
     }
 
-    public GameRoom(String roomId, User player1) {
-        this.roomId = roomId;
+    public GameRoom(String id, User player1) {
+        this.id = id;
         this.player1 = player1;
         this.player2 = null;
         this.status = "waiting";
@@ -33,12 +34,14 @@ public class GameRoom {
         this.processingMatch = false;
     }
 
-    public String getRoomId() {
-        return roomId;
+    @Override
+    public String getId() {
+        return this.id;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getStatus() {

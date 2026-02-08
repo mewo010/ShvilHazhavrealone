@@ -11,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.DatabaseCallback;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -38,7 +37,7 @@ public class SplashActivity extends BaseActivity {
                 if (sharedPreferencesUtil.isUserLoggedIn()) {
                     User current = sharedPreferencesUtil.getUser();
                     if (current != null) {
-                        databaseService.users().getUser(current.getUid(), new DatabaseCallback<>() {
+                        databaseService.getUserService().getUser(current.getId(), new DatabaseCallback<>() {
                             @Override
                             public void onCompleted(User user) {
                                 if (user != null) {
