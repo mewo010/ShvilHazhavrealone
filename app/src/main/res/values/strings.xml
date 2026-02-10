@@ -12,7 +12,7 @@
     <string name="טבלתתיעודהמשחקים">טבלת תיעוד המשחקים</string>
     <string name="טבלתתמונותהתרופות">טבלת תמונות התרופות</string>
     <string name="קשרקרוב">קשר קרוב</string>
-    <string name="ניהולקטגוריותפורום">ניהול קטגוריות פורום</string>
+    <string name="ניהולקטגוריותקשרקרוב">ניהול קטגוריות קשר קרוב</string>
     <string name="משתמש">משתמש</string>
     <string name="התנתקות">התנתקות</string>
     <string name="דףהבית">דף הבית</string>
@@ -109,6 +109,8 @@
     <string name="חפשתרופה">חפש תרופה…</string>
     <string name="איפוסנתונים">איפוס נתונים</string>
     <string name="מחפשיריב">מחפש יריב…</string>
+    <string name="שםקטגוריהחדשה">שם קטגוריה חדשה</string>
+    <string name="קטגוריותקשרקרוב">קטגוריות קשר קרוב</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

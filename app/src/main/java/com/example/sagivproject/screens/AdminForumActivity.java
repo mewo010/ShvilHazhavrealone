@@ -31,6 +31,9 @@ public class AdminForumActivity extends BaseForumActivity implements BaseForumAc
             return insets;
         });
 
+        String categoryId = getIntent().getStringExtra("categoryId");
+        String categoryName = getIntent().getStringExtra("categoryName");
+
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
 
@@ -42,7 +45,7 @@ public class AdminForumActivity extends BaseForumActivity implements BaseForumAc
 
         initForumViews(recyclerForum, edtNewMessage, btnNewMessages);
         this.permissions = this;
-        setupForum();
+        setupForum(categoryId, categoryName);
     }
 
     @Override

@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sagivproject.R;
 import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
@@ -25,14 +27,11 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected ForumAdapter adapter;
     protected ForumPermissions permissions;
     protected String categoryId;
+    protected String categoryName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        categoryId = getIntent().getStringExtra("categoryId");
-        if (categoryId == null) {
-            categoryId = "general";
-        }
     }
 
     protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages) {
@@ -49,7 +48,15 @@ public abstract class BaseForumActivity extends BaseActivity {
         }
     }
 
-    protected void setupForum() {
+    protected void setupForum(String categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+
+        TextView title = findViewById(R.id.txtForumTitle);
+        if (title != null) {
+            title.setText(categoryName);
+        }
+
         recycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ForumAdapter();
         recycler.setAdapter(adapter);
@@ -85,6 +92,8 @@ public abstract class BaseForumActivity extends BaseActivity {
                 return permissions.canDelete(message);
             }
         });
+
+        loadMessages();
     }
 
     protected void loadMessages() {

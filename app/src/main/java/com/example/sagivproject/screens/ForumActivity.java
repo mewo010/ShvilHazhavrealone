@@ -35,6 +35,9 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
 
         user = sharedPreferencesUtil.getUser();
 
+        String categoryId = getIntent().getStringExtra("categoryId");
+        String categoryName = getIntent().getStringExtra("categoryName");
+
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
 
@@ -47,7 +50,7 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
 
         initForumViews(recyclerForum, edtNewMessage, btnNewMessages);
         this.permissions = this;
-        setupForum();
+        setupForum(categoryId, categoryName);
     }
 
     @Override

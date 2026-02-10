@@ -18,7 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implements IForumService {
-    private static final String FORUM_PATH = "forum_messages";
+    private static final String FORUM_PATH = "forum_categories";
 
     @Inject
     public ForumServiceImpl() {
@@ -26,7 +26,7 @@ public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implemen
     }
 
     private String getCategoryPath(String categoryId) {
-        return FORUM_PATH + "/" + categoryId;
+        return FORUM_PATH + "/" + categoryId + "/messages";
     }
 
     private DatabaseReference getCategoryMessagesRef(String categoryId) {
