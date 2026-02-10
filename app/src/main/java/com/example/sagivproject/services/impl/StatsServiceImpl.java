@@ -13,7 +13,6 @@ import com.google.firebase.database.Transaction;
 import javax.inject.Inject;
 
 public class StatsServiceImpl implements IStatsService {
-
     private static final String USERS_PATH = "users";
     private final DatabaseReference databaseReference;
 
@@ -23,6 +22,9 @@ public class StatsServiceImpl implements IStatsService {
     }
 
     private void addAnswer(String uid, String key) {
+        if (uid == null) {
+            return;
+        }
         databaseReference.child(uid).child("mathProblemsStats").child(key).runTransaction(new Transaction.Handler() {
             @NonNull
             @Override

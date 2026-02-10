@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
+import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.utils.CalendarUtil;
 import com.example.sagivproject.utils.Validator;
@@ -68,11 +69,13 @@ public class RegisterActivity extends BaseActivity {
 
         databaseService.getAuthService().register(firstName, lastName, birthDateMillis, email, password, new IAuthService.RegisterCallback() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(User user) {
                 Toast.makeText(RegisterActivity.this, "ההרשמה בוצעה בהצלחה!", Toast.LENGTH_SHORT).show();
+                sharedPreferencesUtil.saveUser(user);
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
 
             @Override
@@ -81,7 +84,6 @@ public class RegisterActivity extends BaseActivity {
             }
         });
     }
-
 
     private boolean validateInput(String firstName, String lastName, String birthDate, String email, String password) {
         if (firstName.isEmpty() || lastName.isEmpty() || birthDate.isEmpty() || email.isEmpty() || password.isEmpty()) {

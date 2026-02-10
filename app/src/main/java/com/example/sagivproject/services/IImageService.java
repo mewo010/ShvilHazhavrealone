@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ImageData;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
+
 
 public interface IImageService {
     /**

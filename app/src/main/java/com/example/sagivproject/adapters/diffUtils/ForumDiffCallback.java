@@ -9,7 +9,7 @@ public class ForumDiffCallback extends DiffUtil.ItemCallback<ForumMessage> {
 
     @Override
     public boolean areItemsTheSame(@NonNull ForumMessage oldItem, @NonNull ForumMessage newItem) {
-        return oldItem.getMessageId().equals(newItem.getMessageId());
+        return oldItem.getId().equals(newItem.getId());
     }
 
     @Override

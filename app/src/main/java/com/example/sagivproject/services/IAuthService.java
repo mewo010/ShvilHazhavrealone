@@ -82,7 +82,7 @@ public interface IAuthService {
         /**
          * Called when the registration is successful.
          */
-        void onSuccess();
+        void onSuccess(User user);
 
         /**
          * Called when the registration fails.

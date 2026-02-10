@@ -23,6 +23,7 @@ import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.EditUserDialog;
 import com.example.sagivproject.screens.dialogs.FullImageDialog;
 import com.example.sagivproject.screens.dialogs.ProfileImageDialog;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.utils.ImageUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -85,6 +86,8 @@ public class DetailsAboutUserActivity extends BaseActivity {
         txtEmail = findViewById(R.id.txt_DetailsAboutUser_email);
         txtPassword = findViewById(R.id.txt_DetailsAboutUser_password);
 
+        loadUserDetailsToUI();
+
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.TakePicturePreview(),
                 bitmap -> {
@@ -123,9 +126,11 @@ public class DetailsAboutUserActivity extends BaseActivity {
         databaseService.getUserService().getUser(user.getId(), new DatabaseCallback<>() {
             @Override
             public void onCompleted(User dbUser) {
-                user = dbUser;
-                sharedPreferencesUtil.saveUser(user);
-                loadUserDetailsToUI();
+                if (dbUser != null) {
+                    user = dbUser;
+                    sharedPreferencesUtil.saveUser(user);
+                    loadUserDetailsToUI();
+                }
             }
 
             @Override
@@ -136,6 +141,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
     }
 
     private void loadUserDetailsToUI() {
+        if (user == null) {
+            return;
+        }
         txtTitle.setText(user.getFullName());
         txtEmail.setText(user.getEmail());
         txtPassword.setText(user.getPassword());

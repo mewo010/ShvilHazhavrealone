@@ -26,6 +26,7 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -224,7 +225,8 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void saveMedication(Medication medication) {
-        medication.setId(databaseService.getMedicationService().generateMedicationId(uid));
+        String medicationId = databaseService.getMedicationService().generateMedicationId(uid);
+        medication.setId(medicationId);
         medication.setUserId(uid);
         databaseService.getMedicationService().createNewMedication(uid, medication, new DatabaseCallback<>() {
             @Override

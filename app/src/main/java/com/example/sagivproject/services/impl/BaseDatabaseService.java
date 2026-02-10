@@ -25,7 +25,7 @@ public abstract class BaseDatabaseService<T extends Idable> {
     private static final String TAG = "BaseFirebaseService";
 
     /// the reference to the database
-    private final DatabaseReference databaseReference;
+    protected final DatabaseReference databaseReference;
 
     /// the path in the database for this entity type
     private final String path;
@@ -89,11 +89,11 @@ public abstract class BaseDatabaseService<T extends Idable> {
 
     // region low-level helpers
 
-    private DatabaseReference readData(@NotNull final String fullPath) {
+    protected DatabaseReference readData(@NotNull final String fullPath) {
         return databaseReference.child(fullPath);
     }
 
-    private void writeData(@NotNull final String fullPath, @NotNull final Object data, final @Nullable IDatabaseService.DatabaseCallback<Void> callback) {
+    protected void writeData(@NotNull final String fullPath, @NotNull final Object data, final @Nullable IDatabaseService.DatabaseCallback<Void> callback) {
         readData(fullPath).setValue(data, (error, ref) -> {
             if (error != null) {
                 if (callback == null) return;
@@ -105,7 +105,7 @@ public abstract class BaseDatabaseService<T extends Idable> {
         });
     }
 
-    private void deleteData(@NotNull final String fullPath, @Nullable final IDatabaseService.DatabaseCallback<Void> callback) {
+    protected void deleteData(@NotNull final String fullPath, @Nullable final IDatabaseService.DatabaseCallback<Void> callback) {
         readData(fullPath).removeValue((error, ref) -> {
             if (error != null) {
                 if (callback == null) return;
@@ -117,7 +117,7 @@ public abstract class BaseDatabaseService<T extends Idable> {
         });
     }
 
-    private void getData(@NotNull final String fullPath, @NotNull final IDatabaseService.DatabaseCallback<T> callback) {
+    protected void getData(@NotNull final String fullPath, @NotNull final IDatabaseService.DatabaseCallback<T> callback) {
         readData(fullPath).get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.e(TAG, "Error getting data", task.getException());
@@ -129,7 +129,7 @@ public abstract class BaseDatabaseService<T extends Idable> {
         });
     }
 
-    private void getDataList(@NotNull final String fullPath, @NotNull final IDatabaseService.DatabaseCallback<List<T>> callback) {
+    protected void getDataList(@NotNull final String fullPath, @NotNull final IDatabaseService.DatabaseCallback<List<T>> callback) {
         readData(fullPath).get().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Log.e(TAG, "Error getting data", task.getException());
@@ -145,7 +145,7 @@ public abstract class BaseDatabaseService<T extends Idable> {
         });
     }
 
-    private void runTransaction(@NotNull final String fullPath, @NotNull final UnaryOperator<T> function, @Nullable final IDatabaseService.DatabaseCallback<T> callback) {
+    protected void runTransaction(@NotNull final String fullPath, @NotNull final UnaryOperator<T> function, @Nullable final IDatabaseService.DatabaseCallback<T> callback) {
         readData(fullPath).runTransaction(new Transaction.Handler() {
             @NonNull
             @Override

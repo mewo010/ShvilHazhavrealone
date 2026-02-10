@@ -25,8 +25,10 @@ public abstract class DatabaseModule {
     }
 
     @Binds
+    @Singleton
     public abstract IDatabaseService bindDatabaseService(DatabaseService databaseService);
 
     @Binds
+    @Singleton
     public abstract IImageService bindImageService(ImageServiceImpl imageService);
 }

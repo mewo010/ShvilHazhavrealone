@@ -1,6 +1,7 @@
 package com.example.sagivproject.services;
 
 import com.example.sagivproject.models.ForumCategory;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 

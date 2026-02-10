@@ -62,6 +62,8 @@ public class LoginActivity extends BaseActivity {
         databaseService.getAuthService().login(email, password, new IAuthService.LoginCallback() {
             @Override
             public void onSuccess(User user) {
+                sharedPreferencesUtil.saveUser(user);
+
                 Intent intent;
 
                 if (user.isAdmin()) {
@@ -74,6 +76,7 @@ public class LoginActivity extends BaseActivity {
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
 
             @Override

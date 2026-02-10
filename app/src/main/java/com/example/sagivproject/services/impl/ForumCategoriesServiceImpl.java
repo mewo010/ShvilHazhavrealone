@@ -7,7 +7,6 @@ import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.IForumCategoriesService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -18,17 +17,16 @@ import javax.inject.Inject;
 
 public class ForumCategoriesServiceImpl extends BaseDatabaseService<ForumCategory> implements IForumCategoriesService {
     private static final String CATEGORIES_PATH = "forum_categories";
-    private final DatabaseReference categoriesRef;
+    private static final String MESSAGES_PATH = "forum_messages"; // For cleaning up messages on category deletion
 
     @Inject
-    public ForumCategoriesServiceImpl(DatabaseReference databaseReference) {
-        super(databaseReference);
-        this.categoriesRef = databaseReference.child(CATEGORIES_PATH);
+    public ForumCategoriesServiceImpl() {
+        super(CATEGORIES_PATH, ForumCategory.class);
     }
 
     @Override
     public void getCategories(IDatabaseService.DatabaseCallback<List<ForumCategory>> callback) {
-        categoriesRef.orderByChild("creationDate").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(CATEGORIES_PATH).orderByChild("creationDate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<ForumCategory> list = new ArrayList<>();
@@ -49,13 +47,29 @@ public class ForumCategoriesServiceImpl extends BaseDatabaseService<ForumCategor
 
     @Override
     public void addCategory(String name, IDatabaseService.DatabaseCallback<Void> callback) {
-        String categoryId = generateId(categoriesRef);
+        String categoryId = super.generateId();
         ForumCategory category = new ForumCategory(categoryId, name);
-        super.create(categoriesRef, categoryId, category, callback);
+        super.create(category, callback);
     }
 
     @Override
     public void deleteCategory(String categoryId, IDatabaseService.DatabaseCallback<Void> callback) {
-        super.delete(categoriesRef, categoryId, callback);
+        // First, delete all messages associated with this category to prevent orphaned data.
+        deleteData(MESSAGES_PATH + "/" + categoryId, new IDatabaseService.DatabaseCallback<>() {
+            @Override
+            public void onCompleted(Void result) {
+                // After the messages are successfully deleted, delete the category entry itself.
+                // This uses the default path ("forum_categories") configured in the constructor.
+                delete(categoryId, callback);
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                // If deleting the messages fails, report the error for the whole operation.
+                if (callback != null) {
+                    callback.onFailed(e);
+                }
+            }
+        });
     }
 }

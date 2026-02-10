@@ -17,11 +17,13 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.adapters.ForumCategoryAdapter;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.ForumCategory;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
+
 
 @AndroidEntryPoint
 public class AdminForumCategoriesActivity extends BaseActivity {
@@ -45,20 +47,18 @@ public class AdminForumCategoriesActivity extends BaseActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_forum_categories);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ForumCategoryAdapter(categories, category -> {
-            databaseService.getForumCategoriesService().deleteCategory(category.getId(), new DatabaseCallback<Void>() {
-                @Override
-                public void onCompleted(Void data) {
-                    loadCategories();
-                    Toast.makeText(AdminForumCategoriesActivity.this, "קטגוריה נמחקה", Toast.LENGTH_SHORT).show();
-                }
+        adapter = new ForumCategoryAdapter(categories, category -> databaseService.getForumCategoriesService().deleteCategory(category.getId(), new DatabaseCallback<>() {
+            @Override
+            public void onCompleted(Void data) {
+                loadCategories();
+                Toast.makeText(AdminForumCategoriesActivity.this, "קטגוריה נמחקה", Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onFailed(Exception e) {
-                    Toast.makeText(AdminForumCategoriesActivity.this, "שגיאה במחיקה", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(AdminForumCategoriesActivity.this, "שגיאה במחיקה", Toast.LENGTH_SHORT).show();
+            }
+        }));
         recyclerView.setAdapter(adapter);
 
         EditText edtNewCategoryName = findViewById(R.id.edt_new_category_name);
@@ -67,7 +67,7 @@ public class AdminForumCategoriesActivity extends BaseActivity {
         btnAddCategory.setOnClickListener(v -> {
             String categoryName = edtNewCategoryName.getText().toString().trim();
             if (!categoryName.isEmpty()) {
-                databaseService.getForumCategoriesService().addCategory(categoryName, new DatabaseCallback<Void>() {
+                databaseService.getForumCategoriesService().addCategory(categoryName, new DatabaseCallback<>() {
                     @Override
                     public void onCompleted(Void data) {
                         edtNewCategoryName.setText("");
@@ -87,7 +87,7 @@ public class AdminForumCategoriesActivity extends BaseActivity {
     }
 
     private void loadCategories() {
-        databaseService.getForumCategoriesService().getCategories(new DatabaseCallback<List<ForumCategory>>() {
+        databaseService.getForumCategoriesService().getCategories(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ForumCategory> data) {
                 categories.clear();

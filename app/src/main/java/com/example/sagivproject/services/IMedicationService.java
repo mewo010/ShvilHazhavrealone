@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.Medication;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
+
 
 public interface IMedicationService {
     /**
@@ -31,7 +33,7 @@ public interface IMedicationService {
      * @param uid the id of the user
      * @return a new id for the medication
      */
-    String generateMedicationId(@NonNull String uid);
+    String generateMedicationId(String uid);
 
     /**
      * delete a medication from the database

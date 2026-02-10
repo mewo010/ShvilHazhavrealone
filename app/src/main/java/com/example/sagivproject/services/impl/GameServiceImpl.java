@@ -6,13 +6,13 @@ import androidx.annotation.Nullable;
 import com.example.sagivproject.models.Card;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.IGameService;
 import com.example.sagivproject.services.RoomStatusCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
@@ -31,10 +31,10 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     private ValueEventListener activeGameListener;
 
     @Inject
-    public GameServiceImpl(DatabaseReference databaseReference) {
-        super("rooms", GameRoom.class);
-        this.roomsReference = databaseReference.child(ROOMS_PATH);
-        this.usersReference = databaseReference.child(USERS_PATH);
+    public GameServiceImpl(FirebaseDatabase firebaseDatabase) {
+        super(ROOMS_PATH, GameRoom.class);
+        this.roomsReference = firebaseDatabase.getReference(ROOMS_PATH);
+        this.usersReference = firebaseDatabase.getReference(USERS_PATH);
     }
 
     @Override
@@ -43,9 +43,6 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
             callback.onFailed(new IllegalArgumentException("User cannot be null"));
             return;
         }
-
-        String newRoomId = roomsReference.push().getKey();
-        final String[] matchedRoomId = new String[1];
 
         roomsReference.runTransaction(new Transaction.Handler() {
             @NonNull
@@ -58,14 +55,13 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
                         room.setPlayer2(user);
                         room.setStatus("playing");
                         roomData.setValue(room);
-                        matchedRoomId[0] = room.getId();
                         return Transaction.success(currentData);
                     }
                 }
 
+                String newRoomId = roomsReference.push().getKey();
                 GameRoom newRoom = new GameRoom(newRoomId, user);
                 currentData.child(Objects.requireNonNull(newRoomId)).setValue(newRoom);
-                matchedRoomId[0] = newRoomId;
                 return Transaction.success(currentData);
             }
 
@@ -76,12 +72,15 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
                     return;
                 }
 
-                if (matchedRoomId[0] != null) {
-                    GameRoom room = snapshot.child(matchedRoomId[0]).getValue(GameRoom.class);
-                    callback.onCompleted(room);
-                } else {
-                    callback.onFailed(new Exception("Could not find or create a room."));
+                // Find the room that the user is in
+                for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
+                    GameRoom room = roomSnapshot.getValue(GameRoom.class);
+                    if (room != null && (user.equals(room.getPlayer1()) || user.equals(room.getPlayer2()))) {
+                        callback.onCompleted(room);
+                        return;
+                    }
                 }
+                callback.onFailed(new Exception("Could not find the room after transaction."));
             }
         });
     }
@@ -109,19 +108,8 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     }
 
     @Override
-    public void findOrCreateRoom(User user, IDatabaseService.DatabaseCallback<GameRoom> callback) {
-
-    }
-
-    @Override
-    public void getAllRoomsRealtime(@NonNull IDatabaseService.DatabaseCallback<List<GameRoom>> callback) {
-
-    }
-
-    @Override
     public ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull RoomStatusCallback callback) {
         ValueEventListener listener = new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
@@ -155,41 +143,28 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     }
 
     @Override
-    public void cancelRoom(@NonNull String roomId, @Nullable IDatabaseService.DatabaseCallback<Void> callback) {
-
-    }
-
-    @Override
-    public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, IDatabaseService.DatabaseCallback<Void> callback) {
-
-    }
-
-    @Override
-    public void listenToGame(String roomId, IDatabaseService.DatabaseCallback<GameRoom> callback) {
-
-    }
-
-    @Override
     public void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback) {
-        super.delete(roomsReference, roomId, callback);
+        deleteData(roomId, callback);
     }
 
     @Override
     public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback) {
         roomsReference.child(roomId).child("cards").setValue(cards);
         roomsReference.child(roomId).child("currentTurnUid").setValue(firstTurnUid);
-        roomsReference.child(roomId).child("status").setValue("playing",
-                (error, ref) -> {
-                    if (callback == null) return;
-                    if (error != null) callback.onFailed(error.toException());
-                    else callback.onCompleted(null);
-                });
+        roomsReference.child(roomId).child("status").setValue("playing", (error, ref) -> {
+            if (callback != null) {
+                if (error != null) {
+                    callback.onFailed(error.toException());
+                } else {
+                    callback.onCompleted(null);
+                }
+            }
+        });
     }
 
     @Override
     public void listenToGame(String roomId, DatabaseCallback<GameRoom> callback) {
         stopListeningToGame(roomId);
-
         activeGameListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -206,7 +181,6 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
                 callback.onFailed(error.toException());
             }
         };
-
         roomsReference.child(roomId).addValueEventListener(activeGameListener);
     }
 
@@ -225,8 +199,9 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
 
     @Override
     public void updateCardStatus(String roomId, int index, boolean revealed, boolean matched) {
-        roomsReference.child(roomId).child("cards").child(String.valueOf(index)).child("isRevealed").setValue(revealed);
-        roomsReference.child(roomId).child("cards").child(String.valueOf(index)).child("isMatched").setValue(matched);
+        DatabaseReference cardRef = roomsReference.child(roomId).child("cards").child(String.valueOf(index));
+        cardRef.child("isRevealed").setValue(revealed);
+        cardRef.child("isMatched").setValue(matched);
     }
 
     @Override
@@ -243,29 +218,28 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData currentData) {
                 Integer currentWins = currentData.getValue(Integer.class);
-                if (currentWins == null) {
-                    currentData.setValue(1);
-                } else {
-                    currentData.setValue(currentWins + 1);
-                }
+                currentData.setValue(currentWins == null ? 1 : currentWins + 1);
                 return Transaction.success(currentData);
             }
 
             @Override
             public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                // Transaction complete. No action needed.
             }
         });
     }
 
     @Override
     public void setupForfeitOnDisconnect(String roomId, String opponentUid) {
-        roomsReference.child(roomId).child("status").onDisconnect().setValue("finished");
-        roomsReference.child(roomId).child("winnerUid").onDisconnect().setValue(opponentUid);
+        DatabaseReference roomRef = roomsReference.child(roomId);
+        roomRef.child("status").onDisconnect().setValue("finished");
+        roomRef.child("winnerUid").onDisconnect().setValue(opponentUid);
     }
 
     @Override
     public void removeForfeitOnDisconnect(String roomId) {
-        roomsReference.child(roomId).child("status").onDisconnect().cancel();
-        roomsReference.child(roomId).child("winnerUid").onDisconnect().cancel();
+        DatabaseReference roomRef = roomsReference.child(roomId);
+        roomRef.child("status").onDisconnect().cancel();
+        roomRef.child("winnerUid").onDisconnect().cancel();
     }
 }

@@ -19,6 +19,7 @@
         android:id="@+id/recycler_forum_categories"
         android.layout_height="0dp"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/ll_add_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,14 +40,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/heebo_regular"
+            android:fontFamily="@font/text_hebrew"
             android:hint="שם קטגוריה חדשה" />
 
         <Button
             android:id="@+id/btn_add_category"
-            android.layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/heebo_bold"
+            android:fontFamily="@font/text_hebrew"
             android:text="הוסף" />
     </LinearLayout>
 

@@ -29,6 +29,7 @@ import com.example.sagivproject.models.ImageData;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.ExitGameDialog;
 import com.example.sagivproject.screens.dialogs.GameEndDialog;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

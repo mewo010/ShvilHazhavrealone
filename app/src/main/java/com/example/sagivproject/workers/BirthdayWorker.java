@@ -9,6 +9,7 @@ import androidx.work.WorkerParameters;
 
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IDatabaseService;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.NotificationService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 

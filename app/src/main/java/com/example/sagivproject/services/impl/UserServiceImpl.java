@@ -69,7 +69,7 @@ public class UserServiceImpl extends BaseDatabaseService<User> implements IUserS
 
     @Override
     public void checkIfEmailExists(@NonNull String email, @NonNull DatabaseCallback<Boolean> callback) {
-        getAll(new DatabaseCallback<List<User>>() {
+        getAll(new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<User> users) {
                 for (User user : users) {
@@ -91,7 +91,7 @@ public class UserServiceImpl extends BaseDatabaseService<User> implements IUserS
     @Override
     public void updateUser(@NonNull User user, @Nullable DatabaseCallback<Void> callback) {
         UnaryOperator<User> updateFunction = oldUser -> user;
-        super.update(user.getId(), updateFunction, new DatabaseCallback<User>() {
+        super.update(user.getId(), updateFunction, new DatabaseCallback<>() {
             @Override
             public void onCompleted(User updatedUser) {
                 if (callback != null) callback.onCompleted(null);
@@ -110,7 +110,7 @@ public class UserServiceImpl extends BaseDatabaseService<User> implements IUserS
             user.setRole(role);
             return user;
         };
-        super.update(uid, updateFunction, new DatabaseCallback<User>() {
+        super.update(uid, updateFunction, new DatabaseCallback<>() {
             @Override
             public void onCompleted(User user) {
                 if (callback != null) callback.onCompleted(null);

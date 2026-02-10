@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.IForumService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,24 +19,36 @@ import javax.inject.Inject;
 
 public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implements IForumService {
     private static final String FORUM_PATH = "forum_messages";
-    private final DatabaseReference dbRef;
 
     @Inject
-    public ForumServiceImpl(DatabaseReference databaseReference) {
-        super(databaseReference);
-        this.dbRef = databaseReference;
+    public ForumServiceImpl() {
+        super(FORUM_PATH, ForumMessage.class);
+    }
+
+    private String getCategoryPath(String categoryId) {
+        return FORUM_PATH + "/" + categoryId;
     }
 
     private DatabaseReference getCategoryMessagesRef(String categoryId) {
-        return dbRef.child(FORUM_PATH).child(categoryId);
+        // 'databaseReference' is the protected root reference from BaseDatabaseService
+        return databaseReference.child(getCategoryPath(categoryId));
     }
 
     @Override
     public void sendMessage(User user, String text, String categoryId, @Nullable DatabaseCallback<Void> callback) {
         DatabaseReference categoryMessagesRef = getCategoryMessagesRef(categoryId);
-        String messageId = generateId(categoryMessagesRef);
+        String messageId = categoryMessagesRef.push().getKey();
+
+        if (messageId == null) {
+            if (callback != null)
+                callback.onFailed(new Exception("Failed to generate message ID."));
+            return;
+        }
+
         ForumMessage msg = new ForumMessage(messageId, user.getFullName(), user.getEmail(), text, System.currentTimeMillis(), user.getId(), user.isAdmin());
-        super.create(categoryMessagesRef, messageId, msg, callback);
+
+        // Use the protected 'writeData' helper from BaseDatabaseService with a full path
+        writeData(getCategoryPath(categoryId) + "/" + messageId, msg, callback);
     }
 
     @Override
@@ -46,7 +59,9 @@ public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implemen
                 List<ForumMessage> list = new ArrayList<>();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     ForumMessage msg = child.getValue(ForumMessage.class);
-                    list.add(msg);
+                    if (msg != null) {
+                        list.add(msg);
+                    }
                 }
                 if (callback != null) callback.onCompleted(list);
             }
@@ -60,6 +75,7 @@ public class ForumServiceImpl extends BaseDatabaseService<ForumMessage> implemen
 
     @Override
     public void deleteMessage(@NonNull String messageId, String categoryId, @Nullable DatabaseCallback<Void> callback) {
-        super.delete(getCategoryMessagesRef(categoryId), messageId, callback);
+        // Use the protected 'deleteData' helper from BaseDatabaseService with a full path
+        deleteData(getCategoryPath(categoryId) + "/" + messageId, callback);
     }
 }

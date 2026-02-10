@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.sagivproject.adapters.ForumAdapter;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.models.User;
-import com.example.sagivproject.services.IForumService;
+import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +23,6 @@ public abstract class BaseForumActivity extends BaseActivity {
     protected EditText edtMessage;
     protected Button btnNewMessagesIndicator;
     protected ForumAdapter adapter;
-    protected IForumService forumService;
     protected ForumPermissions permissions;
     protected String categoryId;
 
@@ -36,11 +35,10 @@ public abstract class BaseForumActivity extends BaseActivity {
         }
     }
 
-    protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages, IForumService forumService) {
+    protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages) {
         this.recycler = recycler;
         this.edtMessage = edtMessage;
         this.btnNewMessagesIndicator = btnNewMessages;
-        this.forumService = forumService;
 
         //הגדרת לחיצה על כפתור "הודעות חדשות"
         if (btnNewMessagesIndicator != null) {
@@ -69,7 +67,7 @@ public abstract class BaseForumActivity extends BaseActivity {
         adapter.setForumMessageListener(new ForumAdapter.ForumMessageListener() {
             @Override
             public void onClick(ForumMessage message) {
-                forumService.deleteMessage(message.getMessageId(), categoryId, new DatabaseCallback<>() {
+                databaseService.getForumService().deleteMessage(message.getId(), categoryId, new DatabaseCallback<>() {
                     @Override
                     public void onCompleted(Void data) {
                         Toast.makeText(BaseForumActivity.this, "ההודעה נמחקה", Toast.LENGTH_SHORT).show();
@@ -90,7 +88,7 @@ public abstract class BaseForumActivity extends BaseActivity {
     }
 
     protected void loadMessages() {
-        forumService.listenToMessages(categoryId, new DatabaseCallback<>() {
+        databaseService.getForumService().listenToMessages(categoryId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ForumMessage> list) {
                 //בודקים אם המשתמש היה בסוף לפני העדכון
@@ -121,7 +119,7 @@ public abstract class BaseForumActivity extends BaseActivity {
 
         User user = sharedPreferencesUtil.getUser();
 
-        forumService.sendMessage(Objects.requireNonNull(user), text, categoryId, new DatabaseCallback<>() {
+        databaseService.getForumService().sendMessage(Objects.requireNonNull(user), text, categoryId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(Void data) {
                 edtMessage.setText("");

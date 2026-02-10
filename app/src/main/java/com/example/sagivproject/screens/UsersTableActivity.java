@@ -260,7 +260,6 @@ public class UsersTableActivity extends BaseActivity {
         String lowerQuery = query.toLowerCase();
 
         switch (searchType) {
-
             case "מנהלים":
                 for (User user : usersList) {
                     if (user.isAdmin() &&
@@ -316,7 +315,9 @@ public class UsersTableActivity extends BaseActivity {
                     }
                 }
                 break;
-            default: // "הכל"
+
+            case "הכל":
+            default:
                 filteredList.addAll(usersList);
                 break;
         }
