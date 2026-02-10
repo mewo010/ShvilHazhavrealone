@@ -15,7 +15,6 @@ import com.example.sagivproject.adapters.diffUtils.ForumCategoryDiffCallback;
 import com.example.sagivproject.models.ForumCategory;
 
 public class ForumCategoryAdapter extends ListAdapter<ForumCategory, ForumCategoryAdapter.CategoryViewHolder> {
-
     private final OnCategoryInteractionListener listener;
     private final boolean isAdmin;
 
