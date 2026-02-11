@@ -21,7 +21,7 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IDatabaseService;
-import com.example.sagivproject.services.RoomStatusCallback;
+import com.example.sagivproject.services.IGameService;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.MessageFormat;
@@ -134,7 +134,7 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void listenToRoom(String roomId) {
-        roomListener = databaseService.getGameService().listenToRoomStatus(roomId, new RoomStatusCallback() {
+        roomListener = databaseService.getGameService().listenToRoomStatus(roomId, new IGameService.IRoomStatusCallback() {
             @Override
             public void onRoomStarted(GameRoom startedRoom) {
                 if (gameStarted) return;

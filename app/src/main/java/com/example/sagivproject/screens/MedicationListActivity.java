@@ -225,7 +225,7 @@ public class MedicationListActivity extends BaseActivity {
     }
 
     private void saveMedication(Medication medication) {
-        String medicationId = databaseService.getMedicationService().generateMedicationId(uid);
+        String medicationId = databaseService.getMedicationService().generateMedicationId();
         medication.setId(medicationId);
         medication.setUserId(uid);
         databaseService.getMedicationService().createNewMedication(uid, medication, new DatabaseCallback<>() {

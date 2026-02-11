@@ -30,10 +30,9 @@ public interface IMedicationService {
     /**
      * generate a new id for a medication under a specific user
      *
-     * @param uid the id of the user
      * @return a new id for the medication
      */
-    String generateMedicationId(String uid);
+    String generateMedicationId();
 
     /**
      * delete a medication from the database

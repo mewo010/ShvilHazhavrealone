@@ -132,7 +132,6 @@
                             android:id="@+id/TV_Ai_txt_response"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:editable="false"
                             android:focusable="false"
                             android:fontFamily="@font/text_hebrew"
                             android:gravity="top|start"

@@ -26,8 +26,8 @@ public class MedicationServiceImpl extends BaseDatabaseService<Medication> imple
     }
 
     @Override
-    public String generateMedicationId(String uid) {
-        return readData(getMedicationPath(uid)).push().getKey();
+    public String generateMedicationId() {
+        return super.generateId();
     }
 
     @Override

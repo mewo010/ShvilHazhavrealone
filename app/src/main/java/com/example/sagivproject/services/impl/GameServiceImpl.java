@@ -8,7 +8,6 @@ import com.example.sagivproject.models.GameRoom;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import com.example.sagivproject.services.IGameService;
-import com.example.sagivproject.services.RoomStatusCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -108,7 +107,7 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     }
 
     @Override
-    public ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull RoomStatusCallback callback) {
+    public ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull IRoomStatusCallback callback) {
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

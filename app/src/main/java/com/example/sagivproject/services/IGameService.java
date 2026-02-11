@@ -34,7 +34,7 @@ public interface IGameService {
      * @param callback callback to notify about room start, deletion or errors
      * @return the ValueEventListener instance so it can later be removed
      */
-    ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull RoomStatusCallback callback);
+    ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull IRoomStatusCallback callback);
 
     /**
      * remove a previously registered room status listener
@@ -125,4 +125,34 @@ public interface IGameService {
      * @param roomId the id of the game room
      */
     void removeForfeitOnDisconnect(String roomId);
+
+    /**
+     * A callback interface for monitoring the status of a game room.
+     */
+    interface IRoomStatusCallback {
+        /**
+         * Called when the game room has started.
+         *
+         * @param room The game room that has started.
+         */
+        void onRoomStarted(GameRoom room);
+
+        /**
+         * Called when the game room has been deleted.
+         */
+        void onRoomDeleted();
+
+        /**
+         * Called when the game room has finished.
+         *
+         */
+        void onRoomFinished(GameRoom ignoredRoom);
+
+        /**
+         * Called when an error occurs while monitoring the game room.
+         *
+         * @param ignoredE The exception that occurred.
+         */
+        void onFailed(Exception ignoredE);
+    }
 }
