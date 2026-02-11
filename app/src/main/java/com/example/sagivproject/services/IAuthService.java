@@ -17,7 +17,7 @@ public interface IAuthService {
      *
      * @param firstName       The user's first name.
      * @param lastName        The user's last name.
-     * @param birthDateMillis The user's birth date in milliseconds.
+     * @param birthDateMillis The user's birthdate in milliseconds.
      * @param email           The user's email.
      * @param password        The user's password.
      * @param callback        The callback to be invoked when the registration process is complete.
@@ -29,7 +29,7 @@ public interface IAuthService {
      *
      * @param firstName       The user's first name.
      * @param lastName        The user's last name.
-     * @param birthDateMillis The user's birth date in milliseconds.
+     * @param birthDateMillis The user's birthdate in milliseconds.
      * @param email           The user's email.
      * @param password        The user's password.
      * @param callback        The callback to be invoked when the user is added.
@@ -42,7 +42,7 @@ public interface IAuthService {
      * @param user               The user to update.
      * @param newFirstName       The new first name.
      * @param newLastName        The new last name.
-     * @param newBirthDateMillis The new birth date in milliseconds.
+     * @param newBirthDateMillis The new birthdate in milliseconds.
      * @param newEmail           The new email.
      * @param newPassword        The new password.
      * @param callback           The callback to be invoked when the update is complete.

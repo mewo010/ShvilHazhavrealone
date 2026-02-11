@@ -41,11 +41,13 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
         ViewGroup topMenuContainer = findViewById(R.id.topMenuContainer);
         setupTopMenu(topMenuContainer);
 
+        Button btnBackToCategories = findViewById(R.id.btn_forum_back_to_categories);
         Button btnSendMessage = findViewById(R.id.btn_forum_send_message);
         EditText edtNewMessage = findViewById(R.id.edt_forum_new_message);
         Button btnNewMessages = findViewById(R.id.btn_forum_new_messages_indicator);
         RecyclerView recyclerForum = findViewById(R.id.recycler_forum);
 
+        btnBackToCategories.setOnClickListener(v -> finish());
         btnSendMessage.setOnClickListener(v -> sendMessage());
 
         initForumViews(recyclerForum, edtNewMessage, btnNewMessages);

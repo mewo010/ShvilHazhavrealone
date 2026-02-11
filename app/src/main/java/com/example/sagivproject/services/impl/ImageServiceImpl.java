@@ -39,7 +39,7 @@ public class ImageServiceImpl extends BaseDatabaseService<ImageData> implements 
             map.put(img.getId(), img);
         }
 
-        // Use the protected writeData helper to overwrite the entire images collection.
+        // Use the protected writeData helper to overwrite the entire images' collection.
         writeData(IMAGES_PATH, map, callback);
     }
 }
