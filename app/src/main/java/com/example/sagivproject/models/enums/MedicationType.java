@@ -4,7 +4,9 @@ public enum MedicationType {
     PILL("כדור"),
     SYRUP("סירופ"),
     CREAM("משחה"),
-    INJECTION("זריקה");
+    INJECTION("זריקה"),
+    HALFTABLET("חצי כדור"),
+    VITAMIN("ויטמין");
 
     private final String displayName;
 
