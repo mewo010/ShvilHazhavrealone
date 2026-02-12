@@ -114,6 +114,7 @@ public class GameHomeScreenActivity extends BaseActivity {
             public void onCompleted(List<User> users) {
                 if (users != null) {
                     users.removeIf(User::isAdmin);
+                    users.removeIf(user -> user.getCountWins() < 1);
                     users.sort((u1, u2) -> Integer.compare(u2.getCountWins(), u1.getCountWins()));
                     adapter = new LeaderboardAdapter(users);
                     rvLeaderboard.setAdapter(adapter);

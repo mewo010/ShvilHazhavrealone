@@ -32,11 +32,10 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = userList.get(position);
         holder.tvName.setText(user.getFullName());
-        holder.tvEmail.setText(user.getEmail());
         holder.tvWins.setText(String.valueOf(user.getCountWins()));
 
         if (position == 0 && user.getCountWins() > 0) {
-            holder.tvWins.setText(MessageFormat.format("\uD83E\uDD47 {0}", user.getCountWins()));
+            holder.tvWins.setText(MessageFormat.format("\uD83E\uDD47 {0}", user.getCountWins())); //🏆
         } else {
             holder.tvWins.setText(String.valueOf(user.getCountWins()));
         }
@@ -48,12 +47,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvName, tvEmail, tvWins;
+        final TextView tvName, tvWins;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_ItemUserRank_user_name);
-            tvEmail = itemView.findViewById(R.id.tv_ItemUserRank_user_email);
             tvWins = itemView.findViewById(R.id.tv_ItemUserRank_wins);
         }
     }

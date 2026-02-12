@@ -23,27 +23,14 @@
             android:id="@+id/tv_ItemUserRank_user_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="8"
             android:ellipsize="end"
             android:fontFamily="@font/text_hebrew"
-            android:gravity="right"
+            android:gravity="center"
             android:maxLines="1"
             android:textSize="20sp"
             tools:ignore="RtlHardcoded"
             tools:text="שם פרטי + משפחה" />
-
-        <TextView
-            android:id="@+id/tv_ItemUserRank_user_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:ellipsize="middle"
-            android:fontFamily="@font/text_english"
-            android:gravity="center"
-            android:maxLines="1"
-            android:paddingHorizontal="4dp"
-            android:textSize="15sp"
-            tools:text="email@example.com" />
 
         <TextView
             android:id="@+id/tv_ItemUserRank_wins"

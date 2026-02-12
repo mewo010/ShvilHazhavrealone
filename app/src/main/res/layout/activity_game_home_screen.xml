@@ -245,20 +245,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="8"
                     android:fontFamily="@font/headline_hebrew"
                     android:gravity="center"
                     android:text="@string/שםמלא"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:fontFamily="@font/headline_hebrew"
-                    android:gravity="center"
-                    android:text="@string/כתובתאימייל"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:layout_width="0dp"

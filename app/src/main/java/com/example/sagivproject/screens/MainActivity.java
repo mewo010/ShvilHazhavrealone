@@ -15,7 +15,16 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.User;
 
+import java.util.Random;
+
 public class MainActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
+    private final String[] inspirationalQuotes = {
+            "ההצלחה היא סך הכל של מאמצים קטנים, שחוזרים עליהם יום יום.",
+            "הדרך הטובה ביותר לחזות את העתיד היא ליצור אותו.",
+            "אל תחכה. הזמן לעולם לא יהיה בדיוק מתאים.",
+            "האמינו בעצמכם וכל מה שאתם. דעו שיש בכם משהו גדול יותר מכל מכשול.",
+            "ההתחלה היא החלק החשוב ביותר בעבודה."
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
         Button btnToMathProblems = findViewById(R.id.btn_main_to_MathProblems);
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
+        TextView tvInspirationContent = findViewById(R.id.tv_inspiration_content);
 
         btnToMedicationList.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MedicationListActivity.class)));
         btnToForum.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ForumCategoriesActivity.class)));
@@ -49,6 +59,10 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         if (user != null) {
             txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));
         }
+
+        Random random = new Random();
+        int index = random.nextInt(inspirationalQuotes.length);
+        tvInspirationContent.setText(inspirationalQuotes[index]);
     }
 }
 /*

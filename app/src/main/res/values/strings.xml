@@ -30,7 +30,7 @@
     <string name="אימייל">shvilhazhav23contact@gmail.com</string>
     <string name="טקסטצורקשר">הרעיון לפרויקט עלה לאור התקופה הקשה שהמדינה עוברת בשנים האחרונות ולא מעט אירועים בהם אוכלוסיות מיוחדות ונזקקות נדרשו לעזרה גם בדברים הקטנים היומיומיים.</string>
     <string name="אייקוןצורקשר">אייקון צור קשר</string>
-    <string name="שםמלא">שם פרטי + משפחה</string>
+    <string name="שםמלא">שם מלא</string>
     <string name="אישור">אישור</string>
     <string name="ביטול">ביטול</string>
     <string name="ברוכיםהבאים">ברוכים הבאים</string>
@@ -111,6 +111,7 @@
     <string name="מחפשיריב">מחפש יריב…</string>
     <string name="שםקטגוריהחדשה">שם קטגוריה חדשה</string>
     <string name="קטגוריותקשרקרוב">קטגוריות קשר קרוב</string>
+    <string name="פינתהשראהיומית">פינת השראה יומית</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>
