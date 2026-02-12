@@ -146,15 +146,6 @@
                         app:iconGravity="textEnd"
                         app:iconPadding="12dp"
                         app:iconSize="28dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_admin_to_exit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/error"
-                        android:fontFamily="@font/text_hebrew"
-                        android:text="@string/התנתקות"
-                        android:textSize="25sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

@@ -112,6 +112,8 @@
     <string name="שםקטגוריהחדשה">שם קטגוריה חדשה</string>
     <string name="קטגוריותקשרקרוב">קטגוריות קשר קרוב</string>
     <string name="פינתהשראהיומית">פינת השראה יומית</string>
+    <string name="מצבכהה">מצב כהה</string>
+    <string name="מצבבהיר">מצב בהיר</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

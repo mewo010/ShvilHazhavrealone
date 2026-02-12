@@ -53,17 +53,5 @@
             android:text="@string/צורקשר"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btn_menu_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="none"
-            android:fontFamily="@font/text_hebrew"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp"
-            android:singleLine="true"
-            android:text="@string/התנתקות"
-            android:textSize="20sp" />
-
     </LinearLayout>
 </merge>

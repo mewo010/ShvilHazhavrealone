@@ -35,7 +35,6 @@ public class AdminPageActivity extends BaseActivity {
         Button btnToForumCategories = findViewById(R.id.btn_admin_to_ForumCategories);
         Button btnToDetailsAboutUser = findViewById(R.id.btn_admin_to_DetailsAboutUser);
         Button btnToSettings = findViewById(R.id.btn_admin_to_Settings);
-        Button btnLogout = findViewById(R.id.btn_admin_to_exit);
         TextView txtAdminTitle = findViewById(R.id.txt_admin_title);
 
         btnToUserTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, UsersTableActivity.class)));
@@ -44,7 +43,6 @@ public class AdminPageActivity extends BaseActivity {
         btnToForumCategories.setOnClickListener(v -> startActivity(new Intent(AdminPageActivity.this, AdminForumCategoriesActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, DetailsAboutUserActivity.class)));
         btnToSettings.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, SettingsActivity.class)));
-        btnLogout.setOnClickListener(view -> logout());
 
         if (user != null) {
             txtAdminTitle.setText(String.format("שלום %s", user.getFullName()));

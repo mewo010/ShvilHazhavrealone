@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -21,8 +20,6 @@ import com.example.sagivproject.screens.LoginActivity;
 import com.example.sagivproject.screens.MainActivity;
 import com.example.sagivproject.screens.RegisterActivity;
 import com.example.sagivproject.screens.SettingsActivity;
-import com.example.sagivproject.screens.dialogs.LogoutDialog;
-import com.example.sagivproject.services.IAuthService;
 import com.example.sagivproject.services.IDatabaseService;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 
@@ -40,8 +37,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected SharedPreferencesUtil sharedPreferencesUtil;
     @Inject
     protected IDatabaseService databaseService;
-    @Inject
-    protected IAuthService authService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,13 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Button btnContact = findViewById(R.id.btn_menu_contact);
                 Button btnDetailsAboutUser = findViewById(R.id.btn_menu_details);
                 ImageButton btnSettings = findViewById(R.id.btn_menu_settings);
-                Button btnLogout = findViewById(R.id.btn_menu_logout);
 
                 btnMain.setOnClickListener(v -> navigateIfNotCurrent(MainActivity.class));
                 btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
                 btnDetailsAboutUser.setOnClickListener(v -> navigateIfNotCurrent(DetailsAboutUserActivity.class));
                 btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
-                btnLogout.setOnClickListener(v -> logout());
             }
         } else {
             @LayoutRes int menuLayout = R.layout.top_menu_logged_out;
@@ -101,18 +94,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             return;
         }
         startActivity(new Intent(this, targetActivity));
-    }
-
-    protected void logout() {
-        new LogoutDialog(this, () -> {
-            String email = authService.logout();
-            Toast.makeText(this, "התנתקת בהצלחה", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("userEmail", email);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        }).show();
     }
 
     protected void requestPermissions() {
