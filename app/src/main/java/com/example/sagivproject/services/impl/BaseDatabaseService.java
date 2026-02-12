@@ -137,10 +137,10 @@ public abstract class BaseDatabaseService<T extends Idable> {
                 return;
             }
             List<T> tList = new ArrayList<>();
-            task.getResult().getChildren().forEach(dataSnapshot -> {
-                T t = dataSnapshot.getValue(clazz);
-                tList.add(t);
-            });
+            for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                T value = snapshot.getValue(clazz);
+                tList.add(value);
+            }
             callback.onCompleted(tList);
         });
     }

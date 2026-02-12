@@ -143,7 +143,28 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
 
     @Override
     public void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback) {
-        deleteData(roomId, callback);
+        roomsReference.child(roomId).runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                GameRoom room = currentData.getValue(GameRoom.class);
+                if (room != null && "waiting".equals(room.getStatus()) && room.getPlayer2() == null) {
+                    currentData.setValue(null); // Delete the room
+                }
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (callback != null) {
+                    if (error != null) {
+                        callback.onFailed(error.toException());
+                    } else {
+                        callback.onCompleted(null);
+                    }
+                }
+            }
+        });
     }
 
     @Override

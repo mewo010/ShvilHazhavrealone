@@ -65,20 +65,47 @@ public class GameHomeScreenActivity extends BaseActivity {
         rvLeaderboard = findViewById(R.id.recyclerView_GameHomeScreen_leaderboard);
 
         btnFindEnemy.setOnClickListener(view -> findEnemy());
-        btnCancelFindEnemy.setOnClickListener(view -> cancel());
+        btnCancelFindEnemy.setOnClickListener(view -> cancelSearch());
         rvLeaderboard.setLayoutManager(new LinearLayoutManager(this));
         setupLeaderboard();
+
+        updateUI(SearchState.IDLE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        user = sharedPreferencesUtil.getUser();
-        loadWins(user);
+        loadWins();
+        gameStarted = false; // Reset game started flag when returning to screen
     }
 
-    private void loadWins(User user) {
-        TVictories.setText(MessageFormat.format("ניצחונות: {0}", user.getCountWins()));
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // If user leaves the screen while searching, cancel the search to free up the room.
+        if (currentRoom != null && !gameStarted) {
+            cancelSearch();
+        }
+    }
+
+    private void loadWins() {
+        databaseService.getUserService().getUser(user.getId(), new IDatabaseService.DatabaseCallback<>() {
+            @Override
+            public void onCompleted(User updatedUser) {
+                if (updatedUser != null) {
+                    sharedPreferencesUtil.saveUser(updatedUser);
+                    GameHomeScreenActivity.this.user = updatedUser;
+                    TVictories.setText(MessageFormat.format("ניצחונות: {0}", updatedUser.getCountWins()));
+                }
+            }
+
+            @Override
+            public void onFailed(Exception e) {
+                Toast.makeText(GameHomeScreenActivity.this, "שגיאה בעדכון נתוני משתמש", Toast.LENGTH_SHORT).show();
+                // Even if update fails, show existing data from shared preferences
+                TVictories.setText(MessageFormat.format("ניצחונות: {0}", GameHomeScreenActivity.this.user.getCountWins()));
+            }
+        });
     }
 
     private void setupLeaderboard() {
@@ -87,10 +114,7 @@ public class GameHomeScreenActivity extends BaseActivity {
             public void onCompleted(List<User> users) {
                 if (users != null) {
                     users.removeIf(User::isAdmin);
-
-                    //מיון הרשימה לפי כמות ניצחונות מהגבוה לנמוך
                     users.sort((u1, u2) -> Integer.compare(u2.getCountWins(), u1.getCountWins()));
-
                     adapter = new LeaderboardAdapter(users);
                     rvLeaderboard.setAdapter(adapter);
                 }
@@ -104,13 +128,14 @@ public class GameHomeScreenActivity extends BaseActivity {
     }
 
     private void findEnemy() {
-        TVStatusOfFindingEnemy.setVisibility(View.VISIBLE);
-        btnCancelFindEnemy.setVisibility(View.VISIBLE);
-        btnFindEnemy.setVisibility(View.GONE);
-
+        updateUI(SearchState.SEARCHING);
         databaseService.getGameService().findOrCreateRoom(user, new IDatabaseService.DatabaseCallback<>() {
             @Override
             public void onCompleted(GameRoom room) {
+                if (room == null) {
+                    onFailed(new Exception("Room not created"));
+                    return;
+                }
                 currentRoom = room;
                 listenToRoom(room.getId());
             }
@@ -118,43 +143,54 @@ public class GameHomeScreenActivity extends BaseActivity {
             @Override
             public void onFailed(Exception e) {
                 Toast.makeText(GameHomeScreenActivity.this, "שגיאה במציאת יריב", Toast.LENGTH_SHORT).show();
+                updateUI(SearchState.IDLE);
             }
         });
     }
 
-    private void cancel() {
-        if (currentRoom != null && "waiting".equals(currentRoom.getStatus()) && user.getId().equals(currentRoom.getPlayer1().getId())) {
-            databaseService.getGameService().cancelRoom(currentRoom.getId(), null);
-            currentRoom = null;
+    private void cancelSearch() {
+        if (roomListener != null && currentRoom != null) {
+            databaseService.getGameService().removeRoomListener(currentRoom.getId(), roomListener);
+            roomListener = null;
         }
 
-        TVStatusOfFindingEnemy.setVisibility(View.GONE);
-        btnCancelFindEnemy.setVisibility(View.GONE);
-        btnFindEnemy.setVisibility(View.VISIBLE);
+        if (currentRoom != null && "waiting".equals(currentRoom.getStatus()) && user.getId().equals(currentRoom.getPlayer1().getId())) {
+            databaseService.getGameService().cancelRoom(currentRoom.getId(), null); // Callback is optional
+        }
+        currentRoom = null;
+        updateUI(SearchState.IDLE);
     }
 
     private void listenToRoom(String roomId) {
+        if (roomId == null) {
+            cancelSearch();
+            return;
+        }
         roomListener = databaseService.getGameService().listenToRoomStatus(roomId, new IGameService.IRoomStatusCallback() {
             @Override
             public void onRoomStarted(GameRoom startedRoom) {
                 if (gameStarted) return;
                 gameStarted = true;
+                updateUI(SearchState.GAME_FOUND);
                 startGame(startedRoom);
             }
 
             @Override
             public void onRoomDeleted() {
-                cancel();
+                Toast.makeText(GameHomeScreenActivity.this, "החיפוש בוטל על ידי המארח.", Toast.LENGTH_SHORT).show();
+                cancelSearch();
             }
 
             @Override
             public void onRoomFinished(GameRoom room) {
-                cancel();
+                // This case should not happen while waiting for a game, but as a safeguard:
+                cancelSearch();
             }
 
             @Override
             public void onFailed(Exception e) {
-
+                Toast.makeText(GameHomeScreenActivity.this, "אירעה שגיאה במעקב אחר החדר.", Toast.LENGTH_SHORT).show();
+                cancelSearch();
             }
         });
     }
@@ -165,14 +201,36 @@ public class GameHomeScreenActivity extends BaseActivity {
             roomListener = null;
         }
 
-        currentRoom = room;
-
-        TVStatusOfFindingEnemy.setVisibility(View.GONE);
-        btnCancelFindEnemy.setVisibility(View.GONE);
-
         Intent intent = new Intent(this, MemoryGameActivity.class);
         intent.putExtra("roomId", room.getId());
         startActivity(intent);
         finish();
+    }
+
+    private void updateUI(SearchState state) {
+        switch (state) {
+            case IDLE:
+                TVStatusOfFindingEnemy.setVisibility(View.GONE);
+                btnCancelFindEnemy.setVisibility(View.GONE);
+                btnFindEnemy.setVisibility(View.VISIBLE);
+                break;
+            case SEARCHING:
+                TVStatusOfFindingEnemy.setText("מחפש יריב...");
+                TVStatusOfFindingEnemy.setVisibility(View.VISIBLE);
+                btnCancelFindEnemy.setVisibility(View.VISIBLE);
+                btnFindEnemy.setVisibility(View.GONE);
+                break;
+            case GAME_FOUND:
+                TVStatusOfFindingEnemy.setText("יריב נמצא! מתחיל משחק...");
+                btnCancelFindEnemy.setVisibility(View.GONE);
+                btnFindEnemy.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private enum SearchState {
+        IDLE,
+        SEARCHING,
+        GAME_FOUND
     }
 }
