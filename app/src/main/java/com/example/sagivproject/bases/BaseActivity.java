@@ -40,10 +40,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected SharedPreferencesUtil sharedPreferencesUtil;
     @Inject
     protected IDatabaseService databaseService;
-
-    protected IAuthService getAuthService() {
-        return databaseService.getAuthService();
-    }
+    @Inject
+    protected IAuthService authService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void logout() {
         new LogoutDialog(this, () -> {
-            String email = getAuthService().logout();
+            String email = authService.logout();
             Toast.makeText(this, "התנתקת בהצלחה", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, LoginActivity.class);
