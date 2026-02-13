@@ -2,11 +2,15 @@ package com.example.sagivproject.services.notifications;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
 import com.example.sagivproject.R;
+import com.example.sagivproject.screens.MedicationListActivity;
+import com.example.sagivproject.screens.SplashActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -53,22 +57,31 @@ public class NotificationService {
     public void showMedicationNotification(String medicationName) {
         String title = "תזכורת תרופה";
         String message = "הגיע הזמן לקחת את התרופה: " + medicationName;
-        show(MEDICATIONS_CHANNEL_ID, title, message);
+
+        Intent intent = new Intent(context, MedicationListActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        show(MEDICATIONS_CHANNEL_ID, title, message, pendingIntent);
     }
 
     public void showBirthdayNotification(String firstName) {
         String title = "מזל טוב!";
         String message = "יום הולדת שמח, " + firstName + "! מאחלים לך בריאות ואושר.";
-        show(BIRTHDAYS_CHANNEL_ID, title, message);
+
+        Intent intent = new Intent(context, SplashActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        show(BIRTHDAYS_CHANNEL_ID, title, message, pendingIntent);
     }
 
-    private void show(String channelId, String title, String message) {
+    private void show(String channelId, String title, String message, PendingIntent pendingIntent) {
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(title)
                         .setContentText(message)
                         .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         manager.notify((int) System.currentTimeMillis(), builder.build());
