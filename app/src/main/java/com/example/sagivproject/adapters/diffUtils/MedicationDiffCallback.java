@@ -41,6 +41,6 @@ public class MedicationDiffCallback extends DiffUtil.Callback {
                 && Objects.equals(oldItem.getName(), newItem.getName())
                 && Objects.equals(oldItem.getDetails(), newItem.getDetails())
                 && Objects.equals(oldItem.getType(), newItem.getType())
-                && Objects.equals(oldItem.getDate(), newItem.getDate());
+                && Objects.equals(oldItem.getReminderHours(), newItem.getReminderHours());
     }
 }

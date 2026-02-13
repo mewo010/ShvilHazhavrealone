@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,17 +22,13 @@ import com.example.sagivproject.R;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.ui.CustomTypefaceSpan;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAdapter.MedicationViewHolder> {
     private final Context context;
     private final ArrayList<Medication> medications;
     private final OnMedicationActionListener listener;
-
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public MedicationListAdapter(Context context, ArrayList<Medication> medications, OnMedicationActionListener listener) {
         this.context = context;
@@ -68,12 +65,12 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         }
 
         holder.txtMedicationDetails.setText(med.getDetails());
-        holder.txtMedicationDate.setText(String.format("תוקף: %s", dateFormat.format(med.getDate())));
-
-        if (med.getDate() != null && med.getDate().before(new Date())) {
-            holder.txtMedicationDate.setTextColor(context.getColor(R.color.error));
+        List<String> reminderHours = med.getReminderHours();
+        if (reminderHours != null && !reminderHours.isEmpty()) {
+            holder.txtMedicationDate.setText(String.format("שעות נבחרות: %s", TextUtils.join(", ", reminderHours)));
+            holder.txtMedicationDate.setVisibility(View.VISIBLE);
         } else {
-            holder.txtMedicationDate.setTextColor(context.getColor(R.color.text_color));
+            holder.txtMedicationDate.setVisibility(View.GONE);
         }
 
         holder.btnMenu.setOnClickListener(v -> {

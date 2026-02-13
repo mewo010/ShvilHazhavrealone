@@ -14,7 +14,6 @@ import androidx.work.WorkManager;
 
 import com.example.sagivproject.utils.SharedPreferencesUtil;
 import com.example.sagivproject.workers.BirthdayWorker;
-import com.example.sagivproject.workers.MedicationWorker;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +35,6 @@ public class MainApplication extends Application implements Configuration.Provid
         boolean isDarkMode = sharedPreferencesUtil.isDarkMode();
         AppCompatDelegate.setDefaultNightMode(isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
 
-        setupDailyNotifications();
         setupBirthdayNotification();
     }
 
@@ -46,40 +44,6 @@ public class MainApplication extends Application implements Configuration.Provid
         return new Configuration.Builder()
                 .setWorkerFactory(workerFactory)
                 .build();
-    }
-
-    private void setupDailyNotifications() {
-        Calendar currentDate = Calendar.getInstance();
-        Calendar dueDate = Calendar.getInstance();
-
-        dueDate.set(Calendar.HOUR_OF_DAY, 8);
-        dueDate.set(Calendar.MINUTE, 0);
-        dueDate.set(Calendar.SECOND, 0);
-        dueDate.set(Calendar.MILLISECOND, 0);
-
-        if (dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_YEAR, 1);
-        }
-
-        long timeDiff = dueDate.getTimeInMillis() - currentDate.getTimeInMillis();
-
-        PeriodicWorkRequest notificationRequest =
-                new PeriodicWorkRequest.Builder(
-                        MedicationWorker.class,
-                        24, TimeUnit.HOURS)
-                        .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
-                        .addTag("MedicationWorkTag")
-                        .setConstraints(new Constraints.Builder()
-                                .setRequiredNetworkType(NetworkType.CONNECTED)
-                                .setRequiresBatteryNotLow(true)
-                                .build())
-                        .build();
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "MedicationDailyWork",
-                ExistingPeriodicWorkPolicy.KEEP,
-                notificationRequest
-        );
     }
 
     private void setupBirthdayNotification() {

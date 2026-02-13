@@ -61,23 +61,31 @@
                 android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:boxBackgroundMode="outline">
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edt_medication_date"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_select_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/text_hebrew"
+                android:text="@string/בחרשעותתזכורת"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_selected_hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="false"
                 android:fontFamily="@font/text_hebrew"
-                android:hint="@string/תאריךאחרוןלשימוש"
-                android:inputType="none"
-                android:textSize="22sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="@string/לאנבחרושעות"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

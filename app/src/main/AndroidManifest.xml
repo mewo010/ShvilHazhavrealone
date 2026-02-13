@@ -24,6 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SagivProject">
 
+        <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:exported="false" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

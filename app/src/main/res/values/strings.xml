@@ -114,6 +114,8 @@
     <string name="פינתהשראהיומית">פינת השראה יומית</string>
     <string name="מצבכהה">מצב כהה</string>
     <string name="מצבבהיר">מצב בהיר</string>
+    <string name="בחרשעותתזכורת">בחר שעות תזכורת</string>
+    <string name="לאנבחרושעות">לא נבחרו שעות</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

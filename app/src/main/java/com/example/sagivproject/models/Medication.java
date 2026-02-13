@@ -1,10 +1,9 @@
 package com.example.sagivproject.models;
 
 import com.example.sagivproject.models.enums.MedicationType;
-import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 public class Medication implements Serializable, Idable {
     private String id;
@@ -12,18 +11,17 @@ public class Medication implements Serializable, Idable {
     private String name;
     private String details;
     private MedicationType type;
-    @Exclude
-    private Date date;
+    private List<String> reminderHours;
 
     public Medication() {
     }
 
-    public Medication(String id, String name, String details, MedicationType type, Date date, String userId) {
+    public Medication(String id, String name, String details, MedicationType type, List<String> reminderHours, String userId) {
         this.id = id;
         this.name = name;
         this.details = details;
         this.type = type;
-        this.date = date;
+        this.reminderHours = reminderHours;
         this.userId = userId;
     }
 
@@ -69,21 +67,11 @@ public class Medication implements Serializable, Idable {
         this.type = type;
     }
 
-    @Exclude
-    public Date getDate() {
-        return this.date;
+    public List<String> getReminderHours() {
+        return reminderHours;
     }
 
-    @Exclude
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public long getDateTimestamp() {
-        return date != null ? date.getTime() : 0;
-    }
-
-    public void setDateTimestamp(long timestamp) {
-        this.date = new Date(timestamp);
+    public void setReminderHours(List<String> reminderHours) {
+        this.reminderHours = reminderHours;
     }
 }
