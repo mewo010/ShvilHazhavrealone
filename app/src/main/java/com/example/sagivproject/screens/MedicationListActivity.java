@@ -42,11 +42,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MedicationListActivity extends BaseActivity {
 
-    @Inject
-    AlarmScheduler alarmScheduler;
-
     private final ArrayList<Medication> medications = new ArrayList<>();
     private final ArrayList<Medication> filteredMedications = new ArrayList<>();
+    @Inject
+    AlarmScheduler alarmScheduler;
     private MedicationListAdapter adapter;
     private User user;
     private String uid;
