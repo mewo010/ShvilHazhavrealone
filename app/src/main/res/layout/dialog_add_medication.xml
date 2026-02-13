@@ -76,15 +76,13 @@
                 android:text="@string/בחרשעותתזכורת"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/tv_selected_hours"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_selected_hours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/text_hebrew"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:text="@string/לאנבחרושעות"
-                android:textSize="16sp" />
+                android:layout_marginTop="8dp"
+                app:chipSpacing="8dp" />
+
         </LinearLayout>
 
         <LinearLayout

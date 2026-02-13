@@ -67,11 +67,14 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
         holder.txtMedicationDetails.setText(med.getDetails());
         List<String> reminderHours = med.getReminderHours();
         if (reminderHours != null && !reminderHours.isEmpty()) {
-            holder.txtMedicationDate.setText(String.format("שעות נבחרות: %s", TextUtils.join(", ", reminderHours)));
-            holder.txtMedicationDate.setVisibility(View.VISIBLE);
+            holder.txtMedicationHours.setText(String.format("שעות: %s", TextUtils.join(", ", reminderHours)));
+            holder.txtMedicationHours.setVisibility(View.VISIBLE);
         } else {
-            holder.txtMedicationDate.setVisibility(View.GONE);
+            holder.txtMedicationHours.setVisibility(View.GONE);
         }
+
+        // Assuming you have a date field in your Medication model
+        // holder.txtMedicationDate.setText(String.format("תאריך: %s", med.getDate()));
 
         holder.btnMenu.setOnClickListener(v -> {
             PopupMenu menu = new PopupMenu(context, v);
@@ -119,7 +122,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
     }
 
     public static class MedicationViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtMedicationName, txtMedicationType, txtMedicationDetails, txtMedicationDate;
+        final TextView txtMedicationName, txtMedicationType, txtMedicationDetails, txtMedicationHours;
         final ImageButton btnMenu;
 
         public MedicationViewHolder(@NonNull View itemView) {
@@ -127,7 +130,7 @@ public class MedicationListAdapter extends RecyclerView.Adapter<MedicationListAd
             txtMedicationName = itemView.findViewById(R.id.txt_MedicationRow_Name);
             txtMedicationType = itemView.findViewById(R.id.txt_MedicationRow_Type);
             txtMedicationDetails = itemView.findViewById(R.id.txt_MedicationRow_Details);
-            txtMedicationDate = itemView.findViewById(R.id.txt_MedicationRow_Date);
+            txtMedicationHours = itemView.findViewById(R.id.txt_MedicationRow_Hours);
             btnMenu = itemView.findViewById(R.id.btn_MedicationRow_Menu);
         }
     }

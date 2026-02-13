@@ -49,7 +49,7 @@
             android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_MedicationRow_Name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_MedicationRow_Name"
             tools:text="כדור" />
 
         <TextView
@@ -62,21 +62,20 @@
             android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_MedicationRow_Type"
+            app:layout_constraintTop_toBottomOf="@+id/txt_MedicationRow_Type"
             tools:text="כאב ראש, 2 כדורים ביום" />
 
         <TextView
-            android:id="@+id/txt_MedicationRow_Date"
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_MedicationRow_Hours"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/text_hebrew"
             android:gravity="start"
-            android:textAlignment="viewStart"
             android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_MedicationRow_Details"
-            tools:text="בתוקף עד: 02/05/2025" />
-
+            app:layout_constraintTop_toBottomOf="@+id/txt_MedicationRow_Details"
+            tools:text="שעות: 08:00, 20:00" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

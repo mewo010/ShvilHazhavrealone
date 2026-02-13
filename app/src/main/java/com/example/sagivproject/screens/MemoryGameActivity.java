@@ -211,7 +211,7 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         Card c1 = currentRoom.getCards().get(idx1);
         Card c2 = currentRoom.getCards().get(idx2);
 
-        if (c1.getId().equals(c2.getId())) {
+        if (c1 != null && c2 != null && c1.getId().equals(c2.getId())) {
             // --- הצלחה ---
             adapter.animateSuccess(idx1, recyclerCards);
             adapter.animateSuccess(idx2, recyclerCards);
@@ -296,11 +296,13 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
 
                 if (room.getCards() != null) {
                     List<Card> oldCards = new ArrayList<>(adapter.getCards());
-                    CardDiffCallback diffCallback = new CardDiffCallback(oldCards, room.getCards());
+                    List<Card> newCards = new ArrayList<>(room.getCards());
+
+                    CardDiffCallback diffCallback = new CardDiffCallback(oldCards, newCards);
                     DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
                     adapter.getCards().clear();
-                    adapter.getCards().addAll(room.getCards());
+                    adapter.getCards().addAll(newCards);
                     diffResult.dispatchUpdatesTo(adapter);
                 }
 

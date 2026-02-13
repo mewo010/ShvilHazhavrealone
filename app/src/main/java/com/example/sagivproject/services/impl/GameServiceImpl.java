@@ -17,7 +17,9 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -169,9 +171,12 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
 
     @Override
     public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback) {
-        roomsReference.child(roomId).child("cards").setValue(cards);
-        roomsReference.child(roomId).child("currentTurnUid").setValue(firstTurnUid);
-        roomsReference.child(roomId).child("status").setValue("playing", (error, ref) -> {
+        Map<String, Object> roomUpdates = new HashMap<>();
+        roomUpdates.put("cards", cards);
+        roomUpdates.put("currentTurnUid", firstTurnUid);
+        roomUpdates.put("status", "playing");
+
+        roomsReference.child(roomId).updateChildren(roomUpdates, (error, ref) -> {
             if (callback != null) {
                 if (error != null) {
                     callback.onFailed(error.toException());

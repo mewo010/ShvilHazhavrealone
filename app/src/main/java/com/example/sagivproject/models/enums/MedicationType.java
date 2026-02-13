@@ -2,7 +2,7 @@ package com.example.sagivproject.models.enums;
 
 public enum MedicationType {
     PILL("כדור"),
-    HALFTABLET("חצי כדור"),
+    HALF_TABLET("חצי כדור"),
     SYRUP("סירופ"),
     CREAM("משחה"),
     INJECTION("זריקה"),

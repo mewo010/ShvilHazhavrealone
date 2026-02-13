@@ -18,8 +18,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String medicationName = intent.getStringExtra("medication_name");
-        String title = "תזכורת תרופה";
-        String message = "הגיע הזמן לקחת את התרופה: " + medicationName;
-        notificationService.show(title, message);
+        notificationService.showMedicationNotification(medicationName);
     }
 }

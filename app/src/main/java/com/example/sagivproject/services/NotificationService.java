@@ -15,7 +15,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 
 @Singleton
 public class NotificationService {
-    private static final String CHANNEL_ID = "medication_notifications", CHANNEL_NAME = "תזכורות תרופות";
+    public static final String MEDICATIONS_CHANNEL_ID = "medication_notifications";
+    public static final String BIRTHDAYS_CHANNEL_ID = "birthday_notifications";
+    private static final String MEDICATIONS_CHANNEL_NAME = "תזכורות תרופות";
+    private static final String BIRTHDAYS_CHANNEL_NAME = "תזכורות יום הולדת";
     private final Context context;
     private final NotificationManager manager;
 
@@ -25,21 +28,43 @@ public class NotificationService {
         this.manager = (NotificationManager)
                 this.context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        createChannelIfNeeded();
+        createMedicationChannelIfNeeded();
+        createBirthdayChannelIfNeeded();
     }
 
-    private void createChannelIfNeeded() {
+    private void createMedicationChannelIfNeeded() {
         NotificationChannel channel = new NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
+                MEDICATIONS_CHANNEL_ID,
+                MEDICATIONS_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT
         );
         manager.createNotificationChannel(channel);
     }
 
-    public void show(String title, String message) {
+    private void createBirthdayChannelIfNeeded() {
+        NotificationChannel channel = new NotificationChannel(
+                BIRTHDAYS_CHANNEL_ID,
+                BIRTHDAYS_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        manager.createNotificationChannel(channel);
+    }
+
+    public void showMedicationNotification(String medicationName) {
+        String title = "תזכורת תרופה";
+        String message = "הגיע הזמן לקחת את התרופה: " + medicationName;
+        show(MEDICATIONS_CHANNEL_ID, title, message);
+    }
+
+    public void showBirthdayNotification(String firstName) {
+        String title = "מזל טוב!";
+        String message = "יום הולדת שמח, " + firstName + "! מאחלים לך בריאות ואושר.";
+        show(BIRTHDAYS_CHANNEL_ID, title, message);
+    }
+
+    private void show(String channelId, String title, String message) {
         NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context, CHANNEL_ID)
+                new NotificationCompat.Builder(context, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(title)
                         .setContentText(message)

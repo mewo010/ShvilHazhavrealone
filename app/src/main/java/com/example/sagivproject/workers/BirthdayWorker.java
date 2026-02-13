@@ -87,10 +87,7 @@ public class BirthdayWorker extends Worker {
         birthDate.setTimeInMillis(user.getBirthDateMillis());
 
         if (today.get(Calendar.DAY_OF_MONTH) == birthDate.get(Calendar.DAY_OF_MONTH) && today.get(Calendar.MONTH) == birthDate.get(Calendar.MONTH)) {
-            notificationService.show(
-                    "מזל טוב!",
-                    "יום הולדת שמח, " + user.getFirstName() + "! מאחלים לך בריאות ואושר."
-            );
+            notificationService.showBirthdayNotification(user.getFirstName());
         }
     }
 }

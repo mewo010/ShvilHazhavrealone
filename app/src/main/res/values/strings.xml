@@ -48,7 +48,6 @@
     <string name="הוסף">הוסף</string>
     <string name="פרטים">פרטים</string>
     <string name="שםהתרופה">שם התרופה</string>
-    <string name="תאריךאחרוןלשימוש">תאריך אחרון לשימוש</string>
     <string name="הוספתמשתמש">הוספת משתמש</string>
     <string name="הקלדכאן">הקלד כאן…</string>
     <string name="חפשלפי">חפש לפי:</string>
@@ -115,7 +114,6 @@
     <string name="מצבכהה">מצב כהה</string>
     <string name="מצבבהיר">מצב בהיר</string>
     <string name="בחרשעותתזכורת">בחר שעות תזכורת</string>
-    <string name="לאנבחרושעות">לא נבחרו שעות</string>
 
     <string-array name="search_types">
         <item>שם פרטי</item>

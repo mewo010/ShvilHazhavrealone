@@ -1,7 +1,7 @@
 package com.example.sagivproject.screens.dialogs;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +18,22 @@ import androidx.core.content.res.ResourcesCompat;
 import com.example.sagivproject.R;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.enums.MedicationType;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class MedicationDialog {
     private final Context context;
     private final Medication medToEdit;
     private final OnMedicationSubmitListener listener;
-    private final ArrayList<Integer> selectedHours = new ArrayList<>();
-    private TextView tvSelectedHours;
+    private final ArrayList<String> selectedHours = new ArrayList<>();
+    private ChipGroup chipGroupSelectedHours;
 
     public MedicationDialog(Context context, Medication medToEdit, OnMedicationSubmitListener listener) {
         this.context = context;
@@ -47,7 +50,7 @@ public class MedicationDialog {
         AutoCompleteTextView spinnerType = dialog.findViewById(R.id.spinner_medication_type);
         EditText edtDetails = dialog.findViewById(R.id.edt_medication_details);
         Button btnSelectHours = dialog.findViewById(R.id.btn_select_hours);
-        tvSelectedHours = dialog.findViewById(R.id.tv_selected_hours);
+        chipGroupSelectedHours = dialog.findViewById(R.id.chip_group_selected_hours);
         Button btnConfirm = dialog.findViewById(R.id.btn_add_medication_confirm);
         Button btnCancel = dialog.findViewById(R.id.btn_add_medication_cancel);
 
@@ -66,10 +69,8 @@ public class MedicationDialog {
             }
             if (medToEdit.getReminderHours() != null && !medToEdit.getReminderHours().isEmpty()) {
                 selectedHours.clear();
-                for (String hour : medToEdit.getReminderHours()) {
-                    selectedHours.add(Integer.parseInt(hour.split(":")[0]));
-                }
-                updateSelectedHoursText();
+                selectedHours.addAll(medToEdit.getReminderHours());
+                updateSelectedHoursChips();
             }
         }
 
@@ -98,15 +99,11 @@ public class MedicationDialog {
                 return;
             }
 
-            List<String> reminderHours = selectedHours.stream()
-                    .map(hour -> String.format("%02d:00", hour))
-                    .collect(Collectors.toList());
-
             Medication medicationData = new Medication();
             medicationData.setName(name);
             medicationData.setDetails(details);
             medicationData.setType(selectedType);
-            medicationData.setReminderHours(reminderHours);
+            medicationData.setReminderHours(selectedHours);
 
             if (medToEdit == null) {
                 listener.onAdd(medicationData);
@@ -124,40 +121,45 @@ public class MedicationDialog {
     }
 
     private void showHourPicker() {
-        String[] hours = new String[24];
-        boolean[] checkedHours = new boolean[24];
-        for (int i = 0; i < 24; i++) {
-            hours[i] = String.format("%02d:00", i);
-            checkedHours[i] = selectedHours.contains(i);
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                context,
+                R.style.TimePickerCustomTheme,
+                (view, hourOfDay, minuteOfHour) -> {
+                    String time = String.format(Locale.US, "%02d:%02d", hourOfDay, minuteOfHour);
+                    if (!selectedHours.contains(time)) {
+                        selectedHours.add(time);
+                        updateSelectedHoursChips();
+                    }
+                },
+                hour,
+                minute,
+                true
+        );
+        timePickerDialog.show();
+
+        if (timePickerDialog.getWindow() != null) {
+            timePickerDialog.getWindow().setBackgroundDrawableResource(R.color.background_color);
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("בחר שעות תזכורת");
-        builder.setMultiChoiceItems(hours, checkedHours, (dialog, which, isChecked) -> {
-            if (isChecked) {
-                if (!selectedHours.contains(which)) {
-                    selectedHours.add(which);
-                }
-            } else if (selectedHours.contains(which)) {
-                selectedHours.remove(Integer.valueOf(which));
-            }
-        });
-
-        builder.setPositiveButton("אישור", (dialog, which) -> updateSelectedHoursText());
-        builder.setNegativeButton("ביטול", (dialog, which) -> dialog.dismiss());
-        builder.create().show();
+        timePickerDialog.show();
     }
 
-    private void updateSelectedHoursText() {
+    private void updateSelectedHoursChips() {
+        chipGroupSelectedHours.removeAllViews();
         Collections.sort(selectedHours);
-        StringBuilder sb = new StringBuilder();
-        for (int hour : selectedHours) {
-            sb.append(String.format("%02d:00", hour)).append("  ");
-        }
-        if (sb.length() > 0) {
-            tvSelectedHours.setText(String.format("שעות נבחרות: %s", sb));
-        } else {
-            tvSelectedHours.setText("לא נבחרו שעות");
+        for (String hour : selectedHours) {
+            Chip chip = new Chip(context);
+            chip.setText(hour);
+            chip.setCloseIconVisible(true);
+            chip.setOnCloseIconClickListener(v -> {
+                selectedHours.remove(hour);
+                updateSelectedHoursChips();
+            });
+            chipGroupSelectedHours.addView(chip);
         }
     }
 
