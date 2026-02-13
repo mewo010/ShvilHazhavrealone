@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,7 +25,7 @@ public class ForumCategoriesServiceImpl extends BaseDatabaseService<ForumCategor
 
     @Override
     public void getCategories(IDatabaseService.DatabaseCallback<List<ForumCategory>> callback) {
-        databaseReference.child(CATEGORIES_PATH).orderByChild("creationDate").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(CATEGORIES_PATH).orderByChild("orderTimestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<ForumCategory> list = new ArrayList<>();
@@ -34,7 +33,6 @@ public class ForumCategoriesServiceImpl extends BaseDatabaseService<ForumCategor
                     ForumCategory category = child.getValue(ForumCategory.class);
                     list.add(category);
                 }
-                Collections.reverse(list); // Show newest first
                 if (callback != null) callback.onCompleted(list);
             }
 

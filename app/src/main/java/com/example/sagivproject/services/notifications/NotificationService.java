@@ -1,4 +1,4 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.notifications;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

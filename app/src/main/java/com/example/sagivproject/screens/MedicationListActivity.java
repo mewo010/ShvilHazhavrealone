@@ -26,8 +26,8 @@ import com.example.sagivproject.bases.BaseActivity;
 import com.example.sagivproject.models.Medication;
 import com.example.sagivproject.models.User;
 import com.example.sagivproject.screens.dialogs.MedicationDialog;
-import com.example.sagivproject.services.AlarmScheduler;
 import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
+import com.example.sagivproject.services.notifications.AlarmScheduler;
 
 import java.util.ArrayList;
 import java.util.Comparator;

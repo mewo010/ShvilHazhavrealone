@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ForumCategory implements Serializable, Idable {
     private String id;
     private String name;
-    private long creationDate;
+    private long orderTimestamp;
 
     public ForumCategory() {
     }
@@ -13,7 +13,7 @@ public class ForumCategory implements Serializable, Idable {
     public ForumCategory(String id, String name) {
         this.id = id;
         this.name = name;
-        this.creationDate = System.currentTimeMillis();
+        this.orderTimestamp = -System.currentTimeMillis(); // Set negative value for descending order
     }
 
     @Override
@@ -34,11 +34,11 @@ public class ForumCategory implements Serializable, Idable {
         this.name = name;
     }
 
-    public long getCreationDate() {
-        return creationDate;
+    public long getOrderTimestamp() {
+        return orderTimestamp;
     }
 
-    public void setCreationDate(long creationDate) {
-        this.creationDate = creationDate;
+    public void setOrderTimestamp(long orderTimestamp) {
+        this.orderTimestamp = orderTimestamp;
     }
 }

@@ -1,10 +1,8 @@
-package com.example.sagivproject.receivers;
+package com.example.sagivproject.services.notifications;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
-import com.example.sagivproject.services.NotificationService;
 
 import javax.inject.Inject;
 

@@ -25,7 +25,7 @@
         android:theme="@style/Theme.SagivProject">
 
         <receiver
-            android:name=".receivers.AlarmReceiver"
+            android:name=".services.notifications.AlarmReceiver"
             android:exported="false" />
 
         <provider

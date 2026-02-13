@@ -69,7 +69,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 btnMain.setOnClickListener(v -> navigateIfNotCurrent(MainActivity.class));
                 btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
                 btnDetailsAboutUser.setOnClickListener(v -> navigateIfNotCurrent(DetailsAboutUserActivity.class));
-                btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
+                btnSettings.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, SettingsActivity.class);
+                    intent.putExtra("isFromLoggedIn", true);
+                    startActivity(intent);
+                });
             }
         } else {
             @LayoutRes int menuLayout = R.layout.top_menu_logged_out;
@@ -85,7 +89,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             btnContact.setOnClickListener(v -> navigateIfNotCurrent(ContactActivity.class));
             btnLogin.setOnClickListener(v -> navigateIfNotCurrent(LoginActivity.class));
             btnRegister.setOnClickListener(v -> navigateIfNotCurrent(RegisterActivity.class));
-            btnSettings.setOnClickListener(v -> navigateIfNotCurrent(SettingsActivity.class));
+            btnSettings.setOnClickListener(v -> {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("isFromLoggedIn", false);
+                startActivity(intent);
+            });
         }
     }
 

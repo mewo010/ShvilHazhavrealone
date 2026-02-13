@@ -95,11 +95,10 @@ public abstract class BaseDatabaseService<T extends Idable> {
 
     protected void writeData(@NotNull final String fullPath, @NotNull final Object data, final @Nullable IDatabaseService.DatabaseCallback<Void> callback) {
         readData(fullPath).setValue(data, (error, ref) -> {
+            if (callback == null) return;
             if (error != null) {
-                if (callback == null) return;
                 callback.onFailed(error.toException());
             } else {
-                if (callback == null) return;
                 callback.onCompleted(null);
             }
         });
@@ -107,11 +106,10 @@ public abstract class BaseDatabaseService<T extends Idable> {
 
     protected void deleteData(@NotNull final String fullPath, @Nullable final IDatabaseService.DatabaseCallback<Void> callback) {
         readData(fullPath).removeValue((error, ref) -> {
+            if (callback == null) return;
             if (error != null) {
-                if (callback == null) return;
                 callback.onFailed(error.toException());
             } else {
-                if (callback == null) return;
                 callback.onCompleted(null);
             }
         });
@@ -150,8 +148,6 @@ public abstract class BaseDatabaseService<T extends Idable> {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                // bug note: currentValue can be null even if the data exists in the database.
-                // Firebase will then re-run the transaction with the correct data.
                 T currentValue = currentData.getValue(clazz);
                 if (currentValue != null) {
                     currentValue = function.apply(currentValue);
@@ -162,17 +158,18 @@ public abstract class BaseDatabaseService<T extends Idable> {
 
             @Override
             public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (callback == null) {
+                    if (error != null)
+                        Log.e(TAG, "Transaction failed silently", error.toException());
+                    return;
+                }
                 if (error != null) {
                     Log.e(TAG, "Transaction failed", error.toException());
-                    if (callback != null) {
-                        callback.onFailed(error.toException());
-                    }
+                    callback.onFailed(error.toException());
                     return;
                 }
                 T result = currentData != null ? currentData.getValue(clazz) : null;
-                if (callback != null) {
-                    callback.onCompleted(result);
-                }
+                callback.onCompleted(result);
             }
         });
     }

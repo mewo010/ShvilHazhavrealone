@@ -12,8 +12,8 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
+import com.example.sagivproject.services.notifications.BirthdayWorker;
 import com.example.sagivproject.utils.SharedPreferencesUtil;
-import com.example.sagivproject.workers.BirthdayWorker;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;

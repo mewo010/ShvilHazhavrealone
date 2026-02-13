@@ -1,4 +1,4 @@
-package com.example.sagivproject.services;
+package com.example.sagivproject.services.notifications;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.sagivproject.models.Medication;
-import com.example.sagivproject.receivers.AlarmReceiver;
 
 import java.util.Calendar;
 

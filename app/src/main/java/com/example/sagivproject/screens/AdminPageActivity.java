@@ -42,7 +42,11 @@ public class AdminPageActivity extends BaseActivity {
         btnToMemoryGameLogsTable.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, MemoryGameLogsTableActivity.class)));
         btnToForumCategories.setOnClickListener(v -> startActivity(new Intent(AdminPageActivity.this, AdminForumCategoriesActivity.class)));
         btnToDetailsAboutUser.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, DetailsAboutUserActivity.class)));
-        btnToSettings.setOnClickListener(view -> startActivity(new Intent(AdminPageActivity.this, SettingsActivity.class)));
+        btnToSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(AdminPageActivity.this, SettingsActivity.class);
+            intent.putExtra("isFromLoggedIn", true);
+            startActivity(intent);
+        });
 
         if (user != null) {
             txtAdminTitle.setText(String.format("שלום %s", user.getFullName()));

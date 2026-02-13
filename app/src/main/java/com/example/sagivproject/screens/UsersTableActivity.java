@@ -40,16 +40,20 @@ import com.example.sagivproject.services.IDatabaseService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class UsersTableActivity extends BaseActivity {
-    private final List<User> usersList = new ArrayList<>(), filteredList = new ArrayList<>();
+    private final List<User> usersList = new ArrayList<>();
+    private final List<User> filteredList = new ArrayList<>();
     private UsersTableAdapter adapter;
     private EditText editSearch;
     private Spinner spinnerSearchType;
     private User currentUser;
+    private Typeface textFont;
+    private int textColor, backgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,16 +122,20 @@ public class UsersTableActivity extends BaseActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-            }
-
-            @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterUsers(s.toString().trim());
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        textFont = ResourcesCompat.getFont(this, R.font.text_hebrew);
+        textColor = getResources().getColor(R.color.text_color, null);
+        backgroundColor = getResources().getColor(R.color.background_color_buttons, null);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 getResources().getStringArray(R.array.search_types)
@@ -137,11 +145,9 @@ public class UsersTableActivity extends BaseActivity {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                Typeface typeface = ResourcesCompat.getFont(UsersTableActivity.this, R.font.text_hebrew);
-                tv.setTypeface(typeface);
-                tv.setTextColor(getResources().getColor(R.color.text_color, null));
-                tv.setBackgroundColor(getResources().getColor(R.color.background_color_buttons, null));
-
+                tv.setTypeface(textFont);
+                tv.setTextColor(textColor);
+                tv.setBackgroundColor(backgroundColor);
                 tv.setTextSize(22);
                 tv.setPadding(24, 24, 24, 24);
                 return tv;
@@ -151,18 +157,16 @@ public class UsersTableActivity extends BaseActivity {
             public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                Typeface typeface = ResourcesCompat.getFont(UsersTableActivity.this, R.font.text_hebrew);
-                tv.setTypeface(typeface);
-                tv.setTextColor(getResources().getColor(R.color.text_color, null));
-                tv.setBackgroundColor(getResources().getColor(R.color.background_color_buttons, null));
-
+                tv.setTypeface(textFont);
+                tv.setTextColor(textColor);
+                tv.setBackgroundColor(backgroundColor);
                 tv.setTextSize(22);
                 tv.setPadding(24, 24, 24, 24);
                 return tv;
             }
         };
 
-        spinnerSearchType.setAdapter(adapter);
+        spinnerSearchType.setAdapter(spinnerAdapter);
 
         spinnerSearchType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -187,13 +191,7 @@ public class UsersTableActivity extends BaseActivity {
             @Override
             public void onCompleted(List<User> list) {
                 usersList.clear();
-
-                for (User user : list) {
-                    if (user != null && user.getId() != null) {
-                        usersList.add(user);
-                    }
-                }
-
+                usersList.addAll(list.stream().filter(u -> u != null && u.getId() != null).collect(Collectors.toList()));
                 filterUsers(editSearch.getText().toString().trim());
             }
 
@@ -259,70 +257,56 @@ public class UsersTableActivity extends BaseActivity {
         String searchType = spinnerSearchType.getSelectedItem().toString();
         String lowerQuery = query.toLowerCase();
 
+        List<User> newFilteredList;
+
         switch (searchType) {
             case "מנהלים":
-                for (User user : usersList) {
-                    if (user.isAdmin() &&
-                            user.getFullName().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.isAdmin() && user.getFullName().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
 
             case "משתמשים רגילים":
-                for (User user : usersList) {
-                    if (!user.isAdmin() &&
-                            user.getFullName().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
+                newFilteredList = usersList.stream()
+                        .filter(user -> !user.isAdmin() && user.getFullName().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
 
             case "ניצחונות":
-                for (User user : usersList) {
-                    if (user.getFullName().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
-                filteredList.sort(
-                        (u1, u2) -> Integer.compare(u2.getCountWins(), u1.getCountWins())
-                );
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.getFullName().toLowerCase().contains(lowerQuery))
+                        .sorted((u1, u2) -> Integer.compare(u2.getCountWins(), u1.getCountWins()))
+                        .collect(Collectors.toList());
                 break;
 
             case "שם פרטי":
-                for (User user : usersList) {
-                    if (user.getFirstName() != null &&
-                            user.getFirstName().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.getFirstName() != null && user.getFirstName().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
 
             case "שם משפחה":
-                for (User user : usersList) {
-                    if (user.getLastName() != null &&
-                            user.getLastName().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.getLastName() != null && user.getLastName().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
 
             case "אימייל":
-                for (User user : usersList) {
-                    if (user.getEmail() != null &&
-                            user.getEmail().toLowerCase().contains(lowerQuery)) {
-                        filteredList.add(user);
-                    }
-                }
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.getEmail() != null && user.getEmail().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
 
             case "הכל":
             default:
-                filteredList.addAll(usersList);
+                newFilteredList = new ArrayList<>(usersList);
                 break;
         }
-        UserDiffCallback diffCallback = new UserDiffCallback(oldList, filteredList);
+
+        UserDiffCallback diffCallback = new UserDiffCallback(oldList, newFilteredList);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        filteredList.clear();
+        filteredList.addAll(newFilteredList);
         diffResult.dispatchUpdatesTo(adapter);
     }
 }
