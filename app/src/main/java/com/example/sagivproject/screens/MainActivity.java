@@ -17,6 +17,14 @@ import com.example.sagivproject.models.User;
 
 import java.util.Random;
 
+/**
+ * The main screen for logged-in users.
+ * <p>
+ * This activity serves as the central hub, providing navigation to the app's main features:
+ * Medication List, Forum, AI Assistant, Memory Game, and Math Problems. It also displays
+ * a welcome message and a random inspirational quote.
+ * </p>
+ */
 public class MainActivity extends BaseActivity implements BaseActivity.RequiresPermissions {
     private final String[] inspirationalQuotes = {
             "ההצלחה היא סך הכל של מאמצים קטנים, שחוזרים עליהם יום יום.",
@@ -26,6 +34,14 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
             "ההתחלה היא החלק החשוב ביותר בעבודה."
     };
 
+    /**
+     * Initializes the activity, sets up the UI, configures button click listeners,
+     * and displays a random inspirational quote.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -23,6 +23,15 @@ import java.text.MessageFormat;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity for practicing various math problems.
+ * <p>
+ * This screen generates random math problems (addition, subtraction, multiplication, division,
+ * powers, and square roots) and allows the user to solve them using a numeric keypad.
+ * It tracks and displays the number of correct and incorrect answers and allows the user
+ * to reset their statistics.
+ * </p>
+ */
 @AndroidEntryPoint
 public class MathProblemsActivity extends BaseActivity {
     private final StringBuilder userInput = new StringBuilder();
@@ -31,6 +40,14 @@ public class MathProblemsActivity extends BaseActivity {
     private TextView tvQuestion, tvAnswer;
     private int correctAnswer;
 
+    /**
+     * Initializes the activity, sets up the UI, generates the first problem,
+     * and configures the keypad.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,17 +76,27 @@ public class MathProblemsActivity extends BaseActivity {
         setupKeypad();
     }
 
+    /**
+     * Updates the statistics UI when the activity resumes.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         updateStatsUI();
     }
 
+    /**
+     * Updates the text views for correct and wrong answers with the current user stats.
+     */
     private void updateStatsUI() {
         tvCorrect.setText(MessageFormat.format("נכונות: {0}", user.getMathProblemsStats().getCorrectAnswers()));
         tvWrong.setText(MessageFormat.format("טעויות: {0}", user.getMathProblemsStats().getWrongAnswers()));
     }
 
+    /**
+     * Resets the user's math problem statistics (correct and wrong answers) to zero,
+     * both locally and in the database.
+     */
     private void resetStats() {
         user.getMathProblemsStats().setCorrectAnswers(0);
         user.getMathProblemsStats().setWrongAnswers(0);
@@ -81,6 +108,10 @@ public class MathProblemsActivity extends BaseActivity {
         Toast.makeText(this, "הנתונים אופסו בהצלחה", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Generates a new random math problem, including the operation and operands,
+     * calculates the correct answer, and displays the question in the UI.
+     */
     private void generateProblem() {
         Operation operation = Operation.values()[(int) (Math.random() * Operation.values().length)];
 
@@ -133,10 +164,21 @@ public class MathProblemsActivity extends BaseActivity {
         tvAnswer.setText("");
     }
 
+    /**
+     * Generates a random integer within a specified range (inclusive).
+     *
+     * @param min The minimum value.
+     * @param max The maximum value.
+     * @return A random integer between min and max.
+     */
     private int rand(int min, int max) {
         return min + (int) (Math.random() * (max - min + 1));
     }
 
+    /**
+     * Sets up the on-click listeners for the numeric keypad buttons and control buttons
+     * (delete, clear, submit).
+     */
     private void setupKeypad() {
         GridLayout keypad = findViewById(R.id.keypad_MathProblemsPage);
 
@@ -161,6 +203,9 @@ public class MathProblemsActivity extends BaseActivity {
         findViewById(R.id.btn_MathProblemsPage_submit).setOnClickListener(v -> checkAnswer());
     }
 
+    /**
+     * Deletes the last character from the user's input.
+     */
     private void deleteLast() {
         if (userInput.length() > 0) {
             userInput.deleteCharAt(userInput.length() - 1);
@@ -168,11 +213,18 @@ public class MathProblemsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Clears the user's entire input.
+     */
     private void clearInput() {
         userInput.setLength(0);
         tvAnswer.setText("");
     }
 
+    /**
+     * Checks the user's submitted answer against the correct answer. Updates statistics,
+     * provides feedback via a Toast message, and generates a new problem if correct.
+     */
     private void checkAnswer() {
         if (userInput.length() == 0) return;
 

@@ -39,6 +39,14 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity for managing a user's list of medications.
+ * <p>
+ * This screen displays a list of the user's medications, allowing them to add, edit,
+ * delete, and search for medications. It also handles scheduling and canceling
+ * medication reminders (alarms).
+ * </p>
+ */
 @AndroidEntryPoint
 public class MedicationListActivity extends BaseActivity {
 
@@ -52,6 +60,14 @@ public class MedicationListActivity extends BaseActivity {
     private EditText editSearch;
     private Spinner spinnerSearchType;
 
+    /**
+     * Initializes the activity, sets up the UI, RecyclerView, search/filter functionality,
+     * and loads medication data.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +143,9 @@ public class MedicationListActivity extends BaseActivity {
         fetchMedicationsFromServer();
     }
 
+    /**
+     * Loads the initial list of medications from the local user cache (SharedPreferences).
+     */
     private void loadMedicationsFromCache() {
         if (user.getMedications() != null) {
             List<Medication> cachedList = new ArrayList<>(user.getMedications().values());
@@ -134,6 +153,9 @@ public class MedicationListActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Fetches the most up-to-date medication list from the server (Firebase) and updates the UI.
+     */
     private void fetchMedicationsFromServer() {
         databaseService.getMedicationService().getUserMedicationList(uid, new DatabaseCallback<>() {
             @Override
@@ -149,6 +171,11 @@ public class MedicationListActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Updates the local user cache in SharedPreferences with the latest medication list.
+     *
+     * @param medicationList The list of medications to cache.
+     */
     private void updateUserCache(List<Medication> medicationList) {
         HashMap<String, Medication> updatedMedicationsMap = new HashMap<>();
         for (Medication med : medicationList) {
@@ -158,13 +185,23 @@ public class MedicationListActivity extends BaseActivity {
         sharedPreferencesUtil.saveUser(user);
     }
 
+    /**
+     * Updates the main medication list, sorts it, and applies the current filter.
+     *
+     * @param medicationList The new list of medications.
+     */
     private void updateMedicationList(List<Medication> medicationList) {
         medications.clear();
         medications.addAll(medicationList);
-        medications.sort(Comparator.comparing(Medication::getName)); // Sort by name or other preference
+        medications.sort(Comparator.comparing(Medication::getName)); // Sort by name
         filterMedications(editSearch.getText().toString());
     }
 
+    /**
+     * Creates and configures the ArrayAdapter for the search filter spinner.
+     *
+     * @return A customized ArrayAdapter for the spinner.
+     */
     @NonNull
     private ArrayAdapter<String> getStringArrayAdapter() {
         String[] searchOptions = {"שם תרופה", "סוג תרופה", "הכל"};
@@ -196,6 +233,11 @@ public class MedicationListActivity extends BaseActivity {
         };
     }
 
+    /**
+     * Saves a new medication to the database and schedules its alarms.
+     *
+     * @param medication The new medication to save.
+     */
     private void saveMedication(Medication medication) {
         String medicationId = databaseService.getMedicationService().generateMedicationId();
         medication.setId(medicationId);
@@ -215,6 +257,11 @@ public class MedicationListActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Updates an existing medication in the database and reschedules its alarms.
+     *
+     * @param med The medication to update.
+     */
     private void updateMedication(Medication med) {
         med.setUserId(uid);
         databaseService.getMedicationService().updateMedication(uid, med, new DatabaseCallback<>() {
@@ -233,6 +280,11 @@ public class MedicationListActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Deletes a medication from the database and cancels its alarms.
+     *
+     * @param medication The medication to delete.
+     */
     private void deleteMedicationById(Medication medication) {
         databaseService.getMedicationService().deleteMedication(uid, medication.getId(), new DatabaseCallback<>() {
             @Override
@@ -248,6 +300,11 @@ public class MedicationListActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Opens a dialog to add a new medication or edit an existing one.
+     *
+     * @param medToEdit The medication to edit, or null to add a new one.
+     */
     private void openMedicationDialog(Medication medToEdit) {
         new MedicationDialog(this, medToEdit, new MedicationDialog.OnMedicationSubmitListener() {
             @Override
@@ -262,6 +319,12 @@ public class MedicationListActivity extends BaseActivity {
         }).show();
     }
 
+    /**
+     * Filters the medication list based on the search query and selected filter type.
+     * Updates the RecyclerView using DiffUtil for efficient updates.
+     *
+     * @param query The search text entered by the user.
+     */
     private void filterMedications(String query) {
         List<Medication> oldList = new ArrayList<>(filteredMedications);
         filteredMedications.clear();

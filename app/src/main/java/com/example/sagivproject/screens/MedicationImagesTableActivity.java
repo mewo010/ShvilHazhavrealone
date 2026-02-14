@@ -39,6 +39,14 @@ import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An admin activity for managing the table of medication images used in the memory game.
+ * <p>
+ * This screen allows administrators to view, search, add, and delete medication images.
+ * Images are displayed in a grid layout. When an image is deleted, the remaining images are
+ * re-ordered to maintain a sequential naming convention (e.g., card1, card2, ...).
+ * </p>
+ */
 @AndroidEntryPoint
 public class MedicationImagesTableActivity extends BaseActivity {
     private final List<ImageData> allImages = new ArrayList<>();
@@ -47,6 +55,13 @@ public class MedicationImagesTableActivity extends BaseActivity {
     private TextInputEditText etSearch;
     private ActivityResultLauncher<androidx.activity.result.PickVisualMediaRequest> photoPickerLauncher;
 
+    /**
+     * Initializes the activity, sets up the UI, RecyclerView, search functionality, and image picker.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +136,9 @@ public class MedicationImagesTableActivity extends BaseActivity {
         loadImages();
     }
 
+    /**
+     * Fetches all medication images from the database and populates the local list.
+     */
     private void loadImages() {
         databaseService.getImageService().getAllImages(new DatabaseCallback<>() {
             @Override
@@ -137,6 +155,11 @@ public class MedicationImagesTableActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Filters the displayed images based on a search query.
+     *
+     * @param query The text to search for in the image IDs.
+     */
     private void filterImages(String query) {
         final List<ImageData> oldList = new ArrayList<>(filteredList);
         final List<ImageData> newList = new ArrayList<>();
@@ -155,6 +178,12 @@ public class MedicationImagesTableActivity extends BaseActivity {
         diffResult.dispatchUpdatesTo(adapter);
     }
 
+    /**
+     * Uploads a new image selected by the user from their device.
+     * The image is converted to Base64 and assigned a new sequential ID.
+     *
+     * @param uri The URI of the selected image.
+     */
     private void uploadImage(Uri uri) {
         try {
             Bitmap bitmap;
@@ -186,6 +215,12 @@ public class MedicationImagesTableActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Deletes the specified image and re-orders the IDs of all remaining images
+     * to maintain a gapless sequence.
+     *
+     * @param imageToDelete The image to be deleted.
+     */
     private void deleteImageAndReorder(ImageData imageToDelete) {
         allImages.remove(imageToDelete);
 

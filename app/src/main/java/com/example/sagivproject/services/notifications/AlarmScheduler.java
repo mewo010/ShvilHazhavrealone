@@ -14,18 +14,36 @@ import javax.inject.Singleton;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
 
+/**
+ * A singleton class responsible for scheduling and canceling medication reminder alarms.
+ * <p>
+ * This class uses Android's {@link AlarmManager} to set up repeating daily alarms for each
+ * reminder time specified in a {@link Medication} object. When an alarm is triggered, it fires
+ * an intent that is caught by the {@link AlarmReceiver}.
+ * </p>
+ */
 @Singleton
 public class AlarmScheduler {
 
     private final Context context;
     private final AlarmManager alarmManager;
 
+    /**
+     * Constructs a new AlarmScheduler.
+     *
+     * @param context The application context.
+     */
     @Inject
     public AlarmScheduler(@ApplicationContext Context context) {
         this.context = context;
         this.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
+    /**
+     * Schedules daily repeating alarms for a given medication.
+     *
+     * @param medication The medication for which to schedule reminders.
+     */
     public void schedule(Medication medication) {
         if (medication.getReminderHours() == null) {
             return;
@@ -41,14 +59,16 @@ public class AlarmScheduler {
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 0);
 
+            // If the time is in the past, schedule it for the next day.
             if (calendar.before(Calendar.getInstance())) {
                 calendar.add(Calendar.DATE, 1);
             }
 
             Intent intent = new Intent(context, AlarmReceiver.class);
             intent.putExtra("medication_name", medication.getName());
-
+            // Create a unique request code for each alarm to avoid conflicts.
             int requestCode = (medication.getId() + hourStr).hashCode();
+            intent.putExtra("notification_id", requestCode);
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context,
@@ -66,6 +86,11 @@ public class AlarmScheduler {
         }
     }
 
+    /**
+     * Cancels all scheduled alarms for a given medication.
+     *
+     * @param medication The medication for which to cancel reminders.
+     */
     public void cancel(Medication medication) {
         if (medication.getReminderHours() == null) {
             return;
@@ -73,6 +98,7 @@ public class AlarmScheduler {
 
         for (String hourStr : medication.getReminderHours()) {
             Intent intent = new Intent(context, AlarmReceiver.class);
+            // Recreate the same request code to identify the correct PendingIntent to cancel.
             int requestCode = (medication.getId() + hourStr).hashCode();
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     context,

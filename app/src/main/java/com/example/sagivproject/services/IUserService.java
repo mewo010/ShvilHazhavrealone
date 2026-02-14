@@ -9,76 +9,83 @@ import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 
+/**
+ * An interface that defines the contract for database operations related to the {@link User} model.
+ * <p>
+ * This service manages all CRUD (Create, Read, Update, Delete) operations for users,
+ * as well as specific queries like authentication and email validation.
+ * </p>
+ */
 public interface IUserService {
     /**
-     * generate a new id for a new user in the database
+     * Generates a new, unique ID for a new user.
      *
-     * @return a new id for the user
+     * @return A unique ID string.
      */
     String generateUserId();
 
     /**
-     * create a new user in the database
+     * Creates a new user record in the database.
      *
-     * @param user     the user object to create
-     * @param callback the callback to call when the operation is completed
+     * @param user     The user object to create.
+     * @param callback An optional callback to be invoked upon completion.
      */
     void createNewUser(@NonNull User user, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * get a user from the database
+     * Retrieves a single user from the database by their ID.
      *
-     * @param uid      the id of the user to get
-     * @param callback the callback to call when the operation is completed
+     * @param uid      The ID of the user to retrieve.
+     * @param callback The callback to be invoked with the retrieved user.
      */
     void getUser(@NonNull String uid, @NonNull DatabaseCallback<User> callback);
 
     /**
-     * get all the users from the database
+     * Retrieves a list of all users from the database.
      *
-     * @param callback the callback to call when the operation is completed
+     * @param callback The callback to be invoked with the list of all users.
      */
     void getUserList(@NonNull DatabaseCallback<List<User>> callback);
 
     /**
-     * delete a user from the database
+     * Deletes a user from the database.
      *
-     * @param uid      the user id to delete
-     * @param callback the callback to call when the operation is completed
+     * @param uid      The ID of the user to delete.
+     * @param callback An optional callback to be invoked upon completion.
      */
     void deleteUser(@NonNull String uid, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * get a user by email and password
+     * Retrieves a user by matching their email and password.
      *
-     * @param email    the email of the user
-     * @param password the password of the user
-     * @param callback the callback to call when the operation is completed
+     * @param email    The email of the user.
+     * @param password The password of the user.
+     * @param callback The callback to be invoked with the matching user, or null if not found.
      */
     void getUserByEmailAndPassword(@NonNull String email, @NonNull String password, @NonNull DatabaseCallback<User> callback);
 
     /**
-     * check if an email already exists in the database
+     * Checks if a given email address already exists in the database.
      *
-     * @param email    the email to check
-     * @param callback the callback to call when the operation is completed
+     * @param email    The email to check.
+     * @param callback The callback to be invoked with true if the email exists, false otherwise.
      */
     void checkIfEmailExists(@NonNull String email, @NonNull DatabaseCallback<Boolean> callback);
 
     /**
-     * update a user in the database
+     * Updates an existing user in the database with a new user object.
      *
-     * @param user     the user object to update
-     * @param callback the callback to call when the operation is completed
+     * @param user     The user object containing the updated information.
+     * @param callback An optional callback to be invoked upon completion.
      */
     void updateUser(@NonNull User user, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * update only the admin status of a user
+     * Updates only the role of a user (e.g., promotes to admin).
      *
-     * @param uid      user id
-     * @param role     new role
-     * @param callback result callback
+     * @param uid      The ID of the user to update.
+     * @param role     The new role for the user.
+     * @param callback An optional callback for the result.
      */
     void updateUserRole(@NonNull String uid, @NonNull UserRole role, @Nullable DatabaseCallback<Void> callback);
 }

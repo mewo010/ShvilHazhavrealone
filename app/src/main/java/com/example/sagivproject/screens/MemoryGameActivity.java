@@ -36,8 +36,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The main activity for the online memory game.
+ * <p>
+ * This screen manages the entire lifecycle of a memory game between two players.
+ * It handles setting up the game board, listening for real-time updates from Firebase,
+ * managing player turns, checking for matches, updating scores, and determining the winner.
+ * </p>
+ */
 public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapter.MemoryGameListener {
-    private static final long TURN_TIME_LIMIT = 15000; //15 שניות
+    private static final long TURN_TIME_LIMIT = 15000; // 15 seconds
     private RecyclerView recyclerCards;
     private boolean endDialogShown = false, localLock = false;
     private String roomId;
@@ -47,6 +55,13 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
     private TextView tvTimer, tvTurnStatus, tvScore, tvOpponentName;
     private CountDownTimer turnTimer;
 
+    /**
+     * Initializes the activity, sets up the UI components, and starts listening for game updates.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +93,9 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         listenToGame();
     }
 
+    /**
+     * Shows a confirmation dialog for exiting the game. If confirmed, the opponent is declared the winner.
+     */
     private void showExitGameDialog() {
         new ExitGameDialog(this, () -> {
             if (currentRoom != null && !"finished".equals(currentRoom.getStatus())) {
@@ -95,6 +113,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }).show();
     }
 
+    /**
+     * Shows a dialog announcing the end of the game with a win, loss, or draw message.
+     *
+     * @param room The final state of the game room.
+     */
     private void showGameEndDialog(GameRoom room) {
         if (endDialogShown) return;
         endDialogShown = true;
@@ -111,7 +134,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }
 
         new GameEndDialog(this, message, () -> {
-            // מעבר למסך הבית בעת לחיצה על "אישור"
             Intent intent = new Intent(MemoryGameActivity.this, GameHomeScreenActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -119,6 +141,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }).show();
     }
 
+    /**
+     * Updates the score display text view.
+     *
+     * @param room The current game room state.
+     */
     private void updateScoreUI(GameRoom room) {
         boolean amIPlayer1 = user.getId().equals(room.getPlayer1().getId());
 
@@ -128,58 +155,68 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         tvScore.setText(MessageFormat.format("אני: {0} | יריב: {1}", myScore, opponentScore));
     }
 
+    /**
+     * Sets up the initial game board by fetching random images, creating card pairs,
+     * shuffling them, and saving the board state to Firebase. This is only done by Player 1.
+     *
+     * @param room The game room.
+     */
     private void setupGameBoard(GameRoom room) {
-        // רק השחקן הראשון יוצר את הלוח
         if (room.getCards() == null && user.getId().equals(room.getPlayer1().getId())) {
             databaseService.getImageService().getAllImages(new DatabaseCallback<>() {
                 @Override
                 public void onCompleted(List<ImageData> allImages) {
                     if (allImages == null || allImages.size() < 6) {
                         Toast.makeText(MemoryGameActivity.this, "אין מספיק תמונות כדי להתחיל את המשחק.", Toast.LENGTH_LONG).show();
-                        databaseService.getGameService().cancelRoom(roomId, null); // Cancel the room as the game cannot start
+                        databaseService.getGameService().cancelRoom(roomId, null);
                         finish();
                         return;
                     }
 
-                    // בחירת 6 תמונות רנדומליות ליצירת 12 קלפים (זוגות)
                     Collections.shuffle(allImages);
                     List<ImageData> selected = allImages.subList(0, 6);
 
                     List<Card> cards = new ArrayList<>();
                     for (ImageData img : selected) {
-                        // יצירת שני קלפים עם אותו ID ותוכן Base64
                         cards.add(new Card(img.getId(), img.getBase64()));
                         cards.add(new Card(img.getId(), img.getBase64()));
                     }
                     Collections.shuffle(cards);
 
-                    // שמירה ל-Firebase
                     databaseService.getGameService().initGameBoard(roomId, cards, room.getPlayer1().getId(), null);
                 }
 
                 @Override
                 public void onFailed(Exception e) {
                     Toast.makeText(MemoryGameActivity.this, "שגיאה בטעינת תמונות המשחק", Toast.LENGTH_SHORT).show();
-                    databaseService.getGameService().cancelRoom(roomId, null); // Cancel the room on error
-                    finish(); // חזרה למסך הקודם
+                    databaseService.getGameService().cancelRoom(roomId, null);
+                    finish();
                 }
             });
         }
     }
 
+    /**
+     * Checks if it is the current user's turn to play.
+     *
+     * @return True if it's the user's turn, false otherwise.
+     */
     public boolean isMyTurn() {
         return currentRoom != null &&
                 user.getId().equals(currentRoom.getCurrentTurnUid()) &&
                 !currentRoom.isProcessingMatch();
     }
 
+    /**
+     * Handles a click on a card. It allows a card to be selected only if it is the player's turn.
+     *
+     * @param card      The card that was clicked.
+     * @param itemView  The view of the item that was clicked.
+     * @param imageView The ImageView within the item.
+     */
     @Override
     public void onCardClicked(Card card, View itemView, ImageView imageView) {
-        if (currentRoom == null) return;
-
-        if (localLock) return;
-
-        if (!isMyTurn()) return;
+        if (currentRoom == null || localLock || !isMyTurn()) return;
 
         int cardIndex = adapter.getCards().indexOf(card);
         if (card.getIsMatched() || card.getIsRevealed()) return;
@@ -187,32 +224,40 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         handleCardSelection(cardIndex);
     }
 
+    /**
+     * Manages the logic for selecting one or two cards.
+     *
+     * @param clickedIndex The index of the card that was just clicked.
+     */
     private void handleCardSelection(int clickedIndex) {
         Integer firstIndex = currentRoom.getFirstSelectedCardIndex();
 
         if (firstIndex == null) {
-            // --- בחירת קלף ראשון ---
             databaseService.getGameService().updateCardStatus(roomId, clickedIndex, true, false);
             databaseService.getGameService().updateRoomField(roomId, "firstSelectedCardIndex", clickedIndex);
         } else {
-            // --- בחירת קלף שני ---
-            if (firstIndex == clickedIndex) return; //לחיצה על אותו קלף
+            if (firstIndex == clickedIndex) return;
 
             localLock = true;
-            databaseService.getGameService().setProcessing(roomId, true); //חסימת לחיצות נוספות
+            databaseService.getGameService().setProcessing(roomId, true);
             databaseService.getGameService().updateCardStatus(roomId, clickedIndex, true, false);
 
-            //בדיקה אם יש התאמה
-            new Handler(Looper.getMainLooper()).postDelayed(() -> checkMatch(firstIndex, clickedIndex), 1000); //השהייה כדי שהשחקן יראה את הקלף השני
+            new Handler(Looper.getMainLooper()).postDelayed(() -> checkMatch(firstIndex, clickedIndex), 1000);
         }
     }
 
+    /**
+     * Checks if the two selected cards are a match.
+     * Updates scores and card states accordingly.
+     *
+     * @param idx1 The index of the first selected card.
+     * @param idx2 The index of the second selected card.
+     */
     private void checkMatch(int idx1, int idx2) {
         Card c1 = currentRoom.getCards().get(idx1);
         Card c2 = currentRoom.getCards().get(idx2);
 
         if (c1 != null && c2 != null && c1.getId().equals(c2.getId())) {
-            // --- הצלחה ---
             adapter.animateSuccess(idx1, recyclerCards);
             adapter.animateSuccess(idx2, recyclerCards);
 
@@ -225,7 +270,6 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
                     currentRoom.getPlayer1Score() + 1 : currentRoom.getPlayer2Score() + 1);
 
         } else {
-            // --- טעות ---
             adapter.animateError(idx1, recyclerCards);
             adapter.animateError(idx2, recyclerCards);
 
@@ -248,6 +292,9 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }, 700);
     }
 
+    /**
+     * Checks if all cards on the board have been matched. If so, finishes the game.
+     */
     private void checkIfGameFinished() {
         boolean allCardsMatched = true;
         for (Card card : currentRoom.getCards()) {
@@ -262,6 +309,11 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }
     }
 
+    /**
+     * Finishes the game by calculating the winner and updating the game room status.
+     *
+     * @param room The final state of the game room.
+     */
     private void finishGame(GameRoom room) {
         if ("finished".equals(room.getStatus())) return;
 
@@ -270,6 +322,9 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         databaseService.getGameService().updateRoomField(roomId, "status", "finished");
     }
 
+    /**
+     * Sets up a real-time listener for the game room to react to changes in the game state.
+     */
     private void listenToGame() {
         databaseService.getGameService().listenToGame(roomId, new DatabaseCallback<>() {
             @Override
@@ -346,6 +401,9 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         });
     }
 
+    /**
+     * Cleans up resources, particularly the game listener, when the activity is destroyed.
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -354,6 +412,12 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         }
     }
 
+    /**
+     * Determines the winner of the game based on the final scores.
+     *
+     * @param room The final game room state.
+     * @return The UID of the winning player, or "draw" for a tie.
+     */
     private String calculateWinner(GameRoom room) {
         int p1 = room.getPlayer1Score();
         int p2 = room.getPlayer2Score();
@@ -367,6 +431,10 @@ public class MemoryGameActivity extends BaseActivity implements MemoryGameAdapte
         return "draw";
     }
 
+    /**
+     * Starts a countdown timer for the current player's turn. If the time runs out,
+     * the turn automatically passes to the opponent.
+     */
     private void startTurnTimer() {
         if (turnTimer != null) turnTimer.cancel();
 

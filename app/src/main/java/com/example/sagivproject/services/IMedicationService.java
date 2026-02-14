@@ -8,47 +8,53 @@ import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 
-
+/**
+ * An interface that defines the contract for operations related to user medications.
+ * <p>
+ * This service manages creating, retrieving, updating, and deleting medication records,
+ * which are stored under a specific user's data in the database.
+ * </p>
+ */
 public interface IMedicationService {
     /**
-     * create a new medication in the database
+     * Creates a new medication record in the database for a specific user.
      *
-     * @param uid        the id of the user
-     * @param medication the medication object to create
-     * @param callback   the callback to call when the operation is completed
+     * @param uid        The ID of the user to whom the medication belongs.
+     * @param medication The medication object to create.
+     * @param callback   An optional callback to be invoked upon completion.
      */
     void createNewMedication(@NonNull String uid, @NonNull Medication medication, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * get all the medications of a specific user
+     * Retrieves the list of all medications for a specific user.
      *
-     * @param uid      the id of the user
-     * @param callback the callback
+     * @param uid      The ID of the user whose medications are to be retrieved.
+     * @param callback The callback to be invoked with the list of medications.
      */
     void getUserMedicationList(@NonNull String uid, @NonNull DatabaseCallback<List<Medication>> callback);
 
     /**
-     * generate a new id for a medication under a specific user
+     * Generates a new, unique ID for a medication.
      *
-     * @return a new id for the medication
+     * @return A new unique ID string for the medication.
      */
     String generateMedicationId();
 
     /**
-     * delete a medication from the database
+     * Deletes a medication from the database.
      *
-     * @param uid          user id
-     * @param medicationId id to delete
-     * @param callback     callback
+     * @param uid          The ID of the user to whom the medication belongs.
+     * @param medicationId The ID of the medication to delete.
+     * @param callback     An optional callback to be invoked upon completion.
      */
     void deleteMedication(@NonNull String uid, @NonNull String medicationId, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * update a medication in the database
+     * Updates an existing medication in the database.
      *
-     * @param uid        user id
-     * @param medication medication to update
-     * @param callback   callback
+     * @param uid        The ID of the user to whom the medication belongs.
+     * @param medication The medication object containing the updated information.
+     * @param callback   An optional callback to be invoked upon completion.
      */
     void updateMedication(String uid, Medication medication, @Nullable DatabaseCallback<Void> callback);
 }

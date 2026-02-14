@@ -21,10 +21,26 @@ import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An admin activity to display a real-time log of all memory game rooms.
+ * <p>
+ * This screen provides a live-updating list of all game rooms (past and present),
+ * showing details such as the players involved, scores, and game status.
+ * It is intended for administrative or debugging purposes.
+ * </p>
+ */
 @AndroidEntryPoint
 public class MemoryGameLogsTableActivity extends BaseActivity {
     private MemoryGameLogAdapter adapter;
 
+    /**
+     * Initializes the activity, sets up the UI and RecyclerView, and starts listening
+     * for real-time updates to the game rooms.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +63,10 @@ public class MemoryGameLogsTableActivity extends BaseActivity {
         listenToGamesRealtime();
     }
 
+    /**
+     * Sets up a real-time listener on the database to fetch and display all game rooms.
+     * The list updates automatically as game data changes.
+     */
     private void listenToGamesRealtime() {
         databaseService.getGameService().getAllRoomsRealtime(new DatabaseCallback<>() {
             @Override

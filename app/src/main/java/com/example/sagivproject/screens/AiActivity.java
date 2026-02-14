@@ -36,6 +36,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * An activity that provides an interface to interact with a generative AI model.
+ * <p>
+ * This screen allows users to ask questions and receive answers from the Gemini AI model.
+ * The response is displayed with a typewriter animation.
+ * </p>
+ */
 public class AiActivity extends BaseActivity {
     private static final String API_KEY = EncryptionAPIKey.decode(BuildConfig.API_KEY);
     private static final String MODEL = "models/gemini-2.5-flash";
@@ -52,6 +59,13 @@ public class AiActivity extends BaseActivity {
     private Handler animationHandler;
     private int charIndex;
 
+    /**
+     * Initializes the activity, sets up the UI, and configures the send button.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,11 +88,17 @@ public class AiActivity extends BaseActivity {
         send.setOnClickListener(view -> sendQuestion());
     }
 
+    /**
+     * Displays text in a TextView with a typewriter-like animation.
+     *
+     * @param textView The TextView to display the text in.
+     * @param fullText The full text to be displayed.
+     */
     private void displayTextWithAnimation(TextView textView, String fullText) {
         textView.setText("");
         charIndex = 0;
         animationHandler = new Handler(Looper.getMainLooper());
-        final int delay = 15; //מהירות כתיבה במילישניות לכל תו
+        final int delay = 15; // Animation speed in milliseconds per character
 
         animationHandler.post(new Runnable() {
             @Override
@@ -91,6 +111,10 @@ public class AiActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Sends the user's question to the generative AI model and displays the response.
+     * Handles API call, response parsing, and error cases.
+     */
     private void sendQuestion() {
         String q = questionInput.getText().toString().trim();
         if (q.isEmpty()) return;

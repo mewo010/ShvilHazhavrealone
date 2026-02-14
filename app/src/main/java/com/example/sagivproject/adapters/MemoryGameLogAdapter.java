@@ -16,9 +16,22 @@ import com.example.sagivproject.models.GameRoom;
 import java.text.MessageFormat;
 import java.util.List;
 
+/**
+ * A RecyclerView adapter for displaying a log of {@link GameRoom} objects.
+ * <p>
+ * This adapter is intended for administrative or debugging purposes, showing a real-time
+ * list of all game rooms and their current state, including players, score, and status.
+ * It uses {@link DiffUtil} to efficiently update the list as game data changes.
+ * </p>
+ */
 public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdapter.ViewHolder> {
     private final List<GameRoom> gameRooms;
 
+    /**
+     * Constructs a new MemoryGameLogAdapter.
+     *
+     * @param gameRooms The initial list of game rooms.
+     */
     public MemoryGameLogAdapter(List<GameRoom> gameRooms) {
         this.gameRooms = gameRooms;
     }
@@ -47,6 +60,11 @@ public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdap
         return gameRooms.size();
     }
 
+    /**
+     * Updates the data in the adapter with a new list of game rooms and calculates the difference.
+     *
+     * @param newRooms The new list of game rooms.
+     */
     public void updateData(List<GameRoom> newRooms) {
         final GameRoomDiffCallback diffCallback = new GameRoomDiffCallback(this.gameRooms, newRooms);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -56,6 +74,9 @@ public class MemoryGameLogAdapter extends RecyclerView.Adapter<MemoryGameLogAdap
         diffResult.dispatchUpdatesTo(this);
     }
 
+    /**
+     * A ViewHolder that describes an item view and metadata about its place within the RecyclerView.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView txtPlayers, txtScore, txtStatus;
 

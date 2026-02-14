@@ -11,148 +11,157 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+/**
+ * An interface that defines the contract for operations related to the online memory game.
+ * <p>
+ * This service manages the entire lifecycle of a game, from matchmaking to completion.
+ * It includes methods for finding/creating rooms, managing game state, handling player actions,
+ * and setting up real-time listeners.
+ * </p>
+ */
 public interface IGameService {
     /**
-     * find an existing waiting room or create a new one if none is available
+     * Finds an existing waiting room or creates a new one if none is available.
      *
-     * @param user     the user who wants to join or create a game room
-     * @param callback callback that returns the matched or newly created GameRoom
+     * @param user     The user who wants to join or create a game room.
+     * @param callback A callback that returns the matched or newly created GameRoom.
      */
     void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback);
 
     /**
-     * Listen to all game rooms in real-time
+     * Listens to all game rooms in real-time.
      *
-     * @param callback the callback that will receive the updated list of rooms
+     * @param callback The callback that will receive the updated list of rooms.
      */
     void getAllRoomsRealtime(@NonNull DatabaseCallback<List<GameRoom>> callback);
 
     /**
-     * listen in realtime to changes in a specific room status
+     * Listens in real-time to changes in a specific room's status (e.g., waiting, playing, finished).
      *
-     * @param roomId   the id of the room to listen to
-     * @param callback callback to notify about room start, deletion or errors
-     * @return the ValueEventListener instance so it can later be removed
+     * @param roomId   The ID of the room to listen to.
+     * @param callback A callback to notify about room status changes.
+     * @return The {@link ValueEventListener} instance so it can later be removed.
      */
     ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull IRoomStatusCallback callback);
 
     /**
-     * remove a previously registered room status listener
+     * Removes a previously registered room status listener.
      *
-     * @param roomId   the id of the room
-     * @param listener the listener instance returned from listenToRoomStatus
+     * @param roomId   The ID of the room.
+     * @param listener The listener instance returned from {@link #listenToRoomStatus(String, IRoomStatusCallback)}.
      */
     void removeRoomListener(@NonNull String roomId, @NonNull ValueEventListener listener);
 
     /**
-     * cancel and delete a game room from the database
+     * Cancels and deletes a game room from the database, typically if the host leaves before it starts.
      *
-     * @param roomId   the id of the room to cancel
-     * @param callback optional callback for success or failure
+     * @param roomId   The ID of the room to cancel.
+     * @param callback An optional callback for success or failure.
      */
     void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * initialize the game board data for a room
+     * Initializes the game board data for a room.
      *
-     * @param roomId       the id of the game room
-     * @param cards        the shuffled list of cards for the game
-     * @param firstTurnUid the UID of the player who starts the game
-     * @param callback     callback for success or failure
+     * @param roomId       The ID of the game room.
+     * @param cards        The shuffled list of cards for the game.
+     * @param firstTurnUid The UID of the player who will take the first turn.
+     * @param callback     An optional callback for success or failure.
      */
-    void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback);
+    void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * listen in realtime to all changes in a game room
+     * Listens in real-time to all changes in a game room's state.
      *
-     * @param roomId   the id of the game room
-     * @param callback callback that receives updated GameRoom objects
+     * @param roomId   The ID of the game room.
+     * @param callback A callback that receives the updated {@link GameRoom} object on every change.
      */
     void listenToGame(String roomId, DatabaseCallback<GameRoom> callback);
 
     /**
-     * stop listening to realtime game updates
+     * Stops listening to real-time game updates for a specific room.
      *
-     * @param roomId the id of the game room
+     * @param roomId The ID of the game room.
      */
     void stopListeningToGame(String roomId);
 
     /**
-     * update a single field inside a game room
+     * Updates a single field inside a game room.
      *
-     * @param roomId the id of the game room
-     * @param field  the field name to update
-     * @param value  the new value for the field
+     * @param roomId The ID of the game room.
+     * @param field  The name of the field to update.
+     * @param value  The new value for the field.
      */
     void updateRoomField(String roomId, String field, Object value);
 
     /**
-     * update the reveal and match state of a specific card in the game board
+     * Updates the revealed and matched state of a specific card on the game board.
      *
-     * @param roomId   the id of the game room
-     * @param index    the index of the card in the cards list
-     * @param revealed whether the card is currently revealed
-     * @param matched  whether the card has been successfully matched
+     * @param roomId   The ID of the game room.
+     * @param index    The index of the card in the `cards` list.
+     * @param revealed Whether the card is currently revealed.
+     * @param matched  Whether the card has been successfully matched.
      */
     void updateCardStatus(String roomId, int index, boolean revealed, boolean matched);
 
     /**
-     * set the processing state of the game
+     * Sets the processing state of the game, used to prevent moves while a match is being checked.
      *
-     * @param roomId       the id of the game room
-     * @param isProcessing true if the game is currently processing a move
+     * @param roomId       The ID of the game room.
+     * @param isProcessing True if the game is currently processing a move, false otherwise.
      */
     void setProcessing(String roomId, boolean isProcessing);
 
     /**
-     * increment the win counter of a user
+     * Increments the win counter of a user.
      *
-     * @param uid the UID of the winning user
+     * @param uid The UID of the winning user.
      */
     void addUserWin(String uid);
 
     /**
-     * define automatic forfeit behavior when a player disconnects unexpectedly
+     * Defines automatic forfeit behavior if a player disconnects unexpectedly.
      *
-     * @param roomId      the id of the game room
-     * @param opponentUid the UID of the opponent who will win by forfeit
+     * @param roomId      The ID of the game room.
+     * @param opponentUid The UID of the opponent who will win by forfeit.
      */
     void setupForfeitOnDisconnect(String roomId, String opponentUid);
 
     /**
-     * cancel previously defined onDisconnect forfeit actions
+     * Cancels the previously defined onDisconnect forfeit actions for a room.
      *
-     * @param roomId the id of the game room
+     * @param roomId The ID of the game room.
      */
     void removeForfeitOnDisconnect(String roomId);
 
     /**
-     * A callback interface for monitoring the status of a game room.
+     * A callback interface for monitoring the high-level status of a game room (e.g., started, deleted).
      */
     interface IRoomStatusCallback {
         /**
-         * Called when the game room has started.
+         * Called when an opponent joins a waiting room, and the game status changes to "playing".
          *
          * @param room The game room that has started.
          */
         void onRoomStarted(GameRoom room);
 
         /**
-         * Called when the game room has been deleted.
+         * Called when a waiting game room has been deleted (e.g., by the host).
          */
         void onRoomDeleted();
 
         /**
-         * Called when the game room has finished.
+         * Called when the game room status changes to "finished".
          *
+         * @param room The finished game room state.
          */
-        void onRoomFinished(GameRoom ignoredRoom);
+        void onRoomFinished(GameRoom room);
 
         /**
          * Called when an error occurs while monitoring the game room.
          *
-         * @param ignoredE The exception that occurred.
+         * @param e The exception that occurred.
          */
-        void onFailed(Exception ignoredE);
+        void onFailed(Exception e);
     }
 }

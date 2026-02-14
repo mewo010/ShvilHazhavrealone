@@ -21,9 +21,23 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity for managing application settings.
+ * <p>
+ * This screen provides options to toggle dark mode and, if the user is logged in,
+ * to log out of their account.
+ * </p>
+ */
 @AndroidEntryPoint
 public class SettingsActivity extends BaseActivity {
 
+    /**
+     * Initializes the activity, sets up the UI, and configures the dark mode switch and logout button.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +77,12 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Updates the text of the dark mode switch based on its current state.
+     *
+     * @param switchDarkMode The dark mode switch.
+     * @param isDarkMode     The current dark mode state.
+     */
     private void updateDarkModeText(SwitchMaterial switchDarkMode, boolean isDarkMode) {
         if (isDarkMode) {
             switchDarkMode.setText(R.string.מצבבהיר);
@@ -71,6 +91,9 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Logs out the current user, clears their session data, and navigates to the Login screen.
+     */
     private void logout() {
         new LogoutDialog(this, () -> {
             String email = databaseService.getAuthService().logout();

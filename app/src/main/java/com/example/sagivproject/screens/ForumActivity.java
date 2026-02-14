@@ -18,10 +18,24 @@ import com.example.sagivproject.models.User;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity that displays the messages within a specific forum category.
+ * <p>
+ * This screen allows users to view messages, send new messages, and delete their own messages.
+ * It extends {@link BaseForumActivity} to handle common forum functionalities.
+ * </p>
+ */
 @AndroidEntryPoint
 public class ForumActivity extends BaseForumActivity implements BaseForumActivity.ForumPermissions {
     private User user;
 
+    /**
+     * Initializes the activity, sets up the UI, and configures the forum for the given category.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +69,23 @@ public class ForumActivity extends BaseForumActivity implements BaseForumActivit
         setupForum(categoryId, categoryName);
     }
 
+    /**
+     * Determines if the current user has permission to delete a specific message.
+     * <p>
+     * In this implementation, a user can only delete their own messages.
+     * </p>
+     *
+     * @param message The message to check.
+     * @return {@code true} if the user can delete the message, {@code false} otherwise.
+     */
     @Override
     public boolean canDelete(ForumMessage message) {
         return message.getUserId() != null && message.getUserId().equals(user.getId());
     }
 
+    /**
+     * Reloads the forum messages when the activity resumes to ensure the list is up-to-date.
+     */
     @Override
     protected void onResume() {
         super.onResume();

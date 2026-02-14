@@ -5,6 +5,13 @@ import com.example.sagivproject.models.enums.MedicationType;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Represents a single medication for a user.
+ * <p>
+ * This class holds all the information about a medication, including its name, type,
+ * dosage details, and the list of reminder times.
+ * </p>
+ */
 public class Medication implements Serializable, Idable {
     private String id;
     private String userId;
@@ -13,9 +20,22 @@ public class Medication implements Serializable, Idable {
     private MedicationType type;
     private List<String> reminderHours;
 
+    /**
+     * Default constructor required for calls to DataSnapshot.getValue(Medication.class).
+     */
     public Medication() {
     }
 
+    /**
+     * Constructs a new Medication object.
+     *
+     * @param id            The unique ID of the medication.
+     * @param name          The name of the medication.
+     * @param details       Dosage or other details about the medication.
+     * @param type          The type of medication (e.g., Pill, Syrup).
+     * @param reminderHours A list of reminder times in "HH:mm" format.
+     * @param userId        The ID of the user to whom this medication belongs.
+     */
     public Medication(String id, String name, String details, MedicationType type, List<String> reminderHours, String userId) {
         this.id = id;
         this.name = name;
@@ -31,8 +51,8 @@ public class Medication implements Serializable, Idable {
     }
 
     @Override
-    public void setId(String messageId) {
-        this.id = messageId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserId() {

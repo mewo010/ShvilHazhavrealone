@@ -14,9 +14,21 @@ import com.example.sagivproject.models.User;
 import java.text.MessageFormat;
 import java.util.List;
 
+/**
+ * A RecyclerView adapter for displaying a leaderboard of users based on their game wins.
+ * <p>
+ * This adapter takes a list of {@link User} objects, sorted by win count, and displays them.
+ * It gives a special visual treatment (a trophy emoji) to the top-ranked player.
+ * </p>
+ */
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.ViewHolder> {
     private final List<User> userList;
 
+    /**
+     * Constructs a new LeaderboardAdapter.
+     *
+     * @param userList The list of users to display, expected to be pre-sorted.
+     */
     public LeaderboardAdapter(List<User> userList) {
         this.userList = userList;
     }
@@ -33,8 +45,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         User user = userList.get(position);
         holder.tvName.setText(user.getFullName());
 
+        // Add a trophy for the first place user
         if (position == 0 && user.getCountWins() > 0) {
-            holder.tvWins.setText(MessageFormat.format("\uD83E\uDD47 {0}", user.getCountWins())); //🏆
+            holder.tvWins.setText(MessageFormat.format("\uD83E\uDD47 {0}", user.getCountWins())); // 🥇
         } else {
             holder.tvWins.setText(String.valueOf(user.getCountWins()));
         }
@@ -45,6 +58,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         return userList.size();
     }
 
+    /**
+     * A ViewHolder that describes an item view and metadata about its place within the RecyclerView.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView tvName, tvWins;
 

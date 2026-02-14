@@ -1,58 +1,87 @@
 package com.example.sagivproject.services;
 
 /**
- * A central interface for accessing all data services.
+ * A central interface that acts as a façade for accessing all other data-related services.
+ * <p>
+ * This interface provides a single point of entry to get instances of all specific service interfaces,
+ * simplifying dependency injection throughout the application.
+ * </p>
  */
 public interface IDatabaseService {
     /**
-     * @return The auth service.
+     * Gets the authentication service.
+     *
+     * @return The {@link IAuthService} instance.
      */
     IAuthService getAuthService();
 
     /**
-     * @return The user service.
+     * Gets the user management service.
+     *
+     * @return The {@link IUserService} instance.
      */
     IUserService getUserService();
 
     /**
-     * @return The medication service.
+     * Gets the medication management service.
+     *
+     * @return The {@link IMedicationService} instance.
      */
     IMedicationService getMedicationService();
 
     /**
-     * @return The game service.
+     * Gets the game management service.
+     *
+     * @return The {@link IGameService} instance.
      */
     IGameService getGameService();
 
     /**
-     * @return The stats service.
+     * Gets the statistics management service.
+     *
+     * @return The {@link IStatsService} instance.
      */
     IStatsService getStatsService();
 
     /**
-     * @return The forum service.
+     * Gets the forum message management service.
+     *
+     * @return The {@link IForumService} instance.
      */
     IForumService getForumService();
 
     /**
-     * @return The image service.
+     * Gets the game image management service.
+     *
+     * @return The {@link IImageService} instance.
      */
     IImageService getImageService();
 
     /**
-     * @return The forum category service.
+     * Gets the forum category management service.
+     *
+     * @return The {@link IForumCategoriesService} instance.
      */
     IForumCategoriesService getForumCategoriesService();
 
+    /**
+     * A generic callback interface for asynchronous database operations.
+     *
+     * @param <T> The type of the expected result.
+     */
     interface DatabaseCallback<T> {
-        /// called when the operation completes successfully
-        ///
-        /// @param object the result of the operation, or null for void operations
+        /**
+         * Called when the asynchronous operation completes successfully.
+         *
+         * @param object The result of the operation. This can be null for operations that don't return a value.
+         */
         void onCompleted(T object);
 
-        /// called when the operation fails
-        ///
-        /// @param e the exception describing what went wrong
+        /**
+         * Called when the asynchronous operation fails.
+         *
+         * @param e The exception that occurred during the operation.
+         */
         void onFailed(Exception e);
     }
 }

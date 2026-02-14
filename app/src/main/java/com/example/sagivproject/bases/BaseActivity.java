@@ -31,6 +31,14 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An abstract base class for all activities in the application.
+ * <p>
+ * This class provides common functionality that is shared across multiple activities,
+ * such as dependency injection for services, and a standardized way to set up a top navigation menu.
+ * It also includes a mechanism for requesting necessary permissions.
+ * </p>
+ */
 @AndroidEntryPoint
 public abstract class BaseActivity extends AppCompatActivity {
     @Inject
@@ -38,6 +46,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Inject
     protected IDatabaseService databaseService;
 
+    /**
+     * Initializes the activity and requests permissions if required.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +62,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Inflates and configures the appropriate top menu based on the user's login status and role.
+     *
+     * @param menuContainer The ViewGroup into which the menu will be inflated.
+     */
     protected void setupTopMenu(ViewGroup menuContainer) {
         boolean isUserLoggedIn = sharedPreferencesUtil.isUserLoggedIn();
 
@@ -97,6 +117,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Navigates to a target activity, but only if it is not the current activity.
+     *
+     * @param targetActivity The class of the activity to navigate to.
+     */
     protected void navigateIfNotCurrent(Class<?> targetActivity) {
         if (this.getClass().equals(targetActivity)) {
             return;
@@ -104,6 +129,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(new Intent(this, targetActivity));
     }
 
+    /**
+     * Requests a standard set of required permissions for the application.
+     */
     protected void requestPermissions() {
         List<String> permissions = new ArrayList<>();
         permissions.add(Manifest.permission.CAMERA);
@@ -113,6 +141,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[0]), 1001);
     }
 
+    /**
+     * A marker interface to indicate that an activity requires special permissions.
+     * Activities implementing this interface will have {@link #requestPermissions()} called automatically.
+     */
     public interface RequiresPermissions {
     }
 }

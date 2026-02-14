@@ -32,6 +32,14 @@ import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity to display and manage user profile details.
+ * <p>
+ * This screen shows the current user's information, including their name, email, age,
+ * birthdate, and game statistics. It allows the user to edit their profile details
+ * and change their profile picture.
+ * </p>
+ */
 @AndroidEntryPoint
 public class DetailsAboutUserActivity extends BaseActivity {
     private TextView txtTitle, txtEmail, txtPassword, txtAge, txtBirthDate, txtWins;
@@ -40,6 +48,13 @@ public class DetailsAboutUserActivity extends BaseActivity {
     private ActivityResultLauncher<androidx.activity.result.PickVisualMediaRequest> photoPickerLauncher;
     private ActivityResultLauncher<Void> cameraLauncher;
 
+    /**
+     * Initializes the activity, sets up the UI, and configures event listeners.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,12 +131,20 @@ public class DetailsAboutUserActivity extends BaseActivity {
         );
     }
 
+    /**
+     * Reloads user data from the database when the activity resumes to ensure the
+     * displayed information is up-to-date.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         loadUserFromDatabase();
     }
 
+    /**
+     * Fetches the latest user data from the database and updates the local user object
+     * and UI.
+     */
     private void loadUserFromDatabase() {
         databaseService.getUserService().getUser(user.getId(), new DatabaseCallback<>() {
             @Override
@@ -140,6 +163,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Populates the UI fields with the details from the local user object.
+     */
     private void loadUserDetailsToUI() {
         if (user == null) {
             return;
@@ -169,6 +195,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
         txtWins.setText(String.valueOf(user.getCountWins()));
     }
 
+    /**
+     * Opens a dialog to allow the user to edit their profile information.
+     */
     private void openEditDialog() {
         new EditUserDialog(this, user, () -> {
             sharedPreferencesUtil.saveUser(user);
@@ -176,6 +205,10 @@ public class DetailsAboutUserActivity extends BaseActivity {
         }, databaseService.getAuthService()).show();
     }
 
+    /**
+     * Opens a dialog to allow the user to choose a new profile image from the camera or
+     * gallery, or to delete the current image.
+     */
     private void openImagePicker() {
         boolean hasImage = user.getProfileImage() != null && !user.getProfileImage().isEmpty();
 
@@ -201,6 +234,9 @@ public class DetailsAboutUserActivity extends BaseActivity {
         }).show();
     }
 
+    /**
+     * Deletes the user's current profile image from the database and updates the UI.
+     */
     private void deleteProfileImage() {
         user.setProfileImage(null);
 
@@ -220,16 +256,25 @@ public class DetailsAboutUserActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Handles the selected image bitmap, sets it as the profile image view,
+     * converts it to Base64, and saves it.
+     *
+     * @param bitmap The bitmap of the selected image.
+     */
     private void handleImageBitmap(Bitmap bitmap) {
         imgUserProfile.setImageBitmap(bitmap);
 
-        //המרה ל־Base64 ושמירה
+        // Convert to Base64 and save
         String base64 = ImageUtil.convertTo64Base(imgUserProfile);
         user.setProfileImage(base64);
 
         saveProfileImage();
     }
 
+    /**
+     * Saves the updated user profile (with the new image) to the database.
+     */
     private void saveProfileImage() {
         databaseService.getUserService().updateUser(user, new DatabaseCallback<>() {
             @Override

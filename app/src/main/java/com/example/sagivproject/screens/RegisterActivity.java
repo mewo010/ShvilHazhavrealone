@@ -21,12 +21,27 @@ import com.example.sagivproject.utils.Validator;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An activity for new user registration.
+ * <p>
+ * This screen allows a new user to create an account by providing their first name,
+ * last name, birthdate, email, and password. It includes input validation and
+ * handles the registration process through the authentication service.
+ * </p>
+ */
 @AndroidEntryPoint
 public class RegisterActivity extends BaseActivity {
 
     private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextBirthDate;
     private long birthDateMillis = -1;
 
+    /**
+     * Initializes the activity, sets up the UI, input fields, and the registration button.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +71,10 @@ public class RegisterActivity extends BaseActivity {
         btnRegister.setOnClickListener(view -> tryRegister());
     }
 
+    /**
+     * Attempts to register a new user with the provided details.
+     * Validates the input before calling the registration service.
+     */
     private void tryRegister() {
         String firstName = editTextFirstName.getText().toString().trim();
         String lastName = editTextLastName.getText().toString().trim();
@@ -85,6 +104,16 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Validates all the user registration input fields.
+     *
+     * @param firstName The user's first name.
+     * @param lastName  The user's last name.
+     * @param birthDate The user's birthdate as a string.
+     * @param email     The user's email address.
+     * @param password  The user's chosen password.
+     * @return {@code true} if all inputs are valid, {@code false} otherwise.
+     */
     private boolean validateInput(String firstName, String lastName, String birthDate, String email, String password) {
         if (firstName.isEmpty() || lastName.isEmpty() || birthDate.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "נא למלא את כל השדות", Toast.LENGTH_SHORT).show();
@@ -130,6 +159,9 @@ public class RegisterActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * Opens a date picker dialog to allow the user to select their birthdate.
+     */
     private void openDatePicker() {
         CalendarUtil.openDatePicker(this, birthDateMillis, (dateMillis, formattedDate) -> {
             this.birthDateMillis = dateMillis;

@@ -44,6 +44,14 @@ import java.util.stream.Collectors;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * An admin activity for managing the list of all users in the application.
+ * <p>
+ * This screen displays a table of users, allowing administrators to add, edit, delete,
+ * and search for users. It also provides the functionality to promote or demote users
+ * to/from admin status.
+ * </p>
+ */
 @AndroidEntryPoint
 public class UsersTableActivity extends BaseActivity {
     private final List<User> usersList = new ArrayList<>();
@@ -55,6 +63,14 @@ public class UsersTableActivity extends BaseActivity {
     private Typeface textFont;
     private int textColor, backgroundColor;
 
+    /**
+     * Initializes the activity, sets up the UI, RecyclerView, search/filter functionality,
+     * and action listeners for user management.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,12 +196,18 @@ public class UsersTableActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Reloads the user list from the database when the activity resumes.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         loadUsers();
     }
 
+    /**
+     * Fetches the complete list of users from the database and updates the UI.
+     */
     private void loadUsers() {
         databaseService.getUserService().getUserList(new IDatabaseService.DatabaseCallback<>() {
             @Override
@@ -202,6 +224,11 @@ public class UsersTableActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Toggles the admin status of a user.
+     *
+     * @param user The user whose admin status is to be toggled.
+     */
     private void handleToggleAdmin(User user) {
         UserRole newRole = user.getRole() == UserRole.ADMIN ? UserRole.REGULAR : UserRole.ADMIN;
 
@@ -213,7 +240,7 @@ public class UsersTableActivity extends BaseActivity {
                         "הסטטוס עודכן בהצלחה",
                         Toast.LENGTH_SHORT
                 ).show();
-                loadUsers(); // רענון
+                loadUsers(); // Refresh list
             }
 
             @Override
@@ -227,6 +254,11 @@ public class UsersTableActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Handles the deletion of a user. If the admin deletes their own account, they are logged out.
+     *
+     * @param user The user to be deleted.
+     */
     private void handleDeleteUser(User user) {
         boolean isSelf = user.equals(currentUser);
         databaseService.getUserService().deleteUser(user.getId(), new IDatabaseService.DatabaseCallback<>() {
@@ -251,6 +283,11 @@ public class UsersTableActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Filters the list of users based on the search query and the selected filter type.
+     *
+     * @param query The search text entered by the admin.
+     */
     private void filterUsers(String query) {
         List<User> oldList = new ArrayList<>(filteredList);
         filteredList.clear();
@@ -299,7 +336,9 @@ public class UsersTableActivity extends BaseActivity {
 
             case "הכל":
             default:
-                newFilteredList = new ArrayList<>(usersList);
+                newFilteredList = usersList.stream()
+                        .filter(user -> user.getFullName().toLowerCase().contains(lowerQuery))
+                        .collect(Collectors.toList());
                 break;
         }
 

@@ -24,6 +24,14 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+/**
+ * An implementation of the {@link IGameService} interface for managing the memory game.
+ * <p>
+ * This service handles all aspects of the game lifecycle, including matchmaking (finding or creating rooms),
+ * managing game state in real-time, handling player moves, updating scores, and determining the winner.
+ * It also manages listeners for game state changes and handles player disconnections.
+ * </p>
+ */
 public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IGameService {
     private static final String ROOMS_PATH = "rooms";
     private static final String USERS_PATH = "users";
@@ -31,6 +39,11 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
     private final DatabaseReference usersReference;
     private ValueEventListener activeGameListener;
 
+    /**
+     * Constructs a new GameServiceImpl.
+     *
+     * @param firebaseDatabase The FirebaseDatabase instance.
+     */
     @Inject
     public GameServiceImpl(FirebaseDatabase firebaseDatabase) {
         super(ROOMS_PATH, GameRoom.class);
@@ -38,6 +51,12 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         this.usersReference = firebaseDatabase.getReference(USERS_PATH);
     }
 
+    /**
+     * Finds an available waiting game room or creates a new one for the user.
+     *
+     * @param user     The user looking for a game.
+     * @param callback The callback to be invoked with the resulting game room.
+     */
     @Override
     public void findOrCreateRoom(User user, DatabaseCallback<GameRoom> callback) {
         if (user == null) {
@@ -73,7 +92,6 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
                     return;
                 }
 
-                // Find the room that the user is in
                 for (DataSnapshot roomSnapshot : snapshot.getChildren()) {
                     GameRoom room = roomSnapshot.getValue(GameRoom.class);
                     if (room != null && (user.equals(room.getPlayer1()) || user.equals(room.getPlayer2()))) {
@@ -86,6 +104,11 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         });
     }
 
+    /**
+     * Retrieves a list of all game rooms with real-time updates.
+     *
+     * @param callback The callback to be invoked with the list of game rooms.
+     */
     @Override
     public void getAllRoomsRealtime(@NonNull DatabaseCallback<List<GameRoom>> callback) {
         roomsReference.addValueEventListener(new ValueEventListener() {
@@ -108,6 +131,13 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         });
     }
 
+    /**
+     * Listens for status changes in a specific game room.
+     *
+     * @param roomId   The ID of the room to listen to.
+     * @param callback The callback to handle room status changes.
+     * @return The {@link ValueEventListener} used for listening.
+     */
     @Override
     public ValueEventListener listenToRoomStatus(@NonNull String roomId, @NonNull IRoomStatusCallback callback) {
         ValueEventListener listener = new ValueEventListener() {
@@ -138,11 +168,23 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         return listener;
     }
 
+    /**
+     * Removes a previously attached room status listener.
+     *
+     * @param roomId   The ID of the room.
+     * @param listener The listener to remove.
+     */
     @Override
     public void removeRoomListener(@NonNull String roomId, @NonNull ValueEventListener listener) {
         roomsReference.child(roomId).removeEventListener(listener);
     }
 
+    /**
+     * Cancels and deletes a waiting game room.
+     *
+     * @param roomId   The ID of the room to cancel.
+     * @param callback The callback to be invoked on completion.
+     */
     @Override
     public void cancelRoom(@NonNull String roomId, @Nullable DatabaseCallback<Void> callback) {
         roomsReference.child(roomId).runTransaction(new Transaction.Handler() {
@@ -169,6 +211,14 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         });
     }
 
+    /**
+     * Initializes the game board with cards and sets the first turn.
+     *
+     * @param roomId       The ID of the room.
+     * @param cards        The list of cards for the game board.
+     * @param firstTurnUid The UID of the player who takes the first turn.
+     * @param callback     The callback to be invoked on completion.
+     */
     @Override
     public void initGameBoard(String roomId, List<Card> cards, String firstTurnUid, DatabaseCallback<Void> callback) {
         Map<String, Object> roomUpdates = new HashMap<>();
@@ -187,6 +237,12 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         });
     }
 
+    /**
+     * Listens for real-time updates to the entire game room state.
+     *
+     * @param roomId   The ID of the room to listen to.
+     * @param callback The callback to be invoked with the updated game room.
+     */
     @Override
     public void listenToGame(String roomId, DatabaseCallback<GameRoom> callback) {
         stopListeningToGame(roomId);
@@ -209,6 +265,11 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         roomsReference.child(roomId).addValueEventListener(activeGameListener);
     }
 
+    /**
+     * Stops listening for game state updates for a specific room.
+     *
+     * @param roomId The ID of the room to stop listening to.
+     */
     @Override
     public void stopListeningToGame(String roomId) {
         if (activeGameListener != null) {
@@ -217,11 +278,26 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         }
     }
 
+    /**
+     * Updates a specific field within a game room.
+     *
+     * @param roomId The ID of the room.
+     * @param field  The name of the field to update.
+     * @param value  The new value for the field.
+     */
     @Override
     public void updateRoomField(String roomId, String field, Object value) {
         roomsReference.child(roomId).child(field).setValue(value);
     }
 
+    /**
+     * Updates the status (revealed and matched) of a specific card on the board.
+     *
+     * @param roomId   The ID of the room.
+     * @param index    The index of the card in the list.
+     * @param revealed The new revealed status.
+     * @param matched  The new matched status.
+     */
     @Override
     public void updateCardStatus(String roomId, int index, boolean revealed, boolean matched) {
         DatabaseReference cardRef = roomsReference.child(roomId).child("cards").child(String.valueOf(index));
@@ -229,11 +305,22 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         cardRef.child("isMatched").setValue(matched);
     }
 
+    /**
+     * Sets a flag to indicate that a match check is in progress, preventing other moves.
+     *
+     * @param roomId       The ID of the room.
+     * @param isProcessing The processing status.
+     */
     @Override
     public void setProcessing(String roomId, boolean isProcessing) {
         updateRoomField(roomId, "processingMatch", isProcessing);
     }
 
+    /**
+     * Increments the win count for a user.
+     *
+     * @param uid The UID of the user who won.
+     */
     @Override
     public void addUserWin(String uid) {
         if (uid == null || uid.isEmpty() || uid.equals("draw")) return;
@@ -254,6 +341,12 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         });
     }
 
+    /**
+     * Sets up an onDisconnect handler to automatically end the game if the current player disconnects.
+     *
+     * @param roomId      The ID of the room.
+     * @param opponentUid The UID of the opponent, who will be declared the winner.
+     */
     @Override
     public void setupForfeitOnDisconnect(String roomId, String opponentUid) {
         DatabaseReference roomRef = roomsReference.child(roomId);
@@ -261,6 +354,11 @@ public class GameServiceImpl extends BaseDatabaseService<GameRoom> implements IG
         roomRef.child("winnerUid").onDisconnect().setValue(opponentUid);
     }
 
+    /**
+     * Removes the onDisconnect handler for the game room.
+     *
+     * @param roomId The ID of the room.
+     */
     @Override
     public void removeForfeitOnDisconnect(String roomId) {
         DatabaseReference roomRef = roomsReference.child(roomId);

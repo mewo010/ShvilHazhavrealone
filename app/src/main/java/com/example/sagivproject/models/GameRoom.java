@@ -3,9 +3,17 @@ package com.example.sagivproject.models;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Represents the state of an online memory game room.
+ * <p>
+ * This class holds all the information about a single game, including the players,
+ * the game board (list of cards), the current turn, scores, and the overall game status.
+ * It is used to synchronize the game state between players via the Firebase database.
+ * </p>
+ */
 public class GameRoom implements Serializable, Idable {
     private String id;
-    private String status; // waiting | playing | finished
+    private String status; // Can be "waiting", "playing", or "finished"
 
     private User player1;
     private User player2;
@@ -16,13 +24,22 @@ public class GameRoom implements Serializable, Idable {
     private int player1Score;
     private int player2Score;
 
-    private Integer firstSelectedCardIndex; //אינדקס הקלף הראשון שנבחר
-    private boolean processingMatch; //דגל למניעת לחיצות בזמן אנימציית סגירה
-    private String winnerUid; //
+    private Integer firstSelectedCardIndex; // Index of the first card selected in a turn
+    private boolean processingMatch; // Flag to prevent clicks during match processing
+    private String winnerUid; // UID of the winner, or "draw"
 
+    /**
+     * Default constructor required for calls to DataSnapshot.getValue(GameRoom.class).
+     */
     public GameRoom() {
     }
 
+    /**
+     * Constructs a new waiting GameRoom.
+     *
+     * @param id      The unique ID of the room.
+     * @param player1 The user who created the room.
+     */
     public GameRoom(String id, User player1) {
         this.id = id;
         this.player1 = player1;

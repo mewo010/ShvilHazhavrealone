@@ -22,11 +22,24 @@ import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-
+/**
+ * An activity that displays a list of forum categories.
+ * <p>
+ * This screen allows users to view the available forum categories and navigate to a specific
+ * forum by clicking on a category.
+ * </p>
+ */
 @AndroidEntryPoint
 public class ForumCategoriesActivity extends BaseActivity {
     private ForumCategoryAdapter adapter;
 
+    /**
+     * Initializes the activity, sets up the UI, and loads the forum categories.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +76,10 @@ public class ForumCategoriesActivity extends BaseActivity {
         loadCategories();
     }
 
+    /**
+     * Fetches the list of forum categories from the database and updates the RecyclerView.
+     * Displays a toast message on failure.
+     */
     private void loadCategories() {
         databaseService.getForumCategoriesService().getCategories(new DatabaseCallback<>() {
             @Override

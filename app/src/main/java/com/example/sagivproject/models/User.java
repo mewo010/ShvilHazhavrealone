@@ -10,6 +10,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Represents a user of the application.
+ * <p>
+ * This class holds all the data associated with a user, including their personal details,
+ * credentials, role, game statistics, and medication list. It is a central model in the application.
+ * </p>
+ */
 public class User implements Serializable, Idable {
     private String id;
     private String email;
@@ -20,13 +27,29 @@ public class User implements Serializable, Idable {
     private String password;
     private String profileImage;
     private HashMap<String, Medication> medications;
-    private int count_wins;
+    private int countWins;
     private MathProblemsStats mathProblemsStats;
 
+    /**
+     * Default constructor required for calls to DataSnapshot.getValue(User.class).
+     */
     public User() {
         this.role = UserRole.REGULAR;
     }
 
+    /**
+     * Constructs a new User object.
+     *
+     * @param id              The unique ID of the user.
+     * @param firstName       The user's first name.
+     * @param lastName        The user's last name.
+     * @param birthDateMillis The user's birthdate in milliseconds.
+     * @param email           The user's email address.
+     * @param password        The user's password.
+     * @param role            The user's role (REGULAR or ADMIN).
+     * @param profileImage    The user's profile image as a Base64 string.
+     * @param medications     A map of the user's medications.
+     */
     public User(String id, String firstName, String lastName, long birthDateMillis, String email, String password, UserRole role, String profileImage, HashMap<String, Medication> medications) {
         this.id = id;
         this.firstName = firstName;
@@ -37,10 +60,8 @@ public class User implements Serializable, Idable {
         this.role = role;
         this.profileImage = profileImage;
         this.medications = medications;
-        this.count_wins = 0;
+        this.countWins = 0;
         this.mathProblemsStats = new MathProblemsStats();
-        this.mathProblemsStats.setCorrectAnswers(0);
-        this.mathProblemsStats.setWrongAnswers(0);
     }
 
     @Override
@@ -77,6 +98,12 @@ public class User implements Serializable, Idable {
         this.birthDateMillis = birthDateMillis;
     }
 
+    /**
+     * Calculates the user's age based on their birthdate.
+     *
+     * @return The user's current age in years.
+     */
+    @Exclude
     public int getAge() {
         Calendar birth = Calendar.getInstance();
         birth.setTimeInMillis(birthDateMillis);
@@ -116,6 +143,11 @@ public class User implements Serializable, Idable {
         this.role = role;
     }
 
+    /**
+     * A convenience method to check if the user has an ADMIN role.
+     *
+     * @return True if the user is an admin, false otherwise.
+     */
     @Exclude
     public boolean isAdmin() {
         return this.role == UserRole.ADMIN;
@@ -138,11 +170,11 @@ public class User implements Serializable, Idable {
     }
 
     public int getCountWins() {
-        return this.count_wins;
+        return this.countWins;
     }
 
-    public void setCountWins(int count_wins) {
-        this.count_wins = count_wins;
+    public void setCountWins(int countWins) {
+        this.countWins = countWins;
     }
 
     public MathProblemsStats getMathProblemsStats() {
@@ -154,6 +186,11 @@ public class User implements Serializable, Idable {
         this.mathProblemsStats = mathProblemsStats;
     }
 
+    /**
+     * A convenience method to get the user's full name.
+     *
+     * @return The user's first name and last name concatenated.
+     */
     @Exclude
     public String getFullName() {
         return this.firstName + " " + this.lastName;
@@ -175,16 +212,16 @@ public class User implements Serializable, Idable {
     @Override
     public String toString() {
         return "User{" +
-                "uid='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDateMillis=" + birthDateMillis +
                 ", password='" + password + '\'' +
-                ", profileImage='" + profileImage + '\'' +
+                ", profileImage='" + (profileImage != null ? "(present)" : "(none)") + '\'' +
                 ", medications=" + medications +
-                ", count_wins=" + count_wins +
+                ", countWins=" + countWins +
                 ", mathProblemsStats=" + mathProblemsStats +
                 '}';
     }

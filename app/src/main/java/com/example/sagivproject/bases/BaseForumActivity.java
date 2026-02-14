@@ -20,6 +20,15 @@ import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * An abstract base class for activities that display a forum message board.
+ * <p>
+ * This class encapsulates the common logic for a forum screen, including setting up the
+ * RecyclerView, sending messages, listening for real-time updates, and managing the scroll
+ * position. It provides a structured way to handle forum interactions while allowing
+ * subclasses to define specific behaviors, such as message deletion permissions.
+ * </p>
+ */
 public abstract class BaseForumActivity extends BaseActivity {
     protected RecyclerView recycler;
     protected EditText edtMessage;
@@ -34,12 +43,18 @@ public abstract class BaseForumActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Initializes the core UI views required for the forum functionality.
+     *
+     * @param recycler       The RecyclerView to display messages.
+     * @param edtMessage     The EditText for composing new messages.
+     * @param btnNewMessages The Button that indicates new incoming messages.
+     */
     protected void initForumViews(RecyclerView recycler, EditText edtMessage, Button btnNewMessages) {
         this.recycler = recycler;
         this.edtMessage = edtMessage;
         this.btnNewMessagesIndicator = btnNewMessages;
 
-        //הגדרת לחיצה על כפתור "הודעות חדשות"
         if (btnNewMessagesIndicator != null) {
             btnNewMessagesIndicator.setOnClickListener(v -> {
                 scrollToBottom(true);
@@ -48,6 +63,12 @@ public abstract class BaseForumActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Sets up the forum with the specified category details and initializes the adapter and listeners.
+     *
+     * @param categoryId   The ID of the forum category.
+     * @param categoryName The name of the forum category, to be used as the title.
+     */
     protected void setupForum(String categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
@@ -61,7 +82,6 @@ public abstract class BaseForumActivity extends BaseActivity {
         adapter = new ForumAdapter();
         recycler.setAdapter(adapter);
 
-        //האזנה לגלילה של המשתמש - אם הוא מגיע לסוף ידנית, נעלים את הכפתור
         recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -96,20 +116,20 @@ public abstract class BaseForumActivity extends BaseActivity {
         loadMessages();
     }
 
+    /**
+     * Loads messages from the database and sets up a real-time listener for new messages.
+     */
     protected void loadMessages() {
         databaseService.getForumService().listenToMessages(categoryId, new DatabaseCallback<>() {
             @Override
             public void onCompleted(List<ForumMessage> list) {
-                //בודקים אם המשתמש היה בסוף לפני העדכון
                 boolean wasAtBottom = isLastItemVisible();
                 int previousItemCount = adapter.getItemCount();
 
                 adapter.submitList(list, () -> {
                     if (wasAtBottom) {
-                        //אם הוא כבר היה למטה, נמשיך לגלול אותו למטה עם ההודעה החדשה
                         scrollToBottom(false);
                     } else if (list.size() > previousItemCount && btnNewMessagesIndicator != null) {
-                        //אם הוא באמצע הרשימה והגיעה הודעה - נציג את הכפתור
                         btnNewMessagesIndicator.setVisibility(View.VISIBLE);
                     }
                 });
@@ -122,6 +142,9 @@ public abstract class BaseForumActivity extends BaseActivity {
         });
     }
 
+    /**
+     * Sends the message currently in the EditText to the forum.
+     */
     protected void sendMessage() {
         String text = edtMessage.getText().toString().trim();
         if (text.isEmpty()) return;
@@ -132,7 +155,6 @@ public abstract class BaseForumActivity extends BaseActivity {
             @Override
             public void onCompleted(Void data) {
                 edtMessage.setText("");
-                //גלילה למטה ברגע שאני שלחתי הודעה
                 scrollToBottom(true);
             }
 
@@ -143,7 +165,11 @@ public abstract class BaseForumActivity extends BaseActivity {
         });
     }
 
-    //פונקציית עזר לבדיקה אם המשתמש רואה את ההודעה האחרונה ברשימה
+    /**
+     * Checks if the last item in the RecyclerView is fully visible.
+     *
+     * @return True if the last item is visible, false otherwise.
+     */
     private boolean isLastItemVisible() {
         LinearLayoutManager lm = (LinearLayoutManager) recycler.getLayoutManager();
         if (lm == null || adapter == null || adapter.getItemCount() == 0) return true;
@@ -152,7 +178,11 @@ public abstract class BaseForumActivity extends BaseActivity {
         return lastVisible >= adapter.getItemCount() - 1;
     }
 
-    //פונקציית עזר לגלילה לסוף הרשימה
+    /**
+     * Scrolls the RecyclerView to the last item.
+     *
+     * @param smooth True to animate the scroll, false to scroll instantly.
+     */
     private void scrollToBottom(boolean smooth) {
         if (adapter != null && adapter.getItemCount() > 0) {
             if (smooth) {
@@ -163,7 +193,16 @@ public abstract class BaseForumActivity extends BaseActivity {
         }
     }
 
+    /**
+     * An interface to delegate permission checks to the concrete Activity.
+     */
     public interface ForumPermissions {
+        /**
+         * Determines if the current user can delete a specific message.
+         *
+         * @param message The message to check.
+         * @return True if deletion is allowed, false otherwise.
+         */
         boolean canDelete(ForumMessage message);
     }
 }

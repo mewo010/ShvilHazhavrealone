@@ -23,13 +23,29 @@ import com.example.sagivproject.adapters.diffUtils.ForumDiffCallback;
 import com.example.sagivproject.models.ForumMessage;
 import com.example.sagivproject.ui.CustomTypefaceSpan;
 
+/**
+ * A RecyclerView adapter for displaying a list of {@link ForumMessage} objects.
+ * <p>
+ * This adapter handles the binding of forum message data to the corresponding views in the
+ * item layout. It also manages a popup menu for message actions, such as deletion,
+ * based on permissions determined by a {@link ForumMessageListener}.
+ * </p>
+ */
 public class ForumAdapter extends ListAdapter<ForumMessage, ForumAdapter.ForumViewHolder> {
     private ForumMessageListener listener;
 
+    /**
+     * Constructs a new ForumAdapter.
+     */
     public ForumAdapter() {
         super(new ForumDiffCallback());
     }
 
+    /**
+     * Sets the listener for message actions.
+     *
+     * @param listener The listener to be notified of user actions.
+     */
     public void setForumMessageListener(ForumMessageListener listener) {
         this.listener = listener;
     }
@@ -64,30 +80,19 @@ public class ForumAdapter extends ListAdapter<ForumMessage, ForumAdapter.ForumVi
         holder.txtMessage.setText(msg.getMessage());
         holder.txtTime.setText(DateFormat.format("dd/MM/yyyy HH:mm", msg.getTimestamp()));
 
+        // Show or hide the menu button based on permissions
         if (listener != null && listener.isShowMenuOptions(msg)) {
             holder.btnMenu.setVisibility(View.VISIBLE);
             holder.btnMenu.setOnClickListener(v -> {
                 PopupMenu popup = new PopupMenu(v.getContext(), holder.btnMenu);
                 popup.getMenuInflater().inflate(R.menu.menu_forum_message, popup.getMenu());
 
+                // Apply custom font and size to the menu item
                 MenuItem deleteItem = popup.getMenu().findItem(R.id.action_delete);
                 if (deleteItem != null && customFont != null) {
                     SpannableString title = new SpannableString(deleteItem.getTitle());
-
-                    title.setSpan(
-                            new CustomTypefaceSpan("", customFont),
-                            0,
-                            title.length(),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    );
-
-                    title.setSpan(
-                            new AbsoluteSizeSpan(20, true),
-                            0,
-                            title.length(),
-                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    );
-
+                    title.setSpan(new CustomTypefaceSpan("", customFont), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    title.setSpan(new AbsoluteSizeSpan(20, true), 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     deleteItem.setTitle(title);
                 }
 
@@ -105,12 +110,29 @@ public class ForumAdapter extends ListAdapter<ForumMessage, ForumAdapter.ForumVi
         }
     }
 
+    /**
+     * An interface for handling actions on a forum message item.
+     */
     public interface ForumMessageListener {
+        /**
+         * Called when a message action (e.g., delete) is clicked.
+         *
+         * @param message The message that was acted upon.
+         */
         void onClick(ForumMessage message);
 
+        /**
+         * Determines whether the action menu should be shown for a given message.
+         *
+         * @param message The message to check.
+         * @return True to show the menu, false otherwise.
+         */
         boolean isShowMenuOptions(ForumMessage message);
     }
 
+    /**
+     * A ViewHolder that describes an item view and metadata about its place within the RecyclerView.
+     */
     public static class ForumViewHolder extends RecyclerView.ViewHolder {
         final TextView txtUser, txtEmail, txtIsAdmin, txtMessage, txtTime;
         final ImageButton btnMenu;

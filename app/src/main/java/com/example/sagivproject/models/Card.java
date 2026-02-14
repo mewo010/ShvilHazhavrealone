@@ -2,6 +2,14 @@ package com.example.sagivproject.models;
 
 import java.io.Serializable;
 
+/**
+ * Represents a single card in the memory game.
+ * <p>
+ * This class holds the state of a card, including its unique identifier (which is shared
+ * with its matching pair), its image content as a Base64 string, and its current state
+ * in the game (revealed, matched).
+ * </p>
+ */
 public class Card implements Serializable, Idable {
     private String id;
     private String base64Content;
@@ -9,9 +17,18 @@ public class Card implements Serializable, Idable {
     private boolean isMatched = false;
     private boolean wasRevealed;
 
+    /**
+     * Default constructor required for calls to DataSnapshot.getValue(Card.class).
+     */
     public Card() {
     }
 
+    /**
+     * Constructs a new Card.
+     *
+     * @param id            The identifier for the card, used to find its match.
+     * @param base64Content The Base64 encoded string of the card's image.
+     */
     public Card(String id, String base64Content) {
         this.id = id;
         this.base64Content = base64Content;

@@ -8,28 +8,37 @@ import com.example.sagivproject.services.IDatabaseService.DatabaseCallback;
 
 import java.util.List;
 
-
+/**
+ * An interface that defines the contract for operations related to the memory game images.
+ * <p>
+ * This service manages the collection of images used as cards in the memory game.
+ * </p>
+ */
 public interface IImageService {
     /**
-     * get all images from the database
+     * Retrieves all images from the database.
      *
-     * @param callback the callback to call when the operation is completed
+     * @param callback The callback to be invoked with the list of all images.
      */
     void getAllImages(DatabaseCallback<List<ImageData>> callback);
 
     /**
-     * create a new image in the database
+     * Creates a new image in the database.
      *
-     * @param image    the image object to create
-     * @param callback the callback to call when the operation is completed
+     * @param image    The image data to create.
+     * @param callback An optional callback to be invoked upon completion.
      */
     void createImage(@NonNull ImageData image, @Nullable DatabaseCallback<Void> callback);
 
     /**
-     * update all images in the database
+     * Updates the entire collection of images in the database with a new list.
+     * <p>
+     * This is useful for batch operations like re-ordering or deleting multiple images,
+     * as it replaces the entire existing collection with the provided list in a single operation.
+     * </p>
      *
-     * @param list     the list of images to update
-     * @param callback the callback to call when the operation is completed
+     * @param list     The new, complete list of images to be saved.
+     * @param callback A callback to be invoked upon completion.
      */
     void updateAllImages(List<ImageData> list, DatabaseCallback<Void> callback);
 }
