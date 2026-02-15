@@ -13,6 +13,14 @@ import javax.inject.Singleton;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
 
+/**
+ * A singleton utility class for managing SharedPreferences.
+ * <p>
+ * This class provides a simplified and centralized way to interact with SharedPreferences.
+ * It includes methods for saving and retrieving primitive data types as well as complex objects
+ * (like the {@link User} model) by using the Gson library for JSON serialization.
+ * </p>
+ */
 @Singleton
 public class SharedPreferencesUtil {
     private static final String PREF_NAME = "com.example.sagivproject.PREFERENCE_FILE_KEY";
@@ -21,6 +29,11 @@ public class SharedPreferencesUtil {
     private final SharedPreferences sharedPreferences;
     private final Gson gson;
 
+    /**
+     * Constructs a new SharedPreferencesUtil.
+     *
+     * @param context The application context.
+     */
     @Inject
     public SharedPreferencesUtil(@ApplicationContext Context context) {
         this.sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -28,118 +41,98 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * Save a string to shared preferences.
+     * Saves a string to SharedPreferences.
      *
-     * @param key   The key to save the string with.
-     * @param value The string to save.
-     * @see SharedPreferences.Editor#putString(String, String)
+     * @param key   The key for the value.
+     * @param value The string value to save.
      */
     public void saveString(String key, String value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
-        editor.apply();
+        sharedPreferences.edit().putString(key, value).apply();
     }
 
     /**
-     * Get a string from shared preferences.
+     * Retrieves a string from SharedPreferences.
      *
-     * @param key          The key to get the string with.
+     * @param key          The key of the value to retrieve.
      * @param defaultValue The default value to return if the key is not found.
-     * @return The string value stored in shared preferences.
-     * @see SharedPreferences#getString(String, String)
+     * @return The retrieved string or the default value.
      */
     public String getString(String key, String defaultValue) {
         return sharedPreferences.getString(key, defaultValue);
     }
 
     /**
-     * Save an integer to shared preferences.
+     * Saves an integer to SharedPreferences.
      *
-     * @param key   The key to save the integer with.
-     * @param value The integer to save.
-     * @see SharedPreferences.Editor#putInt(String, int)
+     * @param key   The key for the value.
+     * @param value The integer value to save.
      */
     public void saveInt(String key, int value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(key, value);
-        editor.apply();
+        sharedPreferences.edit().putInt(key, value).apply();
     }
 
     /**
-     * Get an integer from shared preferences.
+     * Retrieves an integer from SharedPreferences.
      *
-     * @param key          The key to get the integer with.
+     * @param key          The key of the value to retrieve.
      * @param defaultValue The default value to return if the key is not found.
-     * @return The integer value stored in shared preferences.
-     * @see SharedPreferences#getInt(String, int)
+     * @return The retrieved integer or the default value.
      */
     public int getInt(String key, int defaultValue) {
         return sharedPreferences.getInt(key, defaultValue);
     }
 
     /**
-     * Save a boolean to shared preferences.
+     * Saves a boolean to SharedPreferences.
      *
-     * @param key   The key to save the boolean with.
-     * @param value The boolean to save.
-     * @see SharedPreferences.Editor#putBoolean(String, boolean)
+     * @param key   The key for the value.
+     * @param value The boolean value to save.
      */
     public void saveBoolean(String key, boolean value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
+        sharedPreferences.edit().putBoolean(key, value).apply();
     }
 
     /**
-     * Get a boolean from shared preferences.
+     * Retrieves a boolean from SharedPreferences.
      *
-     * @param key          The key to get the boolean with.
+     * @param key          The key of the value to retrieve.
      * @param defaultValue The default value to return if the key is not found.
-     * @return The boolean value stored in shared preferences.
-     * @see SharedPreferences#getBoolean(String, boolean)
+     * @return The retrieved boolean or the default value.
      */
     public boolean getBoolean(String key, boolean defaultValue) {
         return sharedPreferences.getBoolean(key, defaultValue);
     }
 
     /**
-     * Clear all data from shared preferences.
-     *
-     * @see SharedPreferences.Editor#clear()
+     * Clears all data from SharedPreferences.
      */
     public void clear() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        sharedPreferences.edit().clear().apply();
     }
 
     /**
-     * Remove a specific key from shared preferences.
+     * Removes a specific key-value pair from SharedPreferences.
      *
      * @param key The key to remove.
-     * @see SharedPreferences.Editor#remove(String)
      */
     public void remove(String key) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(key);
-        editor.apply();
+        sharedPreferences.edit().remove(key).apply();
     }
 
     /**
-     * Check if a key exists in shared preferences.
+     * Checks if a key exists in SharedPreferences.
      *
      * @param key The key to check.
-     * @return true if the key exists, false otherwise.
-     * @see SharedPreferences#contains(String)
+     * @return True if the key exists, false otherwise.
      */
     public boolean contains(String key) {
         return sharedPreferences.contains(key);
     }
 
     /**
-     * Save an object to shared preferences.
+     * Saves a complex object to SharedPreferences by converting it to a JSON string.
      *
-     * @param key    The key to save the object with.
+     * @param key    The key for the object.
      * @param object The object to save.
      * @param <T>    The type of the object.
      */
@@ -149,12 +142,12 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * Get an object from shared preferences.
+     * Retrieves a complex object from SharedPreferences by converting it from a JSON string.
      *
-     * @param key  The key to get the object with.
+     * @param key  The key of the object to retrieve.
      * @param type The class of the object.
      * @param <T>  The type of the object.
-     * @return The object stored in shared preferences.
+     * @return The retrieved object, or null if not found.
      */
     public <T> T getObject(String key, Class<T> type) {
         String json = getString(key, null);
@@ -165,47 +158,43 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * Save a user object to shared preferences.
+     * Saves the current user object to SharedPreferences.
      *
      * @param user The user object to save.
-     * @see User
      */
     public void saveUser(User user) {
         saveObject(KEY_USER, user);
     }
 
     /**
-     * Get the user object from shared preferences.
+     * Retrieves the current user object from SharedPreferences.
      *
-     * @return The user object stored in shared preferences, or null if not logged in.
-     * @see User
-     * @see #isUserLoggedIn()
+     * @return The user object, or null if no user is logged in.
      */
     public User getUser() {
         return getObject(KEY_USER, User.class);
     }
 
     /**
-     * Sign out the user by removing user data from shared preferences.
+     * Signs out the current user by removing their data from SharedPreferences.
      */
     public void signOutUser() {
         remove(KEY_USER);
     }
 
     /**
-     * Check if a user is logged in by checking if the user data is present in shared preferences.
+     * Checks if a user is currently logged in.
      *
-     * @return true if the user is logged in, false otherwise.
-     * @see #contains(String)
+     * @return True if user data exists in SharedPreferences, false otherwise.
      */
     public boolean isUserLoggedIn() {
         return contains(KEY_USER);
     }
 
     /**
-     * Checks if dark mode is enabled.
+     * Checks if dark mode is enabled in preferences.
      *
-     * @return true if dark mode is enabled, false otherwise.
+     * @return True if dark mode is enabled, false otherwise.
      */
     public boolean isDarkMode() {
         return getBoolean(KEY_DARK_MODE, false);
@@ -214,16 +203,16 @@ public class SharedPreferencesUtil {
     /**
      * Sets the dark mode preference.
      *
-     * @param isDarkMode true to enable dark mode, false to disable.
+     * @param isDarkMode True to enable dark mode, false to disable.
      */
     public void setDarkMode(boolean isDarkMode) {
         saveBoolean(KEY_DARK_MODE, isDarkMode);
     }
 
     /**
-     * Get the user id of the logged-in user.
+     * Retrieves the ID of the currently logged-in user.
      *
-     * @return The user id of the logged-in user, or null if no user is logged in.
+     * @return The user ID, or null if no user is logged in.
      */
     @Nullable
     public String getUserId() {

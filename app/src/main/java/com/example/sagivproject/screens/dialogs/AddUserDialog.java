@@ -14,18 +14,36 @@ import com.example.sagivproject.utils.Validator;
 
 import java.util.Objects;
 
+/**
+ * A dialog for administrators to add a new user to the application.
+ * <p>
+ * This dialog provides a form for entering the new user's details, including first name,
+ * last name, birthdate, email, and password. It includes input validation and uses the
+ * {@link IAuthService} to create the new user.
+ * </p>
+ */
 public class AddUserDialog {
     private final Context context;
     private final AddUserListener listener;
     private final IAuthService authService;
     private long birthDateMillis = -1;
 
+    /**
+     * Constructs a new AddUserDialog.
+     *
+     * @param context     The context in which the dialog should be shown.
+     * @param listener    A listener to be notified when a user is successfully added.
+     * @param authService The authentication service to handle user creation.
+     */
     public AddUserDialog(Context context, AddUserListener listener, IAuthService authService) {
         this.context = context;
         this.listener = listener;
         this.authService = authService;
     }
 
+    /**
+     * Creates and displays the dialog.
+     */
     public void show() {
         Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_add_user);
@@ -38,8 +56,6 @@ public class AddUserDialog {
         EditText inputPassword = dialog.findViewById(R.id.inputAddUserPassword);
         Button btnAdd = dialog.findViewById(R.id.btnAddUserSave);
         Button btnCancel = dialog.findViewById(R.id.btnAddUserCancel);
-
-        updateBirthDateText(inputBirthDate, birthDateMillis);
 
         inputBirthDate.setOnClickListener(v -> CalendarUtil.openDatePicker(context, birthDateMillis, (millis, dateStr) -> {
             birthDateMillis = millis;
@@ -77,6 +93,20 @@ public class AddUserDialog {
         dialog.show();
     }
 
+    /**
+     * Validates all the input fields in the dialog.
+     *
+     * @param fName        First name string.
+     * @param lName        Last name string.
+     * @param email        Email string.
+     * @param password     Password string.
+     * @param firstName    First name EditText for focusing on error.
+     * @param lastName     Last name EditText for focusing on error.
+     * @param emailEdt     Email EditText for focusing on error.
+     * @param passwordEdt  Password EditText for focusing on error.
+     * @param birthDateEdt Birthdate EditText for focusing on error.
+     * @return True if all inputs are valid, false otherwise.
+     */
     private boolean validateInput(String fName, String lName, String email, String password, EditText firstName, EditText lastName, EditText emailEdt, EditText passwordEdt, EditText birthDateEdt) {
         if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || password.isEmpty() || birthDateMillis <= 0) {
             Toast.makeText(context, "נא למלא את כל השדות", Toast.LENGTH_SHORT).show();
@@ -122,13 +152,15 @@ public class AddUserDialog {
         return true;
     }
 
-    private void updateBirthDateText(EditText editText, long millis) {
-        if (millis > 0) {
-            editText.setText(CalendarUtil.formatDate(millis));
-        }
-    }
-
+    /**
+     * An interface to listen for the successful addition of a new user.
+     */
     public interface AddUserListener {
-        void onUserAdded(User ignoredNewUser);
+        /**
+         * Called when a new user has been successfully added.
+         *
+         * @param newUser The newly created user object.
+         */
+        void onUserAdded(User newUser);
     }
 }

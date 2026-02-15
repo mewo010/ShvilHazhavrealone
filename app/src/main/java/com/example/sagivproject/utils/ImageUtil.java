@@ -7,38 +7,62 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.sagivproject.R;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.ByteArrayOutputStream;
 
+/**
+ * A utility class for handling image-related operations.
+ * <p>
+ * This class provides static methods for converting images to and from Base64 encoded strings,
+ * and for loading images into ImageViews using the Glide library.
+ * </p>
+ */
 public class ImageUtil {
     private static final String BASE64_PREFIX = "data:image/jpeg;base64,";
 
-    public static @Nullable String convertTo64Base(@NotNull final ImageView postImage) {
-        if (postImage.getDrawable() == null) {
+    /**
+     * Converts the drawable from an ImageView into a Base64 encoded string.
+     *
+     * @param imageView The ImageView containing the image to convert.
+     * @return The Base64 encoded string with a data URI prefix, or null if the drawable is not present.
+     */
+    public static @Nullable String convertTo64Base(@NotNull final ImageView imageView) {
+        if (imageView.getDrawable() == null) {
             return null;
         }
-        Bitmap bitmap = ((BitmapDrawable) postImage.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return BASE64_PREFIX + Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
+    /**
+     * Loads a Base64 encoded image into an ImageView using Glide.
+     *
+     * @param context    The context.
+     * @param base64Code The Base64 encoded string of the image, potentially with a data URI prefix.
+     * @param imageView  The ImageView to load the image into.
+     */
     public static void loadImage(@NotNull final Context context, @Nullable final String base64Code, @NotNull final ImageView imageView) {
         if (base64Code == null || base64Code.isEmpty()) {
-            // Optional: Set a placeholder for empty codes
-            // imageView.setImageResource(R.drawable.ic_placeholder);
+            // Set a default user icon if no image is available
+            imageView.setImageResource(R.drawable.ic_user);
             return;
         }
 
+        // Remove the data URI prefix if it exists
         String pureBase64 = base64Code.substring(base64Code.indexOf(",") + 1);
         byte[] decodedString = Base64.decode(pureBase64, Base64.DEFAULT);
 
         Glide.with(context)
                 .load(decodedString)
+                .placeholder(R.drawable.ic_user) // Show a placeholder while loading
+                .error(R.drawable.ic_user)      // Show a placeholder on error
                 .into(imageView);
     }
 }

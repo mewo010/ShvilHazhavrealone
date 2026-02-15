@@ -7,8 +7,13 @@ import com.example.sagivproject.models.Medication;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A {@link DiffUtil.Callback} for calculating the difference between two lists of {@link Medication} objects.
+ * <p>
+ * This is used to efficiently update the RecyclerView that displays a user's medication list.
+ * </p>
+ */
 public class MedicationDiffCallback extends DiffUtil.Callback {
-
     private final List<Medication> oldList;
     private final List<Medication> newList;
 
@@ -27,11 +32,17 @@ public class MedicationDiffCallback extends DiffUtil.Callback {
         return newList.size();
     }
 
+    /**
+     * Checks if two items represent the same object based on their ID.
+     */
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
         return oldList.get(oldItemPosition).getId().equals(newList.get(newItemPosition).getId());
     }
 
+    /**
+     * Checks if the contents of two items are the same by comparing all their fields.
+     */
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         Medication oldItem = oldList.get(oldItemPosition);

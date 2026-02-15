@@ -31,8 +31,16 @@
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove" />
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                tools:node="remove" />
+        </provider>
 
+        <activity
+            android:name=".screens.TipOfTheDayActivity"
+            android:exported="false" />
         <activity
             android:name=".screens.ForumCategoriesActivity"
             android:exported="false" />

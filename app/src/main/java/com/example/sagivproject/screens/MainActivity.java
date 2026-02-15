@@ -21,7 +21,7 @@ import java.util.Random;
  * The main screen for logged-in users.
  * <p>
  * This activity serves as the central hub, providing navigation to the app's main features:
- * Medication List, Forum, AI Assistant, Memory Game, and Math Problems. It also displays
+ * Medication List, Forum, AI Assistant, Memory Game, Math Problems and Tip Of The Day. It also displays
  * a welcome message and a random inspirational quote.
  * </p>
  */
@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         Button btnToAi = findViewById(R.id.btn_main_to_Ai);
         Button btnToGameHomeScreen = findViewById(R.id.btn_main_to_GameHomeScreen);
         Button btnToMathProblems = findViewById(R.id.btn_main_to_MathProblems);
+        Button btnToTipOfTheDay = findViewById(R.id.btn_main_to_TipOfTheDay);
         TextView txtHomePageTitle = findViewById(R.id.txt_main_Title);
         TextView tvInspirationContent = findViewById(R.id.tv_inspiration_content);
 
@@ -71,6 +72,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.RequiresP
         btnToAi.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AiActivity.class)));
         btnToGameHomeScreen.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GameHomeScreenActivity.class)));
         btnToMathProblems.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MathProblemsActivity.class)));
+        btnToTipOfTheDay.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, TipOfTheDayActivity.class)));
 
         if (user != null) {
             txtHomePageTitle.setText(String.format("שלום %s", user.getFullName()));
