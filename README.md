@@ -135,7 +135,7 @@ git clone https://github.com/sagiv23/ShvilHazhav.git
 
   <h2 style="color:#155e75;">👨‍💻 מפתח</h2>
   <p>
-    <b>שגיב 23</b><br>
+    <b>mewo010</b><br>
     פרויקט גמר - שביל הזהב
   </p>
 
